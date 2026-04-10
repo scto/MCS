@@ -9,7 +9,10 @@ import androidx.compose.runtime.Composable
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MCSToolbar(title: String) {
+fun MCSToolbar(
+    title: String,
+    actions: @Composable () -> Unit = {}
+) {
     TopAppBar(
         title = { 
             Text(
@@ -17,6 +20,7 @@ fun MCSToolbar(title: String) {
                 color = MaterialTheme.colorScheme.onSurface 
             ) 
         },
+        actions = { actions() },
         colors = TopAppBarDefaults.topAppBarColors(
             containerColor = MaterialTheme.colorScheme.surface
         )
