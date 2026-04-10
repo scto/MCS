@@ -71,6 +71,18 @@ Aider Prompt:
 1. Nutze AndroidView für den Sora-Editor. Binde Syntax-Highlighting über den EditorConfigManager (aus :core:editor) ein.
 2. Implementiere ein Terminal-Panel am unteren Bildschirmrand.
 3. Build-Funktion: Führe ./gradlew assembleDebug im Projektpfad aus, nutze JDK/SDK Pfade aus :core:terminal und streame den Output live in das Terminal-Panel."
+🛠 Phase 100: Gradle-Automatisierung & Modul-Skripte
+Ziel: Flächendeckende Konfiguration aller Modul-Build-Dateien unter Nutzung des Version Catalogs.
+Aider Prompt:
+"Erstelle oder aktualisiere in JEDEM Modul und Submodul (:app, :core:, :feature:) die build.gradle.kts. Nutze dabei konsequent den Version Catalog (libs.versions.toml). Erweitere die libs.versions.toml um fehlende Standard-Libraries (Compose, Hilt, Core-Ktx), falls diese noch nicht definiert sind. Stelle sicher, dass die :core-Submodule als com.android.library und das :app-Modul als com.android.application konfiguriert sind und alle die gleichen SDK-Versionen (Compile 36, Target 35) verwenden."
+🔍 Phase 101: Build-Integritätscheck
+Ziel: Validierung der Modul-Vernetzung und Sicherstellung der Build-Fähigkeit.
+Aider Prompt:
+"Überprüfe die gesamte Projektstruktur auf Build-Fähigkeit:
+1. Vergleiche die vorhandenen Verzeichnisse mit den include-Einträgen in der settings.gradle.kts und ergänze fehlende Module.
+2. Prüfe alle build.gradle.kts auf korrekte Modul-Abhängigkeiten (z.B. ob Features ihre benötigten Core-Module via implementation(project(":core:ui")) etc. eingebunden haben).
+3. Stelle sicher, dass keine zirkulären Abhängigkeiten bestehen.
+4. Korrigiere etwaige Unstimmigkeiten, bis ein sauberer Gradle-Sync und assembleDebug möglich sind."
 💡 Best Practices für Aider
 1. Kontext bewahren: Nutze /add [Dateipfad], bevor du eine neue Phase startest.
 2. Build-Checks: Führe nach jeder Phase einen Gradle-Sync in Android Studio durch.
