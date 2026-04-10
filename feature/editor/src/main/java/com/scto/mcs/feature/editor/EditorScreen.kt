@@ -8,10 +8,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.scto.mcs.core.editor.EditorConfigManager
 import com.scto.mcs.core.ui.components.MCSToolbar
 import com.scto.mcs.core.ui.theme.MCSTheme
 import io.github.rosemoe.sora.widget.CodeEditor
+import io.github.rosemoe.sora.widget.schemes.EditorColorScheme
 
 @Composable
 fun EditorScreen(
@@ -19,7 +19,6 @@ fun EditorScreen(
     viewModel: EditorViewModel = hiltViewModel()
 ) {
     val uiState by viewModel.uiState.collectAsState()
-    val editorConfigManager = viewModel.editorConfigManager
 
     MCSTheme {
         Column(modifier = Modifier.fillMaxSize()) {
@@ -39,12 +38,18 @@ fun EditorScreen(
                         )
                         isLineNumberEnabled = true
                         isAutoCompletionEnabled = true
+                        
+                        // Apply theme colors from EditorConfigManager
+                        val colors = viewModel.editorConfigManager.getThemeColors()
+                        val scheme = EditorColorScheme()
+                        // Basic color mapping
+                        scheme.setColor(EditorColorScheme.WHOLE_BACKGROUND, android.graphics.Color.parseColor(colors["background"] ?: "#1E1E1E"))
+                        scheme.setColor(EditorColorScheme.TEXT_NORMAL, android.graphics.Color.parseColor(colors["foreground"] ?: "#FFFFFF"))
+                        colorScheme = scheme
                     }
                 },
                 update = { editor ->
-                    // Syntax Highlighting Konfiguration
-                    val colors = editorConfigManager.getThemeColors()
-                    // Hier würde die Integration der TextMate-Grammatiken erfolgen
+                    // Update logic if needed
                 }
             )
             
