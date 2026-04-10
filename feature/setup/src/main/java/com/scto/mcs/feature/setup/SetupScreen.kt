@@ -1,9 +1,8 @@
 package com.scto.mcs.feature.setup
 
 import androidx.compose.foundation.layout.*
-import androidx.compose.material3.Button
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -14,16 +13,45 @@ import com.scto.mcs.core.ui.theme.MCSTheme
 fun SetupScreen(
     viewModel: SetupViewModel = hiltViewModel()
 ) {
+    val uiState by viewModel.uiState.collectAsState()
+
     MCSTheme {
         Column(
             modifier = Modifier.fillMaxSize().padding(16.dp),
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Text("Terminal Setup")
+            Text("Terminal Setup", style = MaterialTheme.typography.headlineMedium)
             Spacer(modifier = Modifier.height(16.dp))
-            Button(onClick = { viewModel.startSetup() }) {
-                Text("Setup starten")
+            
+            // JDK Selection
+            Text("Wähle JDK Version:")
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                RadioButton(selected = uiState.jdkVersion == "17", onClick = { viewModel.setJdk("17") })
+                Text("17")
+                RadioButton(selected = uiState.jdkVersion == "21", onClick = { viewModel.setJdk("21") })
+                Text("21")
+            }
+
+            // SDK Selection
+            Text("Wähle Android SDK:")
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                RadioButton(selected = uiState.sdkVersion == "33", onClick = { viewModel.setSdk("33") })
+                Text("33")
+                RadioButton(selected = uiState.sdkVersion == "35", onClick = { viewModel.setSdk("35") })
+                Text("35")
+            }
+
+            Spacer(modifier = Modifier.height(16.dp))
+            
+            if (uiState.isInstalling) {
+                LinearProgressIndicator(modifier = Modifier.fillMaxWidth())
+                Spacer(modifier = Modifier.height(8.dp))
+                Text(uiState.statusMessage)
+            } else {
+                Button(onClick = { viewModel.startSetup() }) {
+                    Text("Setup starten")
+                }
             }
         }
     }
