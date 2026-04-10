@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="ide_background">#1E1E1E</color>
+    <color name="ide_surface">#252526</color>
+    <color name="ide_primary">#007ACC</color>
+    <color name="ide_on_primary">#FFFFFF</color>
+    <color name="ide_text_primary">#D4D4D4</color>
+</resources>
