@@ -16,7 +16,6 @@ class EditorConfigManager @Inject constructor(
     
     suspend fun loadConfigurations() = withContext(Dispatchers.IO) {
         // Logik zum Laden der Grammatiken aus assets/ oder files/
-        // Beispiel: val grammar = context.assets.open("grammars/kotlin.json")
     }
 
     fun getThemeColors(): Map<String, String> {

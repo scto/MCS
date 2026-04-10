@@ -19,6 +19,10 @@ class TerminalEnvironment @Inject constructor(
         envVars["HOME"] = File(mcsDir, "home").absolutePath
         envVars["PATH"] = "${File(mcsDir, "usr/bin").absolutePath}:/usr/bin:/bin"
         envVars["TMPDIR"] = File(mcsDir, "tmp").absolutePath
+        
+        // Platzhalter für spätere Konfiguration durch Setup-Feature
+        envVars["JAVA_HOME"] = ""
+        envVars["ANDROID_HOME"] = ""
     }
 
     fun initializeEnvironment() {
