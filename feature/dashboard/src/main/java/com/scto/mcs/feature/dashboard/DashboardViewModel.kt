@@ -12,6 +12,7 @@ import java.io.File
 import javax.inject.Inject
 
 data class DashboardUiState(
+    val isCloning: Boolean = false,
     val isCloned: Boolean = false,
     val clonedProjectPath: String? = null
 )
@@ -27,12 +28,15 @@ class DashboardViewModel @Inject constructor(
 
     fun cloneRepository(url: String) {
         viewModelScope.launch {
+            _uiState.value = DashboardUiState(isCloning = true)
             val projectName = url.substringAfterLast("/").removeSuffix(".git")
             val destination = File(fileSystemUtils.getMcsDirectory(), "projects/$projectName")
             val result = cloneRepositoryUseCase(url, destination)
             
             if (result.isSuccess) {
                 _uiState.value = DashboardUiState(isCloned = true, clonedProjectPath = destination.absolutePath)
+            } else {
+                _uiState.value = DashboardUiState(isCloning = false)
             }
         }
     }

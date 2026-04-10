@@ -26,21 +26,27 @@ fun DashboardScreen(
     }
 
     MCSTheme {
-        Column(
-            modifier = Modifier.fillMaxSize().padding(16.dp),
-            verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            Text("MCS Dashboard", style = MaterialTheme.typography.headlineMedium)
-            Spacer(modifier = Modifier.height(32.dp))
-            
-            MCSButton(text = "Projekt öffnen", onClick = { /* TODO */ })
-            Spacer(modifier = Modifier.height(16.dp))
-            MCSButton(text = "Projekt erstellen", onClick = { /* TODO */ })
-            Spacer(modifier = Modifier.height(16.dp))
-            MCSButton(text = "Repository klonen", onClick = { showCloneDialog = true })
-            Spacer(modifier = Modifier.height(16.dp))
-            MCSButton(text = "Einstellungen", onClick = { /* TODO */ })
+        Box(modifier = Modifier.fillMaxSize()) {
+            Column(
+                modifier = Modifier.fillMaxSize().padding(16.dp),
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Text("MCS Dashboard", style = MaterialTheme.typography.headlineMedium)
+                Spacer(modifier = Modifier.height(32.dp))
+                
+                MCSButton(text = "Projekt öffnen", onClick = { /* TODO */ })
+                Spacer(modifier = Modifier.height(16.dp))
+                MCSButton(text = "Projekt erstellen", onClick = { /* TODO */ })
+                Spacer(modifier = Modifier.height(16.dp))
+                MCSButton(text = "Repository klonen", onClick = { showCloneDialog = true })
+                Spacer(modifier = Modifier.height(16.dp))
+                MCSButton(text = "Einstellungen", onClick = { /* TODO */ })
+            }
+
+            if (uiState.isCloning) {
+                CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
+            }
         }
 
         if (showCloneDialog) {
