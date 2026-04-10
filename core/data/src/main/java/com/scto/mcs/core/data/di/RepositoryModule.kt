@@ -19,18 +19,18 @@ abstract class RepositoryModule {
     @Binds
     @Singleton
     abstract fun bindProjectRepository(
-        projectRepositoryImpl: ProjectRepositoryImpl
+        impl: ProjectRepositoryImpl
     ): ProjectRepository
 
     @Binds
     @Singleton
     abstract fun bindGitRepository(
-        gitRepositoryImpl: GitRepositoryImpl
+        impl: GitRepositoryImpl
     ): GitRepository
 
     @Binds
     @Singleton
     abstract fun bindEditorRepository(
-        editorRepositoryImpl: EditorRepositoryImpl
+        impl: EditorRepositoryImpl
     ): EditorRepository
 }

@@ -10,7 +10,7 @@ import javax.inject.Singleton
 class ProjectRepositoryImpl @Inject constructor(
     private val fileSystemUtils: FileSystemUtils
 ) : ProjectRepository {
-    
+
     override fun getProjects(): List<File> {
         return fileSystemUtils.listFiles("projects")
     }
