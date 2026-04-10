@@ -2,6 +2,7 @@ package com.scto.mcs.feature.editor
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.scto.mcs.core.editor.EditorConfigManager
 import com.scto.mcs.core.terminal.TerminalEnvironment
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -18,7 +19,8 @@ data class EditorUiState(
 
 @HiltViewModel
 class EditorViewModel @Inject constructor(
-    private val terminalEnvironment: TerminalEnvironment
+    private val terminalEnvironment: TerminalEnvironment,
+    val editorConfigManager: EditorConfigManager
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(EditorUiState())
@@ -30,7 +32,6 @@ class EditorViewModel @Inject constructor(
             
             val output = withContext(Dispatchers.IO) {
                 try {
-                    // Ensure gradlew is executable
                     val gradlew = File(projectPath, "gradlew")
                     if (gradlew.exists()) {
                         gradlew.setExecutable(true)

@@ -12,15 +12,14 @@ import com.scto.mcs.core.editor.EditorConfigManager
 import com.scto.mcs.core.ui.components.MCSToolbar
 import com.scto.mcs.core.ui.theme.MCSTheme
 import io.github.rosemoe.sora.widget.CodeEditor
-import io.github.rosemoe.sora.widget.component.EditorAutoCompletion
 
 @Composable
 fun EditorScreen(
     projectPath: String,
-    viewModel: EditorViewModel = hiltViewModel(),
-    editorConfigManager: EditorConfigManager = hiltViewModel() // Assuming Hilt provides this
+    viewModel: EditorViewModel = hiltViewModel()
 ) {
     val uiState by viewModel.uiState.collectAsState()
+    val editorConfigManager = viewModel.editorConfigManager
 
     MCSTheme {
         Column(modifier = Modifier.fillMaxSize()) {
@@ -38,19 +37,17 @@ fun EditorScreen(
                             ViewGroup.LayoutParams.MATCH_PARENT,
                             ViewGroup.LayoutParams.MATCH_PARENT
                         )
-                        // Basic configuration
                         isLineNumberEnabled = true
                         isAutoCompletionEnabled = true
                     }
                 },
                 update = { editor ->
-                    // Apply theme colors from EditorConfigManager
+                    // Syntax Highlighting Konfiguration
                     val colors = editorConfigManager.getThemeColors()
-                    // Apply logic to set colors to editor if needed
+                    // Hier würde die Integration der TextMate-Grammatiken erfolgen
                 }
             )
             
-            // Terminal Panel
             Surface(
                 modifier = Modifier.height(200.dp).fillMaxWidth(),
                 color = MaterialTheme.colorScheme.surface
