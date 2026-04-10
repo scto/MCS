@@ -8,14 +8,17 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.scto.mcs.core.editor.EditorConfigManager
 import com.scto.mcs.core.ui.components.MCSToolbar
 import com.scto.mcs.core.ui.theme.MCSTheme
 import io.github.rosemoe.sora.widget.CodeEditor
+import io.github.rosemoe.sora.widget.component.EditorAutoCompletion
 
 @Composable
 fun EditorScreen(
     projectPath: String,
-    viewModel: EditorViewModel = hiltViewModel()
+    viewModel: EditorViewModel = hiltViewModel(),
+    editorConfigManager: EditorConfigManager = hiltViewModel() // Assuming Hilt provides this
 ) {
     val uiState by viewModel.uiState.collectAsState()
 
@@ -35,10 +38,15 @@ fun EditorScreen(
                             ViewGroup.LayoutParams.MATCH_PARENT,
                             ViewGroup.LayoutParams.MATCH_PARENT
                         )
+                        // Basic configuration
+                        isLineNumberEnabled = true
+                        isAutoCompletionEnabled = true
                     }
                 },
                 update = { editor ->
-                    // Update editor content
+                    // Apply theme colors from EditorConfigManager
+                    val colors = editorConfigManager.getThemeColors()
+                    // Apply logic to set colors to editor if needed
                 }
             )
             

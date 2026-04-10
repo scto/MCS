@@ -30,12 +30,19 @@ class EditorViewModel @Inject constructor(
             
             val output = withContext(Dispatchers.IO) {
                 try {
+                    // Ensure gradlew is executable
+                    val gradlew = File(projectPath, "gradlew")
+                    if (gradlew.exists()) {
+                        gradlew.setExecutable(true)
+                    }
+
                     val process = ProcessBuilder("./gradlew", "assembleDebug")
                         .directory(File(projectPath))
                         .environment().apply {
                             put("JAVA_HOME", terminalEnvironment.getEnv("JAVA_HOME") ?: "")
                             put("ANDROID_HOME", terminalEnvironment.getEnv("ANDROID_HOME") ?: "")
                         }
+                        .redirectErrorStream(true)
                         .start()
                     
                     process.inputStream.bufferedReader().readText()
