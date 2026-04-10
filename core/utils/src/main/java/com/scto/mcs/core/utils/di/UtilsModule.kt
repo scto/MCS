@@ -1,9 +1,11 @@
 package com.scto.mcs.core.utils.di
 
+import android.content.Context
 import com.scto.mcs.core.utils.FileSystemUtils
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
 
@@ -13,7 +15,7 @@ object UtilsModule {
 
     @Provides
     @Singleton
-    fun provideFileSystemUtils(): FileSystemUtils {
-        return FileSystemUtils()
+    fun provideFileSystemUtils(@ApplicationContext context: Context): FileSystemUtils {
+        return FileSystemUtils(context)
     }
 }
