@@ -1,0 +1,21 @@
+[versions]
+kotlin = "2.2.0"
+gradle = "8.11.2"
+hilt = "2.51"
+jgit = "6.8.0"
+soraEditor = "0.23.0"
+composeBom = "2025.01.00"
+androidGradlePlugin = "8.8.0"
+
+[libraries]
+androidx-compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "composeBom" }
+hilt-android = { group = "com.google.dagger", name = "hilt-android", version.ref = "hilt" }
+hilt-compiler = { group = "com.google.dagger", name = "hilt-compiler", version.ref = "hilt" }
+jgit = { group = "org.eclipse.jgit", name = "org.eclipse.jgit", version.ref = "jgit" }
+sora-editor = { group = "io.github.jpdante", name = "sora-editor", version.ref = "soraEditor" }
+
+[plugins]
+android-application = { id = "com.android.application", version.ref = "androidGradlePlugin" }
+android-library = { id = "com.android.library", version.ref = "androidGradlePlugin" }
+kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+hilt-android = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
