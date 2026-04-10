@@ -1,17 +1,32 @@
-// Top-level build file where you can add configuration options common to all sub-projects/modules.
 plugins {
-    alias(libs.plugins.android.application) apply false
-    alias(libs.plugins.android.library) apply false
-    alias(libs.plugins.kotlin.android) apply false
-    alias(libs.plugins.hilt.android) apply false
+    id("com.android.library")
+    id("org.jetbrains.kotlin.android")
+    id("kotlin-kapt")
+    id("com.google.dagger.hilt.android")
 }
 
-buildscript {
-    repositories {
-        google()
-        mavenCentral()
+android {
+    namespace = "com.scto.mcs.feature.onboarding"
+    compileSdk = 36
+
+    defaultConfig {
+        minSdk = 26
     }
-    dependencies {
-        classpath(libs.hilt.android.gradle.plugin)
+
+    buildFeatures {
+        compose = true
     }
+
+    composeOptions {
+        kotlinCompilerExtensionVersion = "1.5.15"
+    }
+}
+
+dependencies {
+    implementation(project(":core:ui"))
+    implementation("com.google.dagger:hilt-android:2.51")
+    kapt("com.google.dagger:hilt-compiler:2.51")
+    implementation("androidx.compose.ui:ui")
+    implementation("androidx.compose.material3:material3")
+    implementation("androidx.activity:activity-compose:1.9.0")
 }
