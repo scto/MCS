@@ -16,4 +16,17 @@ class FileSystemUtils @Inject constructor(
     fun getMcsDirectory(): File {
         return File(context.filesDir, "mcs")
     }
+
+    fun ensureDirectoryExists(path: String): File {
+        val file = File(getMcsDirectory(), path)
+        if (!file.exists()) {
+            file.mkdirs()
+        }
+        return file
+    }
+
+    fun listFiles(path: String): List<File> {
+        val dir = File(getMcsDirectory(), path)
+        return dir.listFiles()?.toList() ?: emptyList()
+    }
 }

@@ -2,6 +2,8 @@ package com.scto.mcs.core.editor
 
 import android.content.Context
 import dagger.hilt.android.qualifiers.ApplicationContext
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -12,7 +14,13 @@ class EditorConfigManager @Inject constructor(
     // Lädt TextMate-Grammatiken asynchron
     // Synchronisiert Editor-Farbschema mit Material 3
     
-    fun loadConfigurations() {
-        // Logik zum Laden der Konfigurationen aus assets/ oder files/
+    suspend fun loadConfigurations() = withContext(Dispatchers.IO) {
+        // Logik zum Laden der Grammatiken aus assets/ oder files/
+        // Beispiel: val grammar = context.assets.open("grammars/kotlin.json")
+    }
+
+    fun getThemeColors(): Map<String, String> {
+        // Logik zur Rückgabe der Material 3 Farbwerte für den Editor
+        return mapOf("background" to "#1E1E1E", "foreground" to "#FFFFFF")
     }
 }
