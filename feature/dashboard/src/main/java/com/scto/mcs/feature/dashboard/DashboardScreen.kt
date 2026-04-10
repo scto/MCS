@@ -12,9 +12,18 @@ import com.scto.mcs.core.ui.theme.MCSTheme
 
 @Composable
 fun DashboardScreen(
-    viewModel: DashboardViewModel = hiltViewModel()
+    viewModel: DashboardViewModel = hiltViewModel(),
+    onNavigateToEditor: (String) -> Unit
 ) {
     var showCloneDialog by remember { mutableStateOf(false) }
+    val uiState by viewModel.uiState.collectAsState()
+
+    LaunchedEffect(uiState.isCloned) {
+        if (uiState.isCloned) {
+            onNavigateToEditor(uiState.clonedProjectPath ?: "")
+            viewModel.resetCloneState()
+        }
+    }
 
     MCSTheme {
         Column(
