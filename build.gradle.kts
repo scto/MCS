@@ -1,40 +1,17 @@
+// Top-level build file where you can add configuration options common to all sub-projects/modules.
 plugins {
-    id("com.android.library")
-    id("org.jetbrains.kotlin.android")
-    id("kotlin-kapt")
-    id("com.google.dagger.hilt.android")
+    alias(libs.plugins.android.application) apply false
+    alias(libs.plugins.android.library) apply false
+    alias(libs.plugins.kotlin.android) apply false
+    alias(libs.plugins.hilt.android) apply false
 }
 
-android {
-    namespace = "com.scto.mcs.feature.editor"
-    compileSdk = 36
-
-    defaultConfig {
-        minSdk = 26
+buildscript {
+    repositories {
+        google()
+        mavenCentral()
     }
-
-    buildFeatures {
-        compose = true
+    dependencies {
+        classpath(libs.hilt.android.gradle.plugin)
     }
-
-    composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.15"
-    }
-}
-
-dependencies {
-    implementation(project(":core:ui"))
-    implementation(project(":core:editor"))
-    implementation(project(":core:terminal"))
-    implementation(project(":core:domain"))
-    
-    implementation("io.github.jpdante:sora-editor:0.23.0")
-    
-    implementation("com.google.dagger:hilt-android:2.51")
-    kapt("com.google.dagger:hilt-compiler:2.51")
-    
-    implementation("androidx.compose.ui:ui")
-    implementation("androidx.compose.material3:material3")
-    implementation("androidx.activity:activity-compose:1.9.0")
-    implementation("androidx.hilt:hilt-navigation-compose:1.2.0")
 }
