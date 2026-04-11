@@ -38,34 +38,23 @@ Aider Prompt: "Implementiere Flows in feature/onboarding/ und feature/setup/. Sp
 Aider Prompt: "Erstelle das Dashboard in feature/dashboard/. Implementiere den JGit-Clone-Dialog."
 ✍️ Phase 7: Editor & Build (:feature:editor)
 Aider Prompt: "Implementiere das Editor-Feature in feature/editor/. Nutze Sora-Editor und integriere ein Terminal-Panel für Gradle-Builds."
-🛠 Phase 100: Die "Peinlich Genaue" Gradle-Konfiguration
+🛠 Phase 100: Die Gradle-Konfiguration
 Ziel: Erstellung der build.gradle.kts Dateien EXKLUSIV in den Modul-Unterordnern.
-Aider Prompt: "Erstelle für jedes Submodul eine eigene build.gradle.kts im jeweiligen Unterordner.
-STRIKTE REGELN:
-1. Verändere NIEMALS die Root-build.gradle.kts für Modul-Konfigurationen.
-2. Jede Datei muss plugins { alias(libs.plugins.android.library); alias(libs.plugins.kotlin.android); ... } enthalten.
-3. Der namespace muss exakt zum Pfad passen.
-Zu erstellende Dateien (Inhalt peinlich genau prüfen):
-* core/data/build.gradle.kts (Namespace: com.scto.mcs.core.data)
-* core/domain/build.gradle.kts (Namespace: com.scto.mcs.core.domain)
-* core/editor/build.gradle.kts (Namespace: com.scto.mcs.core.editor)
-* core/navigation/build.gradle.kts (Namespace: com.scto.mcs.core.navigation)
-* core/resourcess/build.gradle.kts (Namespace: com.scto.mcs.core.resourcess)
-* core/terminal/build.gradle.kts (Namespace: com.scto.mcs.core.terminal)
-* core/ui/build.gradle.kts (Namespace: com.scto.mcs.core.ui)
-* core/utils/build.gradle.kts (Namespace: com.scto.mcs.core.utils)
-* feature/onboarding/build.gradle.kts (Namespace: com.scto.mcs.feature.onboarding)
-* feature/setup/build.gradle.kts (Namespace: com.scto.mcs.feature.setup)
-* feature/dashboard/build.gradle.kts (Namespace: com.scto.mcs.feature.dashboard)
-* feature/editor/build.gradle.kts (Namespace: com.scto.mcs.feature.editor)
-* feature/settings/build.gradle.kts (Namespace: com.scto.mcs.feature.settings)
-* feature/debug/build.gradle.kts (Namespace: com.scto.mcs.feature.debug)
-Alle Module nutzen compileSdk = 36 und minSdk = 26 aus dem Version Catalog."
-🔍 Phase 101: Build-Integritätscheck (Path-Validation)
+Aider Prompt: "Erstelle für jedes Submodul eine eigene build.gradle.kts im jeweiligen Unterordner. Halte dich an die Namespaces (z.B. com.scto.mcs.core.data) und die SDK-Vorgaben (Compile 36, Min 26). Verändere NIEMALS die Root-build.gradle.kts."
+🔍 Phase 101: Dependency-Audit & Alignment
+Ziel: Synchronisation der Bibliotheken mit dem tatsächlichen Source Code.
+Aider Prompt: "Führe eine Tiefenprüfung aller Submodule in feature/ und core/ durch:
+1. Analysiere den Kotlin-Source-Code in jedem Modul auf verwendete Bibliotheken (z.B. Jetpack Compose, Hilt, Coroutines, Serialization).
+2. Falls ein Modul Compose-UI-Code enthält, stelle sicher, dass in der jeweiligen build.gradle.kts (z.B. feature/editor/build.gradle.kts) buildFeatures.compose = true gesetzt ist und die notwendigen Compose-Dependencies eingetragen sind.
+3. Überprüfe die gradle/libs.versions.toml und ergänze fehlende Bibliotheken, die im Code verwendet werden, aber noch nicht im Version Catalog definiert sind.
+4. Schreibe oder korrigiere die dependencies { ... } Blöcke in JEDEM betroffenen Submodule-Pfad, sodass sie exakt dem Bedarf des Codes entsprechen. Nutze ausschließlich alias(libs.xxx)."
+🔍 Phase 102: Build-Integritätscheck (Path-Validation)
+Ziel: Validierung der Modul-Einbindung in das Gesamtsystem.
 Aider Prompt: "Führe eine finale Prüfung der Dateistruktur durch:
-1. Bestätige, dass keine android { ... } Blöcke in der Root-build.gradle.kts existieren. Falls doch, verschiebe sie in die korrekten Modul-Unterordner und lösche sie im Root.
-2. Prüfe, ob settings.gradle.kts alle Module mit ihrem physischen Pfad referenziert (z.B. include(":core:data"); project(":core:data").projectDir = file("core/data")).
-3. Korrigiere alle implementation(project(...)) Aufrufe so, dass sie auf die korrekten Modul-Namen verweisen."
+1. Bestätige, dass keine android { ... } Blöcke in der Root-build.gradle.kts existieren.
+2. Prüfe, ob settings.gradle.kts alle Module mit ihrem physischen Pfad korrekt referenziert.
+3. Korrigiere alle implementation(project(...)) Aufrufe so, dass sie auf die korrekten Modul-Namen verweisen.
+4. Stelle sicher, dass ein Gradle-Sync ohne Fehler durchläuft."
 💡 Best Practices für Aider
 1. Targeted Files: Nutze immer den spezifischen Pfad (z. B. /add core/data/build.gradle.kts oder /add feature/setup/build.gradle.kts) anstatt nur /add build.gradle.kts, um Verwechslungen mit der Root-Datei oder anderen Modulen zu vermeiden.
 2. Namespace Check: Jedes Modul muss seinen eigenen Namespace haben, der strikt der Ordnerstruktur folgt.
