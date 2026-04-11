@@ -21,7 +21,6 @@ dependencyResolutionManagement {
 
 rootProject.name = "MCS"
 include(":app")
-include(":core:common")
 include(":core:data")
 include(":core:domain")
 include(":core:editor")
