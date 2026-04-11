@@ -7,7 +7,7 @@ plugins {
 
 android {
     namespace = "com.scto.mcs.feature.editor"
-    compileSdk = 36
+    compileSdk = libs.versions.compileSdk.get().toInt()
 
     defaultConfig {
         minSdk = 26
