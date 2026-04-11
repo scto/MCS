@@ -19,6 +19,14 @@ class EditorConfigManager @Inject constructor(
         // Logik zum Laden der Grammatiken aus assets/ oder files/
     }
 
+    suspend fun loadGrammar() {
+        // Placeholder für das Laden von Grammatiken
+    }
+
+    fun syncWithTheme() {
+        // Placeholder für die Synchronisation mit dem Material 3 Theme
+    }
+
     fun getThemeColors(): Map<String, String> {
         // Logik zur Rückgabe der Material 3 Farbwerte für den Editor
         return mapOf("background" to "#1E1E1E", "foreground" to "#FFFFFF")
