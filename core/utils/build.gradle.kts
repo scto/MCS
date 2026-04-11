@@ -1,11 +1,13 @@
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.kotlin.kapt)
+    alias(libs.plugins.hilt.android)
 }
 
 android {
     namespace = "com.scto.mcs.core.utils"
-    compileSdk = 36
+    compileSdk = libs.versions.compileSdk.get().toInt()
 
     defaultConfig {
         minSdk = 26
@@ -21,5 +23,7 @@ android {
 }
 
 dependencies {
-    // Keine Abhängigkeiten
+    implementation(libs.androidx.core.ktx)
+    implementation(libs.hilt.android)
+    kapt(libs.hilt.compiler)
 }

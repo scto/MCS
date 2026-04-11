@@ -5,7 +5,7 @@ plugins {
 
 android {
     namespace = "com.scto.mcs.core.resourcess"
-    compileSdk = 36
+    compileSdk = libs.versions.compileSdk.get().toInt()
 
     defaultConfig {
         minSdk = 26
@@ -21,5 +21,5 @@ android {
 }
 
 dependencies {
-    // Keine Abhängigkeiten
+    // Resource module usually has no dependencies
 }
