@@ -20,7 +20,7 @@ Aider Prompt: "Erstelle das :app Modul mit dem Paketnamen com.scto.mcs. Implemen
 Ziel: Aufbau der Gradle-Struktur und des Version Catalogs.
 Aider Prompt: "Konfiguriere die Projekt-Basis mit Kotlin als Hauptsprache. Erstelle oder aktualisiere die libs.versions.toml mit folgenden Versionen:
 * Kotlin 2.2.0, Gradle 8.11.2, Java 17, Compose BOM (neueste)
-* Hilt (2.51), JGit (6.8.0), Sora-Editor (0.23.0) Setze in der Root-build.gradle.kts den Hilt-Classpath und konfiguriere die settings.gradle.kts für alle Submodule. Stelle sicher, dass compileSdk 36 und targetSdk 35 voreingestellt sind."
+* Hilt (2.51), JGit (6.8.0), Sora-Editor (0.23.0) Setze in der Root-build.gradle.kts den Hilt-Classpath und konfiguriere die settings.gradle.kts für alle Submodule. Stelle sicher, dass compileSdk 36 und targetSdk 35 voreingestellt sind. Die Root-build.gradle.kts darf nur Plugins enthalten, keine Modul-Konfigurationen."
 🧠 Phase 2: Core-Logik & Manager (:core)
 Ziel: Implementierung der "Gehirn"-Komponenten als Singletons.
 Aider Prompt: "Implementiere in den spezifischen :core Submodulen die zentralen Manager als Hilt-Singletons in Kotlin:
@@ -63,19 +63,20 @@ Aider Prompt: "Implementiere das :feature:editor Modul:
 2. Implementiere ein Terminal-Panel am unteren Bildschirmrand.
 3. Build-Funktion: Führe ./gradlew assembleDebug im Projektpfad aus, nutze JDK/SDK Pfade aus :core:terminal und streame den Output live in das Terminal-Panel."
 🛠 Phase 100: Gradle-Konfiguration der Submodule
-Ziel: Erstellung der build.gradle.kts für alle spezifischen Submodule unter Nutzung des Version Catalogs.
-Aider Prompt: "Erstelle für alle folgenden Submodule die entsprechende build.gradle.kts Datei unter Verwendung des Version Catalogs (libs.versions.toml). Erweitere den Katalog bei Bedarf um notwendige Abhängigkeiten. Alle Module müssen als com.android.library konfiguriert werden (außer :app) und die Projekt-Spezifikationen (Kotlin 2.2.0, Compile SDK 36, Target SDK 35) einhalten.
-Zu konfigurierende Submodule:
-* core: :core:data, :core:domain, :core:editor, :core:navigation, :core:resourcess, :core:terminal, :core:ui, :core:utils
-* feature: :feature:onboarding, :feature:setup, :feature:dashboard, :feature:editor, :feature:settings, :feature:debug
-Stelle sicher, dass die Module die für ihre Aufgabe notwendigen Basis-Abhängigkeiten (z.B. Hilt, Kotlin-Ktx, Compose für UI-Module) enthalten."
+Ziel: Erstellung der build.gradle.kts für alle spezifischen Submodule im jeweiligen Verzeichnis.
+Aider Prompt: "Erstelle für jedes der unten aufgeführten Submodule eine eigene build.gradle.kts Datei im jeweiligen Modul-Ordner (z.B. core/data/build.gradle.kts). Nutze ausschließlich den Version Catalog (libs.versions.toml).
+WICHTIG: Die Root-build.gradle.kts darf nicht verändert werden. Jedes Submodule muss als com.android.library konfiguriert werden und seinen eigenen eindeutigen namespace erhalten (z.B. com.scto.mcs.core.data). Halte dich an Kotlin 2.2.0, Compile SDK 36 und Target SDK 35.
+Zu konfigurierende Pfade:
+* core: core/data/build.gradle.kts, core/domain/build.gradle.kts, core/editor/build.gradle.kts, core/navigation/build.gradle.kts, core/resourcess/build.gradle.kts, core/terminal/build.gradle.kts, core/ui/build.gradle.kts, core/utils/build.gradle.kts
+* feature: feature/onboarding/build.gradle.kts, feature/setup/build.gradle.kts, feature/dashboard/build.gradle.kts, feature/editor/build.gradle.kts, feature/settings/build.gradle.kts, feature/debug/build.gradle.kts
+Stelle sicher, dass Abhängigkeiten zwischen Modulen korrekt via implementation(project(':pfad:zu:modul')) gesetzt werden."
 🔍 Phase 101: Build-Integritätscheck & Registrierung
 Ziel: Validierung der Modul-Einbindung in das Gesamtsystem.
 Aider Prompt: "Überprüfe das gesamte Projekt auf Build-Fähigkeit:
 1. Stelle sicher, dass ALLE oben genannten Submodule aus :core und :feature korrekt in der settings.gradle.kts eingetragen sind.
-2. Überprüfe in den jeweiligen build.gradle.kts Dateien, ob die internen Modul-Abhängigkeiten (z.B. :feature:editor benötigt :core:editor) korrekt via implementation(project(...)) gesetzt sind.
-3. Korrigiere fehlende oder fehlerhafte Pfadangaben in den Gradle-Skripten, bis ein fehlerfreier Gradle-Sync möglich ist."
+2. Überprüfe in den jeweiligen build.gradle.kts Dateien (in den Unterordnern!), ob die internen Modul-Abhängigkeiten (z.B. :feature:editor benötigt :core:editor) korrekt via implementation(project(...)) gesetzt sind.
+3. Korrigiere fehlende oder fehlerhafte Pfadangaben in den Gradle-Skripten, bis ein fehlerfreier Gradle-Sync möglich ist. Stelle sicher, dass keine Android-Konfigurationen in der Root-build.gradle.kts stehen."
 💡 Best Practices für Aider
 1. Kontext bewahren: Nutze /add [Dateipfad], bevor du eine neue Phase startest.
-2. Build-Checks: Führe nach jeder Phase einen Gradle-Sync in Android Studio durch.
+2. Keine Root-Verschmutzung: Modul-spezifischer Code gehört in den Modul-Ordner, nicht in die Root-Dateien.
 3. Fehlerbehebung: Wenn Aider einen Fehler macht, nutze /undo und beschreibe das Problem genauer.
