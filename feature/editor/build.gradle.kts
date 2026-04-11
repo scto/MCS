@@ -1,13 +1,14 @@
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
-    id("kotlin-kapt")
+    alias(libs.plugins.kotlin.kapt)
     alias(libs.plugins.hilt.android)
+    alias(libs.plugins.kotlin.compose)
 }
 
 android {
     namespace = "com.scto.mcs.feature.editor"
-    compileSdk = libs.versions.compileSdk.get().toInt()
+    compileSdk = 36
 
     defaultConfig {
         minSdk = 26
@@ -15,10 +16,6 @@ android {
 
     buildFeatures {
         compose = true
-    }
-
-    composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.15"
     }
 
     compileOptions {
@@ -34,15 +31,12 @@ dependencies {
     implementation(project(":core:editor"))
     implementation(project(":core:ui"))
     implementation(project(":core:navigation"))
-
-    // Compose
+    
     implementation(platform(libs.androidx.compose.bom))
     implementation(libs.androidx.compose.ui)
     implementation(libs.androidx.compose.material3)
     implementation(libs.androidx.activity.compose)
-    implementation(libs.androidx.hilt.navigation.compose)
-
-    // Hilt
+    
     implementation(libs.hilt.android)
     kapt(libs.hilt.compiler)
 }

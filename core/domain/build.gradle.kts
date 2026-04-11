@@ -5,7 +5,7 @@ plugins {
 
 android {
     namespace = "com.scto.mcs.core.domain"
-    compileSdk = libs.versions.compileSdk.get().toInt()
+    compileSdk = 36
 
     defaultConfig {
         minSdk = 26
@@ -21,5 +21,4 @@ android {
 }
 
 dependencies {
-    // Domain layer usually has no dependencies or only pure Kotlin ones
 }

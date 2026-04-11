@@ -8,12 +8,12 @@ plugins {
 
 android {
     namespace = "com.scto.mcs"
-    compileSdk = libs.versions.compileSdk.get().toInt()
+    compileSdk = 36
 
     defaultConfig {
         applicationId = "com.scto.mcs"
         minSdk = 26
-        targetSdk = libs.versions.targetSdk.get().toInt()
+        targetSdk = 35
         versionCode = 1
         versionName = "1.0"
     }

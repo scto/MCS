@@ -8,7 +8,7 @@ plugins {
 
 android {
     namespace = "com.scto.mcs.core.navigation"
-    compileSdk = libs.versions.compileSdk.get().toInt()
+    compileSdk = 36
 
     defaultConfig {
         minSdk = 26
