@@ -1,5 +1,5 @@
-﻿MCS: Entwicklungsleitfaden & Aider-Prompts
-Dieses Dokument beschreibt den schrittweisen Aufbau von MCS, einer mobilen IDE für Android. Die Entwicklung folgt der Clean Architecture und einer Multi-Modul-Struktur. Da für das Projekt Kotlin bevorzugt wird, ist die gesamte Codebasis in Kotlin zu verfassen.
+﻿MCS: Entwicklungsleitfaden & Aider-Prompts (Pfad-Optimiert)
+Dieses Dokument beschreibt den schrittweisen Aufbau von MCS, einer mobilen IDE für Android. Die Entwicklung folgt der Clean Architecture und einer Multi-Modul-Struktur. Alle Dateien sind in Kotlin zu verfassen.
 🛠 Projekt-Spezifikationen
 * Paket-Name: com.scto.mcs
 * Gradle: 8.11.2 (Kotlin DSL)
@@ -7,76 +7,66 @@ Dieses Dokument beschreibt den schrittweisen Aufbau von MCS, einer mobilen IDE f
 * Java: 17
 * SDKs: Compile 36, Target 35, Min 26
 * UI: Jetpack Compose mit Material 3
-📂 Modul-Struktur
-* :app – Einstiegspunkt & Hilt-Setup
-* :core Submodule:
-   * :core:data, :core:domain, :core:editor, :core:navigation, :core:resourcess, :core:terminal, :core:ui, :core:utils
-* :feature Submodule:
-   * :feature:onboarding, :feature:setup, :feature:dashboard, :feature:editor, :feature:settings, :feature:debug
+📂 Modul-Struktur (Verzeichnis-Layout)
+* app/ – Hauptmodul (:app)
+* core/
+   * data/, domain/, editor/, navigation/, resourcess/, terminal/, ui/, utils/
+* feature/
+   * onboarding/, setup/, dashboard/, editor/, settings/, debug/
 🚀 Phase 0: Das App-Fundament
-Ziel: Initialisierung des :app Moduls als zentraler Einstiegspunkt und Hilt-Initialisierung.
-Aider Prompt: "Erstelle das :app Modul mit dem Paketnamen com.scto.mcs. Implementiere die MCSApplication Klasse, die von Application erbt und mit @HiltAndroidApp annotiert ist, in Kotlin. Erstelle eine MainActivity als ComponentActivity, die ein Basis-Material3-Theme lädt. Konfiguriere die AndroidManifest.xml so, dass MCSApplication als Name im <application>-Tag steht und die MainActivity als Launch-Activity fungiert. Stelle sicher, dass die build.gradle.kts von :app die notwendigen Hilt- und Compose-Dependencies enthält."
-🚀 Phase 1: Die Infrastruktur
-Ziel: Aufbau der Gradle-Struktur und des Version Catalogs.
-Aider Prompt: "Konfiguriere die Projekt-Basis mit Kotlin als Hauptsprache. Erstelle oder aktualisiere die libs.versions.toml mit folgenden Versionen:
-* Kotlin 2.2.0, Gradle 8.11.2, Java 17, Compose BOM (neueste)
-* Hilt (2.51), JGit (6.8.0), Sora-Editor (0.23.0) Setze in der Root-build.gradle.kts den Hilt-Classpath und konfiguriere die settings.gradle.kts für alle Submodule. Stelle sicher, dass compileSdk 36 und targetSdk 35 voreingestellt sind. Die Root-build.gradle.kts darf nur Plugins enthalten, keine Modul-Konfigurationen."
+Aider Prompt: "Initialisiere das Hauptmodul im Ordner app/. Erstelle app/build.gradle.kts mit dem Paketnamen com.scto.mcs. Implementiere die MCSApplication Klasse (Hilt) und die MainActivity in app/src/main/java/com/scto/mcs/. Konfiguriere die app/src/main/AndroidManifest.xml als Launch-Activity."
+🚀 Phase 1: Die Infrastruktur (Root & Catalog)
+Aider Prompt: "Konfiguriere die Projekt-Basis. Erstelle gradle/libs.versions.toml mit Kotlin 2.2.0 und Hilt 2.51. In der Root-Datei build.gradle.kts dürfen NUR die Plugins definiert werden (mit apply false). Erstelle settings.gradle.kts und inkludiere alle Submodule unter Beachtung ihrer Ordnerstruktur (z.B. :core:data für core/data)."
 🧠 Phase 2: Core-Logik & Manager (:core)
-Ziel: Implementierung der "Gehirn"-Komponenten als Singletons.
-Aider Prompt: "Implementiere in den spezifischen :core Submodulen die zentralen Manager als Hilt-Singletons in Kotlin:
-1. TerminalEnvironment (in :core:terminal): Erstellt Ordnerstruktur (home, usr/bin, tmp) im internen App-Speicher und verwaltet PATH, JAVA_HOME und ANDROID_HOME.
-2. EditorConfigManager (in :core:editor): Lädt TextMate-Grammatiken asynchron und synchronisiert das Editor-Farbschema mit Material 3.
-3. FileSystemUtils (in :core:utils): Funktionen für Dateizugriffe im mcs Pfad inklusive FileProvider Setup.
-4. Erstelle entsprechende Hilt-Module in diesen Submodulen, die diese Klassen bereitstellen."
+Aider Prompt: "Implementiere die Manager-Singletons in den jeweiligen Unterordnern von core/.
+1. core/terminal/.../TerminalEnvironment.kt
+2. core/editor/.../EditorConfigManager.kt
+3. core/utils/.../FileSystemUtils.kt Erstelle die dazugehörigen Hilt-Module in denselben Ordnern."
 🎨 Phase 3: Design System (:core:ui & :core:resourcess)
-Ziel: Einheitliches Look-and-Feel der IDE.
-Aider Prompt: "Initialisiere die Module :core:ui und :core:resourcess:
-1. Erstelle in :core:ui das MCSTheme (Material 3) mit einer Dark-Mode Palette für IDEs (Hintergrund: #1E1E1E, Akzente: Deep Blue). Beziehe Ressourcen aus :core:resourcess.
-2. Implementiere Basis-Komponenten: MCSToolbar, MCSButton und MCSIcons (Icons für Files, Folder, Git, Play, Terminal).
-3. Erstelle eine TerminalText Komponente mit Monospace-Font."
+Aider Prompt: "Initialisiere UI-Ressourcen:
+1. core/ui/src/main/java/.../MCSTheme.kt (Material 3 Dark Mode).
+2. core/resourcess/src/main/res/ (Icons & Fonts). Stelle sicher, dass core/ui auf core/resourcess zugreift."
 🏗 Phase 4: Clean Architecture (:core:domain & :core:data)
-Ziel: Trennung von Logik und technischer Umsetzung.
-Aider Prompt: "Fülle die Module :core:domain und :core:data mit Kotlin-Code:
-1. :core:domain: Erstelle Repository-Interfaces für ProjectRepository, GitRepository und EditorRepository. Erstelle UseCases wie LoadFileContentUseCase und CloneRepositoryUseCase.
-2. :core:data: Implementiere diese Repositories unter Nutzung der Manager aus den anderen :core-Modulen (z.B. :core:utils für File I/O).
-3. Verbinde die Schichten via @Binds in einem Hilt-RepositoryModule in :core:data."
+Aider Prompt: "Implementiere die Daten-Schicht:
+1. Interfaces in core/domain/.
+2. Implementierungen in core/data/. Nutze @Binds in core/data/src/main/java/.../RepositoryModule.kt."
 🧭 Phase 4.5: Navigation (:core:navigation)
-Ziel: Zentrales Routing zwischen den Features.
-Aider Prompt: "Implementiere das Modul :core:navigation:
-1. Erstelle eine zentrale Navigationslogik (z.B. basierend auf Jetpack Navigation Compose).
-2. Definiere typsichere Kotlin-Routen/Destinations für Onboarding, Setup, Dashboard, Editor und Settings.
-3. Stelle einen NavigationManager bereit, der app-weit via Hilt injiziert werden kann."
+Aider Prompt: "Erstelle die Navigationslogik in core/navigation/. Definiere typsichere Routen und den NavigationManager."
 🚦 Phase 5: Onboarding & Setup (:feature:setup)
-Ziel: Berechtigungserteilung und Laufzeit-Installation.
-Aider Prompt: "Implementiere den Start-Flow:
-1. :feature:onboarding: Screen für MANAGE_EXTERNAL_STORAGE Permission (Android 11+).
-2. :feature:setup: Terminal-Setup-Screen mit Dialogen zur Wahl von JDK (17/21) und Android SDK (33-36). Simuliere den Installationsfortschritt in einer Terminal-View und speichere die Pfade in TerminalEnvironment in :core:terminal ab."
+Aider Prompt: "Implementiere Flows in feature/onboarding/ und feature/setup/. Speichere JDK/SDK Pfade über das TerminalEnvironment ab."
 📂 Phase 6: Dashboard & Git (:feature:dashboard)
-Ziel: Projektverwaltung und Klonen von Repositories.
-Aider Prompt: "Implementiere das Dashboard:
-1. Screen mit Optionen: Projekt öffnen, Erstellen, Clonen und Einstellungen.
-2. Integriere CloneProjectDialog: Nutze GitRepository (JGit) aus :core:domain, um Repositories mit Fortschrittsanzeige in den mcs Ordner zu klonen. Navigiere nach Erfolg über :core:navigation zum Editor."
+Aider Prompt: "Erstelle das Dashboard in feature/dashboard/. Implementiere den JGit-Clone-Dialog."
 ✍️ Phase 7: Editor & Build (:feature:editor)
-Ziel: Das funktionale Herzstück der App.
-Aider Prompt: "Implementiere das :feature:editor Modul:
-1. Nutze AndroidView für den Sora-Editor. Binde Syntax-Highlighting über den EditorConfigManager (aus :core:editor) ein.
-2. Implementiere ein Terminal-Panel am unteren Bildschirmrand.
-3. Build-Funktion: Führe ./gradlew assembleDebug im Projektpfad aus, nutze JDK/SDK Pfade aus :core:terminal und streame den Output live in das Terminal-Panel."
-🛠 Phase 100: Gradle-Konfiguration der Submodule
-Ziel: Erstellung der build.gradle.kts für alle spezifischen Submodule im jeweiligen Verzeichnis.
-Aider Prompt: "Erstelle für jedes der unten aufgeführten Submodule eine eigene build.gradle.kts Datei im jeweiligen Modul-Ordner (z.B. core/data/build.gradle.kts). Nutze ausschließlich den Version Catalog (libs.versions.toml).
-WICHTIG: Die Root-build.gradle.kts darf nicht verändert werden. Jedes Submodule muss als com.android.library konfiguriert werden und seinen eigenen eindeutigen namespace erhalten (z.B. com.scto.mcs.core.data). Halte dich an Kotlin 2.2.0, Compile SDK 36 und Target SDK 35.
-Zu konfigurierende Pfade:
-* core: core/data/build.gradle.kts, core/domain/build.gradle.kts, core/editor/build.gradle.kts, core/navigation/build.gradle.kts, core/resourcess/build.gradle.kts, core/terminal/build.gradle.kts, core/ui/build.gradle.kts, core/utils/build.gradle.kts
-* feature: feature/onboarding/build.gradle.kts, feature/setup/build.gradle.kts, feature/dashboard/build.gradle.kts, feature/editor/build.gradle.kts, feature/settings/build.gradle.kts, feature/debug/build.gradle.kts
-Stelle sicher, dass Abhängigkeiten zwischen Modulen korrekt via implementation(project(':pfad:zu:modul')) gesetzt werden."
-🔍 Phase 101: Build-Integritätscheck & Registrierung
-Ziel: Validierung der Modul-Einbindung in das Gesamtsystem.
-Aider Prompt: "Überprüfe das gesamte Projekt auf Build-Fähigkeit:
-1. Stelle sicher, dass ALLE oben genannten Submodule aus :core und :feature korrekt in der settings.gradle.kts eingetragen sind.
-2. Überprüfe in den jeweiligen build.gradle.kts Dateien (in den Unterordnern!), ob die internen Modul-Abhängigkeiten (z.B. :feature:editor benötigt :core:editor) korrekt via implementation(project(...)) gesetzt sind.
-3. Korrigiere fehlende oder fehlerhafte Pfadangaben in den Gradle-Skripten, bis ein fehlerfreier Gradle-Sync möglich ist. Stelle sicher, dass keine Android-Konfigurationen in der Root-build.gradle.kts stehen."
+Aider Prompt: "Implementiere das Editor-Feature in feature/editor/. Nutze Sora-Editor und integriere ein Terminal-Panel für Gradle-Builds."
+🛠 Phase 100: Die "Peinlich Genaue" Gradle-Konfiguration
+Ziel: Erstellung der build.gradle.kts Dateien EXKLUSIV in den Modul-Unterordnern.
+Aider Prompt: "Erstelle für jedes Submodul eine eigene build.gradle.kts im jeweiligen Unterordner.
+STRIKTE REGELN:
+1. Verändere NIEMALS die Root-build.gradle.kts für Modul-Konfigurationen.
+2. Jede Datei muss plugins { alias(libs.plugins.android.library); alias(libs.plugins.kotlin.android); ... } enthalten.
+3. Der namespace muss exakt zum Pfad passen.
+Zu erstellende Dateien (Inhalt peinlich genau prüfen):
+* core/data/build.gradle.kts (Namespace: com.scto.mcs.core.data)
+* core/domain/build.gradle.kts (Namespace: com.scto.mcs.core.domain)
+* core/editor/build.gradle.kts (Namespace: com.scto.mcs.core.editor)
+* core/navigation/build.gradle.kts (Namespace: com.scto.mcs.core.navigation)
+* core/resourcess/build.gradle.kts (Namespace: com.scto.mcs.core.resourcess)
+* core/terminal/build.gradle.kts (Namespace: com.scto.mcs.core.terminal)
+* core/ui/build.gradle.kts (Namespace: com.scto.mcs.core.ui)
+* core/utils/build.gradle.kts (Namespace: com.scto.mcs.core.utils)
+* feature/onboarding/build.gradle.kts (Namespace: com.scto.mcs.feature.onboarding)
+* feature/setup/build.gradle.kts (Namespace: com.scto.mcs.feature.setup)
+* feature/dashboard/build.gradle.kts (Namespace: com.scto.mcs.feature.dashboard)
+* feature/editor/build.gradle.kts (Namespace: com.scto.mcs.feature.editor)
+* feature/settings/build.gradle.kts (Namespace: com.scto.mcs.feature.settings)
+* feature/debug/build.gradle.kts (Namespace: com.scto.mcs.feature.debug)
+Alle Module nutzen compileSdk = 36 und minSdk = 26 aus dem Version Catalog."
+🔍 Phase 101: Build-Integritätscheck (Path-Validation)
+Aider Prompt: "Führe eine finale Prüfung der Dateistruktur durch:
+1. Bestätige, dass keine android { ... } Blöcke in der Root-build.gradle.kts existieren. Falls doch, verschiebe sie in die korrekten Modul-Unterordner und lösche sie im Root.
+2. Prüfe, ob settings.gradle.kts alle Module mit ihrem physischen Pfad referenziert (z.B. include(":core:data"); project(":core:data").projectDir = file("core/data")).
+3. Korrigiere alle implementation(project(...)) Aufrufe so, dass sie auf die korrekten Modul-Namen verweisen."
 💡 Best Practices für Aider
-1. Kontext bewahren: Nutze /add [Dateipfad], bevor du eine neue Phase startest.
-2. Keine Root-Verschmutzung: Modul-spezifischer Code gehört in den Modul-Ordner, nicht in die Root-Dateien.
-3. Fehlerbehebung: Wenn Aider einen Fehler macht, nutze /undo und beschreibe das Problem genauer.
+1. Targeted Files: Nutze immer den spezifischen Pfad (z. B. /add core/data/build.gradle.kts oder /add feature/setup/build.gradle.kts) anstatt nur /add build.gradle.kts, um Verwechslungen mit der Root-Datei oder anderen Modulen zu vermeiden.
+2. Namespace Check: Jedes Modul muss seinen eigenen Namespace haben, der strikt der Ordnerstruktur folgt.
+3. Keine Root-Konfiguration: Android-Library-Plugins dürfen im Root NUR deklariert (apply false), aber niemals konfiguriert werden. Jede Modul-Konfiguration gehört zwingend in den jeweiligen Unterordner.
