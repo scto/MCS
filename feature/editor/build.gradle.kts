@@ -19,3 +19,9 @@ android {
         jvmTarget = "17"
     }
 }
+
+dependencies {
+    implementation(project(":core:editor"))
+    implementation(project(":core:ui"))
+    implementation(project(":core:navigation"))
+}

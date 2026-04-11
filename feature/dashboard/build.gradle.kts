@@ -19,3 +19,10 @@ android {
         jvmTarget = "17"
     }
 }
+
+dependencies {
+    implementation(project(":core:data"))
+    implementation(project(":core:domain"))
+    implementation(project(":core:ui"))
+    implementation(project(":core:navigation"))
+}

@@ -19,3 +19,7 @@ android {
         jvmTarget = "17"
     }
 }
+
+dependencies {
+    // Keine Abhängigkeiten
+}
