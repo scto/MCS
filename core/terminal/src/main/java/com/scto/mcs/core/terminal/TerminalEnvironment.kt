@@ -16,6 +16,13 @@ class TerminalEnvironment @Inject constructor(
     init {
         // Initialisiere Standard-Pfade
         val mcsDir = File(context.filesDir, "mcs")
+        
+        // Erstelle beim Init die Ordner 'home', 'usr/bin' und 'tmp'
+        val subDirs = listOf("home", "usr/bin", "tmp")
+        subDirs.forEach { dir ->
+            File(mcsDir, dir).mkdirs()
+        }
+
         envVars["HOME"] = File(mcsDir, "home").absolutePath
         envVars["PATH"] = "${File(mcsDir, "usr/bin").absolutePath}:/usr/bin:/bin"
         envVars["TMPDIR"] = File(mcsDir, "tmp").absolutePath
