@@ -1,0 +1,338 @@
+```html
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MCS Design Station v3.1</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&family=Inter:wght@400;600;700&display=swap');
+        
+        body { font-family: 'Inter', sans-serif; }
+        .font-mono { font-family: 'Fira Code', monospace; }
+
+        .preview-canvas {
+            background-image: 
+                linear-gradient(45deg, #0f172a 25%, transparent 25%), 
+                linear-gradient(-45deg, #0f172a 25%, transparent 25%), 
+                linear-gradient(45deg, transparent 75%, #0f172a 75%), 
+                linear-gradient(-45deg, transparent 75%, #0f172a 75%);
+            background-size: 20px 20px;
+            background-position: 0 0, 0 10px, 10px -10px, -10px 0px;
+        }
+
+        .tab-active { @apply bg-blue-600 text-white shadow-lg shadow-blue-900/40; }
+        .subtab-active { @apply border-b-2 border-blue-500 text-blue-400; }
+        
+        textarea::-webkit-scrollbar { width: 8px; }
+        textarea::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; }
+
+        .mock-phone {
+            width: 260px;
+            height: 520px;
+            border: 10px solid #1e293b;
+            border-radius: 36px;
+            overflow: hidden;
+            position: relative;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        }
+    </style>
+</head>
+<body class="bg-slate-950 text-slate-200 min-h-screen selection:bg-blue-500/30">
+
+    <!-- Navigation -->
+    <header class="bg-slate-900/90 backdrop-blur-xl border-b border-slate-800 sticky top-0 z-50 p-4">
+        <div class="container mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 bg-gradient-to-br from-blue-500 to-blue-700 rounded-xl flex items-center justify-center font-bold text-white shadow-lg">M</div>
+                <div>
+                    <h1 class="text-lg font-bold tracking-tight">MCS Design Station</h1>
+                    <p class="text-[10px] text-slate-500 uppercase tracking-[0.3em] font-semibold">Pro Edition v3.1</p>
+                </div>
+            </div>
+            
+            <nav class="flex bg-slate-950/50 p-1 rounded-xl border border-slate-800">
+                <button onclick="setTab('lab')" id="btn-lab" class="nav-btn px-5 py-2 rounded-lg text-sm font-medium transition-all tab-active">Vector Lab</button>
+                <button onclick="setTab('theme')" id="btn-theme" class="nav-btn px-5 py-2 rounded-lg text-sm font-medium transition-all text-slate-500 hover:text-slate-200">Theme Builder</button>
+                <button onclick="setTab('icon')" id="btn-icon" class="nav-btn px-5 py-2 rounded-lg text-sm font-medium transition-all text-slate-500 hover:text-slate-200">Icon Studio</button>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container mx-auto p-4 md:p-8">
+        
+        <!-- SECTION 1: VECTOR LAB (SVG & XML) -->
+        <section id="tab-content-lab" class="space-y-6">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+                <div class="lg:col-span-7 space-y-4">
+                    <div class="bg-slate-900 rounded-2xl border border-slate-800 overflow-hidden shadow-2xl">
+                        <!-- Sub-Tabs -->
+                        <div class="flex bg-slate-950/50 border-b border-slate-800 px-4">
+                            <button onclick="setSubTab('svg')" id="subbtn-svg" class="sub-tab px-4 py-3 text-xs font-bold uppercase tracking-wider subtab-active">SVG Modus</button>
+                            <button onclick="setSubTab('xml')" id="subbtn-xml" class="sub-tab px-4 py-3 text-slate-500 text-xs font-bold uppercase tracking-wider hover:text-slate-300">Android XML</button>
+                        </div>
+
+                        <!-- SVG Editor -->
+                        <div id="lab-svg-area" class="p-4 space-y-4">
+                            <div class="flex justify-between items-center">
+                                <label class="text-[10px] font-bold text-slate-500 uppercase">SVG Quellcode</label>
+                                <select id="svg-presets" onchange="applyPreset()" class="bg-slate-950 border border-slate-700 rounded px-2 py-1 text-[10px] text-blue-400 focus:outline-none">
+                                    <option value="mcs_full">Preset: MCS Full Logo</option>
+                                    <option value="mcs_fg">Preset: MCS Foreground</option>
+                                    <option value="mcs_min">Preset: MCS Minimal</option>
+                                </select>
+                            </div>
+                            <textarea id="svg-raw-input" class="w-full h-80 bg-black/50 rounded-xl p-4 font-mono text-xs text-emerald-400 border border-slate-800 focus:border-blue-500 outline-none transition-all" spellcheck="false"></textarea>
+                        </div>
+
+                        <!-- XML Editor -->
+                        <div id="lab-xml-area" class="hidden p-4 space-y-4">
+                            <label class="text-[10px] font-bold text-slate-500 uppercase block">Vector Drawable XML</label>
+                            <textarea id="xml-raw-input" class="w-full h-80 bg-black/50 rounded-xl p-4 font-mono text-xs text-blue-400 border border-slate-800 focus:border-blue-500 outline-none transition-all" spellcheck="false"></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Preview Column -->
+                <div class="lg:col-span-5">
+                    <div class="bg-slate-900 rounded-2xl p-6 border border-slate-800 shadow-2xl sticky top-28 space-y-6 text-center">
+                        <h3 class="text-xs font-bold text-slate-500 uppercase tracking-widest">Echtzeit Vorschau</h3>
+                        <div id="lab-render-box" class="preview-canvas w-full aspect-square rounded-2xl border-4 border-slate-800 flex items-center justify-center overflow-hidden shadow-inner">
+                            <!-- SVG Preview -->
+                        </div>
+                        <div class="flex justify-center gap-2">
+                            <button onclick="copyCurrentLabCode()" class="bg-blue-600 hover:bg-blue-500 text-white text-xs px-4 py-2 rounded-lg font-bold transition-all">Code kopieren</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 2: THEME BUILDER (From previous version) -->
+        <section id="tab-content-theme" class="hidden grid grid-cols-1 lg:grid-cols-12 gap-8">
+            <div class="lg:col-span-4 space-y-6">
+                <div class="bg-slate-900 rounded-2xl p-6 border border-slate-800 shadow-xl">
+                    <h3 class="text-sm font-bold text-blue-400 uppercase mb-6">IDE Farbpalette</h3>
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-xs text-slate-500 mb-2">Primärfarbe (Aktionen)</label>
+                            <input type="color" id="theme-primary" value="#007ACC" oninput="refreshTheme()" class="w-full h-12 bg-slate-800 border-none rounded-xl cursor-pointer">
+                        </div>
+                        <div>
+                            <label class="block text-xs text-slate-500 mb-2">Editor Hintergrund</label>
+                            <input type="color" id="theme-bg" value="#1E1E1E" oninput="refreshTheme()" class="w-full h-12 bg-slate-800 border-none rounded-xl cursor-pointer">
+                        </div>
+                        <div>
+                            <label class="block text-xs text-slate-500 mb-2">Oberflächen (Panels)</label>
+                            <input type="color" id="theme-surface" value="#252526" oninput="refreshTheme()" class="w-full h-12 bg-slate-800 border-none rounded-xl cursor-pointer">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="lg:col-span-8 grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="flex justify-center">
+                    <div id="theme-phone" class="mock-phone bg-white">
+                        <div class="h-6 w-full bg-black/10"></div>
+                        <div id="phone-bar" class="h-14 w-full flex items-center px-4 font-bold text-sm shadow-sm">MCS Pro IDE</div>
+                        <div id="phone-content" class="h-full p-4 font-mono text-[10px] space-y-1">
+                            <p><span class="text-blue-500">class</span> <span class="text-yellow-600">MainActivity</span> : ComponentActivity() {</p>
+                            <p class="pl-4"><span class="text-blue-500">override fun</span> onCreate(savedInstanceState: Bundle?) {</p>
+                            <p class="pl-8 text-slate-400">// Ihr Code hier...</p>
+                            <p class="pl-4">}</p>
+                            <p>}</p>
+                        </div>
+                        <div id="phone-fab" class="absolute bottom-8 right-6 w-14 h-14 rounded-2xl shadow-xl flex items-center justify-center text-white text-2xl font-bold">+</div>
+                    </div>
+                </div>
+                <div class="bg-slate-900 rounded-2xl p-6 border border-slate-800 overflow-hidden flex flex-col">
+                    <h3 class="text-xs font-bold text-slate-500 uppercase mb-4">Kotlin / Compose Code</h3>
+                    <pre id="theme-kotlin-output" class="text-[9px] font-mono text-emerald-400 bg-black/30 p-4 rounded-xl flex-1 overflow-auto"></pre>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 3: ICON STUDIO (Visual Editor) -->
+        <section id="tab-content-icon" class="hidden grid grid-cols-1 lg:grid-cols-12 gap-8">
+            <div class="lg:col-span-4 space-y-6">
+                <div class="bg-slate-900 rounded-2xl p-6 border border-slate-800 shadow-xl">
+                    <h3 class="text-sm font-bold text-blue-400 uppercase mb-6">Icon Konfigurator</h3>
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-xs text-slate-500 mb-2">Icon Text</label>
+                            <input type="text" id="icon-label" value="MCS" maxlength="3" oninput="refreshIcon()" class="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-center font-bold text-white uppercase outline-none focus:border-blue-500">
+                        </div>
+                        <div class="grid grid-cols-2 gap-3">
+                            <input type="color" id="ic-c1" value="#00D2C8" oninput="refreshIcon()" class="w-full h-10 bg-slate-800 border-none rounded-lg cursor-pointer">
+                            <input type="color" id="ic-c2" value="#0082FF" oninput="refreshIcon()" class="w-full h-10 bg-slate-800 border-none rounded-lg cursor-pointer">
+                            <input type="color" id="ic-c3" value="#8232FF" oninput="refreshIcon()" class="w-full h-10 bg-slate-800 border-none rounded-lg cursor-pointer">
+                            <input type="color" id="ic-c4" value="#32D25A" oninput="refreshIcon()" class="w-full h-10 bg-slate-800 border-none rounded-lg cursor-pointer">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="lg:col-span-8 flex flex-col items-center gap-8">
+                <div id="icon-studio-render" class="w-64 h-64 bg-slate-900 rounded-[3rem] shadow-2xl flex items-center justify-center border border-slate-800 p-4">
+                    <!-- Icon Studio Render -->
+                </div>
+                <div class="w-full bg-slate-900 p-6 rounded-2xl border border-slate-800">
+                    <p class="text-[10px] text-slate-500 uppercase font-bold mb-3">Automatisch generierter SVG Code</p>
+                    <textarea id="icon-studio-svg-out" readonly class="w-full h-32 bg-black/40 rounded-xl p-4 font-mono text-[9px] text-emerald-500 outline-none"></textarea>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <script>
+        // --- PRESETS ---
+        const SVG_PRESETS = {
+            mcs_full: `<svg xmlns="http://www.w3.org/2000/svg" width="108" height="108" viewBox="0 0 108 108">
+  <defs>
+    <radialGradient id="ideGradient" cx="50%" cy="50%" r="75%">
+      <stop offset="0%" stop-color="#1A1A2E" />
+      <stop offset="100%" stop-color="#080C16" />
+    </radialGradient>
+  </defs>
+  <rect width="108" height="108" fill="url(#ideGradient)" />
+  <g transform="translate(54, 54)">
+    <path d="M-25,-25 L5,-35 L15,-5 L-15,5 Z" fill="#00D2C8" />
+    <path d="M25,-25 L35,5 L5,15 L-5,-15 Z" fill="#0082FF" />
+    <path d="M25,25 L-5,35 L-15,5 L15,-5 Z" fill="#32D25A" />
+    <path d="M-25,25 L-35,-5 L-5,-15 L5,15 Z" fill="#8232FF" />
+    <path d="M-14,-14 L14,-14 L14,14 L-14,14 Z" fill="#16162A" />
+    <g fill="#FFFFFF" transform="translate(0, 8)">
+      <path d="M-9.5,0 L-7.5,0 L-5.5,3 L-3.5,0 L-1.5,0 L-1.5,6 L-3.5,6 L-3.5,2.5 L-5.5,5.5 L-7.5,2.5 L-7.5,6 L-9.5,6 Z" />
+      <path d="M1,0 L6,0 L6,1.5 L2.8,1.5 L2.8,4.5 L6,4.5 L6,6 L1,6 Z" />
+      <path d="M8,0 L13,0 L13,1.5 L9.8,1.5 L9.8,2.2 L13,2.2 L13,6 L8,6 L8,4.5 L11.2,4.5 L11.2,3.8 L8,3.8 Z" />
+    </g>
+  </g>
+</svg>`,
+            mcs_fg: `<svg xmlns="http://www.w3.org/2000/svg" width="108" height="108" viewBox="0 0 108 108">
+  <g transform="translate(54, 54)">
+    <path d="M-25,-25 L5,-35 L15,-5 L-15,5 Z" fill="#00D2C8" />
+    <path d="M25,-25 L35,5 L5,15 L-5,-15 Z" fill="#0082FF" />
+    <path d="M25,25 L-5,35 L-15,5 L15,-5 Z" fill="#32D25A" />
+    <path d="M-25,25 L-35,-5 L-5,-15 L5,15 Z" fill="#8232FF" />
+    <path d="M-14,-14 L14,-14 L14,14 L-14,14 Z" fill="#16162A" />
+  </g>
+</svg>`,
+            mcs_min: `<svg xmlns="http://www.w3.org/2000/svg" width="108" height="108" viewBox="0 0 108 108">
+  <g transform="translate(54, 54)">
+    <path d="M-14,-14 L14,-14 L14,14 L-14,14 Z" fill="#007ACC" />
+    <text x="0" y="5" font-family="monospace" font-size="12" fill="white" text-anchor="middle" font-weight="bold">MCS</text>
+  </g>
+</svg>`
+        };
+
+        // --- NAVIGATION ---
+        function setTab(tab) {
+            document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('tab-active', 'text-white'));
+            document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.add('text-slate-500'));
+            document.getElementById(`btn-${tab}`).classList.add('tab-active', 'text-white');
+
+            document.getElementById('tab-content-lab').classList.toggle('hidden', tab !== 'lab');
+            document.getElementById('tab-content-theme').classList.toggle('hidden', tab !== 'theme');
+            document.getElementById('tab-content-icon').classList.toggle('hidden', tab !== 'icon');
+        }
+
+        function setSubTab(mode) {
+            document.querySelectorAll('.sub-tab').forEach(t => t.classList.remove('subtab-active', 'text-blue-400'));
+            document.querySelectorAll('.sub-tab').forEach(t => t.classList.add('text-slate-500'));
+            document.getElementById(`subbtn-${mode}`).classList.add('subtab-active', 'text-blue-400');
+
+            document.getElementById('lab-svg-area').classList.toggle('hidden', mode !== 'svg');
+            document.getElementById('lab-xml-area').classList.toggle('hidden', mode !== 'xml');
+            renderLab();
+        }
+
+        // --- VECTOR LAB LOGIC ---
+        function applyPreset() {
+            const val = document.getElementById('svg-presets').value;
+            document.getElementById('svg-raw-input').value = SVG_PRESETS[val];
+            renderLab();
+        }
+
+        function renderLab() {
+            const svgIn = document.getElementById('svg-raw-input').value;
+            const renderBox = document.getElementById('lab-render-box');
+            renderBox.innerHTML = svgIn;
+            // Ensure internal SVGs are responsive
+            const svgEl = renderBox.querySelector('svg');
+            if(svgEl) {
+                svgEl.setAttribute('width', '100%');
+                svgEl.setAttribute('height', '100%');
+            }
+        }
+
+        document.getElementById('svg-raw-input').addEventListener('input', renderLab);
+
+        function copyCurrentLabCode() {
+            const area = document.getElementById('svg-raw-input');
+            area.select();
+            document.execCommand('copy');
+        }
+
+        // --- THEME BUILDER LOGIC ---
+        function refreshTheme() {
+            const primary = document.getElementById('theme-primary').value;
+            const bg = document.getElementById('theme-bg').value;
+            const surface = document.getElementById('theme-surface').value;
+
+            document.getElementById('phone-bar').style.backgroundColor = surface;
+            document.getElementById('phone-content').style.backgroundColor = bg;
+            document.getElementById('phone-fab').style.backgroundColor = primary;
+
+            const code = `// MCS Color Palette
+val Primary = Color(${primary.replace('#', '0xFF')})
+val Background = Color(${bg.replace('#', '0xFF')})
+val Surface = Color(${surface.replace('#', '0xFF')})
+
+// Theme.kt Implementation
+@Composable
+fun MCSTheme(content: @Composable () -> Unit) {
+    val darkColors = darkColorScheme(
+        primary = Primary,
+        background = Background,
+        surface = Surface,
+        onPrimary = Color.White
+    )
+    MaterialTheme(colorScheme = darkColors, content = content)
+}`;
+            document.getElementById('theme-kotlin-output').innerText = code;
+        }
+
+        // --- ICON STUDIO LOGIC ---
+        function refreshIcon() {
+            const label = document.getElementById('icon-label').value.toUpperCase() || "MCS";
+            const c1 = document.getElementById('ic-c1').value;
+            const c2 = document.getElementById('ic-c2').value;
+            const c3 = document.getElementById('ic-c3').value;
+            const c4 = document.getElementById('ic-c4').value;
+
+            const svg = `<svg width="100%" height="100%" viewBox="0 0 108 108" xmlns="http://www.w3.org/2000/svg">
+  <g transform="translate(54, 54)">
+    <path d="M-25,-25 L5,-35 L15,-5 L-15,5 Z" fill="${c1}" />
+    <path d="M25,-25 L35,5 L5,15 L-5,-15 Z" fill="${c2}" />
+    <path d="M25,25 L-5,35 L-15,5 L15,-5 Z" fill="${c3}" />
+    <path d="M-25,25 L-35,-5 L-5,-15 L5,15 Z" fill="${c4}" />
+    <path d="M-14,-14 L14,-14 L14,14 L-14,14 Z" fill="#16162A" />
+    <text x="0" y="6" font-family="monospace" font-size="10" fill="white" text-anchor="middle" font-weight="bold">${label}</text>
+  </g>
+</svg>`;
+            document.getElementById('icon-studio-render').innerHTML = svg;
+            document.getElementById('icon-studio-svg-out').value = svg.replace('width="100%" height="100%"', 'width="108" height="108"');
+        }
+
+        // --- INIT ---
+        window.onload = () => {
+            document.getElementById('svg-raw-input').value = SVG_PRESETS.mcs_full;
+            renderLab();
+            refreshTheme();
+            refreshIcon();
+        }
+    </script>
+</body>
+</html>
+
+```

@@ -1,0 +1,487 @@
+```html
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MCS Design Station v18.0 Enterprise Pro</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&family=Inter:wght@400;600;700&family=Roboto:wght@400;500;700&display=swap');
+        body { font-family: 'Inter', sans-serif; background-color: #020617; color: #f8fafc; margin: 0; -webkit-tap-highlight-color: transparent; }
+        .font-mono { font-family: 'Fira Code', monospace; }
+        .tab-active { background-color: #2563eb; color: white; box-shadow: 0 4px 12px rgba(37, 99, 235, 0.4); }
+        .subtab-active { border-bottom: 3px solid #3b82f6; color: #60a5fa; font-weight: 700; }
+        .mock-phone { width: 240px; height: 480px; border: 8px solid #1e293b; border-radius: 36px; overflow: hidden; position: relative; box-shadow: 0 20px 40px rgba(0,0,0,0.5); transition: all 0.3s ease; }
+        input[type="color"] { border: none; padding: 0; background: none; height: 44px; width: 100%; cursor: pointer; }
+        input[type="color"]::-webkit-color-swatch { border: none; border-radius: 12px; }
+        .code-area { scrollbar-width: thin; scrollbar-color: #334155 transparent; }
+        textarea { resize: none; border: 1px solid #1e293b; transition: all 0.2s; }
+        .preview-grid { background-image: linear-gradient(45deg, #0f172a 25%, transparent 25%), linear-gradient(-45deg, #0f172a 25%, transparent 25%), linear-gradient(45deg, transparent 75%, #0f172a 75%), linear-gradient(-45deg, transparent 75%, #0f172a 75%); background-size: 20px 20px; }
+        .fade-in { animation: fadeIn 0.4s ease-out; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+    </style>
+</head>
+<body>
+
+    <header class="bg-slate-900 border-b border-slate-800 sticky top-0 z-50 p-4">
+        <div class="container mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 bg-blue-600 rounded-xl flex items-center justify-center font-bold text-white shadow-lg text-xl">M</div>
+                <div>
+                    <h1 class="text-sm font-bold text-white uppercase tracking-tight">MCS Design Station</h1>
+                    <p class="text-[9px] text-slate-500 uppercase font-bold tracking-widest">Enterprise v18.0 | Final Master Edition</p>
+                </div>
+            </div>
+            <nav class="flex bg-slate-950 p-1 rounded-xl border border-slate-800 overflow-x-auto max-w-full">
+                <button onclick="setMainTab('theme')" id="btn-theme" class="main-tab-btn px-4 py-2 rounded-lg text-[10px] font-bold transition-all tab-active">THEME & KOTLIN</button>
+                <button onclick="setMainTab('icon')" id="btn-icon" class="main-tab-btn px-4 py-2 rounded-lg text-[10px] font-bold transition-all text-slate-500">ICON STUDIO</button>
+                <button onclick="setMainTab('lab')" id="btn-lab" class="main-tab-btn px-4 py-2 rounded-lg text-[10px] font-bold transition-all text-slate-500">VECTOR LAB</button>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container mx-auto p-4 md:p-6">
+        
+        <!-- SECTION: THEME BUILDER -->
+        <section id="tab-content-theme" class="grid grid-cols-1 lg:grid-cols-12 gap-6 fade-in">
+            <div class="lg:col-span-4 space-y-6">
+                <div class="bg-slate-900/50 rounded-3xl p-5 border border-slate-800 shadow-xl space-y-5">
+                    
+                    <div>
+                        <label class="text-[9px] font-bold text-blue-400 uppercase block mb-2 px-1">Master Theme Presets</label>
+                        <select id="theme-presets" onchange="applyPreset()" class="w-full bg-slate-950 border border-slate-700 rounded-xl p-3 text-xs text-white outline-none font-bold">
+                            <option value="midnight">Midnight Blue (Classic)</option>
+                            <option value="dracula">Dracula Pro (IDE)</option>
+                            <option value="nordic">Nordic Frost</option>
+                            <option value="matrix">Matrix Code (Green)</option>
+                            <option value="synthwave">Synthwave Neon</option>
+                            <option value="sunset">Sunset Orange</option>
+                            <option value="oceanic">Oceanic Teal</option>
+                            <option value="forest">Forest Deep</option>
+                            <option value="coffee">Coffee Comfort</option>
+                            <option value="amoled">High AMOLED Black</option>
+                        </select>
+                    </div>
+
+                    <div class="pt-2 border-t border-slate-800">
+                        <div class="flex items-center justify-between mb-3 px-1">
+                            <h3 class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">M3 Seed & Image Logic</h3>
+                            <input type="checkbox" id="use-seed" checked onchange="updateUI()" class="w-4 h-4 accent-blue-600">
+                        </div>
+                        <div class="bg-slate-950 p-3 rounded-2xl border border-slate-800 space-y-3 text-center">
+                            <div class="flex gap-2">
+                                <input type="color" id="color-seed" value="#007ACC" oninput="updateUI()" class="flex-1">
+                                <button onclick="document.getElementById('img-input').click()" class="bg-slate-800 p-2 rounded-lg border border-slate-700">🖼️</button>
+                                <input type="file" id="img-input" class="hidden" accept="image/*" onchange="extractColor(this)">
+                            </div>
+                            <div id="seed-hex" class="font-mono text-[10px] text-blue-400 uppercase tracking-wider">#007ACC</div>
+                        </div>
+                    </div>
+
+                    <div class="pt-2 border-t border-slate-800 space-y-3 px-1">
+                        <h3 class="text-[10px] font-bold text-slate-400 uppercase">System Config</h3>
+                        <div class="grid grid-cols-3 gap-2">
+                            <input type="number" id="s-s" value="4" oninput="updateUI()" class="bg-slate-950 border border-slate-700 rounded-lg p-2 text-[10px] text-center text-blue-400">
+                            <input type="number" id="s-m" value="12" oninput="updateUI()" class="bg-slate-950 border border-slate-700 rounded-lg p-2 text-[10px] text-center text-blue-400">
+                            <input type="number" id="s-l" value="16" oninput="updateUI()" class="bg-slate-950 border border-slate-700 rounded-lg p-2 text-[10px] text-center text-blue-400">
+                        </div>
+                        <div class="grid grid-cols-2 gap-2">
+                            <select id="sel-typo" onchange="updateUI()" class="bg-slate-950 border border-slate-700 rounded-lg p-2 text-[10px] text-white">
+                                <option value="inter">Inter</option><option value="fira">Fira Mono</option><option value="roboto">Roboto</option>
+                            </select>
+                            <div class="flex bg-slate-950 rounded-lg p-1 border border-slate-700">
+                                <button onclick="setMode('light')" id="m-light" class="flex-1 text-[9px] rounded py-1 transition-all">LIGHT</button>
+                                <button onclick="setMode('dark')" id="m-dark" class="flex-1 text-[9px] bg-blue-600 text-white rounded py-1 transition-all">DARK</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flex justify-center pt-2 border-t border-slate-800">
+                        <div id="phone" class="mock-phone scale-75 origin-top mb-[-160px] bg-white">
+                            <div class="h-6 w-full opacity-10 bg-black"></div>
+                            <div id="ph-bar" class="h-10 w-full flex items-center px-4 font-bold text-[9px] border-b">MCS IDE PRO</div>
+                            <div id="ph-body" class="h-full p-4 space-y-4">
+                                <div id="ph-error" class="p-2 rounded text-[7px] font-bold">⚠️ Warning: Code syntax error</div>
+                                <div id="ph-card" class="p-4 shadow-sm border border-black/5 rounded-xl">
+                                    <div class="h-1.5 w-3/4 rounded-full bg-current opacity-20 mb-2"></div>
+                                    <div class="h-1.5 w-1/2 rounded-full bg-current opacity-10"></div>
+                                </div>
+                                <div id="ph-btn" class="px-5 py-2 inline-block text-[8px] font-bold shadow-md rounded-full">Run Process</div>
+                            </div>
+                            <div id="ph-fab" class="absolute bottom-6 right-4 w-12 h-12 shadow-xl flex items-center justify-center text-white text-xl font-bold rounded-2xl">+</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="lg:col-span-8 flex flex-col h-full">
+                <div class="bg-slate-900 rounded-3xl border border-slate-800 shadow-2xl overflow-hidden flex flex-col flex-1 min-h-[600px]">
+                    <div class="flex bg-slate-950 border-b border-slate-800 p-1">
+                        <button onclick="setFile('color')" id="f-color" class="file-tab flex-1 py-4 text-[9px] font-bold subtab-active uppercase">Color.kt</button>
+                        <button onclick="setFile('shape')" id="f-shape" class="file-tab flex-1 py-4 text-[9px] font-bold text-slate-500 uppercase">Shape.kt</button>
+                        <button onclick="setFile('typo')" id="f-typo" class="file-tab flex-1 py-4 text-[9px] font-bold text-slate-500 uppercase">Type.kt</button>
+                        <button onclick="setFile('theme')" id="f-theme" class="file-tab flex-1 py-4 text-[9px] font-bold text-slate-500 uppercase">Theme.kt</button>
+                    </div>
+                    <div class="relative flex-1 bg-black/40">
+                        <button onclick="copyCode()" class="absolute top-4 right-4 bg-slate-800/80 text-blue-400 text-[10px] px-3 py-1.5 rounded-lg border border-slate-700 font-bold hover:bg-slate-700 transition-all">COPY</button>
+                        <pre id="code-out" class="w-full h-full p-6 font-mono text-[10px] leading-relaxed text-emerald-400 overflow-auto code-area"></pre>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION: ICON STUDIO -->
+        <section id="tab-content-icon" class="hidden grid grid-cols-1 lg:grid-cols-12 gap-8 fade-in">
+            <div class="lg:col-span-4 space-y-4">
+                <div class="bg-slate-900 p-5 rounded-3xl border border-slate-800 shadow-xl space-y-4">
+                    <input type="text" id="i-l1" value="MCS" maxlength="4" oninput="updateIcon()" class="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-center font-bold text-white outline-none focus:border-blue-500 uppercase">
+                    <input type="text" id="i-l2" value="MobileCodeStudio" oninput="updateIcon()" class="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-center text-[10px] text-slate-300 outline-none">
+                    <div class="grid grid-cols-4 gap-2">
+                        <input type="color" id="ic1" value="#00D2C8" oninput="updateIcon()">
+                        <input type="color" id="ic2" value="#0082FF" oninput="updateIcon()">
+                        <input type="color" id="ic3" value="#8232FF" oninput="updateIcon()">
+                        <input type="color" id="ic4" value="#32D25A" oninput="updateIcon()">
+                    </div>
+                </div>
+            </div>
+            <div class="lg:col-span-8 flex flex-col items-center gap-6">
+                <div id="icon-render" class="w-72 h-72 bg-slate-900 rounded-[3.5rem] shadow-2xl flex items-center justify-center border border-slate-800 p-6 transition-all hover:scale-105"></div>
+                <textarea id="icon-svg-out" readonly class="w-full h-32 bg-black/40 rounded-2xl p-4 font-mono text-[9px] text-emerald-500 border border-slate-800 outline-none"></textarea>
+            </div>
+        </section>
+
+        <!-- SECTION: VECTOR LAB -->
+        <section id="tab-content-lab" class="hidden grid grid-cols-1 lg:grid-cols-12 gap-6 fade-in">
+            <div class="lg:col-span-7">
+                <div class="bg-slate-900 rounded-3xl border border-slate-800 shadow-2xl overflow-hidden h-full">
+                    <div class="flex justify-between items-center bg-slate-950 p-4 border-b border-slate-800">
+                        <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">SVG Source Editor</span>
+                        <select id="lab-presets" onchange="applyLabPreset()" class="bg-slate-900 border border-slate-700 rounded px-3 py-1.5 text-[10px] text-blue-400 font-bold outline-none cursor-pointer">
+                            <option value="full">Preset: Full Adaptive Icon</option>
+                            <option value="l1">Preset: 1 Zeile Text (Center)</option>
+                            <option value="l2">Preset: 2 Zeilen Text (Hierarchy)</option>
+                            <option value="fg">Preset: Only Foreground Layer</option>
+                        </select>
+                    </div>
+                    <textarea id="lab-input" class="w-full h-[500px] bg-black/40 p-6 font-mono text-xs text-emerald-400 outline-none leading-relaxed code-area" spellcheck="false"></textarea>
+                </div>
+            </div>
+            <div class="lg:col-span-5 text-center space-y-4">
+                <div class="bg-slate-900 rounded-3xl p-6 border border-slate-800 shadow-2xl sticky top-28 space-y-4">
+                    <h3 class="text-[10px] font-bold text-slate-500 uppercase tracking-widest">Live Renderer</h3>
+                    <div id="lab-preview" class="preview-grid w-full aspect-square rounded-3xl border-4 border-slate-800 flex items-center justify-center overflow-hidden p-6"></div>
+                    <button onclick="copyLabCode()" class="w-full bg-blue-600 py-3 rounded-xl font-bold text-xs shadow-lg hover:bg-blue-500">SVG KOPIEREN</button>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <script>
+        let activeMain = 'theme', activeFile = 'color', previewMode = 'dark';
+        const PRESETS = {
+            midnight: { seed: '#007ACC', bg: '#1E1E1E', s: 4, m: 12, l: 16, typo: 'inter' },
+            dracula: { seed: '#BD93F9', bg: '#282A36', s: 2, m: 8, l: 12, typo: 'fira' },
+            nordic: { seed: '#88C0D0', bg: '#2E3440', s: 8, m: 16, l: 24, typo: 'inter' },
+            matrix: { seed: '#00FF41', bg: '#0D0D0D', s: 0, m: 0, l: 0, typo: 'fira' },
+            synthwave: { seed: '#FF00FF', bg: '#2B0035', s: 0, m: 4, l: 8, typo: 'fira' },
+            sunset: { seed: '#FF8200', bg: '#1C1612', s: 4, m: 16, l: 24, typo: 'inter' },
+            oceanic: { seed: '#00BFA5', bg: '#002B2E', s: 6, m: 12, l: 18, typo: 'roboto' },
+            forest: { seed: '#2E7D32', bg: '#0D1A0E', s: 4, m: 10, l: 16, typo: 'inter' },
+            coffee: { seed: '#795548', bg: '#1F1714', s: 8, m: 14, l: 20, typo: 'roboto' },
+            amoled: { seed: '#FFFFFF', bg: '#000000', s: 4, m: 12, l: 16, typo: 'fira' }
+        };
+
+        const MCS_PATH = `<path d="M-25,-25 L5,-35 L15,-5 L-15,5 Z" fill="#00D2C8" /><path d="M25,-25 L35,5 L5,15 L-5,-15 Z" fill="#0082FF" /><path d="M25,25 L-5,35 L-15,5 L15,-5 Z" fill="#32D25A" /><path d="M-25,25 L-35,-5 L-5,-15 L5,15 Z" fill="#8232FF" /><path d="M-14,-14 L14,-14 L14,14 L-14,14 Z" fill="#16162A" />`;
+        const SVG_PRESETS = {
+            full: `<svg xmlns="http://www.w3.org/2000/svg" width="108" height="108" viewBox="0 0 108 108">\n  <defs>\n    <radialGradient id="g" cx="50%" cy="50%" r="75%">\n      <stop offset="0%" stop-color="#1A1A2E" />\n      <stop offset="100%" stop-color="#080C16" />\n    </radialGradient>\n  </defs>\n  <rect width="108" height="108" fill="url(#g)" />\n  <g transform="translate(54, 54)">${MCS_PATH}\n    <text x="0" y="5" font-family="sans-serif" font-size="14" fill="white" text-anchor="middle" font-weight="bold">MCS</text>\n  </g>\n</svg>`,
+            l1: `<svg xmlns="http://www.w3.org/2000/svg" width="108" height="108" viewBox="0 0 108 108">\n  <rect width="100%" height="100%" fill="#020617" />\n  <g transform="translate(54, 54)">${MCS_PATH}\n    <text x="0" y="6" font-family="sans-serif" font-size="16" fill="white" text-anchor="middle" font-weight="bold">MCS</text>\n  </g>\n</svg>`,
+            l2: `<svg xmlns="http://www.w3.org/2000/svg" width="108" height="108" viewBox="0 0 108 108">\n  <rect width="100%" height="100%" fill="#020617" />\n  <g transform="translate(54, 54)">${MCS_PATH}\n    <text x="0" y="4" font-family="sans-serif" font-size="12" fill="white" text-anchor="middle" font-weight="bold">MCS</text>\n    <text x="0" y="10" font-family="sans-serif" font-size="3.5" fill="#94A3B8" text-anchor="middle">MobileCodeStudio</text>\n  </g>\n</svg>`,
+            fg: `<svg xmlns="http://www.w3.org/2000/svg" width="108" height="108" viewBox="0 0 108 108">\n  <g transform="translate(54, 54)">${MCS_PATH}</g>\n</svg>`
+        };
+
+        function hexToRgb(h) {
+            let r=0,g=0,b=0; if(h.length==4){r="0x"+h[1]+h[1];g="0x"+h[2]+h[2];b="0x"+h[3]+h[3]} else if(h.length==7){r="0x"+h[1]+h[2];g="0x"+h[3]+h[4];b="0x"+h[5]+h[6]}
+            return {r: +r, g: +g, b: +b};
+        }
+        function adjust(h, p) {
+            let {r,g,b} = hexToRgb(h); r=Math.max(0,Math.min(255,r+p)); g=Math.max(0,Math.min(255,g+p)); b=Math.max(0,Math.min(255,b+p));
+            return "#"+((1<<24)+(r<<16)+(g<<8)+b).toString(16).slice(1).toUpperCase();
+        }
+
+        function extractColor(input) {
+            const file = input.files[0]; if(!file) return;
+            const reader = new FileReader(); reader.onload = (e) => {
+                const img = new Image(); img.onload = () => {
+                    const canvas = document.createElement('canvas'); const ctx = canvas.getContext('2d');
+                    canvas.width=img.width; canvas.height=img.height; ctx.drawImage(img,0,0);
+                    const data = ctx.getImageData(img.width/2, img.height/2, 1, 1).data;
+                    const hex = "#"+((1<<24)+(data[0]<<16)+(data[1]<<8)+data[2]).toString(16).slice(1).toUpperCase();
+                    document.getElementById('color-seed').value = hex; updateUI();
+                }; img.src = e.target.result;
+            }; reader.readAsDataURL(file);
+        }
+
+        function getFullM3(seed, isD) {
+            const p = seed, s = adjust(p, -30), t = adjust(p, 50), e = isD ? "#FFB4AB" : "#BA1A1A";
+            const bg = isD ? PRESETS[document.getElementById('theme-presets').value].bg : "#F8FAFC";
+            const surf = isD ? adjust(bg, 8) : "#FFFFFF";
+            return {
+                primary: p, onPrimary: "#FFFFFF", pContainer: adjust(p, isD?40:180), onPContainer: adjust(p, isD?-140:-100),
+                secondary: s, onSecondary: "#FFFFFF", sContainer: adjust(s, isD?30:160), onSContainer: adjust(s, isD?-130:-90),
+                tertiary: t, onTertiary: isD?"#000000":"#FFFFFF", tContainer: adjust(t, isD?20:140), onTContainer: adjust(t, isD?-120:-80),
+                error: e, onError: isD?"#690005":"#FFFFFF", eContainer: isD?"#93000A":"#FFDAD6", onEContainer: isD?"#FFDAD6":"#410002",
+                background: bg, onBackground: isD?"#E2E8F0":"#0F172A", surface: surf, onSurface: isD?"#E2E8F0":"#0F172A",
+                surfV: isD?adjust(bg,15):"#E1E2EC", onSurfV: isD?"#C4C6D0":"#44474F", outline: isD?"#8E9199":"#74777F", outV: isD?"#44474F":"#C4C6D0",
+                invS: isD?"#E2E8F0":"#313033", invOnS: isD?"#1E1E1E":"#F4EFF4", invP: adjust(p,-40), sDim: isD?adjust(bg,-5):"#D9D9D9", sBright: isD?adjust(bg,20):"#FFFFFF",
+                scrim: "#000000", sLowest: isD?bg:"#FFFFFF", sLow: isD?adjust(bg,3):"#F7F2FA", sC: isD?adjust(bg,6):"#F3EDF7", sHigh: isD?adjust(bg,10):"#ECE6F0", sHighest: isD?adjust(bg,15):"#E6E0E9"
+            };
+        }
+
+        function updateUI() {
+            const seed = document.getElementById('color-seed').value; const ss = document.getElementById('s-s').value, sm = document.getElementById('s-m').value, sl = document.getElementById('s-l').value;
+            const typo = document.getElementById('sel-typo').value; document.getElementById('seed-hex').innerText = seed.toUpperCase();
+            const dark = getFullM3(seed, true), light = getFullM3(seed, false);
+            const cur = previewMode === 'dark' ? dark : light;
+            
+            document.getElementById('phone').style.backgroundColor = cur.background;
+            document.getElementById('ph-bar').style.backgroundColor = cur.surface; document.getElementById('ph-bar').style.color = cur.onSurface;
+            document.getElementById('ph-body').style.color = cur.onBackground; document.getElementById('ph-body').style.fontFamily = typo==='fira'?'Fira Code':'Inter';
+            document.getElementById('ph-error').style.backgroundColor = cur.eContainer; document.getElementById('ph-error').style.color = cur.onEContainer; document.getElementById('ph-error').style.borderRadius = ss+'px';
+            document.getElementById('ph-card').style.borderRadius = sm+'px';
+            document.getElementById('ph-btn').style.backgroundColor = cur.primary; document.getElementById('ph-btn').style.borderRadius = sl+'px';
+            document.getElementById('ph-fab').style.backgroundColor = cur.primary; document.getElementById('ph-fab').style.borderRadius = (sl*2)+'px';
+
+            const display = document.getElementById('code-out');
+            if(activeFile==='color') display.innerText = genColorKt(light, dark);
+            else if(activeFile==='shape') display.innerText = `package com.scto.mcs.core.ui.theme\n\nimport androidx.compose.foundation.shape.RoundedCornerShape\nimport androidx.compose.material3.Shapes\nimport androidx.compose.ui.unit.dp\n\nval mcsShapes = Shapes(\n    small = RoundedCornerShape(${ss}.dp),\n    medium = RoundedCornerShape(${sm}.dp),\n    large = RoundedCornerShape(${sl}.dp)\n)`;
+            else if(activeFile==='typo') display.innerText = `package com.scto.mcs.core.ui.theme\n\nimport androidx.compose.material3.Typography\nimport androidx.compose.ui.text.TextStyle\nimport androidx.compose.ui.text.font.FontFamily\nimport androidx.compose.ui.unit.sp\n\nval Typography = Typography(\n    bodyLarge = TextStyle(fontFamily = ${typo==='fira'?'FontFamily.Monospace':'FontFamily.Default'}, fontSize = 16.sp),\n    bodyMedium = TextStyle(fontFamily = ${typo==='fira'?'FontFamily.Monospace':'FontFamily.Default'}, fontSize = 14.sp)\n)`;
+            else display.innerText = genThemeKt();
+        }
+
+        function genColorKt(l, d) {
+            let s = `package com.scto.mcs.core.ui.theme\n\nimport androidx.compose.ui.graphics.Color\n\n`;
+            const keys = { primary: 'primary', onPrimary: 'onPrimary', pContainer: 'primaryContainer', onPContainer: 'onPrimaryContainer', secondary: 'secondary', onSecondary: 'onSecondary', sContainer: 'secondaryContainer', onSContainer: 'onSecondaryContainer', tertiary: 'tertiary', onTertiary: 'onTertiary', tContainer: 'tertiaryContainer', onTContainer: 'onTertiaryContainer', error: 'error', onError: 'onError', eContainer: 'errorContainer', onEContainer: 'onErrorContainer', background: 'background', onBackground: 'onBackground', surface: 'surface', onSurface: 'onSurface', surfV: 'surfaceVariant', onSurfV: 'onSurfaceVariant', outline: 'outline', outV: 'outlineVariant', scrim: 'scrim', invS: 'inverseSurface', invOnS: 'inverseOnSurface', invP: 'inversePrimary', sDim: 'surfaceDim', sBright: 'surfaceBright', sLowest: 'surfaceContainerLowest', sLow: 'surfaceContainerLow', sC: 'surfaceContainer', sHigh: 'surfaceContainerHigh', sHighest: 'surfaceContainerHighest' };
+            for(let k in keys) s += `val ${keys[k]}Light = Color(${l[k].replace('#','0xFF')})\n`;
+            s += `\n`;
+            for(let k in keys) s += `val ${keys[k]}Dark = Color(${d[k].replace('#','0xFF')})\n`;
+            return s;
+        }
+
+        function genThemeKt() {
+            return `package com.scto.mcs.core.ui.theme
+
+import android.annotation.SuppressLint
+import android.os.Build
+import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.ColorScheme
+import androidx.compose.material3.LocalContentColor
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Shapes
+import androidx.compose.material3.darkColorScheme
+import androidx.compose.material3.dynamicDarkColorScheme
+import androidx.compose.material3.dynamicLightColorScheme
+import androidx.compose.material3.lightColorScheme
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.Immutable
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
+
+private val lightScheme = lightColorScheme(
+    primary = primaryLight,
+    onPrimary = onPrimaryLight,
+    primaryContainer = primaryContainerLight,
+    onPrimaryContainer = onPrimaryContainerLight,
+    secondary = secondaryLight,
+    onSecondary = onSecondaryLight,
+    secondaryContainer = secondaryContainerLight,
+    onSecondaryContainer = onSecondaryContainerLight,
+    tertiary = tertiaryLight,
+    onTertiary = onTertiaryLight,
+    tertiaryContainer = tertiaryContainerLight,
+    onTertiaryContainer = onTertiaryContainerLight,
+    error = errorLight,
+    onError = onErrorLight,
+    errorContainer = errorContainerLight,
+    onErrorContainer = onErrorContainerLight,
+    background = backgroundLight,
+    onBackground = onBackgroundLight,
+    surface = surfaceLight,
+    onSurface = onSurfaceLight,
+    surfaceVariant = surfaceVariantLight,
+    onSurfaceVariant = onSurfaceVariantLight,
+    outline = outlineLight,
+    outlineVariant = outlineVariantLight,
+    scrim = scrimLight,
+    inverseSurface = inverseSurfaceLight,
+    inverseOnSurface = inverseOnSurfaceLight,
+    inversePrimary = inversePrimaryLight,
+    surfaceDim = surfaceDimLight,
+    surfaceBright = surfaceBrightLight,
+    surfaceContainerLowest = surfaceContainerLowestLight,
+    surfaceContainerLow = surfaceContainerLowLight,
+    surfaceContainer = surfaceContainerLight,
+    surfaceContainerHigh = surfaceContainerHighLight,
+    surfaceContainerHighest = surfaceContainerHighestLight,
+)
+
+private val darkScheme = darkColorScheme(
+    primary = primaryDark,
+    onPrimary = onPrimaryDark,
+    primaryContainer = primaryContainerDark,
+    onPrimaryContainer = onPrimaryContainerDark,
+    secondary = secondaryDark,
+    onSecondary = onSecondaryDark,
+    secondaryContainer = secondaryContainerDark,
+    onSecondaryContainer = onSecondaryContainerDark,
+    tertiary = tertiaryDark,
+    onTertiary = onTertiaryDark,
+    tertiaryContainer = tertiaryContainerDark,
+    onTertiaryContainer = onTertiaryContainerDark,
+    error = errorDark,
+    onError = onErrorDark,
+    errorContainer = errorContainerDark,
+    onErrorContainer = onErrorContainerDark,
+    background = backgroundDark,
+    onBackground = onBackgroundDark,
+    surface = surfaceDark,
+    onSurface = onSurfaceDark,
+    surfaceVariant = surfaceVariantDark,
+    onSurfaceVariant = onSurfaceVariantDark,
+    outline = outlineDark,
+    outlineVariant = outlineVariantDark,
+    scrim = scrimDark,
+    inverseSurface = inverseSurfaceDark,
+    inverseOnSurface = inverseOnSurfaceDark,
+    inversePrimary = inversePrimaryDark,
+    surfaceDim = surfaceDimDark,
+    surfaceBright = surfaceBrightDark,
+    surfaceContainerLowest = surfaceContainerLowestDark,
+    surfaceContainerLow = surfaceContainerLowDark,
+    surfaceContainer = surfaceContainerDark,
+    surfaceContainerHigh = surfaceContainerHighDark,
+    surfaceContainerHighest = surfaceContainerHighestDark,
+)
+
+@Immutable
+data class ColorFamily(
+    val color: Color,
+    val onColor: Color,
+    val colorContainer: Color,
+    val onColorContainer: Color
+)
+
+@SuppressLint("MaterialDesignInsteadOrbitDesign")
+@Composable
+fun MCSTheme(
+    systemTheme: Boolean = isSystemInDarkTheme(),
+    dynamicColor: MutableState<Boolean> = remember { mutableStateOf(false) },
+    content: @Composable () -> Unit
+) {
+    val context = LocalContext.current
+    val followSystemTheme = true // Mocked logic for UI
+    val isDarkMode = true // Mocked logic for UI
+    val isAmoledMode = false // Mocked logic for UI
+    
+    val darkTheme = if (followSystemTheme) systemTheme else isDarkMode
+
+    val colorScheme = remember(darkTheme, isAmoledMode, dynamicColor.value) {
+        if (dynamicColor.value && atLeastS) {
+            if (darkTheme) dynamicDarkColorScheme(context).maybeAmoled(isAmoledMode)
+            else dynamicLightColorScheme(context)
+        } else {
+            if (darkTheme) darkScheme.maybeAmoled(isAmoledMode) else lightScheme
+        }
+    }
+
+    MaterialTheme(
+        colorScheme = colorScheme,
+        typography = Typography,
+        shapes = mcsShapes,
+    ) {
+        CompositionLocalProvider(
+            LocalContentColor provides androidx.compose.material3.LocalContentColor.current
+        ) {
+            content()
+        }
+    }
+}
+
+@Composable
+fun MCSTerminalTheme(
+    content: @Composable () -> Unit
+) {
+    MaterialTheme(
+        colorScheme = darkScheme,
+        typography = Typography,
+        shapes = mcsShapes,
+        content = content
+    )
+}
+
+private fun ColorScheme.maybeAmoled(isAmoledMode: Boolean): ColorScheme {
+    return if (isAmoledMode) {
+        copy(
+            surface = Color.Black,
+            inverseSurface = Color.White,
+            background = Color.Black
+        )
+    } else this
+}
+
+val atLeastS: Boolean
+    get() = Build.VERSION.SDK_INT >= Build.VERSION_CODES.S`;
+        }
+
+        function setMainTab(t) { activeMain = t; document.querySelectorAll('.main-tab-btn').forEach(b => b.classList.remove('tab-active','text-white'));
+            document.getElementById('btn-'+t).classList.add('tab-active','text-white');
+            document.getElementById('tab-content-theme').classList.toggle('hidden', t!=='theme');
+            document.getElementById('tab-content-icon').classList.toggle('hidden', t!=='icon');
+            document.getElementById('tab-content-lab').classList.toggle('hidden', t!=='lab');
+            if(t==='lab') renderLab();
+        }
+        function setFile(f) { activeFile = f; document.querySelectorAll('.file-tab').forEach(b => b.classList.remove('subtab-active','text-blue-400'));
+            document.getElementById('f-'+f).classList.add('subtab-active','text-blue-400'); updateUI();
+        }
+        function setMode(m) { previewMode = m; document.getElementById('m-light').className = m==='light'?'flex-1 text-[9px] bg-blue-600 text-white rounded py-1':'flex-1 text-[9px] rounded py-1';
+            document.getElementById('m-dark').className = m==='dark'?'flex-1 text-[9px] bg-blue-600 text-white rounded py-1':'flex-1 text-[9px] rounded py-1'; updateUI();
+        }
+        function applyPreset() {
+            const c = PRESETS[document.getElementById('theme-presets').value];
+            document.getElementById('color-seed').value = c.seed; document.getElementById('s-s').value = c.s;
+            document.getElementById('s-m').value = c.m; document.getElementById('s-l').value = c.l;
+            document.getElementById('sel-typo').value = c.typo; updateUI();
+        }
+        function updateIcon() {
+            const l1 = document.getElementById('i-l1').value.toUpperCase(), l2 = document.getElementById('i-l2').value;
+            const c1=document.getElementById('ic1').value, c2=document.getElementById('ic2').value, c3=document.getElementById('ic3').value, c4=document.getElementById('ic4').value;
+            const svg = `<svg width="100%" height="100%" viewBox="0 0 108 108" xmlns="http://www.w3.org/2000/svg"><g transform="translate(54, 54)">
+<path d="M-25,-25 L5,-35 L15,-5 L-15,5 Z" fill="${c1}" /><path d="M25,-25 L35,5 L5,15 L-5,-15 Z" fill="${c2}" />
+<path d="M25,25 L-5,35 L-15,5 L15,-5 Z" fill="${c3}" /><path d="M-25,25 L-35,-5 L-5,-15 L5,15 Z" fill="${c4}" />
+<path d="M-14,-14 L14,-14 L14,14 L-14,14 Z" fill="#16162A" />
+<text x="0" y="4" font-family="sans-serif" font-size="10" fill="white" text-anchor="middle" font-weight="bold">${l1}</text>
+<text x="0" y="10" font-family="sans-serif" font-size="3.2" fill="#94A3B8" text-anchor="middle">${l2}</text></g></svg>`;
+            document.getElementById('icon-render').innerHTML = svg; document.getElementById('icon-svg-out').value = svg;
+        }
+        function applyLabPreset() { document.getElementById('lab-input').value = SVG_PRESETS[document.getElementById('lab-presets').value]; renderLab(); }
+        function renderLab() {
+            const val = document.getElementById('lab-input').value; document.getElementById('lab-preview').innerHTML = val;
+            const s = document.getElementById('lab-preview').querySelector('svg'); if(s) { s.setAttribute('width','100%'); s.setAttribute('height','100%'); }
+        }
+        document.getElementById('lab-input').addEventListener('input', renderLab);
+        function copyCode() { const t = document.getElementById('code-out').innerText; const d = document.createElement("textarea"); document.body.appendChild(d); d.value = t; d.select(); document.execCommand("copy"); document.body.removeChild(d); }
+        function copyLabCode() { const t = document.getElementById('lab-input').value; const d = document.createElement("textarea"); document.body.appendChild(d); d.value = t; d.select(); document.execCommand("copy"); document.body.removeChild(d); }
+
+        window.onload = () => { applyPreset(); setMainTab('theme'); updateIcon(); document.getElementById('lab-input').value = SVG_PRESETS.full; };
+    </script>
+</body>
+</html>
+
+```
