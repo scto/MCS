@@ -7,4 +7,8 @@
     <string name="setup_jdk_installation_status">Installiere JDK %s...</string>
     <string name="setup_android_sdk_installation_status">Installiere Android SDK %s...</string>
     <string name="setup_completed">Setup abgeschlossen!</string>
+    <string name="setup_jdk_17">17</string>
+    <string name="setup_jdk_21">21</string>
+    <string name="setup_sdk_33">33</string>
+    <string name="setup_sdk_35">35</string>
 </resources>

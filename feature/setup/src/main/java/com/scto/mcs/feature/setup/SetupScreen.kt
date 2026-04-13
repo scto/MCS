@@ -29,18 +29,18 @@ fun SetupScreen(
             Text(text = stringResource(id = R.string.setup_select_jdk))
             Row(verticalAlignment = Alignment.CenterVertically) {
                 RadioButton(selected = uiState.jdkVersion == "17", onClick = { viewModel.setJdk("17") })
-                Text("17")
+                Text(stringResource(id = R.string.setup_jdk_17))
                 RadioButton(selected = uiState.jdkVersion == "21", onClick = { viewModel.setJdk("21") })
-                Text("21")
+                Text(stringResource(id = R.string.setup_jdk_21))
             }
 
             // SDK Selection
             Text(text = stringResource(id = R.string.setup_select_sdk))
             Row(verticalAlignment = Alignment.CenterVertically) {
                 RadioButton(selected = uiState.sdkVersion == "33", onClick = { viewModel.setSdk("33") })
-                Text("33")
+                Text(stringResource(id = R.string.setup_sdk_33))
                 RadioButton(selected = uiState.sdkVersion == "35", onClick = { viewModel.setSdk("35") })
-                Text("35")
+                Text(stringResource(id = R.string.setup_sdk_35))
             }
 
             Spacer(modifier = Modifier.height(16.dp))
