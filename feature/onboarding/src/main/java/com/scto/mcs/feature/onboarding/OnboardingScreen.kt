@@ -14,6 +14,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.scto.mcs.core.ui.theme.MCSTheme
 
@@ -38,9 +39,9 @@ fun OnboardingScreen(
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Text("Willkommen bei MCS")
+            Text(text = stringResource(id = R.string.onboarding_welcome))
             Spacer(modifier = Modifier.height(16.dp))
-            Text("Bitte gewähre Zugriff auf den Speicher, um Projekte zu verwalten.")
+            Text(text = stringResource(id = R.string.onboarding_permission_description))
             Spacer(modifier = Modifier.height(16.dp))
             Button(onClick = {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
@@ -51,7 +52,7 @@ fun OnboardingScreen(
                     onPermissionGranted()
                 }
             }) {
-                Text("Berechtigung erteilen")
+                Text(text = stringResource(id = R.string.onboarding_grant_permission))
             }
         }
     }

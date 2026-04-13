@@ -1,0 +1,5 @@
+<resources>
+    <string name="onboarding_welcome">Willkommen bei MCS</string>
+    <string name="onboarding_permission_description">Bitte gewähre Zugriff auf den Speicher, um Projekte zu verwalten.</string>
+    <string name="onboarding_grant_permission">Berechtigung erteilen</string>
+</resources>
