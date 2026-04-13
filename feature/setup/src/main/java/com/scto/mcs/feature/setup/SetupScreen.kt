@@ -5,6 +5,7 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.scto.mcs.core.ui.theme.MCSTheme
@@ -21,11 +22,11 @@ fun SetupScreen(
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Text("Terminal Setup", style = MaterialTheme.typography.headlineMedium)
+            Text(text = stringResource(id = R.string.setup_title), style = MaterialTheme.typography.headlineMedium)
             Spacer(modifier = Modifier.height(16.dp))
             
             // JDK Selection
-            Text("Wähle JDK Version:")
+            Text(text = stringResource(id = R.string.setup_select_jdk))
             Row(verticalAlignment = Alignment.CenterVertically) {
                 RadioButton(selected = uiState.jdkVersion == "17", onClick = { viewModel.setJdk("17") })
                 Text("17")
@@ -34,7 +35,7 @@ fun SetupScreen(
             }
 
             // SDK Selection
-            Text("Wähle Android SDK:")
+            Text(text = stringResource(id = R.string.setup_select_sdk))
             Row(verticalAlignment = Alignment.CenterVertically) {
                 RadioButton(selected = uiState.sdkVersion == "33", onClick = { viewModel.setSdk("33") })
                 Text("33")
@@ -47,10 +48,10 @@ fun SetupScreen(
             if (uiState.isInstalling) {
                 LinearProgressIndicator(modifier = Modifier.fillMaxWidth())
                 Spacer(modifier = Modifier.height(8.dp))
-                Text(uiState.statusMessage)
+                Text(text = uiState.statusMessage)
             } else {
                 Button(onClick = { viewModel.startSetup() }) {
-                    Text("Setup starten")
+                    Text(text = stringResource(id = R.string.setup_start))
                 }
             }
         }

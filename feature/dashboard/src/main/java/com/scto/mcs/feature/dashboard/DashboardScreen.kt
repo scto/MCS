@@ -5,6 +5,7 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.scto.mcs.core.ui.components.MCSButton
@@ -32,16 +33,16 @@ fun DashboardScreen(
                 verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                Text("MCS Dashboard", style = MaterialTheme.typography.headlineMedium)
+                Text(text = stringResource(id = R.string.dashboard_title), style = MaterialTheme.typography.headlineMedium)
                 Spacer(modifier = Modifier.height(32.dp))
                 
-                MCSButton(text = "Projekt öffnen", onClick = { /* TODO */ })
+                MCSButton(text = stringResource(id = R.string.dashboard_open_project), onClick = { /* TODO */ })
                 Spacer(modifier = Modifier.height(16.dp))
-                MCSButton(text = "Projekt erstellen", onClick = { /* TODO */ })
+                MCSButton(text = stringResource(id = R.string.dashboard_create_project), onClick = { /* TODO */ })
                 Spacer(modifier = Modifier.height(16.dp))
-                MCSButton(text = "Repository klonen", onClick = { showCloneDialog = true })
+                MCSButton(text = stringResource(id = R.string.dashboard_clone_repository), onClick = { showCloneDialog = true })
                 Spacer(modifier = Modifier.height(16.dp))
-                MCSButton(text = "Einstellungen", onClick = { /* TODO */ })
+                MCSButton(text = stringResource(id = R.string.dashboard_settings), onClick = { /* TODO */ })
             }
 
             if (uiState.isCloning) {
