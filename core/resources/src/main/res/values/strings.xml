@@ -24,3 +24,4 @@
     <string name="setup_jdk_installation_status">Installiere JDK %s...</string>
     <string name="setup_android_sdk_installation_status">Installiere Android SDK %s...</string>
     <string name="setup_completed">Setup abgeschlossen!</string>
+</resources>
