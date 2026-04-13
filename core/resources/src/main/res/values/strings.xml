@@ -1,0 +1,36 @@
+<resources>
+    <!-- App -->
+    <string name="app_name">MCS IDE</string>
+
+    <!-- Dashboard -->
+    <string name="dashboard_title">MCS Dashboard</string>
+    <string name="dashboard_open_project">Projekt öffnen</string>
+    <string name="dashboard_create_project">Projekt erstellen</string>
+    <string name="dashboard_clone_repository">Repository klonen</string>
+    <string name="dashboard_settings">Einstellungen</string>
+
+    <!-- Editor -->
+    <string name="editor_title">Editor</string>
+    <string name="editor_build">Build</string>
+    <string name="editor_building_status">Building...</string>
+    <string name="editor_build_failed">Build failed: %s</string>
+
+    <!-- Setup -->
+    <string name="setup_title">Terminal Setup</string>
+    <string name="setup_select_jdk">Wähle JDK Version:</string>
+    <string name="setup_select_sdk">Wähle Android SDK:</string>
+    <string name="setup_start">Setup starten</string>
+    <string name="setup_initialization_status">Initialisierung...</string>
+    <string name="setup_jdk_installation_status">Installiere JDK %s...</string>
+    <string name="setup_android_sdk_installation_status">Installiere Android SDK %s...</string>
+    <string name="setup_completed">Setup abgeschlossen!</string>
+    <string name="setup_jdk_17">17</string>
+    <string name="setup_jdk_21">21</string>
+    <string name="setup_sdk_33">33</string>
+    <string name="setup_sdk_35">35</string>
+
+    <!-- Onboarding -->
+    <string name="onboarding_welcome">Willkommen bei MCS</string>
+    <string name="onboarding_permission_description">Bitte gewähre Zugriff auf den Speicher, um Projekte zu verwalten.</string>
+    <string name="onboarding_grant_permission">Berechtigung erteilen</string>
+</resources>

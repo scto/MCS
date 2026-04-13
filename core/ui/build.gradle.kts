@@ -35,6 +35,5 @@ dependencies {
     implementation(libs.hilt.android)
     kapt(libs.hilt.compiler)
     
-    // Falls core:resourcess existiert, sollte es hier eingebunden werden
-    // implementation(project(":core:resourcess"))
+    implementation(project(":core:resources"))
 }
