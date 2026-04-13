@@ -8,6 +8,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import com.scto.mcs.core.resources.R
 import com.scto.mcs.core.ui.theme.MCSTheme
 import dagger.hilt.android.AndroidEntryPoint
 

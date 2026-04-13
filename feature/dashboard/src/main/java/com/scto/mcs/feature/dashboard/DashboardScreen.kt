@@ -8,6 +8,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.scto.mcs.core.resources.R
 import com.scto.mcs.core.ui.components.MCSButton
 import com.scto.mcs.core.ui.theme.MCSTheme
 

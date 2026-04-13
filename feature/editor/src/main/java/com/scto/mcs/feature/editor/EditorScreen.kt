@@ -9,6 +9,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.scto.mcs.core.resources.R
 import com.scto.mcs.core.ui.components.MCSToolbar
 import com.scto.mcs.core.ui.theme.MCSTheme
 import io.github.rosemoe.sora.widget.CodeEditor
