@@ -18,18 +18,26 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Build
+import androidx.compose.material.icons.filled.Code
 import androidx.compose.material.icons.filled.Contrast
 import androidx.compose.material.icons.filled.Create
+import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Edit
-import androidx.compose.material.icons.filled.Folder
+import androidx.compose.material.icons.filled.FormatIndentIncrease
+import androidx.compose.material.icons.filled.FormatSize
 import androidx.compose.material.icons.filled.Gesture
+import androidx.compose.material.icons.filled.Link
+import androidx.compose.material.icons.filled.Numbers
 import androidx.compose.material.icons.filled.Palette
-import androidx.compose.material.icons.filled.PrivacyTip
-import androidx.compose.material.icons.filled.Refresh
-import androidx.compose.material.icons.filled.Save
+import androidx.compose.material.icons.filled.PushPin
 import androidx.compose.material.icons.filled.Settings
+import androidx.compose.material.icons.filled.Tab
 import androidx.compose.material.icons.filled.VisibilityOff
+import androidx.compose.material.icons.filled.WrapText
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -41,6 +49,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Slider
 import androidx.compose.material3.SliderDefaults
 import androidx.compose.material3.Switch
+import androidx.compose.material3.SwitchDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
@@ -54,14 +63,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.scto.mcs.core.navigation.NavigationManager
-import com.scto.mcs.core.ui.components.MCSIcons // Assuming MCSIcons are available
 import com.scto.mcs.core.ui.theme.McsTheme // Assuming McsTheme is available
 
 // Define custom colors to match the dark theme in screenshots (Schwarz/Dunkelviolett-Stich)
@@ -95,7 +101,7 @@ fun SettingsScreen(
                 title = {
                     Text(
                         text = "Settings",
-                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                        color = AccentPurple // Changed to AccentPurple as per screenshot
                     )
                 },
                 navigationIcon = {
@@ -104,7 +110,7 @@ fun SettingsScreen(
                             Icon(
                                 imageVector = Icons.Default.ArrowBack,
                                 contentDescription = "Back",
-                                tint = MaterialTheme.colorScheme.onSurfaceVariant
+                                tint = AccentPurple // Changed to AccentPurple as per screenshot
                             )
                         }
                     } else {
@@ -112,7 +118,7 @@ fun SettingsScreen(
                             Icon(
                                 imageVector = Icons.Default.ArrowBack,
                                 contentDescription = "Back",
-                                tint = MaterialTheme.colorScheme.onSurfaceVariant
+                                tint = AccentPurple // Changed to AccentPurple as per screenshot
                             )
                         }
                     }
@@ -182,7 +188,7 @@ fun MainSettingsMenu(onNavigate: (SettingsScreenRoute) -> Unit) {
         item {
             SettingsMenuItem(
                 title = "Login with GitHub",
-                description = null, // No sub-description based on screenshot
+                description = null,
                 onClick = { /* TODO: Implement GitHub Login */ onNavigate(SettingsScreenRoute.LoginGithub) }
             )
         }
@@ -200,7 +206,7 @@ fun MainSettingsMenu(onNavigate: (SettingsScreenRoute) -> Unit) {
         item {
             SettingsMenuItem(
                 title = "Open Source Licences",
-                description = null, // No sub-description based on screenshot
+                description = null,
                 onClick = { /* TODO: Show Licenses */ onNavigate(SettingsScreenRoute.OpenSourceLicenses) }
             )
         }
@@ -213,7 +219,7 @@ fun SettingsCategoryHeader(title: String) {
         text = title,
         style = MaterialTheme.typography.titleMedium,
         fontWeight = FontWeight.Bold,
-        color = LightGrayText, // Changed to LightGrayText for better contrast
+        color = LightGrayText,
         modifier = Modifier.padding(start = 16.dp, top = 24.dp, bottom = 8.dp)
     )
 }
@@ -272,7 +278,7 @@ fun GeneralSettingsScreen(
         }
         item {
             SettingsToggleItem(
-                icon = Icons.Default.Settings, // Using a generic settings icon
+                icon = Icons.Default.Settings,
                 title = "Use Dark Mode",
                 description = "Dark mode is enabled",
                 checked = generalSettings.useDarkMode,
@@ -325,14 +331,14 @@ fun EditorSettingsScreen(
         }
         item {
             SettingsDisplayItem(
-                icon = Icons.Default.Create, // Placeholder for typing tip icon
+                icon = Icons.Default.Create,
                 title = "Typing Tip",
                 description = "For optimal typing efficiency, explore keyboard customization options."
             )
         }
         item {
             SettingsToggleItem(
-                icon = Icons.Default.Edit, // Placeholder for input method picker icon
+                icon = Icons.Default.Settings, // Changed to Settings icon
                 title = "Show Input Method Picker at Start",
                 description = "Show the input method picker at start.",
                 checked = editorSettings.showInputMethodPickerAtStart,
@@ -343,39 +349,39 @@ fun EditorSettingsScreen(
         item { SettingsCategoryHeader("Editor Settings") }
         item {
             SettingsSliderItem(
-                icon = Icons.Default.Refresh, // Placeholder for Font Size icon
+                icon = Icons.Default.FormatSize, // Changed to FormatSize icon
                 title = "Font Size",
                 value = editorSettings.fontSize,
                 range = 8f..30f,
-                steps = 21, // (30-8)
+                steps = 21,
                 onValueChange = viewModel::setFontSize,
                 valueLabel = "${editorSettings.fontSize.toInt()} sp"
             )
         }
         item {
             SettingsDisplayItem(
-                icon = Icons.Default.Build, // Placeholder for Indent Size icon
+                icon = Icons.Default.FormatIndentIncrease, // Changed to FormatIndentIncrease icon
                 title = "Indent Size",
                 description = "Indent size: ${editorSettings.indentSize} spaces."
             )
         }
         item {
             SettingsDisplayItem(
-                icon = Icons.Default.Create, // Placeholder for Font Family icon
+                icon = Icons.Default.Create,
                 title = "Font Family",
                 description = "Choose the font family for the editor"
             )
         }
         item {
             SettingsDisplayItem(
-                icon = Icons.Default.Palette, // Placeholder for Color Scheme icon
+                icon = Icons.Default.Palette,
                 title = "Color Scheme",
                 description = "Choose a color scheme for the editor"
             )
         }
         item {
             SettingsDisplayItem(
-                icon = Icons.Default.Refresh, // Placeholder for Symbols icon
+                icon = Icons.Default.Code, // Changed to Code icon
                 title = "Symbols",
                 description = "!@#\$%^&*()-_+=[]{}|\\;:'\",.<>/?"
             )
@@ -383,52 +389,52 @@ fun EditorSettingsScreen(
 
         item {
             SettingsToggleItem(
-                icon = Icons.Default.Build, // Placeholder for Font Ligatures icon
+                icon = Icons.Default.Link, // Changed to Link icon
                 title = "Font Ligatures",
-                description = "Ligatures disabled", // Placeholder text, update based on state
+                description = "Ligatures disabled",
                 checked = editorSettings.fontLigatures,
                 onCheckedChange = viewModel::setFontLigatures
             )
         }
         item {
             SettingsToggleItem(
-                icon = Icons.Default.Save, // Placeholder for Sticky Scroll icon
+                icon = Icons.Default.PushPin, // Changed to PushPin icon
                 title = "Sticky Scroll",
-                description = "Sticky scroll disabled", // Placeholder text, update based on state
+                description = "Sticky scroll disabled",
                 checked = editorSettings.stickyScroll,
                 onCheckedChange = viewModel::setStickyScroll
             )
         }
         item {
             SettingsToggleItem(
-                icon = Icons.Default.Edit, // Placeholder for Word Wrap icon
+                icon = Icons.Default.WrapText, // Changed to WrapText icon
                 title = "Word Wrap",
-                description = "Word wrap disabled", // Placeholder text, update based on state
+                description = "Word wrap disabled",
                 checked = editorSettings.wordWrap,
                 onCheckedChange = viewModel::setWordWrap
             )
         }
         item {
             SettingsToggleItem(
-                icon = Icons.Default.Save, // Placeholder for Show Line Numbers icon
+                icon = Icons.Default.Numbers, // Changed to Numbers icon
                 title = "Show Line Numbers",
-                description = "Line numbers displayed", // Placeholder text, update based on state
+                description = "Line numbers displayed",
                 checked = editorSettings.showLineNumbers,
                 onCheckedChange = viewModel::setShowLineNumbers
             )
         }
         item {
             SettingsToggleItem(
-                icon = Icons.Default.Folder, // Placeholder for Use Tabs icon
+                icon = Icons.Default.Tab, // Changed to Tab icon
                 title = "Use Tabs",
-                description = "Tabs are used", // Placeholder text, update based on state
+                description = "Tabs are used",
                 checked = editorSettings.useTabs,
                 onCheckedChange = viewModel::setUseTabs
             )
         }
         item {
             SettingsToggleItem(
-                icon = Icons.Default.Delete, // Placeholder for Delete Line on Backspace icon
+                icon = Icons.Default.Delete, // Changed to actual Delete icon
                 title = "Delete Line on Backspace",
                 description = "Delete entire line when backspace is pressed",
                 checked = editorSettings.deleteLineOnBackspace,
@@ -437,7 +443,7 @@ fun EditorSettingsScreen(
         }
         item {
             SettingsToggleItem(
-                icon = Icons.Default.Delete, // Placeholder for Delete Indent on Backspace icon
+                icon = Icons.Default.Delete, // Changed to actual Delete icon
                 title = "Delete Indent on Backspace",
                 description = "Normal backspace behavior",
                 checked = editorSettings.deleteIndentOnBackspace,
@@ -446,7 +452,7 @@ fun EditorSettingsScreen(
         }
         item {
             SettingsDisplayItem(
-                icon = Icons.Default.Build, // Placeholder for Editor Text Action Window Expand Threshold icon
+                icon = Icons.Default.Build,
                 title = "Editor Text Action Window Expand Threshold",
                 description = "Threshold for expanding the text action window"
             )
@@ -481,7 +487,12 @@ fun PluginsSettingsScreen(
 ) {
     Box(modifier = Modifier.fillMaxSize()) {
         if (isLoading) {
-            Text("Loading plugins...", modifier = Modifier.align(Alignment.Center))
+            Text(
+                text = "Loading plugins...",
+                style = MaterialTheme.typography.bodyLarge,
+                color = LightGrayText,
+                modifier = Modifier.align(Alignment.Center)
+            )
         } else if (installedPlugins.isEmpty()) {
             Text(
                 text = "No plugins found",
@@ -659,22 +670,10 @@ fun SettingsSliderItem(
     }
 }
 
-// Temporary workaround for missing Icons.Default.Add, assuming it will be available.
-// If not, replace with a custom icon or another existing one.
-private val Icons.Default.Add: ImageVector
-    get() = Icons.Default.Build // Using Build as a placeholder if Add is not found
-
-private val Icons.Default.Delete: ImageVector
-    get() = Icons.Default.Save // Using Save as a placeholder for delete icons
-
-
 @Preview(showBackground = true)
 @Composable
 fun PreviewSettingsScreen() {
-    McsTheme { // Assuming McsTheme applies the necessary dark theme
-        // To preview the actual SettingsScreen, you might need a HiltTestApplication.
-        // For a simple preview, we can mock the ViewModel behavior or preview a sub-composable.
-        // Let's preview the MainSettingsMenu for now.
+    McsTheme {
         MainSettingsMenu(onNavigate = {})
     }
 }
