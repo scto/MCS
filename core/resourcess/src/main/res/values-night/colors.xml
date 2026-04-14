@@ -1,5 +1,4 @@
 <resources>
-    <!-- ── Material3 Blueberry palette (dark baseline) ───────────────────── -->
     <color name="md_theme_primary">#AAC7FF</color>
     <color name="md_theme_onPrimary">#0A305F</color>
     <color name="md_theme_primaryContainer">#284777</color>
@@ -47,8 +46,6 @@
     <color name="md_theme_surfaceContainer">#1D2024</color>
     <color name="md_theme_surfaceContainerHigh">#282A2F</color>
     <color name="md_theme_surfaceContainerHighest">#33353A</color>
-
-    <!-- ── Medium-contrast variants ──────────────────────────────────────── -->
     <color name="md_theme_primary_mediumContrast">#B1CBFF</color>
     <color name="md_theme_onPrimary_mediumContrast">#001634</color>
     <color name="md_theme_primaryContainer_mediumContrast">#7491C7</color>
@@ -96,8 +93,6 @@
     <color name="md_theme_surfaceContainer_mediumContrast">#1D2024</color>
     <color name="md_theme_surfaceContainerHigh_mediumContrast">#282A2F</color>
     <color name="md_theme_surfaceContainerHighest_mediumContrast">#33353A</color>
-
-    <!-- ── High-contrast variants ─────────────────────────────────────────── -->
     <color name="md_theme_primary_highContrast">#FBFAFF</color>
     <color name="md_theme_onPrimary_highContrast">#000000</color>
     <color name="md_theme_primaryContainer_highContrast">#B1CBFF</color>
@@ -146,11 +141,11 @@
     <color name="md_theme_surfaceContainerHigh_highContrast">#282A2F</color>
     <color name="md_theme_surfaceContainerHighest_highContrast">#33353A</color>
 
-    <!-- ── Editor / UI chrome ─────────────────────────────────────────────── -->
+    <!-- editor -->
     <color name="defaultSymbolInputBackgroundColor">@android:color/transparent</color>
     <color name="defaultSymbolInputTextColor">@android:color/white</color>
     <color name="bg">#1C1B20</color>
-    
+
     <color name="ide_background">#1E1E1E</color>
     <color name="ide_surface">#252526</color>
     <color name="ide_primary">#007ACC</color>

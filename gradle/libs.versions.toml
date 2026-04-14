@@ -7,19 +7,22 @@ compileSdk = "36"
 targetSdk = "35"
 java = "17"
 
-hilt = "2.59.2"
+hilt = "2.51.1"
 jgit = "6.8.0.202311291450-r"
-soraEditor = "0.23.0"
+soraEditor = "0.23.1"
 composeBom = "2024.10.01"
 
 androidxActivity = "1.13.0"
 androidxComposeUi = "1.7.0"
 androidxComposeMaterial3 = "1.3.0"
 androidxHiltNavigationCompose = "1.2.0"
-androidxCoreKtx = "1.19.0-alpha01"
+androidxCoreKtx = "1.15.0"
 androidxLifecycleRuntimeKtx = "2.11.0-alpha03"
+androidxAppcompat = "1.7.0" 
+material = "1.12.0"
 
 [libraries]
+androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "androidxAppcompat" }
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "androidxCoreKtx" }
 androidx-lifecycle-runtime-ktx = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "androidxLifecycleRuntimeKtx" }
 androidx-compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "composeBom" }
@@ -31,7 +34,8 @@ hilt-android = { group = "com.google.dagger", name = "hilt-android", version.ref
 hilt-compiler = { group = "com.google.dagger", name = "hilt-compiler", version.ref = "hilt" }
 hilt-android-gradle-plugin = { group = "com.google.dagger", name = "hilt-android-gradle-plugin", version.ref = "hilt" }
 jgit = { group = "org.eclipse.jgit", name = "org.eclipse.jgit", version.ref = "jgit" }
-sora-editor = { group = "io.github.jpdante", name = "sora-editor", version.ref = "soraEditor" }
+sora-editor = { group = "io.github.Rosemoe.sora-editor", name = "editor", version.ref = "soraEditor" }
+google-material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "androidGradlePlugin" }

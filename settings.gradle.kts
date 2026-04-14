@@ -23,6 +23,7 @@ rootProject.name = "MCS"
 
 val modules = listOf(
     ":app",
+    
     ":core:data",
     ":core:domain",
     ":core:editor",
@@ -31,6 +32,7 @@ val modules = listOf(
     ":core:terminal",
     ":core:ui",
     ":core:utils",
+    
     ":feature:onboarding",
     ":feature:setup",
     ":feature:dashboard",

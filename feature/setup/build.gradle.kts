@@ -31,7 +31,7 @@ dependencies {
     implementation(project(":core:terminal"))
     implementation(project(":core:ui"))
     implementation(project(":core:navigation"))
-    implementation(project(":core:resources"))
+    implementation(project(":core:resourcess"))
     
     implementation(platform(libs.androidx.compose.bom))
     implementation(libs.androidx.compose.ui)

@@ -29,7 +29,9 @@ android {
 }
 
 dependencies {
+    implementation(libs.androidx.appcompat)
     implementation(libs.androidx.core.ktx)
+    implementation(libs.google.material)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.hilt.android)
     kapt(libs.hilt.compiler)
@@ -41,7 +43,8 @@ dependencies {
 
     implementation(project(":core:ui"))
     implementation(project(":core:navigation"))
-    implementation(project(":core:resources"))
+    implementation(project(":core:resourcess"))
+    
     implementation(project(":feature:onboarding"))
     implementation(project(":feature:setup"))
     implementation(project(":feature:dashboard"))
