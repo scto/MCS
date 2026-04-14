@@ -46,3 +46,4 @@ modules.forEach { module ->
     val path = module.substring(1).replace(":", "/")
     project(module).projectDir = file(path)
 }
+include(":feature:projects")
