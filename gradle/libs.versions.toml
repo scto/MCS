@@ -8,34 +8,122 @@ targetSdk = "35"
 java = "17"
 
 hilt = "2.51.1"
+
 jgit = "6.8.0.202311291450-r"
+#jgit = "7.3.0.202506031305-r"
+lsp4j = "0.24.0"
+
+treeSitterJson = "4.3.2"
+tsBinding = "4.3.2"
+
 soraEditor = "0.23.1"
+#soraEditor = "0.24.4"
+
+junit = "4.13.2"
+junitVersion = "1.3.0"
+
+lifecycleRuntimeKtx = "2.10.0"
+
+desugar_jdk_libs = "2.1.5"
+
 composeBom = "2024.10.01"
+composeIcons = "1.1.1"
+animation = "1.10.4"
+foundation = "1.10.4"
+runtime = "1.10.4"
+material = "1.12.0"
+material3 = "1.4.0"
+materialIconsExtended = "1.7.8"
+materialKolor = "4.1.1"
+
+androidxAnnotation = "1.9.1"
+androidxAppcompat = "1.7.0" 
+androidxCoreKtx = "1.15.0"
+datastoreCore = "1.2.0"
 
 androidxActivity = "1.13.0"
 androidxComposeUi = "1.7.0"
 androidxComposeMaterial3 = "1.3.0"
 androidxHiltNavigationCompose = "1.2.0"
-androidxCoreKtx = "1.15.0"
 androidxLifecycleRuntimeKtx = "2.11.0-alpha03"
-androidxAppcompat = "1.7.0" 
-material = "1.12.0"
+
+navigationCompose = "2.9.7"
+navigation = "2.9.7"
+
+palette = "1.0.0"
+aboutlibrariesCompose = "13.2.1"
+
+coilCompose = "2.7.0"
+coilSvg = "2.7.0"
+
+accompanist = "0.36.0"
+accompanistNavigationAnimation = "0.36.0"
+
+coroutines = "1.10.2"
+
+utilcode = "1.31.1"
 
 [libraries]
+androidx-annotation = { module = "androidx.annotation:annotation", version.ref = "androidxAnnotation" }
 androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "androidxAppcompat" }
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "androidxCoreKtx" }
 androidx-lifecycle-runtime-ktx = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "androidxLifecycleRuntimeKtx" }
+
 androidx-compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "composeBom" }
 androidx-compose-ui = { group = "androidx.compose.ui", name = "ui" }
-androidx-compose-material3 = { group = "androidx.compose.material3", name = "material3" }
+androidx-compose-ui-graphics = { group = "androidx.compose.ui", name = "ui-graphics" }
+androidx-compose-ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling" }
+androidx-compose-ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-tooling-preview" }
+androidx-compose-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-manifest" }
+androidx-compose-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit4" }
+androidx-compose-animation = { group = "androidx.compose.animation", name = "animation", version.ref = "animation" }
+androidx-compose-foundation = { group = "androidx.compose.foundation", name = "foundation", version.ref = "foundation" }
+
+androidx-compose-ui-text = { group = "androidx.compose.ui", name = "ui-text", version.ref = "uiText" }
+androidx-compose-runtime = { group = "androidx.compose.runtime", name = "runtime", version.ref = "runtime" }
+androidx-compose-material3 = { group = "androidx.compose.material3", name = "material3", version.ref = "material3" }
+androidx-compose-material-icons-core = { group = "androidx.compose.material", name = "material-icons-core", version.ref = "materialIcons" }
+androidx-compose-material-icons-extended = { module = "androidx.compose.material:material-icons-extended", version.ref = "materialIconsExtended" }
+
 androidx-activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "androidxActivity" }
+androidx-palette = { group = "androidx.palette", name = "palette", version.ref = "palette" }
+
 androidx-hilt-navigation-compose = { group = "androidx.hilt", name = "hilt-navigation-compose", version.ref = "androidxHiltNavigationCompose" }
 hilt-android = { group = "com.google.dagger", name = "hilt-android", version.ref = "hilt" }
 hilt-compiler = { group = "com.google.dagger", name = "hilt-compiler", version.ref = "hilt" }
 hilt-android-gradle-plugin = { group = "com.google.dagger", name = "hilt-android-gradle-plugin", version.ref = "hilt" }
+
 jgit = { group = "org.eclipse.jgit", name = "org.eclipse.jgit", version.ref = "jgit" }
+lsp4j = { module = "org.eclipse.lsp4j:org.eclipse.lsp4j", version.ref = "lsp4j" }
+
 sora-editor = { group = "io.github.Rosemoe.sora-editor", name = "editor", version.ref = "soraEditor" }
 google-material = { group = "com.google.android.material", name = "material", version.ref = "material" }
+
+aboutlibraries-compose = { module = "com.mikepenz:aboutlibraries-compose", version.ref = "aboutlibrariesCompose" }
+accompanist-navigation-animation = { module = "com.google.accompanist:accompanist-navigation-animation", version.ref = "accompanistNavigationAnimation" }
+accompanist-systemuicontroller = { group = "com.google.accompanist", name = "accompanist-systemuicontroller", version.ref = "accompanist" }
+
+androidx-datastore-core = { module = "androidx.datastore:datastore-core", version.ref = "datastoreCore" }
+androidx-datastore-preferences = { module = "androidx.datastore:datastore-preferences", version.ref = "datastoreCore" }
+androidx-lifecycle-viewmodel-compose = { module = "androidx.lifecycle:lifecycle-viewmodel-compose", version.ref = "lifecycleRuntimeKtx" }
+androidx-navigation-compose = { module = "androidx.navigation:navigation-compose", version.ref = "navigationCompose" }
+
+coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coilCompose" }
+coil-svg = { module = "io.coil-kt:coil-svg", version.ref = "coilSvg" }
+desugar_jdk_libs = { module = "com.android.tools:desugar_jdk_libs", version.ref = "desugar_jdk_libs" }
+
+language-textmate = { module = "io.github.rosemoe:language-textmate", version.ref = "editorVersion" }
+material-kolor = { module = "com.materialkolor:material-kolor", version.ref = "materialKolor" }
+
+androidx-collection = { module = "androidx.collection:collection", version = "1.5.0" }
+androidx-test-junit = { module = "androidx.test.ext:junit", version = "1.3.0" }
+
+kotlin-stdlib = { module = "org.jetbrains.kotlin:kotlin-stdlib", version.ref = "kotlin" }
+kotlinx-coroutines = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-android", version.ref = "coroutines" }
+
+tree-sitter = { module = "com.itsaky.androidide.treesitter:android-tree-sitter", version.ref = "tsBinding" }
+
+utilcode = { group = "com.blankj", name = "utilcodex", version.ref = "utilcode" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "androidGradlePlugin" }
@@ -44,3 +132,4 @@ kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 hilt-android = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
 kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 kotlin-kapt = { id = "org.jetbrains.kotlin.kapt", version.ref = "kotlinKapt" }
+aboutlibraries = { id = "com.mikepenz.aboutlibraries.plugin", version.ref = "aboutlibraries" }
