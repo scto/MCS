@@ -1,23 +1,4 @@
-/*
- * WebIDE - A powerful IDE for Android web development.
- * Copyright (C) 2025  如日中天  <3382198490@qq.com>
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <https://www.gnu.org/licenses/>.
- */
-
-
-package com.web.webide.ui.theme
+package com.scto.mcs.core.ui.theme
 
 import android.app.Activity
 import android.os.Build
@@ -42,17 +23,18 @@ import androidx.compose.runtime.State
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
-import com.web.webide.core.utils.LogCatcher
-import com.web.webide.core.utils.ThemeState
 
-// ============================================================================
-// 1. 预设主题 (保留原样)
-// ============================================================================
-// ============================================================================
-// 1. 预设主题 (已修复 Scrim 缺失与卡片对比度问题)
-// ============================================================================
+import com.scto.mcs.core.utils.LogCatcher
+import com.scto.mcs.core.utils.ThemeState
 
-// 默认 Material 深色 (保留官方微调)
+// ==============================================================================
+// 1. Voreingestelltes Design (Beibehalten)
+// ====================================================================================
+// ============================================================================
+// 1. Voreingestelltes Design (Scrim fehlt, Kartenkontrastprobleme behoben)
+// ================================================================================
+
+// Standard-Material Dunkel (Behält offizielle kleinere Anpassungen bei)
 private val DarkColorScheme = darkColorScheme(
     primary = Color(0xFFD0BCFF),
     onPrimary = Color(0xFF381E72),
@@ -91,7 +73,7 @@ private val DarkColorScheme = darkColorScheme(
     surfaceContainerHighest = Color(0xFF36343B)
 )
 
-// 默认 Material 浅色
+// Standardmaterial: Licht
 private val LightColorScheme = lightColorScheme(
     primary = Color(0xFF6750A4),
     onPrimary = Color(0xFFFFFFFF),
@@ -130,7 +112,7 @@ private val LightColorScheme = lightColorScheme(
     surfaceContainerHighest = Color(0xFFE6E0E9)
 )
 
-// Catppuccin Mocha 深色 (修复背景与卡片撞色)
+// Catppuccin Mocha Dark Color (Behebt Farbkonflikte zwischen Hintergrund und Karte)
 private val CatppuccinDarkColorScheme = darkColorScheme(
     primary = Color(0xFFD9B9FF),
     onPrimary = Color(0xFF411B6D),
@@ -169,7 +151,7 @@ private val CatppuccinDarkColorScheme = darkColorScheme(
     surfaceContainerHighest = Color(0xFF37313D)
 )
 
-// Catppuccin Latte 浅色
+// Catppuccin Latte Theme
 private val CatppuccinLightColorScheme = lightColorScheme(
     primary = Color(0xFF714C9F),
     onPrimary = Color(0xFFFFFFFF),
@@ -208,7 +190,7 @@ private val CatppuccinLightColorScheme = lightColorScheme(
     surfaceContainerHighest = Color(0xFFECE3F2)
 )
 
-// Apple 深色 (修复：使用纯黑背景，实现 iOS Grouped 风格)
+// Apple Dark (Fix: Verwendet einen rein schwarzen Hintergrund, um den iOS-Gruppierungsstil zu erzielen)
 private val AppleDarkColorScheme = darkColorScheme(
     primary = Color(0xFF42E355),
     onPrimary = Color(0xFF00390A),
@@ -247,7 +229,7 @@ private val AppleDarkColorScheme = darkColorScheme(
     surfaceContainerHighest = Color(0xFF1F3721)
 )
 
-// Apple 浅色 (修复：使用灰背景+白卡片，实现 iOS Grouped 风格)
+// Apple Light Color (Behoben: Verwenden Sie einen grauen Hintergrund + eine weiße Karte, um den iOS-Gruppierungsstil zu erzielen)
 private val AppleLightColorScheme = lightColorScheme(
     primary=Color(0xFF006E1C),
     onPrimary=Color(0xFFFFFFFF),
@@ -285,7 +267,7 @@ private val AppleLightColorScheme = lightColorScheme(
     surfaceContainerHigh=Color(0xFFE0EDDE),
     surfaceContainerHighest=Color(0xFFD9E9D8)
 )
-// Lavender (熏衣草)
+// Lavender
 private val LavenderDarkColorScheme = darkColorScheme(
     primary = Color(0xFFC8BFFF),
     onPrimary = Color(0xFF2F2176),
@@ -361,7 +343,7 @@ private val LavenderLightColorScheme=lightColorScheme(
     surfaceContainerHighest=Color(0xFFE9E4F3)
 )
 
-// Midnight (午夜蓝) - GitHub Dark Style
+// Midnight (Midnight Blue) - GitHub Dark Style
 private val MidnightDarkColorScheme = darkColorScheme(
     primary = Color(0xFFA2C9FF),
     onPrimary = Color(0xFF00315B),
@@ -513,7 +495,7 @@ private val NordLightColorScheme = lightColorScheme(
     surfaceContainerHighest = Color(0xFFD9E8EB)
 )
 
-// Strawberry (草莓)
+// Strawberry 
 private val StrawberryDarkColorScheme = darkColorScheme(
     primary = Color(0xFFFFB1C8),
     onPrimary = Color(0xFF600D32),
@@ -589,7 +571,7 @@ private val StrawberryLightColorScheme = lightColorScheme(
     surfaceContainerHighest = Color(0xFFF1E1E9)
 )
 
-// Tako (章鱼紫)
+// Tako (Oktopus-Lila)
 private val TakoDarkColorScheme = darkColorScheme(
     primary = Color(0xFFD4BBFF),
     onPrimary = Color(0xFF3D1A73),
@@ -665,10 +647,9 @@ private val TakoLightColorScheme = lightColorScheme(
     surfaceContainerHighest = Color(0xFFEBE3F3)
 )
 
-// ============================================================================
-// 2. 核心算法: 使用 Material Kolor 库替代手动实现
-// ============================================================================
-
+// ==============================================================================
+// 2. Kernalgorithmus: Verwendung der Material Kolor-Bibliothek anstelle einer manuellen Implementierung
+// ====================================================================================
 @Composable
 fun MyComposeApplicationTheme(
     themeState: ThemeState,
@@ -684,12 +665,12 @@ fun MyComposeApplicationTheme(
     }
 
     SideEffect {
-        LogCatcher.d("ThemeDebug_Apply", "应用主题中... Monet=${themeState.isMonetEnabled}, Custom=${themeState.isCustomTheme}, 模式=$useDarkTheme, 自定义色=${themeState.customColor.value}")
+        LogCatcher.d("ThemeDebug_Apply", "Im Anwendungsthema... Monet=${themeState.isMonetEnabled}, Custom=${themeState.isCustomTheme}, Modell=$useDarkTheme, Sonderfarbe=${themeState.customColor.value}")
     }
 
     // Determine target color scheme
     val targetColorScheme = if (themeState.isCustomTheme) {
-        LogCatcher.i("ThemeDebug_Branch", ">>> 命中分支: Custom (用户自定义 - Material Kolor), 颜色: ${themeState.customColor.value}")
+        LogCatcher.i("ThemeDebug_Branch", ">>> Schlagzweig: Custom (Benutzerdefiniert - Material Kolor), Farbe: ${themeState.customColor.value}")
         rememberDynamicColorScheme(
             seedColor = themeState.customColor,
             isDark = useDarkTheme,
@@ -699,11 +680,11 @@ fun MyComposeApplicationTheme(
     } else {
         when {
             themeState.isMonetEnabled && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S -> {
-                LogCatcher.i("ThemeDebug_Branch", ">>> 命中分支: Monet (系统壁纸取色)")
+                LogCatcher.i("ThemeDebug_Branch", ">>> Schlagzweig: Monet (System-Hintergrundbild-Farbauswahl)")
                 if (useDarkTheme) dynamicDarkColorScheme(context) else dynamicLightColorScheme(context)
             }
             else -> {
-                LogCatcher.i("ThemeDebug_Branch", ">>> 命中分支: Preset (预设主题), Index: ${themeState.selectedThemeIndex}")
+                LogCatcher.i("ThemeDebug_Branch", ">>> Schlagzweig: Preset (Voreingestellte Designs), Index: ${themeState.selectedThemeIndex}")
                 when (themeState.selectedThemeIndex) {
                     0 -> if (useDarkTheme) CatppuccinDarkColorScheme else CatppuccinLightColorScheme
                     1 -> if (useDarkTheme) AppleDarkColorScheme else AppleLightColorScheme
