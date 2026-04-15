@@ -1,4 +1,4 @@
-package com.scto.mcs.feature.settings
+package com.scto.mcs.feature.settings.viewModel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -10,6 +10,8 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+
+import com.scto.mcs.feature.settings.SettingsState
 
 @HiltViewModel
 class SettingsViewModel @Inject constructor(
