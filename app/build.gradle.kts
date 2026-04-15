@@ -49,4 +49,5 @@ dependencies {
     implementation(project(":feature:setup"))
     implementation(project(":feature:dashboard"))
     implementation(project(":feature:editor"))
+    implementation(project(":feature:settings"))
 }
