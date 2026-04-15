@@ -1,0 +1,876 @@
+/*
+ * Copyright (C) 2024-2025 SC T O., Inc.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+package com.scto.mcs.feature.settings.ui
+
+import android.content.Context
+import android.content.Intent
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.expandVertically
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.shrinkVertically
+import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
+import androidx.compose.material.icons.automirrored.filled.OpenInNew
+import androidx.compose.material.icons.filled.Close
+import androidx.compose.material.icons.filled.ContentCopy
+import androidx.compose.material.icons.outlined.Info
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.RectangleShape
+import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.compose.ui.platform.LocalClipboardManager
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.AnnotatedString
+import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import androidx.compose.ui.window.Dialog
+import androidx.compose.ui.window.DialogProperties
+import androidx.core.content.edit
+import androidx.core.net.toUri
+import androidx.navigation.NavController
+import com.mikepenz.aboutlibraries.Libs
+import com.mikepenz.aboutlibraries.entity.Library
+import com.mikepenz.aboutlibraries.util.withContext
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
+import coil.compose.AsyncImage
+import coil.request.ImageRequest
+import com.scto.mcs.core.utils.BuildConfig // Assuming BuildConfig is available from a core module
+// import com.web.webide.BuildConfig // Original import
+// import com.web.webide.ui.components.WebIDE_Icon // Assuming WebIDE_Icon is in a common UI module or needs to be recreated
+
+// Placeholder for WebIDE_Icon if it's not available in the core UI module
+@Composable
+fun WebIDE_Icon() {
+    // Replace with actual implementation or remove if not needed. Assuming it's from core:ui
+    Icon(Icons.Outlined.Star, contentDescription = "App Icon", modifier = Modifier.size(48.dp))
+}
+
+// --- 1. Data Models ---
+
+// Developer
+data class Developer(
+    val name: String,
+    val role: String,
+    val description: String,
+    val color: Color,
+    val url: String = ""
+)
+
+// Special Thanks (with qq field)
+data class SpecialThanks(
+    val qq: String,      // Added: QQ number
+    val name: String,
+    val title: String,
+    val message: String,
+    val url: String = "" // Clickable URL
+)
+
+// Donor (with qq field)
+data class Donor(
+    val qq: String,      // Added: QQ number
+    val name: String,
+    val amount: String,
+    val date: String
+)
+
+// Global cache
+private var cachedLibraries: List<Library>? = null
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun AboutScreen(navController: NavController) {
+    val context = LocalContext.current
+    val scrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior()
+
+    val prefs = remember {
+        context.getSharedPreferences("webide_settings", Context.MODE_PRIVATE)
+    }
+
+    var showAuthorNote by remember {
+        mutableStateOf(prefs.getBoolean("show_author_note", true))
+    }
+
+    // --- Data Loading ---
+    var libraries by remember { mutableStateOf(cachedLibraries ?: emptyList()) }
+    var isLoading by remember { mutableStateOf(cachedLibraries == null) }
+    var selectedLib by remember { mutableStateOf<Library?>(null) }
+
+    LaunchedEffect(Unit) {
+        if (cachedLibraries == null) {
+            withContext(Dispatchers.IO) {
+                val loaded = Libs.Builder()
+                    .withContext(context)
+                    .build()
+                    .libraries
+                    .sortedBy { it.name.lowercase() }
+                cachedLibraries = loaded
+                libraries = loaded
+                isLoading = false
+            }
+        }
+    }
+
+    // --- Data Sources ---
+
+    // 1. Development Team
+    val teamMembers = remember {
+        listOf(
+            Developer("h465855hgg", "Lead", "Maintainer", Color(0xFF009688), "https://github.com/h465855hgg"),
+            Developer("Akimlc", "Theme", "", Color(0xFF009688), "https://github.com/Akimlc"),
+            Developer("wuxianggujun", "TsLanguage", "", Color(0xFF009688), "https://github.com/wuxianggujun"),
+            Developer("Claude", "UI", "Design", Color(0xFFD97757)),
+            Developer("Gemini", "Arch", "Core", Color(0xFF4E8CFF)),
+            Developer("DeepSeek", "Logic", "Editor", Color(0xFF6C5CE7))
+        )
+    }
+
+    // 2. Special Thanks List
+    val thanksList = remember {
+        listOf(
+            SpecialThanks(
+                qq = "2547601734",
+                name = "逸尘",
+                title = "Designer",
+                message = "Designed the application icon.",
+               // url = "https://user.qzone.qq.com/2547601734"
+            ),
+            SpecialThanks(
+                qq = "2084019782",
+                name = "问心",
+                title = "Special Thanks",
+                message = "Provided naming conventions for WebS API docs.", // Translated original message
+              // url = "https://user.qzone.qq.com/2084019782"
+            ),
+            SpecialThanks(
+                qq = "2957148920",
+                name = "氚-Tritium",
+                title = "Mascot", // Translated title
+                message = "Issue provider" // Translated message
+                // url = "https://user.qzone.qq.com/2957148920"
+            )
+        )
+    }
+
+    // 3. Donor List
+    val donorList = remember {
+        listOf(
+            Donor("2051775505", "・是小浣熊哦・", "¥ 66.66", "2025.12"),
+            Donor("3268208143","肘开（有事电话）","¥ 20.00","2026.1") ,
+            Donor("2957148920","海纳百氚，有容乃大","¥ 23.32","2026.01.05.10:56, 2026.01.12.17:49, 2026.01.18.17:55"),
+            Donor("3658267351","黑桃信息科技","¥ 3.00","2026.01.09.12:41"),
+            Donor("162145003", "陌璃与鱼","¥ 0.52","2026.02.06.16:52"),
+            Donor("2736472509", "李架大王","¥ 3.50","2026.02.06.16:53"),
+Donor("676743748", "doro", "¥ 0.01","2026.02.07.21:09")
+        )
+    }
+
+    Scaffold(
+        modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
+        topBar = {
+            LargeTopAppBar(
+                title = { Text("About", fontWeight = FontWeight.SemiBold) }, // Changed to English
+                navigationIcon = {
+                    IconButton(onClick = { navController.popBackStack() }) {
+                        Icon(Icons.AutoMirrored.Filled.ArrowBack, "Back") // Changed to English
+                    }
+                },
+                scrollBehavior = scrollBehavior,
+                colors = TopAppBarDefaults.topAppBarColors(
+                    containerColor = MaterialTheme.colorScheme.surface,
+                    scrolledContainerColor = MaterialTheme.colorScheme.surfaceContainer
+                )
+            )
+        }
+    ) { innerPadding ->
+        LazyColumn(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(innerPadding),
+            contentPadding = PaddingValues(bottom = 52.dp),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            // 1. App Header
+            item { AppHeaderSection() }
+
+            // 2. Development Team (Chip Style)
+            item {
+                SectionTitle("WebIDE Team") // Changed title
+                LazyRow(
+                    contentPadding = PaddingValues(horizontal = 24.dp),
+                    horizontalArrangement = Arrangement.spacedBy(10.dp),
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    items(teamMembers) { dev -> DeveloperChip(dev) }
+                }
+
+                AnimatedVisibility(
+                    visible = showAuthorNote,
+                    enter = expandVertically() + fadeIn(),
+                    exit = shrinkVertically() + fadeOut()
+                ) {
+                    AuthorNoteCard(
+                        onClose = {
+                            showAuthorNote = false
+                            prefs.edit { putBoolean("show_author_note", false) }
+                        }
+                    )
+                }
+            }
+
+            item {
+                Spacer(modifier = Modifier.height(24.dp))
+                SectionTitle("Special Thanks") // Changed title
+                LazyRow(
+                    contentPadding = PaddingValues(horizontal = 24.dp),
+                    horizontalArrangement = Arrangement.spacedBy(12.dp),
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    items(thanksList) { item -> ThanksCard(item) }
+                }
+            }
+
+            // 4. Donor List
+            item {
+                Spacer(modifier = Modifier.height(24.dp))
+                SectionTitle("Donors") // Changed title
+                LazyRow(
+                    contentPadding = PaddingValues(horizontal = 24.dp),
+                    horizontalArrangement = Arrangement.spacedBy(10.dp), // Moderate spacing
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    items(donorList) { item -> DonorCard(item) }
+                }
+            }
+
+            // 5. Open Source Licenses
+            item {
+                Spacer(modifier = Modifier.height(24.dp))
+                SectionTitle("Licenses") // Changed title
+            }
+
+            // 6. Library List
+            if (isLoading) {
+                item {
+                    Box(modifier = Modifier.fillMaxWidth().padding(32.dp), contentAlignment = Alignment.Center) {
+                        CircularProgressIndicator(strokeWidth = 3.dp)
+                    }
+                }
+            } else if (libraries.isEmpty()) {
+                item {
+                    Text("No information available", modifier = Modifier.padding(16.dp), color = MaterialTheme.colorScheme.outline) // Changed text
+                }
+            } else {
+                itemsIndexed(
+                    items = libraries,
+                    key = { _, lib -> lib.uniqueId }
+                ) { index, lib ->
+                    val shape = when {
+                        libraries.size == 1 -> RoundedCornerShape(16.dp)
+                        index == 0 -> RoundedCornerShape(topStart = 16.dp, topEnd = 16.dp)
+                        index == libraries.lastIndex -> RoundedCornerShape(bottomStart = 16.dp, bottomEnd = 16.dp)
+                        else -> RectangleShape
+                    }
+
+                    Surface(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(horizontal = 24.dp),
+                        color = MaterialTheme.colorScheme.surfaceContainer,
+                        shape = shape
+                    ) {
+                        Column {
+                            ImprovedLibraryListItem(lib = lib, onClick = { selectedLib = lib })
+                            if (index < libraries.lastIndex) {
+                                HorizontalDivider(
+                                    modifier = Modifier.padding(horizontal = 20.dp),
+                                    thickness = 0.5.dp,
+                                    color = MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.3f)
+                                )
+                            }
+                        }
+                    }
+                }
+            }
+
+            item {
+                Spacer(modifier = Modifier.height(32.dp))
+                Text(
+                    text = "Copyright © 2025 WebIDE",
+                    style = MaterialTheme.typography.labelMedium,
+                    color = MaterialTheme.colorScheme.outline
+                )
+            }
+        }
+    }
+
+    if (selectedLib != null) {
+        LibraryDetailDialog(lib = selectedLib!!, onDismiss = { selectedLib = null })
+    }
+}
+
+// Helper function to get QQ avatar URL
+private fun getQQAvatar(qq: String): String {
+    // Using the provided interface, 640 spec for high definition
+    return "https://q.qlogo.cn/headimg_dl?dst_uin=$qq&spec=640&img_type=jpg"
+}
+
+// 1. Special Thanks Card (MD3 Style: Left Avatar + Right Info)
+@Composable
+private fun ThanksCard(item: SpecialThanks) {
+    val context = LocalContext.current
+
+    Card(
+        onClick = {
+            if (item.url.isNotEmpty()) {
+                try {
+                    context.startActivity(Intent(Intent.ACTION_VIEW, item.url.toUri()))
+                } catch (_: Exception) {}
+            }
+        },
+        modifier = Modifier
+            .width(300.dp) // Width
+            .height(110.dp), // Height
+        colors = CardDefaults.cardColors(
+            containerColor = MaterialTheme.colorScheme.surfaceContainer // Soft container color
+        ),
+        shape = RoundedCornerShape(16.dp),
+        elevation = CardDefaults.cardElevation(0.dp)
+    ) {
+        Row(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(16.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            // Avatar Area
+            AsyncImage(
+                model = ImageRequest.Builder(LocalContext.current)
+                    .data(getQQAvatar(item.qq))
+                    .crossfade(true)
+                    .build(),
+                contentDescription = item.name,
+                modifier = Modifier
+                    .size(56.dp) // Slightly larger avatar for prominence
+                    .clip(CircleShape)
+                    .background(MaterialTheme.colorScheme.surfaceVariant), // Background while loading
+                contentScale = androidx.compose.ui.layout.ContentScale.Crop
+            )
+
+            Spacer(modifier = Modifier.width(16.dp))
+
+            // Text Info Area
+            Column(modifier = Modifier.weight(1f)) {
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    Text(
+                        text = item.name,
+                        style = MaterialTheme.typography.titleMedium,
+                        fontWeight = FontWeight.Bold,
+                        color = MaterialTheme.colorScheme.onSurface,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis
+                    )
+                    Spacer(modifier = Modifier.width(8.dp))
+                    // Title Capsule
+                    Surface(
+                        color = MaterialTheme.colorScheme.primaryContainer,
+                        shape = RoundedCornerShape(6.dp)
+                    ) {
+                        Text(
+                            text = item.title,
+                            modifier = Modifier.padding(horizontal = 6.dp, vertical = 2.dp),
+                            style = MaterialTheme.typography.labelSmall,
+                            fontSize = 10.sp,
+                            color = MaterialTheme.colorScheme.onPrimaryContainer
+                        )
+                    }
+                }
+
+                Spacer(modifier = Modifier.height(6.dp))
+
+                // Message
+                Text(
+                    text = item.message,
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    maxLines = 2,
+                    overflow = TextOverflow.Ellipsis,
+                    lineHeight = 16.sp
+                )
+            }
+        }
+    }
+}
+
+// 2. Donor Card (MD3 Style: Compact Vertical Card, Circular Avatar)
+@Composable
+private fun DonorCard(item: Donor) {
+    OutlinedCard(
+        modifier = Modifier
+            .width(100.dp) // Still compact
+            .height(120.dp),
+        colors = CardDefaults.outlinedCardColors(
+            containerColor = MaterialTheme.colorScheme.surface
+        ),
+        border = BorderStroke(1.dp, MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.3f)),
+        shape = RoundedCornerShape(16.dp)
+    ) {
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(8.dp),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center
+        ) {
+            // Small Circular Avatar
+            AsyncImage(
+                model = ImageRequest.Builder(LocalContext.current)
+                    .data(getQQAvatar(item.qq))
+                    .crossfade(true)
+                    .build(),
+                contentDescription = item.name,
+                modifier = Modifier
+                    .size(42.dp)
+                    .clip(CircleShape)
+                    .background(MaterialTheme.colorScheme.surfaceContainerHigh),
+                contentScale = androidx.compose.ui.layout.ContentScale.Crop
+            )
+
+            Spacer(modifier = Modifier.height(8.dp))
+
+            // Name
+            Text(
+                text = item.name,
+                style = MaterialTheme.typography.labelMedium,
+                fontWeight = FontWeight.Medium,
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis,
+                fontSize = 11.sp
+            )
+
+            Spacer(modifier = Modifier.height(6.dp))
+
+            // Amount (highlighted)
+            Surface(
+                color = MaterialTheme.colorScheme.tertiaryContainer.copy(alpha = 0.6f),
+                shape = CircleShape
+            ) {
+                Text(
+                    text = item.amount,
+                    modifier = Modifier.padding(horizontal = 8.dp, vertical = 2.dp),
+                    style = MaterialTheme.typography.labelSmall,
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 10.sp,
+                    color = MaterialTheme.colorScheme.onTertiaryContainer,
+                    maxLines = 1
+                )
+            }
+        }
+    }
+}
+
+@Composable
+private fun AuthorNoteCard(onClose: () -> Unit) {
+    Column {
+        Spacer(modifier = Modifier.height(20.dp))
+        Surface(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 24.dp),
+            color = MaterialTheme.colorScheme.secondaryContainer.copy(alpha = 0.3f),
+            shape = RoundedCornerShape(12.dp)
+        ) {
+            Row(modifier = Modifier.padding(12.dp), verticalAlignment = Alignment.Top) {
+                Icon(Icons.Outlined.Info, null, tint = MaterialTheme.colorScheme.primary, modifier = Modifier.size(20.dp).padding(top = 2.dp))
+                Spacer(modifier = Modifier.width(10.dp))
+                Text(
+                    "This project is developed collaboratively by human developers and AI, exploring the infinite possibilities of code generation.", // Translated message
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurface,
+                    modifier = Modifier.weight(1f)
+                )
+                Spacer(modifier = Modifier.width(8.dp))
+                Icon(
+                    imageVector = Icons.Default.Close,
+                    contentDescription = "Close",
+                    tint = MaterialTheme.colorScheme.onSurfaceVariant,
+                    modifier = Modifier.size(18.dp).clickable { onClose() }
+                )
+            }
+        }
+    }
+}
+
+@Composable
+private fun AppHeaderSection() {
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(vertical = 20.dp),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Surface(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(250.dp),
+        ) {
+            Box(contentAlignment = Alignment.Center) {
+                WebIDE_Icon()
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(top = 20.dp)
+                        .align(Alignment.BottomCenter),
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    Text(
+                        text = "WebIDE",
+                        style = MaterialTheme.typography.headlineSmall,
+                        fontWeight = FontWeight.Bold
+                    )
+
+                    Surface(
+                        color = MaterialTheme.colorScheme.secondaryContainer,
+                        shape = RoundedCornerShape(4.dp),
+                        modifier = Modifier.padding(top = 8.dp)
+                    ) {
+                        Text(
+                            text = "v${BuildConfig.VERSION_NAME}",
+                            modifier = Modifier.padding(horizontal = 6.dp, vertical = 2.dp),
+                            style = MaterialTheme.typography.labelSmall,
+                            color = MaterialTheme.colorScheme.onSecondaryContainer,
+                            fontFamily = FontFamily.Monospace
+                        )
+                    }
+                }
+            }
+        }
+    }
+}
+
+@Composable
+private fun SectionTitle(text: String) {
+    Text(
+        text = text,
+        style = MaterialTheme.typography.labelLarge,
+        color = MaterialTheme.colorScheme.primary,
+        fontWeight = FontWeight.Bold,
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 24.dp, vertical = 12.dp)
+    )
+}
+
+@Composable
+private fun DeveloperChip(dev: Developer) {
+    val context = LocalContext.current
+    Surface(
+        onClick = {
+            if (dev.url.isNotEmpty()) {
+                try {
+                    val intent = Intent(Intent.ACTION_VIEW, dev.url.toUri())
+                    context.startActivity(intent)
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                }
+            }
+        },
+        shape = RoundedCornerShape(8.dp),
+        color = MaterialTheme.colorScheme.secondaryContainer,
+        border = BorderStroke(1.dp, MaterialTheme.colorScheme.outline.copy(alpha = 0.1f))
+    ) {
+        Row(
+            modifier = Modifier.padding(horizontal = 8.dp, vertical = 6.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Box(
+                modifier = Modifier
+                    .size(8.dp)
+                    .clip(CircleShape)
+                    .background(dev.color)
+            )
+            Spacer(modifier = Modifier.width(8.dp))
+            Text(
+                text = dev.name,
+                style = MaterialTheme.typography.labelMedium,
+                fontWeight = FontWeight.Bold,
+                color = MaterialTheme.colorScheme.onSecondaryContainer
+            )
+            Spacer(modifier = Modifier.width(4.dp))
+            Text(
+                text = dev.role,
+                style = MaterialTheme.typography.labelSmall,
+                color = MaterialTheme.colorScheme.onSecondaryContainer.copy(alpha = 0.7f)
+            )
+        }
+    }
+}
+
+@Composable
+private fun ImprovedLibraryListItem(lib: Library, onClick: () -> Unit) {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .clickable(onClick = onClick)
+            .padding(vertical = 14.dp, horizontal = 20.dp),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Column(modifier = Modifier.weight(1f)) {
+            Text(
+                text = lib.name,
+                style = MaterialTheme.typography.titleMedium,
+                fontWeight = FontWeight.SemiBold,
+                color = MaterialTheme.colorScheme.onSurface
+            )
+            val author = lib.developers.firstOrNull()?.name ?: lib.organization?.name
+            val license = lib.licenses.firstOrNull()?.name
+            val subtitle = buildString {
+                if (!author.isNullOrBlank()) append(author)
+                if (!author.isNullOrBlank() && !license.isNullOrBlank()) append("  •  ")
+                if (!license.isNullOrBlank()) append(license)
+            }
+            if (subtitle.isNotEmpty()) {
+                Spacer(modifier = Modifier.height(4.dp))
+                Text(
+                    text = subtitle,
+                    fontSize = 10.sp,
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis
+                )
+            }
+        }
+        Spacer(modifier = Modifier.width(12.dp))
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            if (!lib.artifactVersion.isNullOrEmpty()) {
+                Surface(
+                    color = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.5f),
+                    shape = RoundedCornerShape(6.dp)
+                ) {
+                    Text(
+                        text = "v${lib.artifactVersion}",
+                        modifier = Modifier.padding(horizontal = 6.dp, vertical = 2.dp),
+                        style = MaterialTheme.typography.labelSmall,
+                        fontSize = 10.sp,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        fontFamily = FontFamily.Monospace
+                    )
+                }
+                Spacer(modifier = Modifier.width(8.dp))
+            }
+            Icon(
+                imageVector = Icons.AutoMirrored.Filled.KeyboardArrowRight,
+                contentDescription = null,
+                tint = MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.7f),
+                modifier = Modifier.size(18.dp)
+            )
+        }
+    }
+}
+
+@Composable
+fun LibraryDetailDialog(lib: Library, onDismiss: () -> Unit) {
+    val context = LocalContext.current
+    @Suppress("DEPRECATION")
+    val clipboardManager = LocalClipboardManager.current
+    val licenseText = remember(lib) {
+        if (lib.licenses.isNotEmpty()) {
+            lib.licenses.joinToString("\n\n") { license ->
+                val content = license.licenseContent ?: license.url ?: "See project website for license."
+                content
+            }
+        } else {
+            "No license info."
+        }
+    }
+    Dialog(
+        onDismissRequest = onDismiss,
+        properties = DialogProperties(usePlatformDefaultWidth = false)
+    ) {
+        Card(
+            modifier = Modifier
+                .fillMaxWidth(0.9f)
+                .fillMaxHeight(0.85f)
+                .clip(RoundedCornerShape(24.dp)),
+            colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
+            elevation = CardDefaults.cardElevation(defaultElevation = 8.dp)
+        ) {
+            Column(modifier = Modifier.fillMaxSize()) {
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(100.dp)
+                        .background(
+                            Brush.verticalGradient(
+                                colors = listOf(
+                                    MaterialTheme.colorScheme.primaryContainer,
+                                    MaterialTheme.colorScheme.surface
+                                )
+                            )
+                        )
+                ) {
+                    IconButton(
+                        onClick = onDismiss,
+                        modifier = Modifier
+                            .align(Alignment.TopEnd)
+                            .padding(8.dp)
+                    ) {
+                        Text("✕", style = MaterialTheme.typography.titleMedium)
+                    }
+                }
+                Column(
+                    modifier = Modifier
+                        .offset(y = (-40).dp)
+                        .padding(horizontal = 24.dp)
+                ) {
+                    Surface(
+                        shape = RoundedCornerShape(16.dp),
+                        color = MaterialTheme.colorScheme.primary,
+                        modifier = Modifier.size(64.dp),
+                        shadowElevation = 4.dp
+                    ) {
+                        Box(contentAlignment = Alignment.Center) {
+                            Text(
+                                text = lib.name.take(1).uppercase(),
+                                style = MaterialTheme.typography.headlineMedium,
+                                color = MaterialTheme.colorScheme.onPrimary,
+                                fontWeight = FontWeight.Bold
+                            )
+                        }
+                    }
+                    Spacer(modifier = Modifier.height(12.dp))
+                    Text(
+                        text = lib.name,
+                        style = MaterialTheme.typography.headlineSmall,
+                        fontWeight = FontWeight.Bold
+                    )
+                    val version = lib.artifactVersion
+                    if (version != null) {
+                        Surface(
+                            color = MaterialTheme.colorScheme.secondaryContainer,
+                            shape = RoundedCornerShape(4.dp),
+                            modifier = Modifier.padding(top = 8.dp)
+                        ) {
+                            Text(
+                                text = "v$version",
+                                modifier = Modifier.padding(horizontal = 6.dp, vertical = 2.dp),
+                                style = MaterialTheme.typography.labelSmall,
+                                color = MaterialTheme.colorScheme.onSecondaryContainer,
+                                fontFamily = FontFamily.Monospace
+                            )
+                        }
+                    }
+                }
+                Column(
+                    modifier = Modifier
+                        .weight(1f)
+                        .offset(y = (-20).dp)
+                        .padding(horizontal = 24.dp)
+                ) {
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.SpaceBetween,
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Text(
+                            text = "License", // Changed to English
+                            style = MaterialTheme.typography.titleMedium,
+                            fontWeight = FontWeight.SemiBold
+                        )
+                        IconButton(
+                            onClick = { clipboardManager.setText(AnnotatedString(licenseText)) },
+                            modifier = Modifier.size(32.dp)
+                        ) {
+                            Icon(
+                                Icons.Default.ContentCopy,
+                                contentDescription = "Copy", // Changed to English
+                                modifier = Modifier.size(16.dp),
+                                tint = MaterialTheme.colorScheme.primary
+                            )
+                        }
+                    }
+                    Spacer(modifier = Modifier.height(8.dp))
+                    Surface(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .weight(1f),
+                        color = MaterialTheme.colorScheme.surfaceContainerLow,
+                        shape = RoundedCornerShape(8.dp),
+                        border = BorderStroke(1.dp, MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.3f))
+                    ) {
+                        val scrollState = rememberScrollState()
+                        Text(
+                            text = licenseText,
+                            style = MaterialTheme.typography.bodySmall.copy(
+                                fontFamily = FontFamily.Monospace,
+                                fontSize = 11.sp,
+                                lineHeight = 15.sp
+                            ),
+                            color = MaterialTheme.colorScheme.onSurfaceVariant,
+                            modifier = Modifier
+                                .padding(12.dp)
+                                .verticalScroll(scrollState)
+                        )
+                    }
+                }
+                if (!lib.website.isNullOrBlank()) {
+                    Column(modifier = Modifier.padding(horizontal = 24.dp, vertical = 16.dp)) {
+                        Button(
+                            onClick = {
+                                try {
+                                    val intent = Intent(Intent.ACTION_VIEW, lib.website!!.toUri())
+                                    context.startActivity(intent)
+                                } catch (e: Exception) { e.printStackTrace() }
+                            },
+                            modifier = Modifier.fillMaxWidth(),
+                            shape = RoundedCornerShape(12.dp)
+                        ) {
+                            Icon(Icons.AutoMirrored.Filled.OpenInNew, null, modifier = Modifier.size(18.dp))
+                            Spacer(modifier = Modifier.width(8.dp))
+                            Text("Visit Website") // Changed to English
+                        }
+                    }
+                } else {
+                    Spacer(modifier = Modifier.height(16.dp))
+                }
+            }
+        }
+    }
+}
