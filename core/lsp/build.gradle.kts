@@ -6,7 +6,7 @@ plugins {
 }
 
 android {
-    namespace = "com.scto.mcs.core.data"
+    namespace = "com.scto.mcs.core.editor"
     compileSdk = 36
 
     defaultConfig {
@@ -23,7 +23,8 @@ android {
 }
 
 dependencies {
-    implementation(project(":core:domain"))
+    implementation(project(":core:utils"))
+    implementation(libs.sora.editor)
     implementation(libs.hilt.android)
     kapt(libs.hilt.compiler)
 }

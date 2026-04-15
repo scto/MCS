@@ -1,4 +1,4 @@
-package com.scto.mcs.core.debug
+package com.scto.mcs.core.utils
 
 import android.content.Context
 import androidx.datastore.core.DataStore

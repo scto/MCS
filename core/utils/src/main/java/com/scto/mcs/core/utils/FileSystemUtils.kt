@@ -3,7 +3,9 @@ package com.scto.mcs.core.utils
 import android.content.Context
 import androidx.core.content.FileProvider
 import android.net.Uri
+
 import dagger.hilt.android.qualifiers.ApplicationContext
+
 import java.io.File
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -14,7 +16,6 @@ class FileSystemUtils @Inject constructor(
 ) {
     // Funktionen für Dateizugriffe im mcs Pfad
     // FileProvider Setup Unterstützung
-    
     fun getMcsDirectory(): File {
         return File(context.filesDir, "mcs")
     }
