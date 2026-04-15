@@ -15,7 +15,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-package com.web.webide.ui.editor.aicoding
+package com.scto.mcs.feature.editor.aicoding
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable

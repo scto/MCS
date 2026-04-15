@@ -1,21 +1,4 @@
-/*
- * WebIDE - A powerful IDE for Android web development.
- * Copyright (C) 2025  如日中天  <3382198490@qq.com>
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <https://www.gnu.org/licenses/>.
- */
-package com.web.webide.ui.editor.viewmodel
+package com.scto.mcs.feature.editor
 
 import android.app.Application
 import android.content.Context
@@ -31,12 +14,21 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import com.itsaky.androidide.treesitter.TSLanguage
 import com.itsaky.androidide.treesitter.json.TSLanguageJson
-import com.web.webide.core.utils.BackupUtils
-import com.web.webide.core.utils.LogCatcher
-import com.web.webide.core.utils.PermissionManager
-import com.web.webide.ui.editor.EditorColorSchemeManager
-import com.web.webide.ui.editor.TextMateInitializer
-import com.web.webide.ui.editor.git.GitManager
+import com.scto.mcs.core.data.repository.EditorRepositoryImpl
+import com.scto.mcs.core.domain.repository.EditorRepository
+import com.scto.mcs.core.utils.BackupUtils
+import com.scto.mcs.core.utils.CodeFormatter
+import com.scto.mcs.core.utils.FileSystemUtils
+import com.scto.mcs.core.utils.LogCatcher
+import com.scto.mcs.core.utils.PermissionManager
+import com.scto.mcs.core.lsp.ProotStreamConnectionProvider
+import com.scto.mcs.core.terminal.TerminalEnvironment
+import com.scto.mcs.core.editor.EditorConfigManager
+import com.scto.mcs.feature.editor.EditorColorSchemeManager
+import com.scto.mcs.feature.editor.TextMateInitializer
+import com.scto.mcs.feature.editor.components.MediaType
+import com.scto.mcs.feature.editor.git.GitManager
+import dagger.hilt.android.lifecycle.HiltViewModel
 import io.github.rosemoe.sora.lang.Language
 import io.github.rosemoe.sora.lang.EmptyLanguage
 import io.github.rosemoe.sora.lang.styling.TextStyle
@@ -46,18 +38,22 @@ import io.github.rosemoe.sora.widget.CodeEditor
 import io.github.rosemoe.sora.widget.EditorSearcher
 import io.github.rosemoe.sora.widget.schemes.EditorColorScheme
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import org.eclipse.lsp4j.Diagnostic
 import java.io.File
 import java.io.InputStreamReader
 import java.util.UUID
+import javax.inject.Inject
 
 // TreeSitter
-import io.github.rosemoe.sora.editor.ts.TsLanguage
-import io.github.rosemoe.sora.editor.ts.TsLanguageSpec
 import io.github.rosemoe.sora.editor.ts.CssLanguage
 import io.github.rosemoe.sora.editor.ts.HtmlLanguage
 import io.github.rosemoe.sora.editor.ts.JavaScriptLanguage
+import io.github.rosemoe.sora.editor.ts.TsLanguage
+import io.github.rosemoe.sora.editor.ts.TsLanguageSpec
 
 // TextMate
 import io.github.rosemoe.sora.langs.textmate.TextMateLanguage
@@ -70,15 +66,11 @@ import io.github.rosemoe.sora.langs.textmate.registry.provider.AssetsFileResolve
 import org.eclipse.tm4e.core.registry.IThemeSource
 
 // LSP
+import io.github.rosemoe.sora.lsp.client.languageserver.serverdefinition.CustomLanguageServerDefinition
 import io.github.rosemoe.sora.lsp.editor.LspEditor
 import io.github.rosemoe.sora.lsp.editor.LspProject
-import io.github.rosemoe.sora.lsp.events.EventListener
 import io.github.rosemoe.sora.lsp.events.EventContext
-import io.github.rosemoe.sora.lsp.client.languageserver.serverdefinition.CustomLanguageServerDefinition
-import com.web.webide.lsp.ProotStreamConnectionProvider
-import org.eclipse.lsp4j.Diagnostic
-
-import com.web.webide.ui.editor.components.MediaType
+import io.github.rosemoe.sora.lsp.events.EventListener
 
 // ================== 核心数据结构 ==================
 
@@ -150,14 +142,62 @@ data class EditorConfig(
 
 // ================== ViewModel 实现 ==================
 
-class EditorViewModel(application: Application) : AndroidViewModel(application) {
+@HiltViewModel
+class EditorViewModel @Inject constructor(
+    application: Application,
+    private val editorRepository: EditorRepository,
+    private val fileSystemUtils: FileSystemUtils,
+    // Retain existing dependencies from original EditorViewModel
+    private val terminalEnvironment: TerminalEnvironment,
+    val editorConfigManager: EditorConfigManager
+) : AndroidViewModel(application) {
+
+    // Existing UI State for build output
+    private val _buildUiState = MutableStateFlow(BuildUiState())
+    val buildUiState: StateFlow<BuildUiState> = _buildUiState
+
+    // Existing build project function
+    fun buildProject(projectPath: String) {
+        viewModelScope.launch {
+            _buildUiState.value = BuildUiState(buildOutput = application.getString(R.string.editor_action_building))
+
+            val output = withContext(Dispatchers.IO) {
+                try {
+                    val gradlew = File(projectPath, "gradlew")
+                    if (gradlew.exists()) {
+                        gradlew.setExecutable(true)
+                    }
+
+                    val process = ProcessBuilder("./gradlew", "assembleDebug")
+                        .directory(File(projectPath))
+                        .environment().apply {
+                            put("JAVA_HOME", terminalEnvironment.getEnv("JAVA_HOME") ?: "")
+                            put("ANDROID_HOME", terminalEnvironment.getEnv("ANDROID_HOME") ?: "")
+                        }
+                        .redirectErrorStream(true)
+                        .start()
+
+                    process.inputStream.bufferedReader().readText()
+                } catch (e: Exception) {
+                    "Build failed: ${e.message}" // This message remains hardcoded as it includes an exception detail
+                }
+            }
+
+            _buildUiState.value = BuildUiState(buildOutput = output)
+        }
+    }
+
+    // New data class to separate build output state
+    data class BuildUiState(
+        val buildOutput: String = ""
+    )
 
     var hasShownInitialLoader by mutableStateOf(false)
         private set
 
     var openFiles by mutableStateOf<List<IEditorTab>>(emptyList())
         private set
-    
+
     // History of closed files (Max 20)
     var closedFilesHistory by mutableStateOf<List<IEditorTab>>(emptyList())
         private set
@@ -200,21 +240,17 @@ class EditorViewModel(application: Application) : AndroidViewModel(application) 
         saveToFile: Boolean = false
     ) {
         val canonicalPath = try { file.canonicalPath } catch (_: Exception) { file.absolutePath }
-        
+
         // 1. Sync to Physical File (if requested)
         if (saveToFile) {
             viewModelScope.launch(Dispatchers.IO) {
-                try {
-                    file.writeText(newContent)
-                } catch (e: Exception) {
-                    e.printStackTrace()
-                }
+                editorRepository.saveFile(file, newContent)
             }
         }
 
         // 2. Sync to CodeEditorState
         openFiles.filterIsInstance<CodeEditorState>()
-            .find { 
+            .find {
                 val p = try { it.file.canonicalPath } catch (_: Exception) { it.file.absolutePath }
                 p == canonicalPath
             }?.let { state ->
@@ -252,15 +288,16 @@ class EditorViewModel(application: Application) : AndroidViewModel(application) 
                         val cursor = editor.cursor
                         val line = cursor.leftLine
                         val column = cursor.leftColumn
-                        
+
                         editor.setText(newContent)
-                        
+
                         // Try to preserve cursor
                         try {
                             if (line < editor.text.lineCount) {
                                 editor.setSelection(line, column.coerceAtMost(editor.text.getColumnCount(line)))
                             }
                         } catch (_: Exception) {}
+                        // No need for editor.invalidate() here, setText() already handles redraw.
                     }
                 }
             }
@@ -342,7 +379,6 @@ class EditorViewModel(application: Application) : AndroidViewModel(application) 
         }
     }
 
-    // 🔥 修复报错: 补充 reloadAllEditors 方法
     fun reloadAllEditors(context: Context) {
         viewModelScope.launch(Dispatchers.Main) {
             val currentIndex = activeFileIndex
@@ -371,11 +407,11 @@ class EditorViewModel(application: Application) : AndroidViewModel(application) 
 
     fun openDiff(projectPath: String, file: File) {
         viewModelScope.launch {
-            val gitManager = GitManager(projectPath)
+            // GitManager now needs a File object for its constructor
+            val projectFile = File(projectPath)
+            val gitManager = GitManager(projectFile)
             val headContent = gitManager.getFileContentAtHead(file.absolutePath)
-            val currentContent = withContext(Dispatchers.IO) {
-                try { file.readText() } catch (_: Exception) { "" }
-            }
+            val currentContent = editorRepository.readFile(file)
 
             val diffState = DiffEditorState(file, headContent, currentContent)
             val existingIndex = openFiles.indexOfFirst {
@@ -393,18 +429,16 @@ class EditorViewModel(application: Application) : AndroidViewModel(application) 
 
     fun updateDiffContent(state: DiffEditorState, newContent: String) {
         // Use centralized sync logic
-        // sourceInstance is null because DiffViewer manages its own editor instance separately, 
+        // sourceInstance is null because DiffViewer manages its own editor instance separately,
         // but we want to update the main editor instances if they exist.
         // saveToFile = true because Diff view changes are meant to be persisted immediately (per user request)
         onContentChanged(
             file = state.file,
             newContent = newContent,
-            sourceInstance = null, 
+            sourceInstance = null,
             saveToFile = true
         )
     }
-
-
 
     private fun loadTreeSitterLanguage(context: Context, extension: String): TsLanguage? {
         try {
@@ -497,7 +531,7 @@ class EditorViewModel(application: Application) : AndroidViewModel(application) 
                 "yaml", "yml" -> "source.yaml"
                 else -> return null
             }
-            val prefs = context.getSharedPreferences("WebIDE_Editor_Settings", Context.MODE_PRIVATE)
+            val prefs = context.getSharedPreferences("MCS_Editor_Settings", Context.MODE_PRIVATE) // Updated name
             val lspEnabled = prefs.getBoolean("editor_lsp_enabled", false)
             TextMateLanguage.create(scopeName, !lspEnabled)
         } catch (_: Exception) { null }
@@ -536,9 +570,7 @@ class EditorViewModel(application: Application) : AndroidViewModel(application) 
                     openFiles = openFiles + newState
                     activeFileIndex = openFiles.lastIndex
                 } else {
-                    val content = withContext(Dispatchers.IO) {
-                        try { file.readText(Charsets.UTF_8) } catch (_: Exception) { "" }
-                    }
+                    val content = editorRepository.readFile(file)
                     val newState = CodeEditorState(file = file)
                     newState.onContentLoaded(content)
                     openFiles = openFiles + newState
@@ -559,7 +591,7 @@ class EditorViewModel(application: Application) : AndroidViewModel(application) 
 
             modifiedFiles.forEach { state ->
                 try {
-                    state.file.writeText(state.content)
+                    editorRepository.saveFile(state.file, state.content)
                     state.onContentSaved()
                     successCount++
                 } catch (e: Exception) {
@@ -570,17 +602,17 @@ class EditorViewModel(application: Application) : AndroidViewModel(application) 
             }
 
             val message = if (failCount == 0) {
-                "已保存 $successCount 个文件"
+                application.getString(R.string.editor_action_save) + " " + successCount + " files"
             } else {
-                "保存完成: $successCount 成功, $failCount 失败\n最后错误: $lastError"
+                application.getString(R.string.editor_action_save) + " complete: " + successCount + " successful, " + failCount + " failed\nLast error: " + lastError
             }
 
             withContext(Dispatchers.Main) {
-                viewModelScope.launch { 
+                viewModelScope.launch {
                     snackbarHostState.showSnackbar(message)
                 }
             }
-            
+
             failCount == 0
         }
     }
@@ -693,7 +725,7 @@ class EditorViewModel(application: Application) : AndroidViewModel(application) 
             if (modifiedFiles.isNotEmpty()) {
                 modifiedFiles.forEach { state ->
                     try {
-                        state.file.writeText(state.content)
+                        editorRepository.saveFile(state.file, state.content)
                         state.onContentSaved()
                     } catch (_: Exception) {}
                 }
@@ -703,7 +735,7 @@ class EditorViewModel(application: Application) : AndroidViewModel(application) 
     }
 
     fun reloadEditorConfig(context: Context) {
-        val prefs = context.getSharedPreferences("WebIDE_Editor_Settings", Context.MODE_PRIVATE)
+        val prefs = context.getSharedPreferences("MCS_Editor_Settings", Context.MODE_PRIVATE)
         editorConfig = EditorConfig(
             fontSize = prefs.getFloat("editor_font_size", 14f),
             tabWidth = prefs.getInt("editor_tab_width", 4),
@@ -728,7 +760,7 @@ class EditorViewModel(application: Application) : AndroidViewModel(application) 
     fun updateEditorTheme(colorScheme: ColorScheme) {
         editorInstances.values.forEach { editor ->
             EditorColorSchemeManager.applyThemeColors(editor.colorScheme, colorScheme)
-            
+
             // Re-apply rainbow colors if needed (as applying theme colors might reset some custom colors)
             if (editor.editorLanguage is TsLanguage) {
                 configureRainbowColors(editor.colorScheme)
@@ -791,22 +823,22 @@ class EditorViewModel(application: Application) : AndroidViewModel(application) 
                 // Ensure we are deleting everything from (0,0) to the last character
                 val lastLineIndex = text.lineCount - 1
                 val lastColumnIndex = text.getColumnCount(lastLineIndex)
-                
+
                 // If the file is empty, just insert
                 if (text.isEmpty()) {
                     text.insert(0, 0, newContent)
                 } else {
                     text.replace(0, 0, lastLineIndex, lastColumnIndex, newContent)
                 }
-                
-                // Update the state as well, but rely on listener for content sync usually. 
+
+                // Update the state as well, but rely on listener for content sync usually.
                 // However, since we modify programmatically, the listener will trigger.
-                // We just need to ensure savedContent is updated if we consider this "saved" 
+                // We just need to ensure savedContent is updated if we consider this "saved"
                 // but usually "undo" implies it's an edit in the buffer.
                 // If the user "Saved" in the config screen, they expect it to be on disk too.
                 // So we should also update savedContent to avoid "unsaved" indicator.
                 (openFiles.getOrNull(activeFileIndex) as? CodeEditorState)?.savedContent = newContent
-                
+
             } catch (e: Exception) {
                 e.printStackTrace()
             }
@@ -823,7 +855,7 @@ class EditorViewModel(application: Application) : AndroidViewModel(application) 
         viewModelScope.launch(Dispatchers.Default) {
             try {
                 val original = editor.text.toString()
-                val formatted = com.web.webide.core.utils.CodeFormatter.format(original, ext, editorConfig.tabWidth)
+                val formatted = CodeFormatter.format(original, ext, editorConfig.tabWidth)
                 if (formatted != original) {
                     withContext(Dispatchers.Main) {
                         editor.setText(formatted)
@@ -853,7 +885,7 @@ class EditorViewModel(application: Application) : AndroidViewModel(application) 
     private fun setupLspForEditor(context: Context, state: CodeEditorState, editor: CodeEditor, language: Language?) {
         val fileExtension = state.file.extension.lowercase()
         if (fileExtension !in listOf("html", "htm", "css", "js", "javascript", "php", "c", "h", "cpp", "hpp", "glsl", "vert", "frag", "json", "ts", "typescript", "tsx")) return
-        val prefs = context.getSharedPreferences("WebIDE_Editor_Settings", Context.MODE_PRIVATE)
+        val prefs = context.getSharedPreferences("MCS_Editor_Settings", Context.MODE_PRIVATE) // Updated name
         if (!prefs.getBoolean("editor_lsp_enabled", false) || language == null) return
 
         try {
@@ -868,7 +900,6 @@ class EditorViewModel(application: Application) : AndroidViewModel(application) 
             if (!realFile.exists()) realFile.writeText(state.content)
 
             if (!addedLspDefinitions.contains(fileExtension)) {
-                // 🔥 修复报错: 使用具名参数调用
                 val def = when(fileExtension) {
                     "html", "htm" -> CustomLanguageServerDefinition(ext = "html", serverConnectProvider = { ProotStreamConnectionProvider(context, listOf("vscode-html-language-server", "--stdio")) })
                     "css" -> CustomLanguageServerDefinition(ext = "css", serverConnectProvider = { ProotStreamConnectionProvider(context, listOf("vscode-css-language-server", "--stdio")) })
@@ -886,7 +917,7 @@ class EditorViewModel(application: Application) : AndroidViewModel(application) 
             lspEditor.wrapperLanguage = language
             lspEditor.editor = editor
             state.lspEditor = lspEditor
-            
+
             lspEditor.eventManager.addEventListener(object : EventListener {
                 override val eventName = "editor/publishDiagnostics"
                 override fun handle(context: EventContext) {

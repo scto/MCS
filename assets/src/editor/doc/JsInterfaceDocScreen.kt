@@ -16,7 +16,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.web.webide.ui.editor.doc
+package com.scto.mcs.feature.editor.doc
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.clickable
@@ -37,6 +37,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
@@ -47,6 +48,7 @@ import com.mikepenz.markdown.compose.elements.MarkdownHighlightedCodeFence
 import com.mikepenz.markdown.m3.Markdown
 import com.mikepenz.markdown.m3.elements.MarkdownCheckBox
 import com.mikepenz.markdown.model.rememberMarkdownState
+import com.scto.mcs.feature.editor.R
 import dev.snipme.highlights.Highlights
 import dev.snipme.highlights.model.SyntaxThemes
 import kotlinx.coroutines.launch
@@ -92,7 +94,7 @@ fun JsInterfaceDocScreen(navController: NavController) {
                 val reader = BufferedReader(InputStreamReader(inputStream))
                 docContent = reader.use { it.readText() }
             } catch (e: Exception) {
-                docContent = "# Error loading documentation\n\n${e.message}"
+                docContent = context.getString(R.string.doc_error_loading_content, e.message)
             }
         }
     }
@@ -130,7 +132,7 @@ fun JsInterfaceDocScreen(navController: NavController) {
                             TextField(
                                 value = searchQuery,
                                 onValueChange = { searchQuery = it },
-                                placeholder = { Text("Search...") },
+                                placeholder = { Text(stringResource(R.string.doc_search_hint)) },
                                 singleLine = true,
                                 modifier = Modifier
                                     .fillMaxWidth()
@@ -144,7 +146,7 @@ fun JsInterfaceDocScreen(navController: NavController) {
                                 trailingIcon = {
                                     if (searchQuery.isNotEmpty()) {
                                         IconButton(onClick = { searchQuery = "" }) {
-                                            Icon(Icons.Default.Close, "Clear")
+                                            Icon(Icons.Default.Close, stringResource(R.string.doc_clear_search_button_desc))
                                         }
                                     }
                                 }
@@ -153,7 +155,7 @@ fun JsInterfaceDocScreen(navController: NavController) {
                                 focusRequester.requestFocus()
                             }
                         } else {
-                            Text("接口文档")
+                            Text(stringResource(R.string.doc_screen_title))
                         }
                     },
                     navigationIcon = {
@@ -165,13 +167,13 @@ fun JsInterfaceDocScreen(navController: NavController) {
                                 navController.popBackStack()
                             }
                         }) {
-                            Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back")
+                            Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = stringResource(R.string.doc_back_button_desc))
                         }
                     },
                     actions = {
                         if (!isSearchActive) {
                             IconButton(onClick = { isSearchActive = true }) {
-                                Icon(Icons.Default.Search, contentDescription = "Search")
+                                Icon(Icons.Default.Search, contentDescription = stringResource(R.string.doc_search_button_desc))
                             }
                         }
                     }

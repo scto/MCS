@@ -1,4 +1,4 @@
-package com.web.webide.ui.editor
+package com.scto.mcs.feature.editor
 
 import android.content.Context
 import io.github.rosemoe.sora.langs.textmate.registry.FileProviderRegistry

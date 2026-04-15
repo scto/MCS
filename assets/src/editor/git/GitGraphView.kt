@@ -15,7 +15,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-package com.web.webide.ui.editor.git
+package com.scto.mcs.feature.editor.git
 
 import android.content.ClipData
 import android.content.ClipboardManager
@@ -38,11 +38,13 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.scto.mcs.feature.editor.R
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -231,7 +233,7 @@ fun GitLogItemAligned(commit: GitCommitUI) {
                         Icons.Default.ContentCopy, null,
                         Modifier.size(12.dp).clickable {
                             val clipboard = context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
-                            val clip = ClipData.newPlainText("Hash", commit.hash)
+                            val clip = ClipData.newPlainText(context.getString(R.string.git_copy_hash_button_desc), commit.hash)
                             clipboard.setPrimaryClip(clip)
                         },
                         tint = MaterialTheme.colorScheme.outline

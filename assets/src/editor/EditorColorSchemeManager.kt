@@ -17,7 +17,7 @@
  */
 
 
-package com.web.webide.ui.editor
+package com.scto.mcs.feature.editor
 
 import android.graphics.Color as AndroidColor
 import androidx.compose.material3.ColorScheme
@@ -28,7 +28,7 @@ object EditorColorSchemeManager {
 
     /**
      * 将 Material 主题色应用到现有的 EditorColorScheme
-     * 直接使用 Compose 的 ColorScheme，无需重复计算 HCT
+     * 直接使用 Compose 的 ColorScheme, ohne Wiederholung der HCT-Berechnung
      */
     fun applyThemeColors(scheme: EditorColorScheme, colorScheme: ColorScheme) {
         val primary = colorScheme.primary.toArgb()
@@ -38,64 +38,64 @@ object EditorColorSchemeManager {
         val onSurfaceVariant = colorScheme.onSurfaceVariant.toArgb()
 
         scheme.apply {
-            // 只更新基础背景和文本颜色
+            // Nur grundlegende Hintergrund- und Textfarben aktualisieren
             setColor(EditorColorScheme.WHOLE_BACKGROUND, background)
             setColor(EditorColorScheme.LINE_NUMBER_BACKGROUND, surface)
             setColor(EditorColorScheme.LINE_DIVIDER, surfaceVariant)
             setColor(EditorColorScheme.LINE_NUMBER, onSurfaceVariant)
             setColor(EditorColorScheme.LINE_NUMBER_CURRENT, primary)
             
-            // 当前行高亮
+            // Hervorhebung der aktuellen Zeile
             setColor(EditorColorScheme.CURRENT_LINE, adjustAlpha(surfaceVariant, 0.3f))
             
-            // 选择相关
+            // Auswahlbezogen
             setColor(EditorColorScheme.SELECTED_TEXT_BACKGROUND, adjustAlpha(primary, 0.25f))
             setColor(EditorColorScheme.SELECTION_INSERT, primary)
             setColor(EditorColorScheme.SELECTION_HANDLE, primary)
             
-            // 滚动条
+            // Scrollbalken
             setColor(EditorColorScheme.SCROLL_BAR_THUMB, adjustAlpha(onSurfaceVariant, 0.3f))
             setColor(EditorColorScheme.SCROLL_BAR_THUMB_PRESSED, adjustAlpha(primary, 0.5f))
             
-            // 自动完成窗口
+            // Auto-Vervollständigungsfenster
             setColor(EditorColorScheme.COMPLETION_WND_BACKGROUND, surface)
             setColor(EditorColorScheme.COMPLETION_WND_CORNER, surfaceVariant)
             setColor(EditorColorScheme.COMPLETION_WND_ITEM_CURRENT, adjustAlpha(primary, 0.2f))
             
-            // 文本操作弹窗 (双击/长按弹出的菜单)
+            // Textoperations-Popup (Menü, das bei Doppelklick/Langdruck erscheint)
             setColor(EditorColorScheme.TEXT_ACTION_WINDOW_BACKGROUND, surface)
             setColor(EditorColorScheme.TEXT_ACTION_WINDOW_ICON_COLOR, primary)
             
-            // 括号匹配
+            // Klammerabgleich
             setColor(EditorColorScheme.HIGHLIGHTED_DELIMITERS_FOREGROUND, primary)
             setColor(EditorColorScheme.HIGHLIGHTED_DELIMITERS_BACKGROUND, AndroidColor.TRANSPARENT)
             setColor(EditorColorScheme.HIGHLIGHTED_DELIMITERS_BORDER, AndroidColor.TRANSPARENT)
             setColor(EditorColorScheme.HIGHLIGHTED_DELIMITERS_UNDERLINE, primary)
             
-            // 下划线
+            // Unterstrich
             setColor(EditorColorScheme.UNDERLINE, primary)
             
-            // 代码块线条
+            // Codeblock-Linien
             setColor(EditorColorScheme.BLOCK_LINE, surfaceVariant)
             setColor(EditorColorScheme.BLOCK_LINE_CURRENT, primary)
             setColor(EditorColorScheme.SIDE_BLOCK_LINE, surfaceVariant)
             
-            // 确保文本颜色适配深色/浅色模式 (针对 TreeSitter 或默认编辑器)
+            // Sicherstellen der Textfarbanpassung für dunklen/hellen Modus (für TreeSitter oder Standardeditor)
             val onBackground = colorScheme.onBackground.toArgb()
             setColor(EditorColorScheme.TEXT_NORMAL, onBackground)
             
-            // 如果是浅色模式，优化 TreeSitter 的默认高亮颜色 (简单的覆盖，防止看不清)
+            // Im Light-Modus die Standard-Highlight-Farben von TreeSitter optimieren (einfache Überschreibung, um Lesbarkeit zu gewährleisten)
             if (!isDarkScheme(this)) {
-                 setColor(EditorColorScheme.KEYWORD, 0xFF0000FF.toInt()) // 蓝色关键字
-                 setColor(EditorColorScheme.COMMENT, 0xFF008000.toInt()) // 绿色注释
-                 setColor(EditorColorScheme.LITERAL, 0xFF098658.toInt()) // 深绿数字/常量
-                 setColor(EditorColorScheme.OPERATOR, 0xFF333333.toInt()) // 深灰操作符
-                 setColor(EditorColorScheme.IDENTIFIER_NAME, 0xFF001080.toInt()) // 深蓝标识符
-                 setColor(EditorColorScheme.IDENTIFIER_VAR, 0xFF001080.toInt()) // 深蓝变量
-                 setColor(EditorColorScheme.FUNCTION_NAME, 0xFF795E26.toInt()) // 金色函数名
-                 setColor(EditorColorScheme.ATTRIBUTE_NAME, 0xFF001080.toInt()) // 属性名
-                 setColor(EditorColorScheme.ATTRIBUTE_VALUE, 0xFFA31515.toInt()) // 属性值
-                 setColor(EditorColorScheme.HTML_TAG, 0xFF800000.toInt()) // HTML标签
+                 setColor(EditorColorScheme.KEYWORD, 0xFF0000FF.toInt()) // Blauer Schlüsselwort
+                 setColor(EditorColorScheme.COMMENT, 0xFF008000.toInt()) // Grüner Kommentar
+                 setColor(EditorColorScheme.LITERAL, 0xFF098658.toInt()) // Dunkelgrüne Zahlen/Konstanten
+                 setColor(EditorColorScheme.OPERATOR, 0xFF333333.toInt()) // Dunkelgraue Operatoren
+                 setColor(EditorColorScheme.IDENTIFIER_NAME, 0xFF001080.toInt()) // Dunkelblauer Bezeichner
+                 setColor(EditorColorScheme.IDENTIFIER_VAR, 0xFF001080.toInt()) // Dunkelblaue Variable
+                 setColor(EditorColorScheme.FUNCTION_NAME, 0xFF795E26.toInt()) // Goldener Funktionsname
+                 setColor(EditorColorScheme.ATTRIBUTE_NAME, 0xFF001080.toInt()) // Attributname
+                 setColor(EditorColorScheme.ATTRIBUTE_VALUE, 0xFFA31515.toInt()) // Attributwert
+                 setColor(EditorColorScheme.HTML_TAG, 0xFF800000.toInt()) // HTML-Tag
             }
         }
     }
@@ -109,16 +109,16 @@ object EditorColorSchemeManager {
     }
 
     /**
-     * 获取 Diff 视图的新增行背景色
+     * Die Hintergrundfarbe für hinzugefügte Zeilen in der Diff-Ansicht abrufen
      */
     fun getDiffAddColor(scheme: EditorColorScheme): Int {
         val isDark = isDarkScheme(scheme)
-        // 深色模式下用深绿，浅色模式下用浅绿，或者统一用半透明绿
+        // Im dunklen Modus dunkles Grün, im hellen Modus helles Grün, oder einheitlich halbtransparentes Grün
         return if (isDark) 0x401B5E20 else 0x40A5D6A7
     }
 
     /**
-     * 获取 Diff 视图的删除行背景色
+     * Die Hintergrundfarbe für gelöschte Zeilen in der Diff-Ansicht abrufen
      */
     fun getDiffDeleteColor(scheme: EditorColorScheme): Int {
         val isDark = isDarkScheme(scheme)
@@ -126,7 +126,7 @@ object EditorColorSchemeManager {
     }
 
     /**
-     * 获取 Diff 视图的新增行背景色 (Word Level)
+     * Die Hintergrundfarbe für hinzugefügte Wörter in der Diff-Ansicht abrufen (Wortebene)
      */
     fun getDiffAddWordColor(scheme: EditorColorScheme): Int {
         val isDark = isDarkScheme(scheme)
@@ -134,7 +134,7 @@ object EditorColorSchemeManager {
     }
 
     /**
-     * 获取 Diff 视图的删除行背景色 (Word Level)
+     * Die Hintergrundfarbe für gelöschte Wörter in der Diff-Ansicht abrufen (Wortebene)
      */
     fun getDiffDeleteWordColor(scheme: EditorColorScheme): Int {
         val isDark = isDarkScheme(scheme)
@@ -143,7 +143,7 @@ object EditorColorSchemeManager {
 
     private fun isDarkScheme(scheme: EditorColorScheme): Boolean {
         val bg = scheme.getColor(EditorColorScheme.WHOLE_BACKGROUND)
-        // 简单计算亮度，如果 R/G/B 平均值小于 128 认为是深色
+        // Einfache Helligkeitsberechnung: Wenn der Durchschnitt von R/G/B unter 128 liegt, wird es als dunkel betrachtet.
         val r = AndroidColor.red(bg)
         val g = AndroidColor.green(bg)
         val b = AndroidColor.blue(bg)

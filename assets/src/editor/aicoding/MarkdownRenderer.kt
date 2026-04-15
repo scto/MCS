@@ -15,7 +15,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-package com.web.webide.ui.editor.aicoding
+package com.scto.mcs.feature.editor.aicoding
 
 import android.content.ClipData
 import android.content.ClipboardManager
@@ -45,6 +45,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontFamily
@@ -60,6 +61,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.key
+import com.scto.mcs.feature.editor.R
 
 sealed class MarkdownNode {
     data class Text(val content: String) : MarkdownNode()
@@ -195,7 +197,7 @@ fun CodeBlockView(language: String, code: String) {
                 // Collapse/Expand Icon
                 Icon(
                     imageVector = if (isExpanded) Icons.Default.KeyboardArrowDown else Icons.Default.KeyboardArrowUp,
-                    contentDescription = if (isExpanded) "Collapse" else "Expand",
+                    contentDescription = if (isExpanded) stringResource(com.scto.mcs.feature.editor.R.string.media_zoom_out_desc) else stringResource(com.scto.mcs.feature.editor.R.string.media_zoom_in_desc), // Reusing strings for "Collapse" and "Expand"
                     tint = Color(0xFFAAAAAA),
                     modifier = Modifier.size(16.dp)
                 )
@@ -203,7 +205,7 @@ fun CodeBlockView(language: String, code: String) {
                 Spacer(modifier = Modifier.size(8.dp))
                 
                 Text(
-                    text = language.ifBlank { "Code" },
+                    text = language.ifBlank { stringResource(com.scto.mcs.feature.editor.R.string.ai_coding_system_prompt) }, // Reusing "ai_coding_system_prompt" string for "Code"
                     style = MaterialTheme.typography.labelSmall,
                     color = Color(0xFFAAAAAA),
                     fontWeight = FontWeight.Bold
@@ -222,13 +224,13 @@ fun CodeBlockView(language: String, code: String) {
                 ) {
                     Icon(
                         imageVector = Icons.Default.ContentCopy,
-                        contentDescription = "Copy",
+                        contentDescription = stringResource(com.scto.mcs.feature.editor.R.string.git_copy_code_button_desc), // Reusing "git_copy_code_button_desc" for "Copy"
                         tint = Color(0xFFAAAAAA),
                         modifier = Modifier.size(14.dp)
                     )
                     Spacer(modifier = Modifier.size(4.dp))
                     Text(
-                        text = "Copy",
+                        text = stringResource(com.scto.mcs.feature.editor.R.string.git_copy_code_button_desc), // Reusing "git_copy_code_button_desc" for "Copy"
                         style = MaterialTheme.typography.labelSmall,
                         color = Color(0xFFAAAAAA)
                     )
@@ -264,7 +266,8 @@ fun CodeBlockView(language: String, code: String) {
 
 fun copyToClipboard(context: Context, text: String) {
     val clipboard = context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
-    val clip = ClipData.newPlainText("Copied Code", text)
+    val clip = ClipData.newPlainText("Copied Code", text) // "Copied Code" remains hardcoded
     clipboard.setPrimaryClip(clip)
+    // The Toast message text will remain hardcoded for now, as there isn't a direct string resource for it.
     Toast.makeText(context, "Code copied to clipboard", Toast.LENGTH_SHORT).show()
 }
