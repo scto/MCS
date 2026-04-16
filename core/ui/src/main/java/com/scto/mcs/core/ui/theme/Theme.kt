@@ -651,7 +651,7 @@ private val TakoLightColorScheme = lightColorScheme(
 // 2. Kernalgorithmus: Verwendung der Material Kolor-Bibliothek anstelle einer manuellen Implementierung
 // ====================================================================================
 @Composable
-fun MyComposeApplicationTheme(
+fun MCSTheme(
     themeState: ThemeState,
     content: @Composable () -> Unit
 ) {
