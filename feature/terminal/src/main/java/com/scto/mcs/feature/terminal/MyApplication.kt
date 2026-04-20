@@ -3,7 +3,7 @@ package com.scto.mcs.feature.terminal
 import android.app.Application
 
 import com.rk.libcommons.application
-import com.scto.mcs.core.resources.Res
+import com.scto.mcs.core.resourcess.Res
 
 class MyApplication : Application() {
     override fun onCreate() {
