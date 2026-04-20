@@ -72,7 +72,7 @@ enum class AutoSaveOption(val label: String, val interval: Long) {
 
 // 扩展函数解决 luminance 报错
 fun Color.luminance(): Float {
-    return 0.2126f * this.red + 0.7152f * this.green + 0.0722f * this.blue
+    return 0.2126f * this.red + 0.7152f * this.green + 0.722f * this.blue
 }
 
 private val PRESET_FONTS = listOf(
