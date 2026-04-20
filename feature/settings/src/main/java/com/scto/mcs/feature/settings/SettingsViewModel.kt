@@ -14,7 +14,7 @@ class SettingsViewModel @Inject constructor() : ViewModel() {
     private val _uiState = MutableStateFlow(SettingsState())
     val uiState: StateFlow<SettingsState> = _uiState
 
-    // Mock-Daten für die UI-Integration
+    // Initialisierung der States
     val themeState = ThemeState(
         selectedModeIndex = 0,
         selectedThemeIndex = 0,
@@ -25,10 +25,10 @@ class SettingsViewModel @Inject constructor() : ViewModel() {
     val logConfigState = LogConfigState()
 
     fun updateTheme(modeIndex: Int, themeIndex: Int, customColor: androidx.compose.ui.graphics.Color, isMonet: Boolean, isCustom: Boolean) {
-        // Implementierung der Theme-Logik
+        // Logik zur Aktualisierung des Themes
     }
 
     fun updateLogConfig(enabled: Boolean, filePath: String) {
-        // Implementierung der Log-Logik
+        // Logik zur Aktualisierung der Log-Konfiguration
     }
 }

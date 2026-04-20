@@ -37,4 +37,6 @@ dependencies {
     
     implementation(project(":core:ui"))
     implementation(project(":core:navigation"))
+    implementation(project(":core:utils"))
+    implementation(project(":feature:editor"))
 }
