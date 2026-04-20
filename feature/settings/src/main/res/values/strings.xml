@@ -32,7 +32,7 @@
     <string name="settings_editor_show_whitespace_label">Show Whitespace</string>
     <string name="settings_editor_code_folding_label">Code Folding</string>
     <string name="settings_editor_custom_symbols_label">Custom Symbols</string>
-    <string name="settings_editor_custom_symbols_placeholder">Tab, &lt;, >, /, =, \"', !, ?, ;, :, {, }, [, ], (, +, -, *, _, &, |</string>
+    <string name="settings_editor_custom_symbols_placeholder">Tab, &lt;, &gt;, /, =, &quot;&apos;, !, ?, ;, :, {, }, [, ], (, +, -, *, _, &amp;, |</string>
 
     <!-- Theme Settings -->
     <string name="settings_theme_dynamic_color_label">Dynamic Color</string>
