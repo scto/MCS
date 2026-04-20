@@ -6,4 +6,5 @@ object Routes {
     const val DASHBOARD = "dashboard"
     const val EDITOR = "editor/{projectPath}"
     const val SETTINGS = "settings"
+    const val TERMINAL = "terminal"
 }

@@ -1,6 +1,7 @@
 package com.scto.mcs.core.navigation.di
 
 import com.scto.mcs.core.navigation.NavigationManager
+
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
