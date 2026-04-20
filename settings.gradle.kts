@@ -41,7 +41,8 @@ val modules = listOf(
     ":feature:dashboard",
     ":feature:editor",
     ":feature:settings",
-    ":feature:debug"
+    ":feature:debug",
+    ":feature:terminal"
 )
 
 modules.forEach { module ->
@@ -49,4 +50,3 @@ modules.forEach { module ->
     val path = module.substring(1).replace(":", "/")
     project(module).projectDir = file(path)
 }
-include(":feature:projects")
