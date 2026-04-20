@@ -28,6 +28,32 @@ run_aider() {
     exit 0
 }
 
+choose_run_mode() {
+    local model=$1
+    local base_flags=$2
+
+    while true; do
+        clear
+        echo -e "${C}=== AUSFÜHRUNGSMODUS ===${NC}"
+        echo -e "Modell: ${W}$model${NC}"
+        echo -e "------------------------------------------------------"
+        echo -e "${G}1) Run Aider Console${NC}"
+        echo -e "${C}2) Run Aider Browser${NC}"
+        echo -e "------------------------------------------------------"
+        echo -e "${Y}0) Zurück${NC}"
+        read -p "Wahl: " run_choice
+
+        case $run_choice in
+            1) run_aider "$model" "$base_flags" ;;
+            2) 
+                run_aider "$model" "$base_flags --browser" 
+                ;;
+            0) return ;;
+            *) echo -e "${R}Ungültige Eingabe!${NC}"; sleep 1 ;;
+        esac
+    done
+}
+
 # ==========================================
 # SUB-MENÜS FÜR GEMINI
 # ==========================================
@@ -72,7 +98,7 @@ menu_gemini_flash() {
             IFS='|' read -r name id desc <<< "${mods[$((c-1))]}"
             local f=""
             [[ "$id" == *"computer-use"* ]] && f="--browser"
-            run_aider "$id" "$f"
+            choose_run_mode "$id" "$f"
         fi
     done
 }
@@ -107,7 +133,7 @@ menu_gemini_pro() {
         [[ "$c" == "0" ]] && return
         if [[ "$c" -ge 1 && "$c" -le "${#mods[@]}" ]]; then
             IFS='|' read -r name id desc <<< "${mods[$((c-1))]}"
-            run_aider "$id" "--architect"
+            choose_run_mode "$id" "--architect"
         fi
     done
 }
@@ -153,10 +179,10 @@ menu_openai() {
         echo -e "${Y}0) Zurück${NC}"
         read -p "Wahl: " o
         case $o in
-            1) run_aider "o1" "--architect" ;;
-            2) run_aider "o3-mini" "--architect" ;;
-            3) run_aider "gpt-4o" "" ;;
-            4) run_aider "gpt-4o-mini" "" ;;
+            1) choose_run_mode "o1" "--architect" ;;
+            2) choose_run_mode "o3-mini" "--architect" ;;
+            3) choose_run_mode "gpt-4o" "" ;;
+            4) choose_run_mode "gpt-4o-mini" "" ;;
             0) return ;;
         esac
     done
@@ -172,8 +198,8 @@ menu_deepseek() {
         echo -e "${Y}0) Zurück${NC}"
         read -p "Wahl: " d
         case $d in
-            1) run_aider "deepseek/deepseek-chat" "" ;;
-            2) run_aider "deepseek/deepseek-reasoner" "--architect" ;;
+            1) choose_run_mode "deepseek/deepseek-chat" "" ;;
+            2) choose_run_mode "deepseek/deepseek-reasoner" "--architect" ;;
             0) return ;;
         esac
     done
@@ -190,9 +216,9 @@ menu_claude() {
         echo -e "${Y}0) Zurück${NC}"
         read -p "Wahl: " cl
         case $cl in
-            1) run_aider "claude-3-5-sonnet-20241022" "--architect" ;;
-            2) run_aider "claude-3-5-haiku-20241022" "" ;;
-            3) run_aider "claude-3-opus-20240229" "--architect" ;;
+            1) choose_run_mode "claude-3-5-sonnet-20241022" "--architect" ;;
+            2) choose_run_mode "claude-3-5-haiku-20241022" "" ;;
+            3) choose_run_mode "claude-3-opus-20240229" "--architect" ;;
             0) return ;;
         esac
     done
