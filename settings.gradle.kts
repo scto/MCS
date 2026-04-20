@@ -40,7 +40,7 @@ val modules = listOf(
     ":feature:setup",
     ":feature:dashboard",
     ":feature:editor",
-    ":feature:settings", // Added the new module
+    ":feature:settings",
     ":feature:debug"
 )
 

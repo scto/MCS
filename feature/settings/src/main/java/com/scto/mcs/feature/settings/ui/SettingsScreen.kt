@@ -1,51 +1,31 @@
 /*
- * Copyright (C) 2024-2025 SC T O., Inc.
+ * Copyright (C) 2025 SC T O., Inc.
  */
 
 package com.scto.mcs.feature.settings.ui
 
-import android.content.Context
-import android.os.Build
 import androidx.compose.animation.*
-import androidx.compose.animation.core.*
-import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.LazyRow
-import androidx.compose.foundation.lazy.itemsIndexed
-import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.*
 import androidx.compose.material.icons.outlined.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.graphicsLayer
-import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
-
-import com.scto.mcs.core.ui.theme.themeColors
 import com.scto.mcs.core.utils.LogConfigState
 import com.scto.mcs.core.utils.ThemeState
-import com.scto.mcs.core.utils.WorkspaceManager
-import com.scto.mcs.feature.settings.EditorSettings
-import com.scto.mcs.feature.settings.GeneralSettings
+import com.scto.mcs.feature.settings.R
 import com.scto.mcs.feature.settings.viewModel.SettingsViewModel
 
 // Routen für die interne Navigation innerhalb der Einstellungen
@@ -68,19 +48,13 @@ fun SettingsScreen(
 ) {
     val uiState by viewModel.uiState.collectAsState()
     var currentSubScreen by remember { mutableStateOf<SettingsSubRoute>(SettingsSubRoute.Main) }
-    val context = LocalContext.current
 
     Scaffold(
         topBar = {
             TopAppBar(
                 title = {
                     Text(
-                        text = when (currentSubScreen) {
-                            SettingsSubRoute.Main -> "Einstellungen"
-                            SettingsSubRoute.General -> "Allgemein"
-                            SettingsSubRoute.Editor -> "Editor"
-                            SettingsSubRoute.FileExplorer -> "Datei-Explorer"
-                        },
+                        text = stringResource(R.string.settings_title),
                         fontWeight = FontWeight.SemiBold
                     )
                 },
@@ -92,7 +66,7 @@ fun SettingsScreen(
                             currentSubScreen = SettingsSubRoute.Main
                         }
                     }) {
-                        Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Zurück")
+                        Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = stringResource(R.string.settings_nav_back_content_description))
                     }
                 },
                 colors = TopAppBarDefaults.topAppBarColors(
@@ -148,7 +122,7 @@ private fun MainSettingsList(
         item {
             SimpleSettingsCard(
                 icon = Icons.Outlined.Settings,
-                title = "Allgemein",
+                title = stringResource(R.string.settings_general_title),
                 subtitle = "Erscheinungsbild und Systemverhalten",
                 onClick = { onNavigate(SettingsSubRoute.General) }
             )
@@ -156,7 +130,7 @@ private fun MainSettingsList(
         item {
             SimpleSettingsCard(
                 icon = Icons.Outlined.Code,
-                title = "Editor",
+                title = stringResource(R.string.settings_editor_title),
                 subtitle = "Schriftart, Einrückung und KI-Hilfe",
                 onClick = { onNavigate(SettingsSubRoute.Editor) }
             )
@@ -175,7 +149,7 @@ private fun MainSettingsList(
         item {
             SimpleSettingsCard(
                 icon = Icons.Outlined.Info,
-                title = "Über MCS",
+                title = stringResource(R.string.about_screen_title),
                 subtitle = "Version, Team und Lizenzen",
                 onClick = onAboutNavigate
             )
@@ -185,7 +159,7 @@ private fun MainSettingsList(
 
 @Composable
 private fun GeneralSettingsList(
-    settings: GeneralSettings,
+    settings: com.scto.mcs.feature.settings.GeneralSettings,
     viewModel: SettingsViewModel,
     themeState: ThemeState,
     onThemeChange: (Int, Int, Color, Boolean, Boolean) -> Unit
@@ -220,7 +194,7 @@ private fun GeneralSettingsList(
 
 @Composable
 private fun EditorSettingsList(
-    settings: EditorSettings,
+    settings: com.scto.mcs.feature.settings.EditorSettings,
     viewModel: SettingsViewModel
 ) {
     LazyColumn(
@@ -282,8 +256,6 @@ private fun FileExplorerSettingsList(
     }
 }
 
-// --- Hilfskomponenten (gekürzt für Übersichtlichkeit, basierend auf deinem Design) ---
-
 @Composable
 fun SectionHeader(title: String) {
     Text(
@@ -333,12 +305,11 @@ fun ThemeSettingsItem(
     currentThemeState: ThemeState,
     onThemeChange: (Int, Int, Color, Boolean, Boolean) -> Unit
 ) {
-    var expanded by remember { mutableStateOf(true) }
     Card(
         colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainer),
         modifier = Modifier.fillMaxWidth()
     ) {
-        Column(modifier = Modifier.animateContentSize().padding(16.dp)) {
+        Column(modifier = Modifier.padding(16.dp)) {
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Icon(Icons.Outlined.Palette, null, tint = MaterialTheme.colorScheme.primary)
                 Spacer(Modifier.width(16.dp))
@@ -366,7 +337,7 @@ fun ThemeSettingsItem(
 
 @Composable
 fun EditorSettingsItem(
-    settings: EditorSettings,
+    settings: com.scto.mcs.feature.settings.EditorSettings,
     viewModel: SettingsViewModel
 ) {
     Card(

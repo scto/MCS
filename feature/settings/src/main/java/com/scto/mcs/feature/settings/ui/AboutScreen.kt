@@ -1,10 +1,9 @@
 /*
- * Copyright (C) 2024-2025 SC T O., Inc.
+ * Copyright (C) 2025 SC T O., Inc.
  */
 
 package com.scto.mcs.feature.settings.ui
 
-import android.content.Intent
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -22,12 +21,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
-import androidx.core.net.toUri
 import androidx.navigation.NavController
 import com.scto.mcs.core.utils.BuildConfig
+import com.scto.mcs.feature.settings.R
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -37,10 +36,10 @@ fun AboutScreen(navController: NavController) {
     Scaffold(
         topBar = {
             LargeTopAppBar(
-                title = { Text("Über MCS", fontWeight = FontWeight.SemiBold) },
+                title = { Text(stringResource(R.string.about_screen_title), fontWeight = FontWeight.SemiBold) },
                 navigationIcon = {
                     IconButton(onClick = { navController.popBackStack() }) {
-                        Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Zurück")
+                        Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = stringResource(R.string.settings_nav_back_content_description))
                     }
                 },
                 scrollBehavior = scrollBehavior
@@ -68,13 +67,13 @@ fun AboutScreen(navController: NavController) {
                 }
                 Spacer(Modifier.height(16.dp))
                 Text("Visual Code Space", style = MaterialTheme.typography.headlineSmall, fontWeight = FontWeight.Bold)
-                Text("Version ${BuildConfig.VERSION_NAME}", style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                Text(stringResource(R.string.about_app_header_version_label, BuildConfig.VERSION_NAME), style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
                 Spacer(Modifier.height(32.dp))
             }
 
             // Team Sektion
             item {
-                SectionTitle("Entwickler-Team")
+                SectionTitle(stringResource(R.string.about_webide_team_title))
                 val team = listOf(
                     Developer("h465855hgg", "Lead", Color(0xFF009688)),
                     Developer("Akimlc", "Theme", Color(0xFF673AB7)),
@@ -92,7 +91,7 @@ fun AboutScreen(navController: NavController) {
             // Copyright
             item {
                 Text(
-                    text = "© 2025 SC T O., Inc.",
+                    text = stringResource(R.string.about_copyright),
                     style = MaterialTheme.typography.labelMedium,
                     color = MaterialTheme.colorScheme.outline
                 )
@@ -113,7 +112,6 @@ private fun SectionTitle(text: String) {
 
 @Composable
 private fun DeveloperChip(dev: Developer) {
-    val context = LocalContext.current
     Surface(
         shape = RoundedCornerShape(8.dp),
         color = MaterialTheme.colorScheme.surfaceContainerHigh
@@ -126,7 +124,7 @@ private fun DeveloperChip(dev: Developer) {
             Spacer(Modifier.width(8.dp))
             Text(dev.name, style = MaterialTheme.typography.labelMedium, fontWeight = FontWeight.Bold)
             Spacer(Modifier.width(4.dp))
-            Text(dev.role, style = MaterialTheme.typography.labelSmall, alpha = 0.7f)
+            Text(dev.role, style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.7f))
         }
     }
 }
