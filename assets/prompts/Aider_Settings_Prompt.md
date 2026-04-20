@@ -1,44 +1,24 @@
-﻿Aider Prompt: Settings Module Implementation
-Nutze Jetpack Compose und Kotlin, um das Settings-Modul im Pfad feature/settings zu implementieren. Erstelle einen SettingsScreen und ein zugehöriges SettingsViewModel.
-Architektur & Dateistruktur
-* Zielverzeichnis: feature/settings/
-* Dateien:
-   * SettingsScreen.kt: Enthält die Compose-UI (Hauptmenü und Unterseiten).
-   * SettingsViewModel.kt: Verwaltet den Zustand der Einstellungen (StateFlow).
-   * SettingsState.kt: Datenklasse für die Einstellungs-Werte.
-Anforderungen basierend auf den Screenshots
-1. Haupt-Settings-Screen (Navigation)
-* Implementiere eine TopAppBar mit "Settings" und einem Back-Button.
-* Erstelle zwei Sektionen: "Configure" und "About".
-* Configure: General, Editor, File Explorer, Plugins, Login with GitHub.
-* About: GitHub (Visual Code Space is open source!), Open Source Licences.
-* Jedes Item soll einen Titel und eine graue Sub-Beschreibung haben.
-2. Unterseite: General (Screenshot 1003643842)
-* Sektion "General" mit folgenden Schaltern (Switches):
-   * Follow System Theme: Mit Palette-Icon.
-   * Use Dark Mode: Mit Zahnrad/Sonne-Icon.
-   * Use Amoled Mode: Mit Kontrast-Icon.
-   * Dynamic Colors: Mit Palette-Icon.
-   * Enable gesture in drawer: Mit Kurven-Icon.
-3. Unterseite: Editor (Screenshot 1003643844)
-* Sektion "Editor": "Current Editor (Sora)", "Typing Tip", "Show Input Method Picker at Start" (Switch).
-* Sektion "Editor Settings":
-   * Font Size: Slider (Bereich 8-30 sp, Default 14 sp).
-   * Indent Size: Text-Anzeige (z.B. 4 spaces).
-   * Font Family, Color Scheme, Symbols.
-   * Switches für: Font Ligatures, Sticky Scroll, Word Wrap, Show Line Numbers, Use Tabs, Delete Line on Backspace, Delete Indent on Backspace.
-* Sektion "Tabs".
-4. Unterseite: File Settings (Screenshot 1003643845)
-* Sektion "File Settings".
-* Switch: Show Hidden Files (Hidden files are not displayed).
-5. Unterseite: Plugins (Screenshot 1003643846)
-* Eigene Seite mit Tab "Installed".
-* "No plugins found" Text in der Mitte.
-* Floating Action Button (FAB) unten rechts mit "+ New Plugin".
-Technische Details
-* Verwende Material 3 Komponenten.
-* Das Design soll "Dark Theme" sein (Hintergrund: Schwarz/Dunkelviolett-Stich, Akzente: Hellviolett/Lila).
-* Nutze Scaffold für die Struktur.
-* Das ViewModel soll die Zustände (Boolean für Switches, Int für Slider) via MutableStateFlow halten und persistierbar vorbereiten (erstmal nur In-Memory, aber modular).
-* Nutze eine einfache Navigation innerhalb des Screens (z.B. via Crossfade oder ein lokales NavHost), um zwischen Hauptmenü und Unterseiten zu wechseln.
-Bitte erstelle den vollständigen Kotlin-Code für diese Komponenten.
+﻿Bitte führe die folgenden Refactoring- und Architektur-Aufgaben in diesem Kotlin-Projekt (mcs) Schritt für Schritt aus. Das Projekt nutzt Jetpack Compose für das UI und Dagger Hilt für Dependency Injection.
+1. Neues Submodul erstellen:
+   * Erstelle im Ordner feature ein neues Submodul namens settings (also feature/settings).
+   * Lege in diesem neuen Ordner eine build.gradle.kts an.
+   * Konfiguriere die build.gradle.kts für Jetpack Compose (aktiviere buildFeatures { compose = true } und füge Standard-Compose-Abhängigkeiten wie Material3, UI und Tooling hinzu) sowie für Dagger Hilt (füge die Hilt-Plugins wie dagger.hilt.android.plugin, ksp/kapt und die entsprechenden Hilt-Bibliotheken hinzu).
+   * Registriere das neue Modul, indem du include(":feature:settings") zur root settings.gradle.kts (oder settings.gradle) hinzufügst.
+2. Verzeichnisstruktur anlegen:
+   * Erstelle im neuen Modul die Verzeichnisstruktur: feature/settings/src/main/java/com/scto/mcs/feature/settings.
+3. Dateien migrieren & anpassen:
+   * Verschiebe alle Dateien aus dem bestehenden Ordner assets/src/settings in den neu erstellten Ordner feature/settings/src/main/java/com/scto/mcs/feature/settings.
+   * Ändere in allen verschobenen Dateien die Package-Deklaration auf package com.scto.mcs.feature.settings.
+   * Aktualisiere alle fehlerhaften Imports. Falls in den migrierten Dateien veraltetes UI-Zeug ist, weise mich darauf hin, damit wir es später in Compose umschreiben können.
+4. Neue Architektur-Komponenten (Hilt & Compose) erstellen:
+   * Erstelle SettingsState.kt: Eine Kotlin data class für den Compose UI-State.
+   * Erstelle SettingsViewModel.kt: Ein Android ViewModel, versehen mit der Annotation @HiltViewModel und einem @Inject constructor(). Nutze Kotlin StateFlow, um den SettingsState für Compose bereitzustellen.
+   * Erstelle den Unterordner di und darin die Datei SettingsModule.kt: Ein Hilt-Modul mit @Module und @InstallIn(ViewModelComponent::class) (oder SingletonComponent), um eventuelle Abhängigkeiten (z.B. DataStore oder Repositories) für das ViewModel bereitzustellen.
+5. Navigation anpassen (Compose Navigation):
+   * Öffne die Navigationsdateien im Modul :core:navigation.
+   * Ergänze die Compose-Navigation für das neue Settings-Feature (z.B. über eine NavGraphBuilder.settingsScreen(...) Extension-Funktion).
+   * Binde den neuen Screen ein und sorge dafür, dass das ViewModel innerhalb der Route-Definition per hiltViewModel() injiziert wird.
+6. App-Modul überprüfen:
+   * Öffne die build.gradle.kts im Modul app (oder :app).
+   * Füge implementation(project(":feature:settings")) zu den Abhängigkeiten hinzu. Dies ist besonders wichtig, damit der Hilt-Compiler im App-Modul den Hilt-Graphen um das neue Settings-Modul erweitern kann.
+Bitte überprüfe nach jedem Schritt, ob der reine Kotlin-Code sauber kompiliert und gib mir ein kurzes Feedback über den Fortschritt.
