@@ -57,12 +57,8 @@ import androidx.navigation.NavController
 import com.scto.mcs.core.utils.LogConfigState
 import com.scto.mcs.core.utils.ThemeState
 import com.scto.mcs.core.utils.WorkspaceManager
-// TODO: Import safeNavigate if available in core/navigation
-// import com.scto.mcs.core.navigation.safeNavigate
 import com.scto.mcs.core.ui.components.DirectorySelector
 import com.scto.mcs.core.ui.components.ColorPickerDialog
-// TODO: Import themeColors from appropriate location
-// import com.scto.mcs.core.ui.theme.themeColors
 import com.scto.mcs.feature.editor.EditorViewModel
 
 // 自动保存选项枚举
@@ -243,7 +239,7 @@ fun SettingsScreen(
                     icon = Icons.Outlined.WavingHand,
                     title = "欢迎页",
                     subtitle = "查看功能介绍",
-                    onClick = { /* navController.safeNavigate("welcome") */ }
+                    onClick = { /* navController.navigate("welcome") */ }
                 )
             }
 
@@ -252,7 +248,7 @@ fun SettingsScreen(
                     icon = Icons.Outlined.Info,
                     title = "关于",
                     subtitle = "版本信息与介绍",
-                    onClick = { /* navController.safeNavigate("about") */ }
+                    onClick = { /* navController.navigate("about") */ }
                 )
             }
 
@@ -690,19 +686,6 @@ fun ThemeSettingsItem(
                                 contentPadding = PaddingValues(top = 8.dp, bottom = 16.dp)
                             ) {
                                 // TODO: Fix themeColors reference
-                                /*
-                                itemsIndexed(themeColors) { index, theme ->
-                                    val isSelected = !currentThemeState.isCustomTheme && currentThemeState.selectedThemeIndex == index
-                                    ColorSelectionItem(
-                                        color = theme.primaryColor,
-                                        name = theme.name,
-                                        isSelected = isSelected,
-                                        onClick = {
-                                            onThemeChange(currentThemeState.selectedModeIndex, index, currentThemeState.customColor, false, false)
-                                        }
-                                    )
-                                }
-                                */
                                 item {
                                     CustomColorButton(
                                         isSelected = currentThemeState.isCustomTheme,
