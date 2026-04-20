@@ -685,7 +685,6 @@ fun ThemeSettingsItem(
                                 horizontalArrangement = Arrangement.spacedBy(12.dp),
                                 contentPadding = PaddingValues(top = 8.dp, bottom = 16.dp)
                             ) {
-                                // TODO: Fix themeColors reference
                                 item {
                                     CustomColorButton(
                                         isSelected = currentThemeState.isCustomTheme,
