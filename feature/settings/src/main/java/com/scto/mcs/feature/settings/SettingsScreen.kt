@@ -211,7 +211,7 @@ fun SettingsScreen(
             item {
                 val currentOption = AutoSaveOption.entries.find { it.interval == autoSaveInterval } ?: AutoSaveOption.OFF
                 SimpleSettingsCard(
-                    icon = Icons.Outlined.SaveAs, // 需要确保有此图标，如果没有可以使用 Icons.Default.Save
+                    icon = Icons.Outlined.SaveAs,
                     title = "自动保存与备份",
                     subtitle = if (currentOption == AutoSaveOption.OFF) "已关闭" else "频率: ${currentOption.label}",
                     onClick = { showAutoSaveDialog = true }
@@ -239,7 +239,7 @@ fun SettingsScreen(
                     icon = Icons.Outlined.WavingHand,
                     title = "欢迎页",
                     subtitle = "查看功能介绍",
-                    onClick = { /* navController.navigate("welcome") */ }
+                    onClick = { navController.navigate("welcome") }
                 )
             }
 
@@ -248,7 +248,7 @@ fun SettingsScreen(
                     icon = Icons.Outlined.Info,
                     title = "关于",
                     subtitle = "版本信息与介绍",
-                    onClick = { /* navController.navigate("about") */ }
+                    onClick = { navController.navigate("about") }
                 )
             }
 
