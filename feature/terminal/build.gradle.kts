@@ -7,7 +7,7 @@ plugins {
 }
 
 android {
-    namespace = "com.scto.mcs.feature.settings"
+    namespace = "com.scto.mcs.feature.terminal"
     compileSdk = 36
 
     defaultConfig {
@@ -16,6 +16,7 @@ android {
 
     buildFeatures {
         compose = true
+        buildConfig = true
     }
 
     compileOptions {

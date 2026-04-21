@@ -1,9 +1,9 @@
-package com.scto.mcs.feature.settings
+package com.scto.mcs.feature.terminal
 
 import androidx.compose.runtime.Immutable
 
 @Immutable
-data class SettingsState(
+data class TerminalState(
     val generalSettings: GeneralSettings = GeneralSettings(),
     val editorSettings: EditorSettings = EditorSettings(),
     val fileExplorerSettings: FileExplorerSettings = FileExplorerSettings(),
