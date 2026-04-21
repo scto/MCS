@@ -1,6 +1,6 @@
 package com.scto.mcs.feature.settings.di
 
-import com.scto.mcs.feature.settings.SettingsViewModel
+import com.scto.mcs.feature.settings.viewmodel.SettingsViewModel
 import com.scto.mcs.core.navigation.NavigationManager
 import dagger.Module
 import dagger.Provides
