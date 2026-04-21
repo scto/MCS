@@ -40,21 +40,32 @@ fun SettingsScreen(
                 .fillMaxSize()
                 .padding(paddingValues)
         ) {
-            items(state.items) { item ->
-                ListItem(
-                    headlineContent = { Text(stringResource(id = item.titleRes)) },
-                    supportingContent = { Text(stringResource(id = item.descriptionRes)) },
-                    leadingContent = {
-                        Icon(
-                            imageVector = getIconForId(item.id),
-                            contentDescription = null,
-                            tint = MaterialTheme.colorScheme.primary
-                        )
-                    },
-                    modifier = Modifier.fillMaxWidth(),
-                    onClick = { viewModel.navigateTo(item.route) }
-                )
-                HorizontalDivider()
+            val groupedItems = state.items.groupBy { it.section }
+            
+            groupedItems.forEach { (section, items) ->
+                item {
+                    Text(
+                        text = stringResource(id = section.titleRes),
+                        style = MaterialTheme.typography.titleSmall,
+                        color = MaterialTheme.colorScheme.primary,
+                        modifier = Modifier.padding(16.dp)
+                    )
+                }
+                items(items) { item ->
+                    ListItem(
+                        headlineContent = { Text(stringResource(id = item.titleRes)) },
+                        supportingContent = { Text(stringResource(id = item.descriptionRes)) },
+                        leadingContent = {
+                            Icon(
+                                imageVector = getIconForId(item.id),
+                                contentDescription = null,
+                                tint = MaterialTheme.colorScheme.onSurfaceVariant
+                            )
+                        },
+                        modifier = Modifier.fillMaxWidth(),
+                        onClick = { viewModel.navigateTo(item.route) }
+                    )
+                }
             }
         }
     }
