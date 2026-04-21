@@ -1,9 +1,11 @@
-package com.scto.mcs.feature.settings.viewModel
+package com.scto.mcs.feature.settings.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.scto.mcs.core.navigation.NavigationManager
+import com.scto.mcs.core.utils.LogConfigManager
 import com.scto.mcs.core.utils.ThemeDataStore
+import com.scto.mcs.feature.settings.ui.SettingsState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -11,10 +13,6 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
-import com.scto.mcs.core.utils.LogConfigState
-import com.scto.mcs.core.utils.LogConfigManager
-import com.scto.mcs.core.utils.ThemeState
-import com.scto.mcs.feature.settings.SettingsState
 
 @HiltViewModel
 class SettingsViewModel @Inject constructor(
@@ -48,39 +46,11 @@ class SettingsViewModel @Inject constructor(
     }
 
     // General Settings
-    fun setFollowSystemTheme(enabled: Boolean) {
-        viewModelScope.launch {
-            themeDataStore.setFollowSystemTheme(enabled)
-        }
-    }
-
-    fun setUseDarkMode(enabled: Boolean) {
-        viewModelScope.launch {
-            themeDataStore.setUseDarkMode(enabled)
-        }
-    }
-
-    fun setUseAmoledMode(enabled: Boolean) {
-        viewModelScope.launch {
-            themeDataStore.setUseAmoledMode(enabled)
-        }
-    }
-
-    fun setDynamicColors(enabled: Boolean) {
-        viewModelScope.launch {
-            themeDataStore.setDynamicColors(enabled)
-        }
-    }
-
     fun setEnableGestureInDrawer(enabled: Boolean) {
         _uiState.update { it.copy(generalSettings = it.generalSettings.copy(enableGestureInDrawer = enabled)) }
     }
 
     // Editor Settings
-    fun setShowInputMethodPickerAtStart(enabled: Boolean) {
-        _uiState.update { it.copy(editorSettings = it.editorSettings.copy(showInputMethodPickerAtStart = enabled)) }
-    }
-
     fun setFontSize(size: Float) {
         _uiState.update { it.copy(editorSettings = it.editorSettings.copy(fontSize = size)) }
     }
@@ -105,42 +75,8 @@ class SettingsViewModel @Inject constructor(
         _uiState.update { it.copy(editorSettings = it.editorSettings.copy(showLineNumbers = enabled)) }
     }
 
-    fun setUseTabs(enabled: Boolean) {
-        _uiState.update { it.copy(editorSettings = it.editorSettings.copy(useTabs = enabled)) }
-    }
-
-    fun setDeleteLineOnBackspace(enabled: Boolean) {
-        _uiState.update { it.copy(editorSettings = it.editorSettings.copy(deleteLineOnBackspace = enabled)) }
-    }
-
-    fun setDeleteIndentOnBackspace(enabled: Boolean) {
-        _uiState.update { it.copy(editorSettings = it.editorSettings.copy(deleteIndentOnBackspace = enabled)) }
-    }
-
     // File Explorer Settings
     fun setShowHiddenFiles(enabled: Boolean) {
         _uiState.update { it.copy(fileExplorerSettings = it.fileExplorerSettings.copy(showHiddenFiles = enabled)) }
-    }
-    
-    // Log Settings
-    fun setLogEnabled(enabled: Boolean) {
-        viewModelScope.launch {
-            logConfigManager.setLogEnabled(enabled)
-        }
-    }
-    
-    fun setLogFilePath(path: String) {
-        viewModelScope.launch {
-            logConfigManager.setLogFilePath(path)
-        }
-    }
-
-    fun loadPlugins() {
-        viewModelScope.launch {
-            _uiState.update { it.copy(isPluginsLoading = true) }
-            // Simulate API call or local loading
-            kotlinx.coroutines.delay(1000)
-            _uiState.update { it.copy(isPluginsLoading = false, installedPlugins = listOf("Plugin A", "Plugin B")) }
-        }
     }
 }
