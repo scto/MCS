@@ -33,6 +33,10 @@
     <string name="settings_support_title">Unterstützung</string>
     <string name="settings_support_description">Entwicklung unterstützen</string>
 
+    <!-- About Info -->
+    <string name="settings_author">Thomas Schmid</string>
+    <string name="settings_github">github.com/scto/MCS</string>
+
     <!-- Navigation -->
     <string name="settings_nav_back_content_description">Zurück</string>
 </resources>
