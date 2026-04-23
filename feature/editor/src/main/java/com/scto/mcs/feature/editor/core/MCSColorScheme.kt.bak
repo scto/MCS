@@ -1,0 +1,34 @@
+package com.srvhive.app.editor
+
+import android.graphics.Color
+import io.github.rosemoe.sora.langs.textmate.TextMateColorScheme
+import io.github.rosemoe.sora.langs.textmate.registry.ThemeRegistry
+import io.github.rosemoe.sora.langs.textmate.registry.model.ThemeModel
+import io.github.rosemoe.sora.widget.schemes.EditorColorScheme
+
+/**
+ * Ein spezialisiertes ColorScheme, das Material 3 Farben auf TextMate Themes "patcht".
+ */
+class MCSColorScheme(
+    private val patchArgs: Editor.PatchArgs,
+    themeModel: ThemeModel
+) : TextMateColorScheme(ThemeRegistry.getInstance(), themeModel) {
+
+    init {
+        ThemeRegistry.getInstance().loadTheme(themeModel)
+    }
+
+    override fun applyDefault() {
+        super.applyDefault()
+        
+        // M3 Patches anwenden
+        setColor(WHOLE_BACKGROUND, patchArgs.editorSurface)
+        setColor(TEXT_NORMAL, patchArgs.onSurface)
+        setColor(LINE_NUMBER_BACKGROUND, patchArgs.gutterColor)
+        setColor(LINE_NUMBER, Color.GRAY)
+        setColor(SELECTION_INSERT, patchArgs.colorPrimary)
+        setColor(SELECTION_HANDLE, patchArgs.colorPrimary)
+        setColor(CURRENT_LINE, patchArgs.currentLine)
+        setColor(PROBLEM_ERROR, patchArgs.errorColor)
+    }
+}

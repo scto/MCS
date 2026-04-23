@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  MCS – Vordergrund-Ebene (Vektor)
+  ─────────────────────────────────────────────────────────────────────────────
+  Dieses Vektor-Drawable ersetzt das vorherige Bitmap. Es enthält:
+    1. Vier rotierte Karten in den Markenfarben.
+    2. Ein zentrales dunkles Quadrat.
+    3. Das Code-Symbol "</>".
+    4. Den neuen Text "MCS".
+
+  Sicherheitszone: Alle wichtigen Inhalte liegen innerhalb der zentralen 72dp.
+-->
+
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+
+    <!-- Gruppe zur Zentrierung und Skalierung der Elemente -->
+    <group android:translateX="54" android:translateY="54">
+        
+        <!-- Die 4 farbigen Karten im Hintergrund des Vordergrunds -->
+        <path
+            android:pathData="M-25,-25 L5,-35 L15,-5 L-15,5 Z"
+            android:fillColor="#00D2C8" /> <!-- Neon Teal -->
+        <path
+            android:pathData="M25,-25 L35,5 L5,15 L-5,-15 Z"
+            android:fillColor="#0082FF" /> <!-- Electric Blue -->
+        <path
+            android:pathData="M25,25 L-5,35 L-15,5 L15,-5 Z"
+            android:fillColor="#32D25A" /> <!-- Vivid Green -->
+        <path
+            android:pathData="M-25,25 L-35,-5 L-5,-15 L5,15 Z"
+            android:fillColor="#8232FF" /> <!-- Deep Violet -->
+
+        <!-- Zentrales Quadrat (IDE Hintergrundfarbe) -->
+        <path
+            android:pathData="M-14,-14 L14,-14 L14,14 L-14,14 Z"
+            android:fillColor="#16162A" />
+
+        <!-- Code Symbol </> -->
+        <path
+            android:pathData="M-8,-4 L-11,0 L-8,4 M8,-4 L11,0 L8,4 M2,-6 L-2,6"
+            android:strokeColor="#FFFFFF"
+            android:strokeWidth="1.5"
+            android:strokeLineCap="round"
+            android:strokeLineJoin="round" />
+
+        <!-- Text "MCS" (Als Pfad-Silhouetten) -->
+        <!-- M -->
+        <path
+            android:pathData="M-7,8 L-7,14 M-7,8 L-4,11 L-1,8 L-1,14"
+            android:strokeColor="#FFFFFF"
+            android:strokeWidth="1.2"
+            android:strokeLineCap="round"
+            android:strokeLineJoin="round" />
+        <!-- C -->
+        <path
+            android:pathData="M4,9 A2.5,2.5 0 1,0 4,13"
+            android:strokeColor="#FFFFFF"
+            android:strokeWidth="1.2"
+            android:strokeLineCap="round" />
+        <!-- S -->
+        <path
+            android:pathData="M6,13.5 Q8.5,13.5 8.5,12 Q8.5,11 6,11 Q3.5,11 3.5,10 Q3.5,8.5 6,8.5"
+            android:strokeColor="#FFFFFF"
+            android:strokeWidth="1.2"
+            android:strokeLineCap="round" />
+    </group>
+    
+</vector>

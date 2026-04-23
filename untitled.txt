@@ -1,0 +1,331 @@
+package com.srvhive.ide.feature.filetree
+
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.*
+import androidx.compose.material3.Icon
+import androidx.compose.material3.Text
+import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import java.io.File
+
+class FileNode(val file: File, val depth: Int) {
+    var isExpanded by mutableStateOf(false)
+    var children by mutableStateOf<List<FileNode>>(emptyList())
+    val isDirectory get() = file.isDirectory
+}
+
+@Composable
+fun SrvHiveFileTree(modifier: Modifier = Modifier, rootDir: File, onFileClick: (File) -> Unit) {
+    val coroutineScope = rememberCoroutineScope()
+    var visibleNodes by remember { mutableStateOf<List<FileNode>>(emptyList()) }
+    var rootNodes by remember { mutableStateOf<List<FileNode>>(emptyList()) }
+
+    fun updateVisibleNodes() {
+        val result = mutableListOf<FileNode>()
+        fun traverse(nodes: List<FileNode>) {
+            for (node in nodes) { result.add(node); if (node.isExpanded) traverse(node.children) }
+        }
+        traverse(rootNodes)
+        visibleNodes = result
+    }
+
+    LaunchedEffect(rootDir) {
+        withContext(Dispatchers.IO) {
+            val files = rootDir.listFiles()?.sortedWith(compareBy({ !it.isDirectory }, { it.name.lowercase() })) ?: emptyList()
+            rootNodes = files.map { FileNode(it, 0) }
+        }
+        updateVisibleNodes()
+    }
+
+    LazyColumn(modifier = modifier.fillMaxSize().background(Color(0xFF252526))) {
+        items(visibleNodes, key = { it.file.absolutePath }) { node ->
+            Row(
+                modifier = Modifier.fillMaxWidth().clickable {
+                    if (node.isDirectory) {
+                        node.isExpanded = !node.isExpanded
+                        if (node.isExpanded && node.children.isEmpty()) {
+                            coroutineScope.launch(Dispatchers.IO) {
+                                val files = node.file.listFiles()?.sortedWith(compareBy({ !it.isDirectory }, { it.name.lowercase() })) ?: emptyList()
+                                node.children = files.map { FileNode(it, node.depth + 1) }
+                                withContext(Dispatchers.Main) { updateVisibleNodes() }
+                            }
+                        } else updateVisibleNodes()
+                    } else onFileClick(node.file)
+                }.padding(start = (node.depth * 16 + 8).dp, top = 4.dp, bottom = 4.dp, end = 8.dp),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                if (node.isDirectory) {
+                    Icon(if (node.isExpanded) Icons.Default.KeyboardArrowDown else Icons.Default.KeyboardArrowRight, null, tint = Color.Gray, modifier = Modifier.size(16.dp))
+                } else Spacer(modifier = Modifier.width(16.dp))
+                Spacer(modifier = Modifier.width(4.dp))
+                Icon(if (node.isDirectory) Icons.Default.Folder else Icons.Default.Description, null, tint = if (node.isDirectory) Color(0xFFFFCA28) else Color(0xFF90CAF9), modifier = Modifier.size(16.dp))
+                Spacer(modifier = Modifier.width(6.dp))
+                Text(node.file.name, color = Color(0xFFCCCCCC), fontSize = 13.sp, fontFamily = FontFamily.Monospace)
+            }
+        }
+    }
+}
+
+
+
+
+
+
+-------
+
+
+
+
+package com.srvhive.ide.feature.git
+
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import java.io.BufferedReader
+import java.io.File
+import java.io.InputStreamReader
+
+suspend fun runGit(dir: File, vararg args: String): String = withContext(Dispatchers.IO) {
+    try {
+        val proc = ProcessBuilder("git", *args).directory(dir).redirectErrorStream(true).start()
+        val out = BufferedReader(InputStreamReader(proc.inputStream)).readText()
+        proc.waitFor()
+        out.trim()
+    } catch (e: Exception) { "Git error" }
+}
+
+@Composable
+fun GitPanel(modifier: Modifier = Modifier, projectDir: File) {
+    val scope = rememberCoroutineScope()
+    var status by remember { mutableStateOf("Loading...") }
+    var msg by remember { mutableStateOf("") }
+
+    LaunchedEffect(projectDir) { status = runGit(projectDir, "status", "-s").ifEmpty { "Clean tree" } }
+
+    Column(modifier = modifier.fillMaxSize().background(Color(0xFF252526)).padding(16.dp)) {
+        OutlinedTextField(value = msg, onValueChange = { msg = it }, placeholder = { Text("Commit message") }, modifier = Modifier.fillMaxWidth())
+        Spacer(modifier = Modifier.height(8.dp))
+        Button(onClick = { scope.launch { runGit(projectDir, "add", "."); runGit(projectDir, "commit", "-m", msg); status = runGit(projectDir, "status", "-s"); msg="" } }) {
+            Text("Commit")
+        }
+        Spacer(modifier = Modifier.height(16.dp))
+        LazyColumn {
+            items(status.split("\n")) { line ->
+                Text(line, color = Color(0xFFE2C08D), fontFamily = FontFamily.Monospace, fontSize = 12.sp)
+            }
+        }
+    }
+}
+
+
+
+
+-------
+
+
+
+package com.srvhive.ide.engine.terminal
+
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.foundation.text.BasicTextField
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material3.Text
+import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.SolidColor
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import java.io.*
+
+class TerminalSession(private val workingDirectory: File) {
+    val outputHistory = mutableStateListOf<String>()
+    private var process: Process? = null
+    private var writer: BufferedWriter? = null
+
+    suspend fun start() = withContext(Dispatchers.IO) {
+        try {
+            val shell = if (File("/system/bin/sh").exists()) "/system/bin/sh" else "/bin/sh"
+            process = ProcessBuilder(shell).directory(workingDirectory).redirectErrorStream(true).start()
+            writer = BufferedWriter(OutputStreamWriter(process!!.outputStream))
+            
+            outputHistory.add("Terminal started in ${workingDirectory.absolutePath}")
+            val reader = BufferedReader(InputStreamReader(process!!.inputStream))
+            var line: String?
+            while (reader.readLine().also { line = it } != null) {
+                withContext(Dispatchers.Main) { outputHistory.add(line ?: "") }
+            }
+        } catch (e: Exception) {
+            withContext(Dispatchers.Main) { outputHistory.add("Error: ${e.message}") }
+        }
+    }
+
+    fun sendCommand(command: String) {
+        outputHistory.add("$ $command")
+        try {
+            writer?.write(command + "\n")
+            writer?.flush()
+        } catch (e: Exception) {}
+    }
+    fun stop() { process?.destroy() }
+}
+
+@Composable
+fun SrvHiveTerminal(modifier: Modifier = Modifier, workingDirectory: File) {
+    val session = remember(workingDirectory) { TerminalSession(workingDirectory) }
+    LaunchedEffect(session) { session.start() }
+    DisposableEffect(session) { onDispose { session.stop() } }
+
+    var input by remember { mutableStateOf("") }
+    val listState = rememberLazyListState()
+    LaunchedEffect(session.outputHistory.size) { if (session.outputHistory.isNotEmpty()) listState.animateScrollToItem(session.outputHistory.size - 1) }
+
+    Column(modifier = modifier.fillMaxSize().background(Color(0xFF121212)).padding(8.dp)) {
+        LazyColumn(state = listState, modifier = Modifier.weight(1f).fillMaxWidth()) {
+            items(session.outputHistory) { line ->
+                Text(line, color = Color.Green, fontFamily = FontFamily.Monospace, fontSize = 12.sp)
+            }
+        }
+        Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.fillMaxWidth().padding(top = 4.dp)) {
+            Text("$ ", color = Color.Green, fontFamily = FontFamily.Monospace, fontSize = 12.sp)
+            BasicTextField(
+                value = input,
+                onValueChange = { input = it },
+                textStyle = TextStyle(color = Color.White, fontFamily = FontFamily.Monospace, fontSize = 12.sp),
+                cursorBrush = SolidColor(Color.White),
+                keyboardOptions = KeyboardOptions(imeAction = ImeAction.Send),
+                keyboardActions = KeyboardActions(onSend = { if (input.isNotBlank()) { session.sendCommand(input); input = "" } }),
+                modifier = Modifier.fillMaxWidth().padding(start = 4.dp)
+            )
+        }
+    }
+}
+
+
+
+-------
+
+
+
+package com.srvhive.ide.feature.plugins
+
+import androidx.compose.runtime.Composable
+
+interface PanelRegistry {
+    fun registerLeftPanel(id: String, title: String, content: @Composable () -> Unit)
+    fun registerBottomPanel(id: String, title: String, content: @Composable () -> Unit)
+}
+
+interface SrvHivePlugin {
+    val id: String
+    fun onLoad()
+    fun registerPanels(registry: PanelRegistry)
+}
+
+
+
+
+-------
+
+
+
+
+package com.srvhive.ide.core.model
+
+import androidx.compose.runtime.mutableStateListOf
+import androidx.lifecycle.ViewModel
+import java.io.File
+
+// --- CORE MODELS ---
+data class EditorTab(
+    val file: File,
+    var content: String,
+    var isUnsaved: Boolean = false
+)
+
+enum class NavigationTab {
+    EXPLORER, GIT, SETTINGS
+}
+
+// --- VIEWMODEL LAYER ---
+class IDEViewModel : ViewModel() {
+    var currentProjectDir: File? = null
+    
+    // UI State
+    var activeNavTab: NavigationTab = NavigationTab.EXPLORER
+    var isTerminalVisible: Boolean = true
+    
+    // Editor State
+    val openTabs = mutableStateListOf<EditorTab>()
+    var activeTab: EditorTab? = null
+
+    fun openFile(file: File) {
+        if (file.isDirectory) return
+        val existingTab = openTabs.find { it.file.absolutePath == file.absolutePath }
+        if (existingTab != null) {
+            activeTab = existingTab
+        } else {
+            val content = try { file.readText() } catch (e: Exception) { "" }
+            val newTab = EditorTab(file, content)
+            openTabs.add(newTab)
+            activeTab = newTab
+        }
+    }
+
+    fun closeTab(tab: EditorTab) {
+        openTabs.remove(tab)
+        if (activeTab == tab) activeTab = openTabs.lastOrNull()
+    }
+
+    fun updateTabContent(tab: EditorTab, newContent: String) {
+        val index = openTabs.indexOf(tab)
+        if (index != -1) {
+            openTabs[index] = tab.copy(content = newContent, isUnsaved = true)
+            // Auto-Save Mockup
+            try { tab.file.writeText(newContent); openTabs[index].isUnsaved = false } catch (e: Exception) {}
+        }
+    }
+}
+
+
+
+
+-------
+
+
