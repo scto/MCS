@@ -9,14 +9,18 @@ kotlin = "2.2.0"
 kotlinKapt = "2.2.0"
 
 coroutines = "1.10.2"
+kotlinxUuid = "0.0.20"
 
 desugar_jdk_libs = "2.1.5"
 
 coreKtx = "1.17.0"
 androidxAppcompat = "1.7.0"
 androidxAnnotation = "1.9.1"
+datastoreCore = "1.2.0"
 androidxCoreSplashscreen = "1.0.1"
 material = "1.13.0"
+materialKolor = "4.1.1"
+palette = "1.0.0"
 
 composeBom = "2026.02.01"
 foundation = "1.10.4"
@@ -24,13 +28,13 @@ foundationLayout = "1.10.4"
 uiText = "1.10.4"
 activityCompose = "1.12.4"
 navigationCompose = "2.9.7"
+runtime = "1.10.4"
 
 material3 = "1.4.0"
 composeIcons = "1.1.1"
 animation = "1.10.4"
 materialIcons = "1.7.8"
 materialIconsExtended = "1.7.8"
-material-kolor = { module = "com.materialkolor:material-kolor", version.ref = "materialKolor" }
 
 lifecycleRuntimeKtx = "2.10.0"
 #lifecycle = "2.8.0"
@@ -39,6 +43,7 @@ hilt = "2.51.1"
 androidxHiltNavigationCompose = "1.2.0"
 
 aboutlibrariesCompose = "13.2.1"
+aboutlibraries = "13.2.1"
 accompanist = "0.36.0"
 utilcode = "1.31.1"
 
@@ -62,6 +67,10 @@ tree-sitter-log = "4.3.2"
 tree-sitter-properties = "4.3.2"
 tree-sitter-python = "4.3.2"
 tree-sitter-xml = "4.3.2"
+
+commonsCompress = "1.26.1"
+okhttp = "4.12.0"
+xzJava = "1.9"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -96,33 +105,32 @@ material-kolor = { module = "com.materialkolor:material-kolor", version.ref = "m
 androidx-palette = { group = "androidx.palette", name = "palette", version.ref = "palette" }
 
 aboutlibraries-compose = { module = "com.mikepenz:aboutlibraries-compose", version.ref = "aboutlibrariesCompose" }
-accompanist-navigation-animation = { module = "com.google.accompanist:accompanist-navigation-animation", version.ref = "accompanistNavigationAnimation" }
+accompanist-navigation-animation = { module = "com.google.accompanist:accompanist-navigation-animation", version.ref = "accompanist" }
 accompanist-systemuicontroller = { group = "com.google.accompanist", name = "accompanist-systemuicontroller", version.ref = "accompanist" }
 
-kotlin-stdlib = { module = "org.jetbrains.kotlin:kotlin-stdlib", version.ref = "kotlin" }
-kotlinx-coroutines = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-android", version.ref = "coroutines" }
-
+# Dependency Injection
 androidx-hilt-navigation-compose = { group = "androidx.hilt", name = "hilt-navigation-compose", version.ref = "androidxHiltNavigationCompose" }
 hilt-android = { group = "com.google.dagger", name = "hilt-android", version.ref = "hilt" }
 hilt-compiler = { group = "com.google.dagger", name = "hilt-compiler", version.ref = "hilt" }
 hilt-android-gradle-plugin = { group = "com.google.dagger", name = "hilt-android-gradle-plugin", version.ref = "hilt" }
 
-gson = { module = "com.google.code.gson:gson", version.ref = "gson" }
+# Asynchrony & Utilities
+kotlinx-coroutines-android = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-android", version.ref = "coroutines" }
+kotlinx-uuid = { group = "app.softwork", name = "kotlinx-uuid-core", version.ref = "kotlinxUuid" }
+kotlin-stdlib = { module = "org.jetbrains.kotlin:kotlin-stdlib", version.ref = "kotlin" }
+kotlinx-coroutines = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-android", version.ref = "coroutines" }
 
-utilcode = { group = "com.blankj", name = "utilcodex", version.ref = "utilcode" }
-
-lsp4j = { module = "org.eclipse.lsp4j:org.eclipse.lsp4j", version.ref = "lsp4j" }
-jgit = { module = "org.eclipse.jgit:org.eclipse.jgit", version.ref = "jgit" }
-jgit-ssh-apache = { module = "org.eclipse.jgit:org.eclipse.jgit.ssh.apache", version.ref = "jgitSshApache" }
-zipalign-java = { module = "com.github.iyxan23:zipalign-java", version.ref = "zipalignJava" }
-
-androidx-desugar = { module = "com.android.tools:desugar_jdk_libs", version.ref = "desugar_jdk_libs" }
-
+# Editor & Git
 sora-editor = { module = "io.github.Rosemoe.sora-editor:editor", version.ref = "editor" }
 sora-editor-lsp = { module = "io.github.Rosemoe.sora-editor:editor-lsp", version.ref = "editor" }
 sora-language-textmate = { module = "io.github.Rosemoe.sora-editor:language-textmate", version.ref = "editor" }
 sora-language-treesitter = { module = "io.github.Rosemoe.sora-editor:language-treesitter", version.ref = "editor" }
+sora-language-java = { group = "io.github.rosemoe.sora-editor", name = "language-java", version.ref = "soraEditor" }
+lsp4j = { module = "org.eclipse.lsp4j:org.eclipse.lsp4j", version.ref = "lsp4j" }
+jgit = { module = "org.eclipse.jgit:org.eclipse.jgit", version.ref = "jgit" }
+jgit-ssh-apache = { module = "org.eclipse.jgit:org.eclipse.jgit.ssh.apache", version.ref = "jgitSshApache" }
 
+# tree-sitter
 android-tree-sitter = { module = "com.itsaky.androidide.treesitter:android-tree-sitter", version.ref = "android-tree-sitter" }
 tree-sitter-aidl = { module = "com.itsaky.androidide.treesitter:tree-sitter-aidl", version.ref = "tree-sitter-aidl" }
 tree-sitter-java = { module = "com.itsaky.androidide.treesitter:tree-sitter-java", version.ref = "tree-sitter-java" }
@@ -132,6 +140,19 @@ tree-sitter-log = { module = "com.itsaky.androidide.treesitter:tree-sitter-log",
 tree-sitter-properties = { module = "com.itsaky.androidide.treesitter:tree-sitter-properties", version.ref = "tree-sitter-properties" }
 tree-sitter-python = { module = "com.itsaky.androidide.treesitter:tree-sitter-python", version.ref = "tree-sitter-python" }
 tree-sitter-xml = { module = "com.itsaky.androidide.treesitter:tree-sitter-xml", version.ref = "tree-sitter-xml" }
+
+gson = { module = "com.google.code.gson:gson", version.ref = "gson" }
+
+utilcode = { group = "com.blankj", name = "utilcodex", version.ref = "utilcode" }
+
+zipalign-java = { module = "com.github.iyxan23:zipalign-java", version.ref = "zipalignJava" }
+
+androidx-desugar = { module = "com.android.tools:desugar_jdk_libs", version.ref = "desugar_jdk_libs" }
+
+# Netzwerk & Kompression
+okhttp = { group = "com.squareup.okhttp3", name = "okhttp", version.ref = "okhttp" }
+commons-compress = { group = "org.apache.commons", name = "commons-compress", version.ref = "commonsCompress" }
+xz-java = { group = "org.tukaani", name = "xz", version.ref = "xzJava" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

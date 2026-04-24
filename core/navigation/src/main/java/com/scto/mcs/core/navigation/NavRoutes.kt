@@ -1,4 +1,4 @@
-package com.srvhive.app.navigation
+package com.scto.mcs.core.navigation
 
 object NavRoutes {
     const val HOME = "home"

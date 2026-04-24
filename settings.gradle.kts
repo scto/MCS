@@ -35,3 +35,10 @@ include(":core:ui")
 
 include(":feature:editor")
 include(":feature:settings")
+
+include(
+  ":termux:application",
+  ":termux:emulator",
+  ":termux:shared",
+  ":termux:view"
+)

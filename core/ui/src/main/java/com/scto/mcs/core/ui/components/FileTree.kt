@@ -1,4 +1,4 @@
-package com.srvhive.app.ui.components
+package com.scto.mcs.core.ui.components
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.combinedClickable
@@ -14,9 +14,12 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.srvhive.app.ui.screens.FileSortBy
-import com.srvhive.app.ui.screens.FileSortOrder
-import com.srvhive.app.ui.screens.SettingsViewModel
+
+import com.scto.mcs.feature.settings.FileSortBy
+import com.scto.mcs.feature.settings.FileSortOrder
+import com.scto.mcs.feature.settings.SettingsScreen
+import com.scto.mcs.feature.settings.SettingsViewModel
+
 import java.io.File
 
 /**

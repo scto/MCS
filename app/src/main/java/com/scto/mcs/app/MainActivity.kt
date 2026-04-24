@@ -1,4 +1,4 @@
-package com.srvhive.app
+package com.scto.mcs.app
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -8,9 +8,9 @@ import androidx.activity.viewModels
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import com.google.android.material.color.DynamicColors
 
-import com.srvhive.app.ui.MainScreen
-import com.srvhive.app.ui.theme.MCSTheme
-import com.srvhive.app.ui.screens.SettingsViewModel
+import com.scto.mcs.app.ui.MainScreen
+import com.scto.mcs.core.ui.theme.MCSTheme
+import com.scto.mcs.feature.settings.SettingsViewModel
 
 class MainActivity : ComponentActivity() {
     

@@ -1,5 +1,4 @@
-
-package com.srvhive.app.ui.screens
+package com.scto.mcs.app.ui.screens
 
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable

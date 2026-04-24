@@ -1,76 +1,123 @@
-package com.srvhive.app.ui.screens
+package com.scto.mcs.feature.editor
 
 import android.content.Context
 import android.net.Uri
 import androidx.compose.runtime.*
 import androidx.lifecycle.ViewModel
-import io.github.rosemoe.sora.text.Content
-import io.github.rosemoe.sora.text.ContentIO
-import java.io.OutputStreamWriter
+import androidx.lifecycle.viewModelScope
+import com.scto.mcs.core.build_tools.indexing.api.ProjectIndexer
+import com.scto.mcs.core.build_tools.lsp.models.Position
+import com.scto.mcs.core.editor.lsp.LspClient
+import com.scto.mcs.core.domain.repository.GitRepository
+import com.scto.mcs.core.domain.repository.LineDiff
+import dagger.hilt.android.lifecycle.HiltViewModel
+import dagger.hilt.android.qualifiers.ApplicationContext
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.launch
+import java.io.File
+import javax.inject.Inject
 
-class EditorViewModel : ViewModel() {
-    val openFiles = mutableStateListOf<EditorFile>()
-    var activeFileIndex by mutableStateOf(-1)
-    
-    val activeFile: EditorFile?
-        get() = if (activeFileIndex in openFiles.indices) openFiles[activeFileIndex] else null
+@HiltViewModel
+class EditorViewModel @Inject constructor(
+    @ApplicationContext private val context: Context,
+    private val indexer: ProjectIndexer,
+    private val gitRepository: GitRepository
+) : ViewModel() {
 
-    fun openFileFromUri(context: Context, uri: Uri) {
-        val existing = openFiles.indexOfFirst { it.uri == uri }
-        if (existing != -1) {
-            activeFileIndex = existing
+    private val _openFiles = mutableStateListOf<EditorFile>()
+    val openFiles: List<EditorFile> get() = _openFiles
+
+    var activeFileIndex by mutableStateOf(0)
+    val activeFile: EditorFile? get() = _openFiles.getOrNull(activeFileIndex)
+
+    // Git Diff Status für die aktive Datei
+    private val _activeFileDiff = MutableStateFlow<List<LineDiff>>(emptyList())
+    val activeFileDiff: StateFlow<List<LineDiff>> = _activeFileDiff
+
+    private val _pendingScrollToLine = MutableSharedFlow<Int>()
+    val pendingScrollToLine: SharedFlow<Int> = _pendingScrollToLine
+
+    /**
+     * Aktualisiert den Git-Diff für die aktuelle Datei.
+     */
+    fun refreshGitDiff(repoPath: String) {
+        val file = activeFile ?: return
+        val relativePath = file.uri.path?.substringAfter(repoPath)?.removePrefix("/") ?: return
+
+        viewModelScope.launch {
+            gitRepository.getDiffForFile(repoPath, relativePath).onSuccess { diffs ->
+                _activeFileDiff.value = diffs
+            }
+        }
+    }
+
+    fun goToDefinition(lspClient: LspClient?) {
+        val file = activeFile ?: return
+        val editor = file.editorInstance ?: return
+        viewModelScope.launch {
+            val locations = lspClient?.requestDefinition(file.uri.toString(), Position(editor.cursor.line, editor.cursor.column)) ?: emptyList()
+            if (locations.isNotEmpty()) {
+                val target = locations.first()
+                jumpToLocation(Uri.parse(target.uri), target.range.start.line)
+            }
+        }
+    }
+
+    fun jumpToLocation(uri: Uri, line: Int) {
+        val index = _openFiles.indexOfFirst { it.uri == uri }
+        if (index != -1) {
+            activeFileIndex = index
+            viewModelScope.launch { _pendingScrollToLine.emit(line) }
+        } else {
+            openFileFromUri(uri)
+            viewModelScope.launch {
+                kotlinx.coroutines.delay(300)
+                _pendingScrollToLine.emit(line)
+            }
+        }
+    }
+
+    fun openFileFromUri(uri: Uri) {
+        val existingIndex = _openFiles.indexOfFirst { it.uri == uri }
+        if (existingIndex != -1) {
+            activeFileIndex = existingIndex
             return
         }
-
-        try {
-            context.contentResolver.openInputStream(uri)?.use { stream ->
-                val content = ContentIO.createFromReader(stream.bufferedReader())
-                // Name aus URI extrahieren
-                val fileName = uri.path?.split("/")?.lastOrNull() ?: "Unbenannt"
-                
-                val newFile = EditorFile(uri, fileName, content)
-                openFiles.add(newFile)
-                activeFileIndex = openFiles.lastIndex
-            }
-        } catch (e: Exception) {
-            e.printStackTrace()
-        }
-    }
-
-    /**
-     * Speichert den aktuellen Inhalt in die bestehende Datei (URI).
-     */
-    fun saveCurrentFile(context: Context) {
-        val file = activeFile ?: return
-        val uri = file.uri ?: return // "Speichern unter" falls kein URI vorhanden
-        
-        saveToUri(context, uri, file)
-    }
-
-    /**
-     * Schreibt den Content in einen URI und aktualisiert den Dateistatus.
-     */
-    fun saveToUri(context: Context, uri: Uri, file: EditorFile) {
-        try {
-            context.contentResolver.openOutputStream(uri, "wt")?.use { outputStream ->
-                OutputStreamWriter(outputStream).use { writer ->
-                    writer.write(file.content.toString())
-                    file.isDirty.value = false
-                    // Falls "Speichern unter", URI und Name aktualisieren
-                    if (file.uri != uri) {
-                        // In einer realen App würde man hier den Namen aus dem neuen URI extrahieren
-                    }
-                }
-            }
-        } catch (e: Exception) {
-            e.printStackTrace()
+        viewModelScope.launch {
+            val content = context.contentResolver.openInputStream(uri)?.use { it.bufferedReader().readText() } ?: ""
+            _openFiles.add(EditorFile(uri, uri.lastPathSegment ?: "Unbenannt", mutableStateOf(content)))
+            activeFileIndex = _openFiles.size - 1
+            // Trigger Diff after open
+            // refreshGitDiff(currentRepoPath) 
         }
     }
 
     fun closeTab(index: Int) {
-        if (index in openFiles.indices) {
-            openFiles.removeAt(index)
-            if (activeFileIndex >= openFiles.size) activeFileIndex = openFiles.size - 1
+        if (index in _openFiles.indices) {
+            _openFiles.removeAt(index)
+            activeFileIndex = activeFileIndex.coerceIn(0, (_openFiles.size - 1).coerceAtLeast(0))
         }
     }
+    
+    fun onContentChanged(newContent: String) {
+        activeFile?.let {
+            if (it.content.value != newContent) {
+                it.content.value = newContent
+                // Optional: Diff bei jeder Änderung re-triggern (CPU intensiv)
+            }
+        }
+    }
+
+    fun clearDocumentation() {}
+    val currentDoc: StateFlow<com.scto.mcs.core.domain.model.Documentation?> = MutableStateFlow(null)
 }
+
+data class EditorFile(
+    val uri: Uri,
+    val name: String,
+    val content: MutableState<String>,
+    var editorInstance: io.github.rosemoe.sora.widget.CodeEditor? = null
+)

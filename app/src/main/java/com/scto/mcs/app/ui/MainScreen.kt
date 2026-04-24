@@ -1,104 +1,88 @@
-package com.srvhive.app.ui
+package com.scto.mcs.app.ui
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Edit
-import androidx.compose.material.icons.filled.Home
-import androidx.compose.material.icons.filled.Settings
+import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material3.*
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
-import androidx.navigation.NavDestination.Companion.hierarchy
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.*
 
-import com.srvhive.app.navigation.NavRoutes
-import com.srvhive.app.ui.screens.*
+import com.scto.mcs.core.navigation.NavRoutes
+import com.scto.mcs.app.ui.screens.HomeScreen
+import com.scto.mcs.feature.editor.ui.EditorScreen
+import com.scto.mcs.feature.editor.EditorViewModel
+import com.scto.mcs.feature.settings.SettingsViewModel
+import com.scto.mcs.core.ui.components.sidepanel.SidePanel
+import com.scto.mcs.core.ui.components.sidepanel.SidePanelViewModel
+
+import kotlinx.coroutines.launch
 
 /**
- * Der MainScreen dient als Container für die NavigationRail und den NavHost.
- * Er reicht das SettingsViewModel an alle Unterbildschirme weiter.
+ * Zentraler Screen der Anwendung.
+ * Verwaltet das SidePanel im Drawer und den Navigations-Host.
  */
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MainScreen(settingsViewModel: SettingsViewModel) {
+fun MainScreen(
+    settingsViewModel: SettingsViewModel,
+    sidePanelViewModel: SidePanelViewModel = hiltViewModel()
+) {
     val navController = rememberNavController()
     val navBackStackEntry by navController.currentBackStackEntryAsState()
-    val currentDestination = navBackStackEntry?.destination
+    val currentRoute = navBackStackEntry?.destination?.route
+    
+    val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
+    val scope = rememberCoroutineScope()
+    val editorViewModel: EditorViewModel = hiltViewModel()
 
-    // Wir stellen sicher, dass das EditorViewModel App-weit stabil bleibt,
-    // damit geöffnete Tabs beim Navigieren nicht verloren gehen.
-    val editorViewModel: EditorViewModel = viewModel()
-
-    Surface(
-        modifier = Modifier.fillMaxSize(),
-        color = MaterialTheme.colorScheme.background
-    ) {
-        Row(
-            modifier = Modifier
-                .fillMaxSize()
-                .safeDrawingPadding()
-        ) {
-            // Seiten-Navigation (Rail) für Tablets und Querformat-Handys optimiert
-            NavigationRail(
-                containerColor = MaterialTheme.colorScheme.surface
-            ) {
-                NavigationRailItem(
-                    selected = currentDestination?.hierarchy?.any { it.route == NavRoutes.HOME } == true,
-                    onClick = {
-                        navController.navigate(NavRoutes.HOME) {
+    ModalNavigationDrawer(
+        drawerState = drawerState,
+        gesturesEnabled = true,
+        drawerContent = {
+            ModalDrawerSheet(modifier = Modifier.width(320.dp)) {
+                SidePanel(
+                    viewModel = sidePanelViewModel,
+                    currentRoute = currentRoute,
+                    onNavigate = { route ->
+                        navController.navigate(route) {
                             popUpTo(navController.graph.findStartDestination().id) { saveState = true }
                             launchSingleTop = true
                             restoreState = true
                         }
-                    },
-                    icon = { Icon(Icons.Default.Home, "Start") },
-                    label = { Text("Start") }
-                )
-
-                NavigationRailItem(
-                    selected = currentDestination?.hierarchy?.any { it.route == NavRoutes.EDITOR } == true,
-                    onClick = {
-                        navController.navigate(NavRoutes.EDITOR) {
-                            popUpTo(navController.graph.findStartDestination().id) { saveState = true }
-                            launchSingleTop = true
-                            restoreState = true
-                        }
-                    },
-                    icon = { Icon(Icons.Default.Edit, "Editor") },
-                    label = { Text("Editor") }
-                )
-
-                NavigationRailItem(
-                    selected = currentDestination?.hierarchy?.any { it.route == NavRoutes.SETTINGS } == true,
-                    onClick = {
-                        navController.navigate(NavRoutes.SETTINGS) {
-                            popUpTo(navController.graph.findStartDestination().id) { saveState = true }
-                            launchSingleTop = true
-                            restoreState = true
-                        }
-                    },
-                    icon = { Icon(Icons.Default.Settings, "Optionen") },
-                    label = { Text("Optionen") }
+                        scope.launch { drawerState.close() }
+                    }
                 )
             }
-
-            // Inhaltsbereich
-            NavHost(
-                navController = navController,
-                startDestination = NavRoutes.HOME,
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(8.dp)
-            ) {
-                composable(NavRoutes.HOME) { HomeScreen() }
-                composable(NavRoutes.EDITOR) { 
-                    EditorScreen(settingsViewModel, editorViewModel) 
-                }
-                composable(NavRoutes.SETTINGS) { 
-                    SettingsScreen(settingsViewModel) 
+        }
+    ) {
+        Scaffold(
+            topBar = {
+                CenterAlignedTopAppBar(
+                    title = { Text("KW IDE") },
+                    navigationIcon = {
+                        IconButton(onClick = { scope.launch { drawerState.open() } }) {
+                            Icon(Icons.Default.Menu, "Menü")
+                        }
+                    }
+                )
+            }
+        ) { padding ->
+            Box(modifier = Modifier.padding(padding).fillMaxSize()) {
+                NavHost(
+                    navController = navController,
+                    startDestination = NavRoutes.EDITOR,
+                    modifier = Modifier.fillMaxSize()
+                ) {
+                    composable(NavRoutes.EDITOR) { 
+                        EditorScreen(settingsViewModel, editorViewModel) 
+                    }
+                    composable(NavRoutes.SETTINGS) { 
+                        // SettingsScreen(settingsViewModel) 
+                    }
                 }
             }
         }

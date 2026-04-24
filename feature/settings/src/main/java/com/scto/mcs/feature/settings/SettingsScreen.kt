@@ -1,4 +1,4 @@
-package com.srvhive.app.ui.screens
+package com.scto.mcs.feature.settings
 
 import android.content.Context
 import android.net.Uri
@@ -23,8 +23,11 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+
 import androidx.lifecycle.ViewModel
+
 import org.json.JSONObject
+
 import java.io.File
 
 // --- Enums für Zustände und Navigation ---
