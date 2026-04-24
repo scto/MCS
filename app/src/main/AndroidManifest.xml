@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <application
-        android:name=".SrvHiveApp"
+        android:name=".McsApp"
         android:label="SrvHive"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
