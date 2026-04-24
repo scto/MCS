@@ -29,16 +29,31 @@ rootProject.name = "MCS"
 
 include(":app")
 
-include(":core:navigation")
-include(":core:resourcess")
-include(":core:ui")
-
-include(":feature:editor")
-include(":feature:settings")
-
+// Core modules
 include(
-  ":termux:application",
-  ":termux:emulator",
-  ":termux:shared",
-  ":termux:view"
+    ":core:build-tools",
+    ":core:commands",
+    ":core:domain",
+    ":core:files",
+    ":core:git",
+    ":core:navigation",
+    ":core:resourcess",
+    ":core:terminal",
+    ":core:terminal-emulator",
+    ":core:termux-shared",
+    ":core:ui"
+)
+
+// Feature modules
+include(
+    ":feature:editor",
+    ":feature:settings"
+)
+
+// Termux modules
+include(
+    ":termux:application",
+    ":termux:emulator",
+    ":termux:shared",
+    ":termux:view"
 )
