@@ -32,28 +32,28 @@ include(":app")
 // Core modules
 include(
     ":core:build-tools",
-    ":core:commands",
+ //   ":core:commands",
+    ":core:di",
     ":core:domain",
+    ":core:editor",
+    ":core:exec",
     ":core:files",
     ":core:git",
     ":core:navigation",
+    ":core:network",
     ":core:resourcess",
     ":core:terminal",
     ":core:terminal-emulator",
+    ":core:terminal-view",
     ":core:termux-shared",
-    ":core:ui"
+    ":core:ui",
+    ":core:utils"
 )
 
 // Feature modules
 include(
     ":feature:editor",
-    ":feature:settings"
-)
-
-// Termux modules
-include(
-    ":termux:application",
-    ":termux:emulator",
-    ":termux:shared",
-    ":termux:view"
+    ":feature:git",
+    ":feature:settings",
+    ":feature:terminal"
 )
