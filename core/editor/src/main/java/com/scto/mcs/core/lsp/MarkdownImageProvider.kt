@@ -1,4 +1,4 @@
-package com.rk.lsp
+package com.scto.mcs.core.editor.lsp
 
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
@@ -8,7 +8,9 @@ import android.graphics.drawable.Drawable
 import android.util.Base64
 import androidx.core.graphics.createBitmap
 import androidx.core.graphics.scale
+
 import com.caverock.androidsvg.SVG
+
 import io.github.rosemoe.sora.lsp.editor.text.SimpleMarkdownRenderer
 
 /**

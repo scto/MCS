@@ -1,4 +1,4 @@
-package com.rk.lsp
+package com.scto.mcs.core.editor.lsp
 
 import java.io.ByteArrayOutputStream
 import java.io.FilterInputStream

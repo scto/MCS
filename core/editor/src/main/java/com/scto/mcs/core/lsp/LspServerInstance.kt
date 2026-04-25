@@ -1,4 +1,4 @@
-package com.rk.lsp
+package com.scto.mcs.core.editor.lsp
 
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
@@ -16,6 +16,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+
 import com.rk.activities.main.MainActivity
 import com.rk.file.FileObject
 import com.rk.icons.Error
@@ -27,10 +28,13 @@ import com.rk.tabs.editor.EditorTab
 import com.rk.tabs.editor.applyHighlightingAndConnectLSP
 import com.rk.theme.greenStatus
 import com.rk.theme.yellowStatus
+
 import io.github.rosemoe.sora.lsp.client.languageserver.wrapper.LanguageServerWrapper
 import io.github.rosemoe.sora.lsp.editor.LspProject
+
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+
 import org.eclipse.lsp4j.MessageParams
 import org.eclipse.lsp4j.MessageType
 

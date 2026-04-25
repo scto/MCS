@@ -1,11 +1,13 @@
-package com.rk.lsp
+package com.scto.mcs.core.editor.lsp
 
 import android.util.Log
+
 import java.io.IOException
 import java.io.InputStream
 import java.io.OutputStream
 import java.net.InetSocketAddress
 import java.net.Socket
+
 import org.eclipse.lsp4j.MessageType
 
 class SocketConnection(private val port: Int, private val host: String? = null, instance: LspServerInstance) :

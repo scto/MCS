@@ -1,14 +1,18 @@
-package com.rk.lsp
+package com.scto.mcs.core.editor.lsp
 
 import android.util.Log
-import com.rk.exec.ubuntuProcess
+
+import com.scto.mcs.core.exec.ubuntuProcess
+
 import java.io.InputStream
 import java.io.OutputStream
+
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
+
 import org.eclipse.lsp4j.MessageType
 
 class ProcessConnection(private val cmd: Array<String>, instance: LspServerInstance) :
