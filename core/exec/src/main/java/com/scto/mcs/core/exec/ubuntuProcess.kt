@@ -4,18 +4,18 @@ import android.annotation.SuppressLint
 import android.os.Build
 import android.util.Log
 
-import com.rk.file.child
-import com.rk.file.localBinDir
-import com.rk.file.localDir
-import com.rk.file.localLibDir
-import com.rk.file.sandboxDir
-import com.rk.file.sandboxHomeDir
-import com.rk.settings.Settings
-import com.rk.utils.application
-import com.rk.utils.getSourceDirOfPackage
-import com.rk.utils.getTempDir
-import com.rk.utils.isFDroid
-import com.rk.xededitor.BuildConfig
+import com.scto.mcs.core.files.child
+import com.scto.mcs.core.files.localBinDir
+import com.scto.mcs.core.files.localDir
+import com.scto.mcs.core.files.localLibDir
+import com.scto.mcs.core.files.sandboxDir
+import com.scto.mcs.core.files.sandboxHomeDir
+import com.scto.mcs.feature.settings.SettingsViewModel
+import com.scto.mcs.core.utils.application
+import com.scto.mcs.core.utils.getSourceDirOfPackage
+import com.scto.mcs.core.utils.getTempDir
+import com.scto.mcs.core.utils.isFDroid
+import com.scto.mcs.app.BuildConfig
 
 import java.io.File
 import java.io.IOException

@@ -1,20 +1,26 @@
 package com.scto.mcs.core.terminal.setup
 
 import android.content.Context
+
 import com.scto.mcs.core.domain.repository.DownloadRepository
 import com.scto.mcs.core.domain.repository.DownloadStatus
 import com.scto.mcs.core.terminal.config.TerminalConfig
+
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.*
+
 import org.apache.commons.compress.archivers.tar.TarArchiveInputStream
 import org.apache.commons.compress.compressors.xz.XZCompressorInputStream
+
 import java.io.File
 import java.io.FileInputStream
 import java.io.FileOutputStream
 import java.io.IOException
+
 import javax.inject.Inject
 import javax.inject.Singleton
+
 import kotlin.math.pow
 
 /**
@@ -44,7 +50,15 @@ class TerminalSetupService @Inject constructor(
                 emit(state) 
             }
 
-        // 2. Download RootFS mit Retry-Logik
+        // 2. Download LibAlloc mit Retry-Logik
+        val LibAllocFile = File(binDir, "liballoc.2.so")
+        downloadWithRetries("LibAlloc", config.LibAllocUrl, LibAllocFile)
+            .collect { state -> 
+                if (state is SetupState.Downloading && state.progress == 1f) LibAllocFile.setExecutable(true)
+                emit(state) 
+            }
+
+        // 3. Download RootFS mit Retry-Logik
         val archiveFile = File(baseDir, "rootfs.tar.xz")
         downloadWithRetries("RootFS", config.rootfsUrl, archiveFile)
             .collect { state ->
@@ -57,7 +71,7 @@ class TerminalSetupService @Inject constructor(
                 }
             }
 
-        // 3. Initialisierung der Shell
+        // 4. Initialisierung der Shell
         emit(SetupState.Initializing("Konfiguriere Umgebung..."))
         initializeShellEnv(rootFsDir)
 

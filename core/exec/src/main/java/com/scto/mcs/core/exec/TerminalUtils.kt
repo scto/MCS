@@ -3,13 +3,13 @@ package com.scto.mcs.core.exec
 import android.content.Context
 import android.content.Intent
 
-import com.rk.activities.main.MainActivity
-import com.rk.activities.terminal.Terminal
-import com.rk.file.child
-import com.rk.file.localDir
-import com.rk.file.sandboxDir
-import com.rk.file.sandboxHomeDir
-import com.rk.utils.showTerminalNotice
+import com.scto.mcs.app.activities.MainActivity
+import com.scto.mcs.app.activities.TerminalActivity
+import com.scto.mcs.core.files.child
+import com.scto.mcs.core.files.localDir
+import com.scto.mcs.core.files.sandboxDir
+import com.scto.mcs.core.files.sandboxHomeDir
+import com.scto.mcs.core.utils.showTerminalNotice
 
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
