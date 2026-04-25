@@ -1,10 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+<manifest
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+    <uses-permission
+        android:name="android.permission.MANAGE_EXTERNAL_STORAGE"
+        tools:ignore="ScopedStorage" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_SPECIAL_USE" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission
+        android:name="android.permission.READ_PHONE_STATE"
+        tools:node="remove" />
+
+    <queries>
+        <package android:name="com.github.android" />
+        <package android:name="com.termux.x11" />
+        <intent>
+            <action android:name="android.support.customtabs.action.CustomTabsService" />
+        </intent>
+    </queries>
 
     <application
         android:name=".McsApp"
-        android:label="SrvHive"
+        android:label="@string/app_name"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:enableOnBackInvokedCallback="true"
@@ -19,20 +42,34 @@
         android:theme="@style/Theme.MCS.Splash"
         tools:targetApi="tiramisu">
         
+        <profileable
+            android:shell="true"
+            tools:targetApi="29" />
+
+        <service
+            android:name="com.scto.mcs.core.terminal.SessionService"
+            android:foregroundServiceType="specialUse" />
+
         <activity
-            android:name=".MainActivity"
+            android:name="com.scto.mcs.app.MainActivity"
             android:windowSoftInputMode="adjustResize"
             android:screenOrientation="fullSensor"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:exported="true">
-            
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
-            
         </activity>
-        
+
+        <activity
+            android:name="com.scto.mcs.app.terminal.TerminalActivity"
+            android:exported="true"
+            android:label="Terminal"
+            android:launchMode="singleTask"
+            android:windowSoftInputMode="adjustResize|stateVisible">
+        </activity>
+
     </application>
     
 </manifest>

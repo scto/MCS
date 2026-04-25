@@ -1,17 +1,22 @@
 package com.scto.mcs.core.terminal
 
 import android.content.Context
+
 import com.scto.mcs.core.terminal.config.TerminalConfig
+
 import dagger.hilt.android.qualifiers.ApplicationContext
+
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.launch
+
 import java.io.BufferedReader
 import java.io.File
 import java.io.InputStreamReader
+
 import javax.inject.Inject
 import javax.inject.Singleton
 

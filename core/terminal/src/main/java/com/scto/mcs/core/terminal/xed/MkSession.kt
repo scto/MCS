@@ -1,17 +1,17 @@
-package com.scto.mcs.core.terminal
+package com.scto.mcs.core.terminal.xed
 
 import android.os.Build
 
-import com.scto.mcs.app.MainActivity
-import com.scto.mcs.app.TerminalActivity
+import com.scto.mcs.app.activities.MainActivity
+import com.scto.mcs.app.activities.TerminalActivity
 import com.scto.mcs.core.exec.pendingCommand
-import com.scto.mcs.core.file.FileWrapper
-import com.scto.mcs.core.file.child
-import com.scto.mcs.core.file.localBinDir
-import com.scto.mcs.core.file.localDir
-import com.scto.mcs.core.file.localLibDir
-import com.scto.mcs.core.file.sandboxHomeDir
-import com.scto.mcs.feature.settings.Settings
+import com.scto.mcs.core.files.FileWrapper
+import com.scto.mcs.core.files.child
+import com.scto.mcs.core.files.localBinDir
+import com.scto.mcs.core.files.localDir
+import com.scto.mcs.core.files.localLibDir
+import com.scto.mcs.core.files.sandboxHomeDir
+import com.scto.mcs.feature.settings.SettingsViewModel
 import com.scto.mcs.core.tabs.editor.EditorTab
 import com.scto.mcs.core.utils.getSourceDirOfPackage
 import com.scto.mcs.core.utils.getTempDir
@@ -27,7 +27,7 @@ import kotlinx.coroutines.runBlocking
 
 object MkSession {
     fun createSession(
-        activity: Terminal,
+        activity: TerminalActivity,
         sessionClient: TerminalSessionClient,
         sessionId: String,
     ): Pair<TerminalSession, SessionPwd> {
@@ -69,12 +69,12 @@ object MkSession {
                     "PRIVATE_DIR=${filesDir.parentFile!!.absolutePath}",
                     "LD_LIBRARY_PATH=${localLibDir().absolutePath}",
                     "EXT_HOME=${sandboxHomeDir()}",
-                    "HOME=${if (Settings.sandbox){ "/home"} else{ sandboxHomeDir()}}",
+                    "HOME=${if (SettingsViewModel.sandbox){ "/home"} else{ sandboxHomeDir()}}",
                     "PROMPT_DIRTRIM=2",
                     "LINKER=${if(File("/system/bin/linker64").exists()){"/system/bin/linker64"}else{"/system/bin/linker"}}",
                     "NATIVE_LIB_DIR=${applicationInfo.nativeLibraryDir}",
                     "FDROID=${isFDroid}",
-                    "SANDBOX=${Settings.sandbox}",
+                    "SANDBOX=${SettingsViewModel.sandbox}",
                     "TMP_DIR=${getTempDir()}",
                     "TMPDIR=${getTempDir()}",
                     "TZ=UTC",
@@ -146,7 +146,7 @@ object MkSession {
                 localDir().absolutePath,
                 actualArgs,
                 env.toTypedArray(),
-                Settings.terminal_scrollback_buffer,
+                SettingsViewModel.terminal_scrollback_buffer,
                 sessionClient,
             ) to workingDir
         }
@@ -164,7 +164,7 @@ suspend fun Terminal.getPwd(): String {
     }
 
     val currentTab = MainActivity.instance?.viewModel?.tabManager?.currentTab
-    if (Settings.project_as_pwd) {
+    if (SettingsViewModel.project_as_pwd) {
         //        if (currentProject != null && currentProject is FileWrapper) {
         //            val absolutePath = currentProject!!.getAbsolutePath()
         //            return if (Settings.sandbox) {
@@ -178,7 +178,7 @@ suspend fun Terminal.getPwd(): String {
             if (it is EditorTab && it.file is FileWrapper) {
                 val parent = it.file.getParentFile()
                 if (parent != null && parent is FileWrapper) {
-                    return if (Settings.sandbox) {
+                    return if (SettingsViewModel.sandbox) {
                         parent.getAbsolutePath().removePrefix(localDir().absolutePath)
                     } else {
                         parent.getAbsolutePath()
@@ -191,7 +191,7 @@ suspend fun Terminal.getPwd(): String {
             if (it is EditorTab && it.file is FileWrapper) {
                 val parent = it.file.getParentFile()
                 if (parent != null && parent is FileWrapper) {
-                    return if (Settings.sandbox) {
+                    return if (SettingsViewModel.sandbox) {
                         parent.getAbsolutePath().removePrefix(localDir().absolutePath)
                     } else {
                         parent.getAbsolutePath()
@@ -200,7 +200,7 @@ suspend fun Terminal.getPwd(): String {
             }
         }
     }
-    return if (Settings.sandbox) {
+    return if (SettingsViewModel.sandbox) {
         "/home"
     } else {
         sandboxHomeDir().absolutePath

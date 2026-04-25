@@ -1,4 +1,4 @@
-package com.rk.terminal
+package com.scto.mcs.core.terminal.xed
 
 import android.annotation.SuppressLint
 import android.app.Notification
@@ -13,13 +13,15 @@ import android.os.PowerManager
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.core.app.NotificationCompat
-import com.rk.activities.terminal.Terminal
-import com.rk.resources.drawables
-import com.rk.resources.getString
-import com.rk.resources.strings
-import com.rk.settings.Settings
+
+import com.scto.mcs.app.activities.terminal.TerminalActivity
+import com.scto.mcs.core.resources.drawables
+import com.scto.mcs.core.resources.getString
+import com.scto.mcs.core.resources.strings
+import com.scto.mcs.feature.settings.SettingsViewModel
 import com.termux.terminal.TerminalSession
 import com.termux.terminal.TerminalSessionClient
+
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -98,7 +100,7 @@ class SessionService : Service() {
 
     override fun onTaskRemoved(rootIntent: Intent?) {
         super.onTaskRemoved(rootIntent)
-        if (Settings.terminate_sessions_on_exit) {
+        if (SettingsViewModel.terminate_sessions_on_exit) {
             actionExit()
         }
     }
@@ -153,7 +155,7 @@ class SessionService : Service() {
     }
 
     private fun createNotification(): Notification {
-        val intent = Intent(this, Terminal::class.java)
+        val intent = Intent(this, TerminalActivity::class.java)
         val pendingIntent =
             PendingIntent.getActivity(
                 this,

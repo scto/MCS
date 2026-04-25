@@ -37,7 +37,7 @@ class ProotProcessWrapper private constructor(
             fun getHomeDir(context: Context) = File(context.filesDir, "home")
             fun getAndroidSdkDir(context: Context) = File(context.filesDir, "sdk")
         }
-    }
+y
 
     /**
      * Startet den Prozess mit den konfigurierten Parametern.

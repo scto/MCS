@@ -1,4 +1,4 @@
-package com.rk.terminal
+package com.scto.mcs.core.terminal.xed
 
 import android.graphics.Typeface
 import android.view.KeyEvent
@@ -66,26 +66,28 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.rk.activities.settings.SettingsRoutes
-import com.rk.activities.terminal.Terminal
-import com.rk.animations.NavigationAnimationTransitions
-import com.rk.editor.FontCache
-import com.rk.exec.pendingCommand
-import com.rk.file.child
-import com.rk.file.sandboxDir
-import com.rk.resources.strings
-import com.rk.settings.Settings
-import com.rk.settings.editor.DEFAULT_TERMINAL_FONT_PATH
-import com.rk.settings.editor.TerminalFontScreen
-import com.rk.settings.terminal.SettingsTerminalScreen
-import com.rk.settings.terminal.TerminalExtraKeys
-import com.rk.terminal.virtualkeys.VirtualKeysConstants
-import com.rk.terminal.virtualkeys.VirtualKeysInfo
-import com.rk.terminal.virtualkeys.VirtualKeysListener
-import com.rk.terminal.virtualkeys.VirtualKeysView
-import com.rk.theme.LocalThemeHolder
-import com.rk.theme.ThemeHolder
-import com.rk.utils.dpToPx
+
+import com.scto.mcs.app.ui.activities.settings.SettingsRoutes
+import com.scto.mcs.app.ui.activities.terminal.TerminalActivity
+import com.scto.mcs.core.animations.NavigationAnimationTransitions
+import com.scto.mcs.core.editor.FontCache
+import com.scto.mcs.core.exec.pendingCommand
+import com.scto.mcs.core.files.child
+import com.scto.mcs.core.files.sandboxDir
+import com.scto.mcs.core.resources.strings
+import com.scto.mcs.feature.settings.SettingsViewModel
+import com.scto.mcs.feature.settings.editor.DEFAULT_TERMINAL_FONT_PATH
+import com.scto.mcs.feature.settings.editor.TerminalFontScreen
+import com.scto.mcs.feature.settings.terminal.SettingsTerminalScreen
+import com.scto.mcs.feature.settings.terminal.TerminalExtraKeys
+import com.scto.mcs.core.terminal.xed.virtualkeys.VirtualKeysConstants
+import com.scto.mcs.core.terminal.xed.virtualkeys.VirtualKeysInfo
+import com.scto.mcs.core.terminal.xed.virtualkeys.VirtualKeysListener
+import com.scto.mcs.core.terminal.xed.virtualkeys.VirtualKeysView
+import com.scto.mcs.core.ui.theme.LocalThemeHolder
+import com.scto.mcs.core.ui.theme.ThemeHolder
+import com.scto.mcs.core.utils.dpToPx
+
 import com.termux.terminal.TerminalColors
 import com.termux.terminal.TextStyle
 import com.termux.view.TerminalView
@@ -229,7 +231,7 @@ private fun ColumnScope.TerminalView(
     currentTheme: ThemeHolder,
     surfaceColor: Int,
     onSurfaceColor: Int,
-    terminalActivity: Terminal,
+    terminalActivity: TerminalActivity,
 ) {
     AndroidView(
         factory = { context ->

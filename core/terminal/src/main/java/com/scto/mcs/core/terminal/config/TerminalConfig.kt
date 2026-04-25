@@ -38,14 +38,19 @@ object TerminalConfig {
 
     val ARCH_CONFIGS = mapOf(
         "aarch64" to ArchUrls(
-            prootUrl = "https://example.com/proot-aarch64",
-            rootfsUrl = "https://example.com/rootfs-aarch64.tar.xz",
-            liballocUrl = "https://example.com/liballoc-aarch64.so"
+            prootUrl = "https://raw.githubusercontent.com/Xed-Editor/Karbon-PackagesX/main/aarch64/proot",
+            rootfsUrl = "https://github.com/Xed-Editor/Karbon-PackagesX/releases/download/ubuntu/ubuntu-base-24.04.3-base-arm64.tar.gz",
+            liballocUrl = "https://raw.githubusercontent.com/Xed-Editor/Karbon-PackagesX/main/aarch64/liballoc.so.2"
         ),
         "arm" to ArchUrls(
-            prootUrl = "https://example.com/proot-arm",
-            rootfsUrl = "https://example.com/rootfs-arm.tar.xz",
-            liballocUrl = "https://example.com/liballoc-arm.so"
+            prootUrl = "https://raw.githubusercontent.com/Xed-Editor/Karbon-PackagesX/main/arm/proot",
+            rootfsUrl = "https://github.com/Xed-Editor/Karbon-PackagesX/releases/download/ubuntu/ubuntu-base-24.04.3-base-armhf.tar.gz",
+            liballocUrl = "https://raw.githubusercontent.com/Xed-Editor/Karbon-PackagesX/main/arm/liballoc.so.2"
+        ),
+        "x64" to ArchUrls(
+            prootUrl = "https://raw.githubusercontent.com/Xed-Editor/Karbon-PackagesX/main/amd64/proot",
+            rootfsUrl = "https://github.com/Xed-Editor/Karbon-PackagesX/releases/download/ubuntu/ubuntu-base-24.04.3-base-amd64.tar.gz",
+            liballocUrl = "https://raw.githubusercontent.com/Xed-Editor/Karbon-PackagesX/main/amd64/liballoc.so.2"
         )
     )
 

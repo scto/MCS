@@ -1,10 +1,10 @@
-package com.scto.mcs.core.terminal
+package com.scto.mcs.core.terminal.xed
 
 import android.content.Context
 
-import com.scto.mcs.core.file.child
-import com.scto.mcs.core.file.sandboxDir
-import com.scto.mcs.core.file.sandboxHomeDir
+import com.scto.mcs.core.files.child
+import com.scto.mcs.core.files.sandboxDir
+import com.scto.mcs.core.files.sandboxHomeDir
 import com.scto.mcs.core.utils.getTempDir
 import com.scto.mcs.core.utils.isMainThread
 

@@ -1,11 +1,11 @@
-package com.rk.terminal
+package com.scto.mcs.core.terminal.xed
 
-import com.rk.file.child
-import com.rk.file.createFileIfNot
-import com.rk.file.localBinDir
-import com.rk.file.localDir
-import com.rk.file.sandboxDir
-import com.rk.utils.application
+import com.scto.mcs.core.files.child
+import com.scto.mcs.core.files.createFileIfNot
+import com.scto.mcs.core.files.localBinDir
+import com.scto.mcs.core.files.localDir
+import com.scto.mcs.core.files.sandboxDir
+import com.scto.mcs.core.utils.application
 
 fun setupTerminalFiles() {
     if (sandboxDir().exists().not() || localBinDir().exists().not()) return
