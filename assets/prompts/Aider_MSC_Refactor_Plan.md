@@ -32,21 +32,37 @@ Anweisungen:
 3. Konfiguration der Compose-Optionen: Aktiviere Compose-Optionen und den Compose-Compiler in den Modulen, die UI-Elemente enthalten.
 4. Angleichung der SDK-Versionen: Harmonisiere die minSdk und targetSdk Werte über alle Feature-Module hinweg basierend auf den zentralen Vorgaben.
 
-Schritt 4.1: Quellcode-Refactoring (Feature-Module)
-Aider-Aufruf: aider feature/**/*.kt feature/**/*.java **/AndroidManifest.xml
+Schritt 4.1: Quellcode-Refactoring (Feature-Editor-Modul)
+Aider-Aufruf: /add feature/editor/*.kt **/AndroidManifest.xml
 Anweisungen:
-1. Überarbeitung des Quellcodes (Feature-Module): Führe eine Suche und Ersetzung aller Package-Deklarationen innerhalb der Feature-Submodule durch.
-2. Migration der Namespaces in Features: Ändere Package-Strings von com.rk, com.srvhive oder com.scto.mcs zu com.scto.msc.feature.<modulname>.
-3. Refactoring der Feature-Imports: Aktualisiere alle Imports, damit sie auf die neuen Pfade (auch die der Core-Module) unter com.scto.msc zeigen.
-4. Anpassung der Feature-Manifeste: Aktualisiere die package-Attribute in den Manifesten der Feature-Module.
+1. Überarbeitung des Quellcodes (Feature-Editor-Modul): Führe eine Suche und Ersetzung aller Package-Deklarationen innerhalb des Feature-Editor-Submodules durch.
+2. Migration der Namespaces in Feature-Editor: Ändere Package-Strings von com.rk, com.srvhive oder com.scto.msc zu com.scto.mcs.feature.editor.
+3. Refactoring der Feature-Editor-Imports: Aktualisiere alle Imports, damit sie auf die neuen Pfade (auch die der Core-Module) unter com.scto.mcs zeigen.
+4. Anpassung des Feature-Editor-Manifeste: Aktualisiere die package-Attribute in den Manifesten des Feature-EditorModuls.
 
-Schritt 4.2: Quellcode-Refactoring (Core-Module)
-Aider-Aufruf: aider core/**/*.kt core/**/*.java **/AndroidManifest.xml
+Schritt 4.2: Quellcode-Refactoring (Feature-Editor-Modul)
+Aider-Aufruf: /add feature/editor/*.kt **/AndroidManifest.xml
 Anweisungen:
-1. Überarbeitung des Quellcodes (Core-Module): Führe eine Suche und Ersetzung aller Package-Deklarationen innerhalb der Core-Submodule durch.
-2. Migration der Namespaces in Core: Ändere Package-Strings von com.rk, com.srvhive oder com.scto.mcs zu com.scto.msc.core.<modulname>.
-3. Refactoring der Core-Imports: Aktualisiere alle internen Core-Imports und Referenzen auf den neuen Namespace com.scto.msc.
-4. Anpassung der Core-Manifeste: Aktualisiere die package-Attribute in den Manifesten der Core-Module.
+1. Überarbeitung des Quellcodes (Feature-Editor-Modul): Führe eine Suche und Ersetzung aller Package-Deklarationen innerhalb des Feature-Editor-Submodules durch.
+2. Migration der Namespaces in Feature-Editor: Ändere Package-Strings von com.rk, com.srvhive oder com.scto.msc zu com.scto.mcs.feature.editor.
+3. Refactoring der Feature-Editor-Imports: Aktualisiere alle Imports, damit sie auf die neuen Pfade (auch die der Core-Module) unter com.scto.mcs zeigen.
+4. Anpassung des Feature-Editor-Manifeste: Aktualisiere die package-Attribute in den Manifesten des Feature-EditorModuls.
+
+Schritt 4.3: Quellcode-Refactoring (Feature-Editor-Modul)
+Aider-Aufruf: /add feature/editor/*.kt **/AndroidManifest.xml
+Anweisungen:
+1. Überarbeitung des Quellcodes (Feature-Editor-Modul): Führe eine Suche und Ersetzung aller Package-Deklarationen innerhalb des Feature-Editor-Submodules durch.
+2. Migration der Namespaces in Feature-Editor: Ändere Package-Strings von com.rk, com.srvhive oder com.scto.msc zu com.scto.mcs.feature.editor.
+3. Refactoring der Feature-Editor-Imports: Aktualisiere alle Imports, damit sie auf die neuen Pfade (auch die der Core-Module) unter com.scto.mcs zeigen.
+4. Anpassung des Feature-Editor-Manifeste: Aktualisiere die package-Attribute in den Manifesten des Feature-EditorModuls.
+
+Schritt 4.4: Quellcode-Refactoring (Feature-Editor-Modul)
+Aider-Aufruf: /add feature/editor/*.kt **/AndroidManifest.xml
+Anweisungen:
+1. Überarbeitung des Quellcodes (Feature-Editor-Modul): Führe eine Suche und Ersetzung aller Package-Deklarationen innerhalb des Feature-Editor-Submodules durch.
+2. Migration der Namespaces in Feature-Editor: Ändere Package-Strings von com.rk, com.srvhive oder com.scto.msc zu com.scto.mcs.feature.editor.
+3. Refactoring der Feature-Editor-Imports: Aktualisiere alle Imports, damit sie auf die neuen Pfade (auch die der Core-Module) unter com.scto.mcs zeigen.
+4. Anpassung des Feature-Editor-Manifeste: Aktualisiere die package-Attribute in den Manifesten des Feature-EditorModuls.
 
 Schritt 5: App-Modul, Manifeste & Finale Integration
 Aider-Aufruf: aider app/build.gradle.kts app/src/main/AndroidManifest.xml
