@@ -7,7 +7,7 @@ plugins {
 }
 
 android {
-    namespace = "com.scto.mcs.core.ui"
+    namespace = "com.scto.msc.core.ui"
     compileSdk = libs.versions.compileSdk.get().toInt()
 
     defaultConfig {
