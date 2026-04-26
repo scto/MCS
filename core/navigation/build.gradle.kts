@@ -7,7 +7,7 @@ plugins {
 }
 
 android {
-    namespace = "com.scto.mcs.core.navigation"
+    namespace = "com.scto.msc.core.navigation"
     compileSdk = libs.versions.compileSdk.get().toInt()
 
     defaultConfig {

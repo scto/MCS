@@ -7,7 +7,7 @@ plugins {
 }
 
 android {
-    namespace = "com.scto.mcs.core.filetree"
+    namespace = "com.scto.msc.core.filetree"
     compileSdk = 36
 
     defaultConfig {
