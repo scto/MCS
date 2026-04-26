@@ -1,4 +1,4 @@
-﻿MCS Projekt-Refactoring & Ressourcen-Zentralisierungs Plan
+﻿MCS Projekt-Refactoring & Ressourcen-Zentralisierungs Plan (Final)
 Dieses Dokument dient als Master-Plan für die Konsolidierung des Projekts auf den Namespace com.scto.mcs, die Bereinigung der Gradle-Konfigurationen und die Zentralisierung aller Ressourcen.
 Projekt-Kontext
 * Ziel-Package: com.scto.mcs
@@ -9,7 +9,7 @@ Projekt-Kontext
 * Zu ersetzende Namespaces: com.rk, com.srvhive, com.scto.msc
 
 Schritt 1: Zentrale Build-Konfiguration & Version Catalog
-Aider-Aufruf: aider build.gradle.kts settings.gradle.kts gradle/libs.versions.toml
+Aider-Aufruf: /add build.gradle.kts settings.gradle.kts gradle/libs.versions.toml
 Anweisungen:
 1. Überprüfung der zentralen Build-Dateien: Untersuche libs.versions.toml auf Vollständigkeit bezüglich Android Plugins, Kotlin, Hilt, Compose und KSP.
 2. Synchronisation der Modul-Inklusion: Stelle sicher, dass in settings.gradle.kts alle Module (:core:* und :feature:*) korrekt inkludiert sind.
@@ -30,84 +30,61 @@ Anweisungen:
 
 Schritt 4: Quellcode-Refactoring (Feature-Module)
 
-4.1 Refactoring des Quellcodes (Feature-Editor)
-Aider-Aufruf: /add feature/editor/**/*.kt feature/editor/src/main/AndroidManifest.xml
-Anweisungen:
-1. Ändere Package-Deklarationen und Imports von com.rk, com.srvhive oder com.scto.msc zu com.scto.mcs.feature.editor.
+4.1 Feature Editor
+Aider-Aufruf: /add feature/editor/**/*.kt feature/editor/src/main/AndroidManifest.xml Anweisungen: Migration auf com.scto.mcs.feature.editor. Ersetze com.rk, com.srvhive, com.scto.msc.
 
-4.2 Refactoring des Quellcodes (Feature-Git)
-Aider-Aufruf: /add feature/git/**/*.kt feature/git/src/main/AndroidManifest.xml. 
-Anweisungen:  
-1. Ändere Package-Deklarationen und Imports von com.rk, com.srvhive oder com.scto.msc zu com.scto.mcs.feature.git.
+4.2 Feature Git
+Aider-Aufruf: /add feature/git/**/*.kt feature/git/src/main/AndroidManifest.xml Anweisungen: Migration auf com.scto.mcs.feature.git. Ersetze com.rk, com.srvhive, com.scto.msc.
 
-4.3 Refactoring des Quellcodes (Feature-Settings)
-Aider-Aufruf: /add feature/settings/**/*.kt feature/settings/src/main/AndroidManifest.xml
-Anweisungen:
-Ändere Package-Deklarationen und Imports von com.rk, com.srvhive oder com.scto.msc zu com.scto.mcs.feature.settings.
+4.3 Feature Settings
+Aider-Aufruf: /add feature/settings/**/*.kt feature/settings/src/main/AndroidManifest.xml Anweisungen: Migration auf com.scto.mcs.feature.settings. Ersetze com.rk, com.srvhive, com.scto.msc.
 
-4.4 Refactoring des Quellcodes (Feature-Terminal)
-Aider-Aufruf: /add feature/terminal/**/*.kt feature/terminal/src/main/AndroidManifest.xml
-Anweisungen:
-Ändere Package-Deklarationen und Imports von com.rk, com.srvhive oder com.scto.msc zu com.scto.mcs.feature.terminal.
+4.4 Feature Terminal
+Aider-Aufruf: /add feature/terminal/**/*.kt feature/terminal/src/main/AndroidManifest.xml Anweisungen: Migration auf com.scto.mcs.feature.terminal. Ersetze com.rk, com.srvhive, com.scto.msc.
 
 Schritt 5: Quellcode-Refactoring (Core-Submodule)
 
-5.1 Refactoring Core-DI
-Aider-Aufruf: /add core/di/**/*.kt
-Anweisungen:
-Migration auf com.scto.mcs.core.di.
+5.1 Core DI
+Aider-Aufruf: /add core/di/**/*.kt Anweisungen: Migration auf com.scto.mcs.core.di.
 
-5.2 Refactoring Core-Exec
-Aider-Aufruf: /add core/exec/**/*.kt
-Anweisungen:
-Migration auf com.scto.mcs.core.exec.
+5.2 Core Exec
+Aider-Aufruf: /add core/exec/**/*.kt Anweisungen: Migration auf com.scto.mcs.core.exec.
 
-5.3 Refactoring Core-Files
-Aider-Aufruf: /add core/files/**/*.kt
-Anweisungen:
-Migration auf com.scto.mcs.core.files.
+5.3 Core Files
+Aider-Aufruf: /add core/files/**/*.kt Anweisungen: Migration auf com.scto.mcs.core.files.
 
-5.4 Refactoring Core-Navigation
-Aider-Aufruf: /add core/navigation/**/*.kt
-Anweisungen:
-Migration auf com.scto.mcs.core.navigation.
+5.4 Core Navigation
+Aider-Aufruf: /add core/navigation/**/*.kt Anweisungen: Migration auf com.scto.mcs.core.navigation.
 
-5.5 Refactoring Core-Network
-Aider-Aufruf: /add core/network/**/*.kt 
-Anweisungen:
-Ändere Package-Deklarationen und Imports von com.rk, com.srvhive oder com.scto.msc zu com.scto.mcs.core.network.
+5.5 Core Network
+Aider-Aufruf: /add core/network/**/*.kt Anweisungen: Migration auf com.scto.mcs.core.network.
 
-5.6 Refactoring Core-Resources
-Aider-Aufruf: /add core/resources/**/*.kt
-Anweisungen:
-Migration auf com.scto.mcs.core.resources.
+5.6 Core Resources
+Aider-Aufruf: /add core/resources/**/*.kt Anweisungen: Migration auf com.scto.mcs.core.resources.
 
-5.7 Refactoring Core-UI
-Aider-Aufruf: /add core/ui/**/*.kt Anweisungen:
-Migration auf com.scto.mcs.core.ui.
+5.7 Core UI
+Aider-Aufruf: /add core/ui/**/*.kt Anweisungen: Migration auf com.scto.mcs.core.ui.
 
-5.8 Refactoring Core-Utils
-Aider-Aufruf: /add core/utils/**/*.kt
-Anweisungen:
-Migration auf com.scto.mcs.core.utils.
+5.8 Core Utils
+Aider-Aufruf: /add core/utils/**/*.kt Anweisungen: Migration auf com.scto.mcs.core.utils.
 
-5.9 Refactoring Core-Terminal (Logik)
-Aider-Aufruf: /add core/terminal/**/*.kt
-Anweisungen:
-Ändere Package-Deklarationen und Imports von com.rk, com.srvhive oder com.scto.msc zu com.scto.mcs.core.terminal.
+5.9 Core Terminal (Logik)
+Aider-Aufruf: /add core/terminal/**/*.kt Anweisungen: Migration auf com.scto.mcs.core.terminal.
 
-Schritt 6: Zentralisierung der Ressourcen & String-Management
-Aider-Aufruf: /add **/*.xml **/*.kt **/*.java
-Anweisungen:
-1. Zentralisierung aller Ressourcen: Verschiebe alle Ressourcen (drawables, layouts, values, xml, etc.) aus allen Modulen und Submodulen in das Modul :core:resources.
-2. Zusammenführung der strings.xml: Sammle alle strings.xml Dateien aus dem gesamten Projekt und führe sie in core/resources/src/main/res/values/strings.xml zusammen. Eliminiere dabei Duplikate.
-3. Ersetzung hardkodierter Strings: Scanne alle Kotlin- und Java-Dateien nach hardkodierten User-Interface-Strings. Ersetze diese durch Referenzen auf die neue zentrale strings.xml (z.B. getString(R.string...) oder context.getString(...)).
-4. Bereinigung der Module: Lösche alle verbleibenden res-Ordner und deren Inhalte in allen Modulen (App, Features, andere Cores), außer im Modul :core:resources.
-5. R-Klassen-Korrektur: Stelle sicher, dass alle Code-Dateien nun com.scto.mcs.core.resources.R importieren, um auf Ressourcen zuzugreifen.
+Schritt 6: Zentralisierung der Ressourcen (Aufgeteilt)
+
+Schritt 6.1: Ressourcen-Verschiebung (Filesystem)
+Aider-Aufruf: /add **/*.xml Anweisungen: Verschiebe alle Ressourcen aus allen Modulen nach :core:resources unter core/resources/src/main/res/. Behalte die Unterordnerstruktur bei.
+
+Schritt 6.2: String-Management & Code-Anpassung
+Aider-Aufruf: /add core/resources/src/main/res/values/*.xml **/*.kt **/*.java Anweisungen:
+1. Führe alle strings.xml in der zentralen Datei zusammen (Duplikate entfernen).
+2. Ersetze hartkodierte UI-Strings im Code durch R.string-Referenzen.
+3. Aktualisiere alle Ressourcen-Imports projektweit auf com.scto.mcs.core.resources.R.
+4. Lösche leere res-Ordner in allen Modulen außer :core:resources.
 
 Schritt 7: App-Modul & Finale Integration
-Aider-Aufruf: /add app/build.gradle.kts app/src/main/AndroidManifest.xml
-Anweisungen:
-1. Finalisierung des App-Namespace: Setze den Namespace des :app Moduls auf com.scto.mcs.app.
-2. Validierung der Manifest-Konfiguration: Überprüfe die Haupt-AndroidManifest.xml auf korrekte Pfade zu Activities und stelle sicher, dass alle Permissions (Internet, Storage etc.) vorhanden sind.
-3. Abschließende Fehlerbehebung: Behebe alle verbleibenden Kompilierfehler, die durch die Namespace-Verschiebungen, Import-Änderungen oder Ressourcen-Umzüge entstanden sind.
+Aider-Aufruf: /add app/build.gradle.kts app/src/main/AndroidManifest.xml Anweisungen:
+1. Finalisiere :app auf com.scto.mcs.app.
+2. Validiere Manifest-Pfade und Permissions.
+3. Behebe letzte Kompilierfehler.
