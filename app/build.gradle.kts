@@ -2,11 +2,13 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
+    alias(libs.plugins.ksp)
+    alias(libs.plugins.hilt.android)
 }
 
 android {
     namespace = "com.scto.mcs.app"
-    compileSdk = 36
+    compileSdk = libs.versions.compileSdk.get().toInt()
 
     defaultConfig {
         applicationId = "com.scto.mcs.app"
@@ -45,11 +47,16 @@ dependencies {
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.navigation.compose)
     
+    implementation(libs.hilt.android)
+    ksp(libs.hilt.compiler)
+    
     implementation(project(":core:ui"))
     implementation(project(":core:navigation"))
     implementation(project(":core:resources"))
+    implementation(project(":core:di"))
     
     implementation(project(":feature:editor"))
     implementation(project(":feature:settings"))
     implementation(project(":feature:terminal"))
+    implementation(project(":feature:git"))
 }
