@@ -32,6 +32,7 @@ dependencies {
     implementation(project(":core:ui"))
     implementation(project(":core:navigation"))
     implementation(project(":core:resources"))
+    implementation(project(":core:domain"))
     
     implementation(platform(libs.androidx.compose.bom))
     implementation(libs.androidx.compose.ui)

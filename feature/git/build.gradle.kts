@@ -28,10 +28,12 @@ android {
 }
 
 dependencies {
+    implementation(project(":core:git"))
     implementation(project(":core:ui"))
     implementation(project(":core:navigation"))
     implementation(project(":core:utils"))
     implementation(project(":core:resources"))
+    implementation(project(":core:domain"))
     
     implementation(platform(libs.androidx.compose.bom))
     implementation(libs.androidx.compose.ui)
