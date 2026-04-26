@@ -1,0 +1,67 @@
+<resources>
+
+    <!-- ── Base theme (Nacht / Dark) ────────────────────────────────────────
+         Dieses Theme wird automatisch gewählt, wenn das System im Dark Mode ist.
+    ──────────────────────────────────────────────────────────────────────── -->
+    <style name="Base.Theme.MCS" parent="Theme.Material3.Dark.NoActionBar">
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:navigationBarColor">@android:color/transparent</item>
+        
+        <item name="android:windowNoTitle">true</item>
+        <item name="windowActionBar">false</item>
+        <item name="android:forceDarkAllowed">false</item>
+        
+        <item name="selectableItemBackground">?attr/selectableItemBackground</item>
+        <item name="selectableItemBackgroundBorderless">?attr/selectableItemBackgroundBorderless</item>
+    </style>
+
+    <!-- ── Default Dark Palette ──────────────────────────────────────────── -->
+    <style name="Theme.MCS" parent="Base.Theme.MCS">
+        <item name="colorPrimary">@color/md_theme_primary</item>
+        <item name="colorOnPrimary">@color/md_theme_onPrimary</item>
+        <item name="colorPrimaryContainer">@color/md_theme_primaryContainer</item>
+        <item name="colorOnPrimaryContainer">@color/md_theme_onPrimaryContainer</item>
+        <item name="colorSecondary">@color/md_theme_secondary</item>
+        <item name="colorOnSecondary">@color/md_theme_onSecondary</item>
+        <item name="colorSecondaryContainer">@color/md_theme_secondaryContainer</item>
+        <item name="colorOnSecondaryContainer">@color/md_theme_onSecondaryContainer</item>
+        <item name="colorTertiary">@color/md_theme_tertiary</item>
+        <item name="colorOnTertiary">@color/md_theme_onTertiary</item>
+        <item name="colorTertiaryContainer">@color/md_theme_tertiaryContainer</item>
+        <item name="colorOnTertiaryContainer">@color/md_theme_onTertiaryContainer</item>
+        <item name="colorError">@color/md_theme_error</item>
+        <item name="colorOnError">@color/md_theme_onError</item>
+        <item name="colorErrorContainer">@color/md_theme_errorContainer</item>
+        <item name="colorOnErrorContainer">@color/md_theme_onErrorContainer</item>
+        <item name="android:colorBackground">@color/md_theme_background</item>
+        <item name="colorOnBackground">@color/md_theme_onBackground</item>
+        <item name="colorSurface">@color/md_theme_surface</item>
+        <item name="colorOnSurface">@color/md_theme_onSurface</item>
+        <item name="colorSurfaceVariant">@color/md_theme_surfaceVariant</item>
+        <item name="colorOnSurfaceVariant">@color/md_theme_onSurfaceVariant</item>
+    </style>
+
+    <!-- ── OLED / Pure Black Variante ────────────────────────────────────── -->
+    <style name="Theme.MCS.Oled" parent="Theme.MCS">
+        <item name="android:colorBackground">@android:color/black</item>
+        <item name="colorSurface">@android:color/black</item>
+    </style>
+
+    <!-- ── Material You Dark (API 31+) ───────────────────────────────────── -->
+    <style name="Base.Theme.MCS.Monet" parent="Theme.Material3.DynamicColors.Dark">
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:navigationBarColor">@android:color/transparent</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="windowActionBar">false</item>
+        <item name="selectableItemBackground">?attr/selectableItemBackground</item>
+        <item name="selectableItemBackgroundBorderless">?attr/selectableItemBackgroundBorderless</item>
+    </style>
+
+    <!-- ── Splash Screen (Dark) ──────────────────────────────────────────── -->
+    <style name="Theme.MCS.Splash" parent="Theme.SplashScreen">
+        <item name="windowSplashScreenBackground">@color/md_theme_background</item>
+        <item name="windowSplashScreenAnimatedIcon">@mipmap/ic_launcher</item>
+        <item name="postSplashScreenTheme">@style/Theme.MCS</item>
+    </style>
+
+</resources>

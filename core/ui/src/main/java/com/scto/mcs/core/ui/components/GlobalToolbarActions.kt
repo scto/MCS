@@ -1,4 +1,4 @@
-package com.rk.components
+package com.scto.mcs.core.ui.components
 
 import android.app.Activity
 import android.content.Intent
@@ -19,6 +19,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.lifecycleScope
+
 import com.rk.DefaultScope
 import com.rk.activities.main.MainActivity
 import com.rk.activities.main.MainViewModel
@@ -45,6 +46,7 @@ import com.rk.settings.app.InbuiltFeatures
 import com.rk.utils.application
 import com.rk.utils.errorDialog
 import com.rk.utils.getTempDir
+
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 

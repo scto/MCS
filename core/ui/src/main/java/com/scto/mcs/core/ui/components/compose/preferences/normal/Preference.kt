@@ -1,4 +1,4 @@
-package com.rk.components.compose.preferences.normal
+package com.scto.mcs.core.ui.components.compose.preferences.normal
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
@@ -11,7 +11,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.rk.components.compose.preferences.base.PreferenceTemplate
+
+import com.scto.mcs.core.ui.components.compose.preferences.base.PreferenceTemplate
 
 /*
  * A Normal preference used in settings

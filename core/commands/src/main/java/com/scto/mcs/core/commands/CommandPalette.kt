@@ -1,4 +1,4 @@
-package com.rk.commands
+package com.scto.mcs.core.commands
 
 import androidx.activity.compose.BackHandler
 import androidx.activity.compose.LocalActivity
@@ -51,12 +51,14 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.rk.components.XedDialog
+
+import com.rk.components.McsDialog
 import com.rk.components.compose.utils.addIf
-import com.rk.icons.XedIcon
+import com.rk.icons.McsIcon
 import com.rk.resources.strings
 import com.rk.settings.Settings
 import com.rk.theme.Typography
+
 import kotlinx.coroutines.DelicateCoroutinesApi
 
 @OptIn(DelicateCoroutinesApi::class)

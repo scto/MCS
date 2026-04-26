@@ -1,4 +1,4 @@
-package com.rk.color
+package com.scto.mcs.core.ui.color
 
 import androidx.compose.ui.graphics.Color
 

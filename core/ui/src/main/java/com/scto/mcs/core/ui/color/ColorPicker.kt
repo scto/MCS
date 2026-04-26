@@ -1,4 +1,4 @@
-package com.rk.color
+package com.scto.mcs.core.ui.color
 
 import android.graphics.ComposeShader
 import android.graphics.LinearGradient
@@ -49,10 +49,11 @@ import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import com.rk.icons.Error
-import com.rk.icons.XedIcons
-import com.rk.resources.getString
-import com.rk.resources.strings
+
+import com.scto.mcs.core.ui.icons.Error
+import com.scto.mcs.core.ui.icons.McsIcons
+import com.scto.mcs.core.resources.getString
+import com.scto.mcs.core.resources.strings
 
 private typealias AndroidColor = android.graphics.Color
 
@@ -159,7 +160,7 @@ fun ColorPicker(
                     label = { Text(selectedColorFormat.label) },
                     trailingIcon = {
                         colorError?.let {
-                            Icon(XedIcons.Error, stringResource(strings.error), tint = MaterialTheme.colorScheme.error)
+                            Icon(McsIcons.Error, stringResource(strings.error), tint = MaterialTheme.colorScheme.error)
                         } ?: Box(Modifier.size(16.dp).background(color))
                     },
                 )

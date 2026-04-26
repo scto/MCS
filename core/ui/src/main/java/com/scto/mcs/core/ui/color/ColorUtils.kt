@@ -1,7 +1,9 @@
-package com.rk.color
+package com.scto.mcs.core.ui.color
 
 import androidx.compose.ui.graphics.Color
+
 import io.github.rosemoe.sora.lsp.utils.ColorUtils
+
 import kotlin.math.abs
 import kotlin.math.roundToInt
 

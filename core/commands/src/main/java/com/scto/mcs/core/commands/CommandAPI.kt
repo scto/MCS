@@ -1,6 +1,7 @@
-package com.rk.commands
+package com.scto.mcs.core.commands
 
 import android.app.Activity
+
 import com.rk.activities.main.MainViewModel
 import com.rk.editor.Editor
 import com.rk.icons.Icon

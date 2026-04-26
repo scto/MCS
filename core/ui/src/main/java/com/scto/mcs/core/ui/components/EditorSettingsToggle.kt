@@ -1,4 +1,4 @@
-package com.rk.components
+package com.scto.mcs.core.ui.components
 
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.layout.padding
@@ -10,8 +10,10 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-import com.rk.DefaultScope
-import com.rk.settings.editor.refreshEditorSettings
+
+import com.scto.mcs.app.DefaultScope
+import com.scto.mcs.feature.settings.editor.refreshEditorSettings
+
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 

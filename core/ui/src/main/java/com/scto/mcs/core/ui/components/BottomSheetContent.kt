@@ -1,4 +1,4 @@
-package com.rk.components
+package package com.scto.mcs.core.ui.components
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box

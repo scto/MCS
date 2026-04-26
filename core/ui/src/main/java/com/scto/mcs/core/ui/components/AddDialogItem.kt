@@ -1,4 +1,4 @@
-package com.rk.components
+package com.scto.mcs.core.ui.components
 
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.clickable
@@ -22,9 +22,11 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
-import com.rk.components.compose.utils.addIf
-import com.rk.icons.Icon
-import com.rk.icons.rememberSvgImageLoader
+
+import com.scto.mcs.core.ui.components.compose.utils.addIf
+import com.scto.mcs.core.ui.icons.Icon
+import com.scto.mcs.core.ui.icons.rememberSvgImageLoader
+
 import java.io.File
 
 @Composable

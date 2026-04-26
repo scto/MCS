@@ -1,12 +1,15 @@
-package com.rk.commands
+package com.scto.mcs.core.commands
 
 import android.view.KeyEvent
+
 import com.google.gson.Gson
-import com.rk.activities.main.MainActivity
-import com.rk.resources.getString
-import com.rk.resources.strings
-import com.rk.settings.Preference
-import com.rk.settings.keybinds.KeyUtils
+
+import com.scto.mcs.app.activities.MainActivity
+import com.scto.mcs.core.resourcess.getString
+import com.scto.mcs.core.resourcess.strings
+import com.scto.mcs.feature.settings.Preference
+import com.scto.mcs.feature.settings.keybinds.KeyUtils
+
 import io.github.rosemoe.sora.event.KeyBindingEvent
 
 data class KeyAction(val commandId: String, val keyCombination: KeyCombination)

@@ -1,4 +1,4 @@
-package com.rk.components.compose.icons
+package com.scto.mcs.core.ui.components.compose.icons
 
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.material3.Icon

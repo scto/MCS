@@ -1,4 +1,4 @@
-package com.rk.components.compose.preferences.switch
+package com.scto.mcs.core.ui.components.compose.preferences.switch
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
@@ -23,7 +23,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import com.rk.components.compose.preferences.base.PreferenceTemplate
+
+import com.scto.mcs.core.ui.components.compose.preferences.base.PreferenceTemplate
 
 /**
  * A Preference that provides a two-state toggleable option.

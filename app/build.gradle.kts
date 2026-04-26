@@ -51,4 +51,5 @@ dependencies {
     
     implementation(project(":feature:editor"))
     implementation(project(":feature:settings"))
+    implementation(project(":feature:terminal"))
 }

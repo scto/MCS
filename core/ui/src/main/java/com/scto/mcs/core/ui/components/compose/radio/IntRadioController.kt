@@ -1,4 +1,4 @@
-package com.rk.components.compose.radio
+package package com.scto.mcs.core.ui.components.compose.radio
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*

@@ -1,4 +1,4 @@
-package com.rk.components.compose.preferences.base
+package com.scto.mcs.core.ui.components.compose.preferences.base
 
 /*
  * Copyright 2021, Lawnchair.
@@ -35,7 +35,9 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.rk.components.compose.utils.addIf
+
+import com.scto.mcs.core.ui.components.compose.utils.addIf
+
 import kotlinx.coroutines.awaitCancellation
 
 @Composable

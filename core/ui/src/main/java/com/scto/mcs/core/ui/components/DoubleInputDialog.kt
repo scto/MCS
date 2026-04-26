@@ -1,4 +1,4 @@
-package com.rk.components
+package com.scto.mcs.core.ui.components
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -25,9 +25,10 @@ import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
-import com.rk.icons.Error
-import com.rk.icons.XedIcons
-import com.rk.resources.strings
+
+import com.scto.mcs.core.ui.icons.Error
+import com.scto.mcs.core.ui.icons.McsIcons
+import com.scto.mcs.core.resourcess.strings
 
 @Composable
 fun DoubleInputDialog(

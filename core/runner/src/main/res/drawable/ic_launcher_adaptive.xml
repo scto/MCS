@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  MCS – Adaptives Icon (Standalone)
+  ─────────────────────────────────────────────────────────────────────────────
+  Definition des Icons zur Verwendung in der App:
+    android:icon="@drawable/ic_launcher_adaptive"
+
+  Ebenen-Aufbau (hinten → vorne):
+  ┌─────────────────────────────────────────────────────────────────────┐
+  │  HINTERGRUND  @drawable/ic_launcher_background                      │
+  │               Dunkelblauer radialer Verlauf (#1A1A2E → #080C16)    │
+  │                                                                     │
+  │  VORDERGRUND  @drawable/ic_launcher_foreground                      │
+  │               4 farbige Karten + dunkles Quadrat + "</>" + "MCS"    │
+  │                                                                     │
+  │  MONOCHROM    @drawable/ic_launcher_monochrome (ab API 33)          │
+  │               Weiße Silhouette — getönt durch Systemfarbe           │
+  └─────────────────────────────────────────────────────────────────────┘
+-->
+<adaptive-icon xmlns:android="http://schemas.android.com/apk/res/android">
+    <background android:drawable="@drawable/ic_launcher_background" />
+    <foreground android:drawable="@drawable/ic_launcher_foreground" />
+    <monochrome android:drawable="@drawable/ic_launcher_monochrome" />
+</adaptive-icon>
