@@ -41,7 +41,7 @@ include(
     ":core:git",
     ":core:navigation",
     ":core:network",
-    ":core:resourcess",
+    ":core:resources",
     ":core:terminal",
     ":core:terminal-emulator",
     ":core:terminal-view",

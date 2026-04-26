@@ -7,6 +7,7 @@ java = "17"
 agp = "8.11.2"
 kotlin = "2.2.0"
 kotlinKapt = "2.2.0"
+ksp = "2.2.0-1.0.26"
 ktfmt = "0.25.0"
 
 coroutines = "1.10.2"
@@ -41,7 +42,6 @@ materialIcons = "1.7.8"
 materialIconsExtended = "1.7.8"
 
 lifecycleRuntimeKtx = "2.10.0"
-#lifecycle = "2.8.0"
 
 hilt = "2.51.1"
 androidxHiltNavigationCompose = "1.2.0"
@@ -87,9 +87,7 @@ joni = "2.2.7"
 snakeyaml = "3.0.1"
 documentfile = "1.1.0"
 glide = "5.0.5"
-kotlinReflect = "2.3.20"
 materialIconsCore = "1.7.8"
-nanohttpd = "2.3.1"
 activity = "1.12.0"
 quickjsAndroid = "0.9.2"
 coil = "2.7.0"
@@ -97,8 +95,6 @@ ec4jCore = "1.2.0"
 jcodings = "1.0.64"
 jdtAnnotation = "2.4.100"
 kotlinxCoroutines = "1.10.2"
-joni = "2.2.7"
-snakeyaml = "3.0.1"
 moshi = "1.15.2"
 regexOnig = "1.0.3"
 regexRe2j = "1.0.2"
@@ -154,7 +150,7 @@ sora-editor = { module = "io.github.Rosemoe.sora-editor:editor", version.ref = "
 sora-editor-lsp = { module = "io.github.Rosemoe.sora-editor:editor-lsp", version.ref = "editor" }
 sora-language-textmate = { module = "io.github.Rosemoe.sora-editor:language-textmate", version.ref = "editor" }
 sora-language-treesitter = { module = "io.github.Rosemoe.sora-editor:language-treesitter", version.ref = "editor" }
-sora-language-java = { group = "io.github.rosemoe.sora-editor", name = "language-java", version.ref = "soraEditor" }
+sora-language-java = { group = "io.github.rosemoe.sora-editor", name = "language-java", version.ref = "editor" }
 
 # tree-sitter
 android-tree-sitter = { module = "com.itsaky.androidide.treesitter:android-tree-sitter", version.ref = "android-tree-sitter" }
@@ -209,6 +205,7 @@ kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
 kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 kotlin-kapt = { id = "org.jetbrains.kotlin.kapt", version.ref = "kotlinKapt" }
+ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 kotlin-parcelize = { id = "org.jetbrains.kotlin.plugin.parcelize", version.ref = "kotlin" }
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 ktfmt = { id = "com.ncorti.ktfmt.gradle", version.ref = "ktfmt" }
