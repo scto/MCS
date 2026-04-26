@@ -6,7 +6,7 @@ plugins {
 }
 
 android {
-    namespace = "com.scto.mcs.core.domain"
+    namespace = "com.scto.msc.core.domain"
     compileSdk = libs.versions.compileSdk.get().toInt()
 
     defaultConfig {
