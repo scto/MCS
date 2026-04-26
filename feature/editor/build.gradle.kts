@@ -7,7 +7,7 @@ plugins {
 }
 
 android {
-    namespace = "com.scto.msc.feature.editor"
+    namespace = "com.scto.mcs.feature.editor"
     compileSdk = libs.versions.compileSdk.get().toInt()
 
     defaultConfig {

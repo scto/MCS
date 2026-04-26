@@ -7,7 +7,7 @@ plugins {
 }
 
 android {
-    namespace = "com.scto.msc.feature.terminal"
+    namespace = "com.scto.mcs.feature.terminal"
     compileSdk = libs.versions.compileSdk.get().toInt()
 
     defaultConfig {
