@@ -7,7 +7,7 @@ plugins {
 }
 
 android {
-    namespace = "com.scto.mcs.feature.git"
+    namespace = "com.scto.msc.feature.git"
     compileSdk = libs.versions.compileSdk.get().toInt()
 
     defaultConfig {
