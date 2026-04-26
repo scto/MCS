@@ -181,7 +181,7 @@ jgit = { module = "org.eclipse.jgit:org.eclipse.jgit", version.ref = "jgit" }
 jgit-ssh-apache = { module = "org.eclipse.jgit:org.eclipse.jgit.ssh.apache", version.ref = "jgitSshApache" }
 jcodings = { module = "org.jruby.jcodings:jcodings", version.ref = "jcodings" }
 joni = { module = "org.jruby.joni:joni", version.ref = "joni" }
-snakeyaml-engine = { module = "org.snakeyaml:snakeyaml-engine", version.ref = "snakeyaml" }
+snakeyaml-engine = { module = "org.snakeyaml:snakeyaml", version.ref = "snakeyaml" }
 moshi = { module = "com.squareup.moshi:moshi", version.ref = "moshi" }
 androidsvg-aar = { module = "com.caverock:androidsvg-aar", version.ref = "androidsvgAar" }
 ec4j-core = { module = "org.ec4j.core:ec4j-core", version.ref = "ec4jCore" }
