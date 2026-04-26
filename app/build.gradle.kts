@@ -47,7 +47,7 @@ dependencies {
     
     implementation(project(":core:ui"))
     implementation(project(":core:navigation"))
-    implementation(project(":core:resourcess"))
+    implementation(project(":core:resources"))
     
     implementation(project(":feature:editor"))
     implementation(project(":feature:settings"))
