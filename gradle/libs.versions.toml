@@ -103,7 +103,7 @@ motionCompose = "2.0.1"
 androidx-activity = { module = "androidx.activity:activity", version.ref = "activity" }
 androidx-annotation = { module = "androidx.annotation:annotation", version.ref = "androidxAnnotation" }
 androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "androidxAppcompat" }
-androidx-collection = { module = "androidx.collection:collection", version = "1.5.0" }
+androidx-collection = { module = "androidx.collection:collection", version.ref = "collection" }
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 androidx-core-splashscreen = { group = "androidx.core", name = "core-splashscreen", version.ref = "androidxCoreSplashscreen" }
 androidx-datastore-core = { module = "androidx.datastore:datastore-core", version.ref = "datastoreCore" }
