@@ -11,6 +11,7 @@ android {
 
     defaultConfig {
         minSdk = 26
+        targetSdk = libs.versions.targetSdk.get().toInt()
     }
 
     compileOptions {
