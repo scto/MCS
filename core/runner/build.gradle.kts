@@ -5,7 +5,7 @@ plugins {
 
 android {
     namespace = "com.scto.msc.core.runner"
-    compileSdk = 36
+    compileSdk = libs.versions.compileSdk.get().toInt()
 
     defaultConfig {
         minSdk = 26
