@@ -30,23 +30,38 @@ Anweisungen:
 
 Schritt 4: Quellcode-Refactoring (Feature-Module)
 4.1 Refactoring des Quellcodes (Feature-Editor)
-Aider-Aufruf: aider feature/editor/**/*.kt feature/editor/src/main/AndroidManifest.xml Anweisungen: Ändere Package-Deklarationen und Imports von com.rk, com.srvhive oder com.scto.mcs zu com.scto.mcs.feature.editor.
+Aider-Aufruf: aider feature/editor/**/*.kt feature/editor/src/main/AndroidManifest.xml
+Anweisungen:
+1. Ändere Package-Deklarationen und Imports von com.rk, com.srvhive oder com.scto.mcs zu com.scto.mcs.feature.editor.
 4.2 Refactoring des Quellcodes (Feature-Git)
-Aider-Aufruf: aider feature/git/**/*.kt feature/git/src/main/AndroidManifest.xml Anweisungen: Ändere Package-Deklarationen und Imports zu com.scto.mcs.feature.git.
+Aider-Aufruf: aider feature/git/**/*.kt feature/git/src/main/AndroidManifest.xml Anweisungen:
+1. Ändere Package-Deklarationen und Imports zu com.scto.mcs.feature.git.
 4.3 Refactoring des Quellcodes (Feature-Settings)
-Aider-Aufruf: aider feature/settings/**/*.kt feature/settings/src/main/AndroidManifest.xml Anweisungen: Ändere Package-Deklarationen und Imports zu com.scto.mcs.feature.settings.
+Aider-Aufruf: aider feature/settings/**/*.kt feature/settings/src/main/AndroidManifest.xml
+Anweisungen:
+1. Ändere Package-Deklarationen und Imports zu com.scto.mcs.feature.settings.
 4.4 Refactoring des Quellcodes (Feature-Terminal)
-Aider-Aufruf: aider feature/terminal/**/*.kt feature/terminal/src/main/AndroidManifest.xml Anweisungen: Ändere Package-Deklarationen und Imports zu com.scto.mcs.feature.terminal.
+Aider-Aufruf: aider feature/terminal/**/*.kt feature/terminal/src/main/AndroidManifest.xml
+Anweisungen:
+1. Ändere Package-Deklarationen und Imports zu com.scto.mcs.feature.terminal.
 
 Schritt 5: Quellcode-Refactoring (Core-Submodule)
 5.1 Refactoring Core-DI
-Aider-Aufruf: aider core/di/**/*.kt Anweisungen: Migration auf com.scto.mcs.core.di.
+Aider-Aufruf: aider core/di/**/*.kt
+Anweisungen:
+1. Migration auf com.scto.mcs.core.di.
 5.2 Refactoring Core-Exec
-Aider-Aufruf: aider core/exec/**/*.kt Anweisungen: Migration auf com.scto.mcs.core.exec.
+Aider-Aufruf: aider core/exec/**/*.kt
+Anweisungen:
+1. Migration auf com.scto.mcs.core.exec.
 5.3 Refactoring Core-Files
-Aider-Aufruf: aider core/files/**/*.kt Anweisungen: Migration auf com.scto.mcs.core.files.
+Aider-Aufruf: aider core/files/**/*.kt
+Anweisungen:
+1. Migration auf com.scto.mcs.core.files.
 5.4 Refactoring Core-Navigation
-Aider-Aufruf: aider core/navigation/**/*.kt Anweisungen: Migration auf com.scto.mcs.core.navigation.
+Aider-Aufruf: aider core/navigation/**/*.kt
+Anweisungen:
+1. Migration auf com.scto.mcs.core.navigation.
 5.5 Refactoring Core-Network
 Aider-Aufruf: aider core/network/**/*.kt Anweisungen: Migration auf com.scto.mcs.core.network.
 5.6 Refactoring Core-Resources
