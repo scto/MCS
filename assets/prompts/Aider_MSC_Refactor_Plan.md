@@ -1,11 +1,11 @@
-﻿MSC Projekt-Refactoring & Build-Audit Plan
-Dieses Dokument dient als Master-Plan für die Konsolidierung des Projekts auf den Namespace com.scto.msc und die Bereinigung der Gradle-Konfigurationen in allen Modulen.
+﻿MCS Projekt-Refactoring & Ressourcen-Zentralisierungs Plan
+Dieses Dokument dient als Master-Plan für die Konsolidierung des Projekts auf den Namespace com.scto.mcs, die Bereinigung der Gradle-Konfigurationen und die Zentralisierung aller Ressourcen.
 Projekt-Kontext
-* Ziel-Package: com.scto.msc
+* Ziel-Package: com.scto.mcs
 * Struktur:
-   * App: com.scto.msc.app
-   * Core: com.scto.msc.core.<submodule>
-   * Feature: com.scto.msc.feature.<submodule>
+   * App: com.scto.mcs.app
+   * Core: com.scto.mcs.core.<submodule>
+   * Feature: com.scto.mcs.feature.<submodule>
 * Zu ersetzende Namespaces: com.rk, com.srvhive, com.scto.mcs
 
 Schritt 1: Zentrale Build-Konfiguration & Version Catalog
@@ -13,61 +13,63 @@ Aider-Aufruf: aider build.gradle.kts settings.gradle.kts gradle/libs.versions.to
 Anweisungen:
 1. Überprüfung der zentralen Build-Dateien: Untersuche libs.versions.toml auf Vollständigkeit bezüglich Android Plugins, Kotlin, Hilt, Compose und KSP.
 2. Synchronisation der Modul-Inklusion: Stelle sicher, dass in settings.gradle.kts alle Module (:core:* und :feature:*) korrekt inkludiert sind.
-3. Validierung der Root-Plugin-Definitionen: Überprüfe das Root-build.gradle.kts auf korrekte Plugin-Definitionen ohne Versionen (Nutzung des Version Catalogs).
-4. Bereinigung harter Versions-Strings: Verifiziere, dass keine harten Versions-Strings in den Gradle-Dateien stehen und alles konsistent über den Version Catalog läuft.
+3. Validierung der Root-Plugin-Definitionen: Überprüfe das Root-build.gradle.kts auf korrekte Plugin-Definitionen ohne Versionen.
+4. Bereinigung harter Versions-Strings: Verifiziere, dass keine harten Versions-Strings in den Gradle-Dateien stehen.
 
-Schritt 2: Audit der Core-Module (Namespaces & Gradle)
+Schritt 2: Audit der Core-Module (Build-Logik)
 Aider-Aufruf: aider core/*/build.gradle.kts
 Anweisungen:
-1. Überarbeitung der Build-Gradle Dateien (Core): Setze in jedem Modul unter :core den Namespace strikt auf com.scto.msc.core.<modulname>.
-2. Optimierung von Plugins und Imports: Entferne ungenutzte Plugins und unnötige Imports aus den Build-Dateien der Core-Submodule.
-3. Strukturierung der Modul-Abhängigkeiten: Stelle sicher, dass die Abhängigkeiten zwischen Core-Modulen korrekt definiert sind und keine zirkulären Abhängigkeiten existieren.
-4. Standardisierung der Hilt/KSP Konfiguration: Konfiguriere Hilt und KSP einheitlich für alle Core-Module gemäß dem Projektstandard.
+1. Überarbeitung der Build-Gradle Dateien (Core): Setze in jedem Modul unter :core den Namespace strikt auf com.scto.mcs.core.<modulname>.
+2. Standardisierung der Hilt/KSP Konfiguration: Konfiguriere Hilt und KSP einheitlich für alle Core-Module gemäß dem Projektstandard.
 
-Schritt 3: Audit der Feature-Module (Namespaces & Gradle)
+Schritt 3: Audit der Feature-Module (Build-Logik)
 Aider-Aufruf: aider feature/*/build.gradle.kts
 Anweisungen:
-1. Überarbeitung der Build-Gradle Dateien (Feature): Setze in jedem Modul unter :feature den Namespace strikt auf com.scto.msc.feature.<modulname>.
+1. Überarbeitung der Build-Gradle Dateien (Feature): Setze in jedem Modul unter :feature den Namespace strikt auf com.scto.mcs.feature.<modulname>.
 2. Verknüpfung der Core-Abhängigkeiten: Stelle sicher, dass die Feature-Module korrekt auf die benötigten :core-Module zugreifen (via implementation(project(":core:<name>"))).
-3. Konfiguration der Compose-Optionen: Aktiviere Compose-Optionen und den Compose-Compiler in den Modulen, die UI-Elemente enthalten.
-4. Angleichung der SDK-Versionen: Harmonisiere die minSdk und targetSdk Werte über alle Feature-Module hinweg basierend auf den zentralen Vorgaben.
 
-Schritt 4.1: Quellcode-Refactoring (Feature-Editor-Modul)
-Aider-Aufruf: /add feature/editor/*.kt **/AndroidManifest.xml
+Schritt 4: Quellcode-Refactoring (Feature-Module)
+4.1 Refactoring des Quellcodes (Feature-Editor)
+Aider-Aufruf: aider feature/editor/**/*.kt feature/editor/src/main/AndroidManifest.xml Anweisungen: Ändere Package-Deklarationen und Imports von com.rk, com.srvhive oder com.scto.mcs zu com.scto.mcs.feature.editor.
+4.2 Refactoring des Quellcodes (Feature-Git)
+Aider-Aufruf: aider feature/git/**/*.kt feature/git/src/main/AndroidManifest.xml Anweisungen: Ändere Package-Deklarationen und Imports zu com.scto.mcs.feature.git.
+4.3 Refactoring des Quellcodes (Feature-Settings)
+Aider-Aufruf: aider feature/settings/**/*.kt feature/settings/src/main/AndroidManifest.xml Anweisungen: Ändere Package-Deklarationen und Imports zu com.scto.mcs.feature.settings.
+4.4 Refactoring des Quellcodes (Feature-Terminal)
+Aider-Aufruf: aider feature/terminal/**/*.kt feature/terminal/src/main/AndroidManifest.xml Anweisungen: Ändere Package-Deklarationen und Imports zu com.scto.mcs.feature.terminal.
+
+Schritt 5: Quellcode-Refactoring (Core-Submodule)
+5.1 Refactoring Core-DI
+Aider-Aufruf: aider core/di/**/*.kt Anweisungen: Migration auf com.scto.mcs.core.di.
+5.2 Refactoring Core-Exec
+Aider-Aufruf: aider core/exec/**/*.kt Anweisungen: Migration auf com.scto.mcs.core.exec.
+5.3 Refactoring Core-Files
+Aider-Aufruf: aider core/files/**/*.kt Anweisungen: Migration auf com.scto.mcs.core.files.
+5.4 Refactoring Core-Navigation
+Aider-Aufruf: aider core/navigation/**/*.kt Anweisungen: Migration auf com.scto.mcs.core.navigation.
+5.5 Refactoring Core-Network
+Aider-Aufruf: aider core/network/**/*.kt Anweisungen: Migration auf com.scto.mcs.core.network.
+5.6 Refactoring Core-Resources
+Aider-Aufruf: aider core/resources/**/*.kt Anweisungen: Migration auf com.scto.mcs.core.resources.
+5.7 Refactoring Core-UI
+Aider-Aufruf: aider core/ui/**/*.kt Anweisungen: Migration auf com.scto.mcs.core.ui.
+5.8 Refactoring Core-Utils
+Aider-Aufruf: aider core/utils/**/*.kt Anweisungen: Migration auf com.scto.mcs.core.utils.
+5.9 Refactoring Core-Terminal (Logik)
+Aider-Aufruf: aider core/terminal/**/*.kt Anweisungen: Migration auf com.scto.mcs.core.terminal.
+
+Schritt 6: Zentralisierung der Ressourcen & String-Management
+Aider-Aufruf: aider **/*.xml **/*.kt **/*.java
 Anweisungen:
-1. Überarbeitung des Quellcodes (Feature-Editor-Modul): Führe eine Suche und Ersetzung aller Package-Deklarationen innerhalb des Feature-Editor-Submodules durch.
-2. Migration der Namespaces in Feature-Editor: Ändere Package-Strings von com.rk, com.srvhive oder com.scto.msc zu com.scto.mcs.feature.editor.
-3. Refactoring der Feature-Editor-Imports: Aktualisiere alle Imports, damit sie auf die neuen Pfade (auch die der Core-Module) unter com.scto.mcs zeigen.
-4. Anpassung des Feature-Editor-Manifeste: Aktualisiere die package-Attribute in den Manifesten des Feature-EditorModuls.
+1. Zentralisierung aller Ressourcen: Verschiebe alle Ressourcen (drawables, layouts, values, xml, etc.) aus allen Modulen und Submodulen in das Modul :core:resources.
+2. Zusammenführung der strings.xml: Sammle alle strings.xml Dateien aus dem gesamten Projekt und führe sie in core/resources/src/main/res/values/strings.xml zusammen. Eliminiere dabei Duplikate.
+3. Ersetzung hardkodierter Strings: Scanne alle Kotlin- und Java-Dateien nach hardkodierten User-Interface-Strings. Ersetze diese durch Referenzen auf die neue zentrale strings.xml (z.B. getString(R.string...) oder context.getString(...)).
+4. Bereinigung der Module: Lösche alle verbleibenden res-Ordner und deren Inhalte in allen Modulen (App, Features, andere Cores), außer im Modul :core:resources.
+5. R-Klassen-Korrektur: Stelle sicher, dass alle Code-Dateien nun com.scto.mcs.core.resources.R importieren, um auf Ressourcen zuzugreifen.
 
-Schritt 4.2: Quellcode-Refactoring (Feature-Editor-Modul)
-Aider-Aufruf: /add feature/editor/*.kt **/AndroidManifest.xml
-Anweisungen:
-1. Überarbeitung des Quellcodes (Feature-Editor-Modul): Führe eine Suche und Ersetzung aller Package-Deklarationen innerhalb des Feature-Editor-Submodules durch.
-2. Migration der Namespaces in Feature-Editor: Ändere Package-Strings von com.rk, com.srvhive oder com.scto.msc zu com.scto.mcs.feature.editor.
-3. Refactoring der Feature-Editor-Imports: Aktualisiere alle Imports, damit sie auf die neuen Pfade (auch die der Core-Module) unter com.scto.mcs zeigen.
-4. Anpassung des Feature-Editor-Manifeste: Aktualisiere die package-Attribute in den Manifesten des Feature-EditorModuls.
-
-Schritt 4.3: Quellcode-Refactoring (Feature-Editor-Modul)
-Aider-Aufruf: /add feature/editor/*.kt **/AndroidManifest.xml
-Anweisungen:
-1. Überarbeitung des Quellcodes (Feature-Editor-Modul): Führe eine Suche und Ersetzung aller Package-Deklarationen innerhalb des Feature-Editor-Submodules durch.
-2. Migration der Namespaces in Feature-Editor: Ändere Package-Strings von com.rk, com.srvhive oder com.scto.msc zu com.scto.mcs.feature.editor.
-3. Refactoring der Feature-Editor-Imports: Aktualisiere alle Imports, damit sie auf die neuen Pfade (auch die der Core-Module) unter com.scto.mcs zeigen.
-4. Anpassung des Feature-Editor-Manifeste: Aktualisiere die package-Attribute in den Manifesten des Feature-EditorModuls.
-
-Schritt 4.4: Quellcode-Refactoring (Feature-Editor-Modul)
-Aider-Aufruf: /add feature/editor/*.kt **/AndroidManifest.xml
-Anweisungen:
-1. Überarbeitung des Quellcodes (Feature-Editor-Modul): Führe eine Suche und Ersetzung aller Package-Deklarationen innerhalb des Feature-Editor-Submodules durch.
-2. Migration der Namespaces in Feature-Editor: Ändere Package-Strings von com.rk, com.srvhive oder com.scto.msc zu com.scto.mcs.feature.editor.
-3. Refactoring der Feature-Editor-Imports: Aktualisiere alle Imports, damit sie auf die neuen Pfade (auch die der Core-Module) unter com.scto.mcs zeigen.
-4. Anpassung des Feature-Editor-Manifeste: Aktualisiere die package-Attribute in den Manifesten des Feature-EditorModuls.
-
-Schritt 5: App-Modul, Manifeste & Finale Integration
+Schritt 7: App-Modul & Finale Integration
 Aider-Aufruf: aider app/build.gradle.kts app/src/main/AndroidManifest.xml
 Anweisungen:
-1. Finalisierung des App-Modul Namespaces: Setze den Namespace des :app Moduls auf com.scto.msc.app.
-2. Integration der Feature-Module: Stelle sicher, dass alle Feature-Module im App-Modul korrekt als Abhängigkeiten registriert sind.
-3. Validierung der Manifest-Konfiguration: Überprüfe die Haupt-AndroidManifest.xml auf korrekte Pfade zu Activities, Services und Providern sowie das Vorhandensein aller Permissions (Internet, Storage etc.).
-4. Abschließende Fehlerbehebung: Identifiziere und behebe alle verbleibenden Kompilierfehler, die durch die Namespace-Verschiebungen oder geänderten Imports entstanden sind.
+1. Finalisierung des App-Namespace: Setze den Namespace des :app Moduls auf com.scto.mcs.app.
+2. Validierung der Manifest-Konfiguration: Überprüfe die Haupt-AndroidManifest.xml auf korrekte Pfade zu Activities und stelle sicher, dass alle Permissions (Internet, Storage etc.) vorhanden sind.
+3. Abschließende Fehlerbehebung: Behebe alle verbleibenden Kompilierfehler, die durch die Namespace-Verschiebungen, Import-Änderungen oder Ressourcen-Umzüge entstanden sind.
