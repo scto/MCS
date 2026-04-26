@@ -7,7 +7,7 @@ plugins {
 }
 
 android {
-    namespace = "com.scto.msc.core.editor"
+    namespace = "com.scto.mcs.core.editor"
     compileSdk = 36
 
     defaultConfig {

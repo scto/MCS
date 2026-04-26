@@ -7,7 +7,7 @@ plugins {
 }
 
 android {
-    namespace = "com.scto.msc.core.build-tools"
+    namespace = "com.scto.mcs.core.build-tools"
     compileSdk = 36
 
     defaultConfig {

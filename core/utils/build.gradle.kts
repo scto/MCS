@@ -7,7 +7,7 @@ plugins {
 }
 
 android {
-    namespace = "com.scto.msc.core.utils"
+    namespace = "com.scto.mcs.core.utils"
     compileSdk = 36
 
     defaultConfig {
