@@ -63,7 +63,7 @@
         </activity>
 
         <activity
-            android:name="com.scto.mcs.app.terminal.TerminalActivity"
+            android:name="com.scto.mcs.feature.terminal.TerminalActivity"
             android:exported="true"
             android:label="Terminal"
             android:launchMode="singleTask"
