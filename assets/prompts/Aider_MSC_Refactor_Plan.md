@@ -32,14 +32,21 @@ Anweisungen:
 3. Konfiguration der Compose-Optionen: Aktiviere Compose-Optionen und den Compose-Compiler in den Modulen, die UI-Elemente enthalten.
 4. Angleichung der SDK-Versionen: Harmonisiere die minSdk und targetSdk Werte über alle Feature-Module hinweg basierend auf den zentralen Vorgaben.
 
-Schritt 4: Globales Quellcode-Refactoring (Imports & Packages)
-Aider-Aufruf: aider **/*.kt **/*.java **/AndroidManifest.xml
-Anweisungen (WICHTIG):
-1. Projektweite Anpassung der Package-Deklarationen: Führe eine globale Suche und Ersetzung aller Package-Deklarationen in allen Quellcodedateien des Projekts durch.
-2. Migration der Legacy-Namespaces: Ändere alle Package-Strings von com.rk, com.srvhive oder com.scto.mcs konsistent zu com.scto.msc.
-3. Refactoring der Quellcode-Imports: Aktualisiere alle Imports in allen .kt und .java Dateien, um auf die neuen Pfade unter com.scto.msc zu zeigen.
-4. Korrektur der R-Klassen-Referenzen: Achte besonders auf die generierten R-Klassen-Imports und passe diese an den neuen Namespace an (z.B. com.scto.msc.core.ui.R).
-5. Aktualisierung der Manifest-Namespaces: Passe alle package-Attribute und Pfad-Referenzen in den AndroidManifest.xml Dateien aller Submodule an.
+Schritt 4.1: Quellcode-Refactoring (Feature-Module)
+Aider-Aufruf: aider feature/**/*.kt feature/**/*.java **/AndroidManifest.xml
+Anweisungen:
+1. Überarbeitung des Quellcodes (Feature-Module): Führe eine Suche und Ersetzung aller Package-Deklarationen innerhalb der Feature-Submodule durch.
+2. Migration der Namespaces in Features: Ändere Package-Strings von com.rk, com.srvhive oder com.scto.mcs zu com.scto.msc.feature.<modulname>.
+3. Refactoring der Feature-Imports: Aktualisiere alle Imports, damit sie auf die neuen Pfade (auch die der Core-Module) unter com.scto.msc zeigen.
+4. Anpassung der Feature-Manifeste: Aktualisiere die package-Attribute in den Manifesten der Feature-Module.
+
+Schritt 4.2: Quellcode-Refactoring (Core-Module)
+Aider-Aufruf: aider core/**/*.kt core/**/*.java **/AndroidManifest.xml
+Anweisungen:
+1. Überarbeitung des Quellcodes (Core-Module): Führe eine Suche und Ersetzung aller Package-Deklarationen innerhalb der Core-Submodule durch.
+2. Migration der Namespaces in Core: Ändere Package-Strings von com.rk, com.srvhive oder com.scto.mcs zu com.scto.msc.core.<modulname>.
+3. Refactoring der Core-Imports: Aktualisiere alle internen Core-Imports und Referenzen auf den neuen Namespace com.scto.msc.
+4. Anpassung der Core-Manifeste: Aktualisiere die package-Attribute in den Manifesten der Core-Module.
 
 Schritt 5: App-Modul, Manifeste & Finale Integration
 Aider-Aufruf: aider app/build.gradle.kts app/src/main/AndroidManifest.xml
