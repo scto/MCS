@@ -1,43 +1,47 @@
-﻿MSC Projekt-Audit & Refactoring Plan
-Dieses Dokument leitet aider durch den Prozess, das gesamte Projekt auf den Namespace com.scto.mcs zu vereinheitlichen und die Gradle-Konfigurationen zu reparieren.
-Globale Projekt-Architektur
-* App: com.scto.mcs.app
-* Core: com.scto.mcs.core.<submodule>
-* Feature: com.scto.mcs.feature.<submodule>
-Schritt 1: Zentrale Konfiguration (Root & Version Catalog)
-Aider Aufruf: aider build.gradle.kts settings.gradle.kts gradle/libs.versions.toml
-Prompt:
-Untersuche die Root-Konfiguration.
-1. Überprüfe libs.versions.toml auf Vollständigkeit (Hilt, KSP, Compose, etc.).
-2. Stelle sicher, dass settings.gradle.kts alle Module korrekt mit dem Schema :core:<name> und :feature:<name> inkludiert.
-3. Korrigiere Plugin-Definitionen im Root-build.gradle.kts.
-Schritt 2: Core-Module & Namespace Konsolidierung
-Aider Aufruf: aider core/*/build.gradle.kts
-Prompt:
-Untersuche alle build.gradle.kts Dateien im Ordner core/.
-1. Setze den Namespace jedes Moduls strikt auf com.scto.mcs.core.<name>.
-2. Stelle sicher, dass die compileSdk, minSdk und Java-Versionen aus dem Version Catalog oder konsistent gesetzt sind.
-3. Bereinige die Abhängigkeiten: Core-Module sollten so wenig wie möglich voneinander abhängen.
-4. Stelle sicher, dass Hilt/KSP korrekt konfiguriert ist.
-Schritt 3: Feature-Module & Abhängigkeiten
-Aider Aufruf: aider feature/*/build.gradle.kts
-Prompt:
-Untersuche alle build.gradle.kts Dateien im Ordner feature/.
-1. Setze den Namespace jedes Moduls auf com.scto.mcs.feature.<name>.
-2. Stelle sicher, dass die Module korrekt auf die benötigten :core-Abhängigkeiten zugreifen.
-3. Aktiviere Compose-Optionen in den Modulen, die UI-Komponenten enthalten.
-Schritt 4: Globales Import-Refactoring (WICHTIG)
-Aider Aufruf: aider **/*.kt **/*.java **/AndroidManifest.xml
-Prompt:
-Führe ein globales Refactoring aller Quellcodedateien durch, um die Imports auf den neuen Projekt-Namespace com.scto.mcs anzupassen.
-1. Ersetze alle Package-Deklarationen und Imports, die mit com.scto.msc, com.srvhive oder com.rk beginnen, durch den entsprechenden Pfad unter com.scto.mcs.
-2. Aktualisiere alle R-Klassen-Imports (z.B. com.scto.mcs.core.ui.R).
-3. Überprüfe alle AndroidManifest.xml Dateien in den Submodulen und passe die package-Attribute oder Activity-Pfade an.
-4. Stelle sicher, dass keine alten Referenzen auf rk oder srvhive im Code verbleiben.
-Schritt 5: App-Modul & Finale Integration
-Aider Aufruf: aider app/build.gradle.kts app/src/main/AndroidManifest.xml
-Prompt:
-Finalisiere das app Modul (com.scto.mcs.app).
-1. Stelle sicher, dass alle :feature und :core Module korrekt inkludiert sind.
-2. Überprüfe das Haupt-Manifest auf korrekte Permissions und die Start-Activity.
-3. Korrigiere alle verbleibenden Build-Fehler, die durch das Umbenennen der Packages entstanden sind.
+﻿MSC Projekt-Refactoring & Build-Audit Plan
+Dieses Dokument dient als Master-Plan für die Konsolidierung des Projekts auf den Namespace com.scto.msc und die Bereinigung der Gradle-Konfigurationen in allen Modulen.
+Projekt-Kontext
+* Ziel-Package: com.scto.msc
+* Struktur:
+   * App: com.scto.msc.app
+   * Core: com.scto.msc.core.<submodule>
+   * Feature: com.scto.msc.feature.<submodule>
+* Zu ersetzende Namespaces: com.rk, com.srvhive, com.scto.mcs
+Schritt 1: Zentrale Build-Konfiguration & Version Catalog
+Aider-Aufruf: aider build.gradle.kts settings.gradle.kts gradle/libs.versions.toml
+Anweisungen:
+1. Untersuche die libs.versions.toml auf Vollständigkeit (Android Plugins, Kotlin, Hilt, Compose, KSP).
+2. Stelle sicher, dass in settings.gradle.kts alle Module (:core:* und :feature:*) korrekt inkludiert sind.
+3. Überprüfe das Root-build.gradle.kts auf korrekte Plugin-Definitionen ohne Versionen (da diese im Catalog stehen sollten).
+4. Verifiziere, dass keine harten Versions-Strings in den Gradle-Dateien stehen.
+Schritt 2: Audit der Core-Module (Namespaces & Gradle)
+Aider-Aufruf: aider core/*/build.gradle.kts
+Anweisungen:
+1. Setze in jedem Modul unter :core den Namespace strikt auf com.scto.msc.core.<modulname>.
+2. Bereinige ungenutzte Plugins und Imports.
+3. Stelle sicher, dass die Abhängigkeiten zwischen Core-Modulen korrekt sind (keine zirkulären Abhängigkeiten).
+4. Konfiguriere Hilt/KSP einheitlich für alle Core-Module.
+Schritt 3: Audit der Feature-Module (Namespaces & Gradle)
+Aider-Aufruf: aider feature/*/build.gradle.kts
+Anweisungen:
+1. Setze in jedem Modul unter :feature den Namespace strikt auf com.scto.msc.feature.<modulname>.
+2. Verknüpfe die notwendigen :core-Module korrekt via implementation(project(":core:<name>")).
+3. Aktiviere Compose-Optionen, falls UI-Elemente vorhanden sind.
+4. Harmonisiere die minSdk und targetSdk Werte über alle Feature-Module hinweg.
+Schritt 4: Globales Quellcode-Refactoring (Imports & Packages)
+Aider-Aufruf: aider **/*.kt **/*.java **/AndroidManifest.xml
+Anweisungen (WICHTIG):
+1. Führe eine globale Suche und Ersetzung aller Package-Deklarationen durch.
+2. Ändere alle Package-Strings von com.rk, com.srvhive oder com.scto.mcs zu com.scto.msc.
+3. Aktualisiere alle Imports in allen .kt und .java Dateien, um auf den neuen com.scto.msc Pfad zu zeigen.
+4. Achte besonders auf die generierten R-Klassen-Imports (z.B. von com.srvhive.app.R zu com.scto.msc.app.R).
+5. Passe alle package-Attribute in den AndroidManifest.xml Dateien der Submodule an.
+Schritt 5: App-Modul, Manifeste & Finale Integration
+Aider-Aufruf: aider app/build.gradle.kts app/src/main/AndroidManifest.xml
+Anweisungen:
+1. Finalisiere das :app Modul mit dem Namespace com.scto.msc.app.
+2. Stelle sicher, dass alle Feature-Module im App-Modul inkludiert sind.
+3. Überprüfe die AndroidManifest.xml der App:
+   * Korrigiere die Pfade zu Activities, Services und Providern.
+   * Stelle sicher, dass alle Permissions (Internet, Storage für Terminal etc.) vorhanden sind.
+4. Behebe alle verbleibenden Kompilierfehler, die durch verschobene Klassen oder geänderte Imports entstanden sind.
