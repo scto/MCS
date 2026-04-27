@@ -1,4 +1,4 @@
-package com.rk.filetree
+package com.scto.mcs.core.filetree
 
 import android.os.Environment
 import androidx.compose.foundation.horizontalScroll
@@ -44,13 +44,14 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewModelScope
-import com.rk.activities.main.MainActivity
-import com.rk.activities.main.searchViewModel
-import com.rk.file.FileObject
-import com.rk.icons.XedIcon
-import com.rk.resources.getString
-import com.rk.resources.strings
-import com.rk.settings.Settings
+import com.scto.mcs.app.activities.MainActivity
+import com.scto.mcs.app.activities.searchViewModel
+import com.scto.mcs.core.files.FileObject
+import com.scto.mcs.core.ui.icons.XedIcon
+import com.scto.mcs.core.resources.getString
+import com.scto.mcs.core.resources.strings
+import com.scto.mcs.feature.settings.Settings
+
 import kotlin.math.min
 import kotlinx.coroutines.launch
 

@@ -1,9 +1,11 @@
-package com.rk.file
+package com.scto.mcs.core.files
 
 import android.content.Context
 import android.content.Intent
-import com.rk.activities.main.MainActivity
-import com.rk.components.ContentProgress
+
+import com.scto.mcs.app.activities.MainActivity
+import com.scto.mcs.core.ui.components.ContentProgress
+
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import org.apache.commons.net.io.Util

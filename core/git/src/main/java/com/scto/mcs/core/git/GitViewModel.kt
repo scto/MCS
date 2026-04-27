@@ -1,4 +1,4 @@
-package com.rk.git
+package com.scto.mcs.core.git
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateMapOf
@@ -6,11 +6,13 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.rk.resources.strings
-import com.rk.settings.Settings
-import com.rk.settings.app.InbuiltFeatures
-import com.rk.utils.findGitRoot
-import com.rk.utils.toast
+
+import com.scto.mcs.core.resources.strings
+import com.scto.mcs.feature.settings.Settings
+import com.scto.mcs.feature.settings.app.InbuiltFeatures
+import com.scto.mcs.core.utils.findGitRoot
+import com.scto.mcs.core.utils.toast
+
 import java.io.File
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job

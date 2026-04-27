@@ -1,14 +1,16 @@
-package com.rk.runner.runners.web.markdown
+package com.scto.mcs.core.runner.runners.web.markdown
 
 import android.content.Context
 import android.content.Intent
-import com.rk.file.BuiltinFileType
-import com.rk.file.FileObject
-import com.rk.icons.Icon
-import com.rk.resources.getString
-import com.rk.resources.strings
-import com.rk.runner.RunnerImpl
-import com.rk.runner.runners.web.html.HtmlRunner
+
+import com.scto.mcs.core.files.BuiltinFileType
+import com.scto.mcs.core.files.FileObject
+import com.scto.mcs.core.ui.icons.Icon
+import com.scto.mcs.core.resources.getString
+import com.scto.mcs.core.resources.strings
+import com.scto.mcs.core.runner.RunnerImpl
+import com.scto.mcs.core.runner.runners.web.html.HtmlRunner
+
 import java.lang.ref.WeakReference
 
 var mdViewerRef = WeakReference<MDViewer?>(null)

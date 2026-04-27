@@ -1,4 +1,4 @@
-package com.rk.git
+package com.scto.mcs.core.git
 
 import org.eclipse.jgit.lib.ProgressMonitor
 

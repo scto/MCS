@@ -1,10 +1,10 @@
-package com.rk.file
+package com.scto.mcs.core.files
 
-import com.rk.icons.Icon
-import com.rk.icons.pack.currentIconPack
-import com.rk.resources.drawables
-import com.rk.resources.getString
-import com.rk.resources.strings
+import com.scto.mcs.core.ui.icons.Icon
+import com.scto.mcs.core.ui.icons.pack.currentIconPack
+import com.scto.mcs.core.resources.drawables
+import com.scto.mcs.core.resources.getString
+import com.scto.mcs.core.resources.strings
 
 private val java = drawables.java
 private val html = drawables.html

@@ -1,4 +1,4 @@
-package com.rk.file
+package com.scto.mcs.core.files
 
 import android.app.Activity
 import android.content.ContentResolver
@@ -11,14 +11,17 @@ import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.StringRes
 import androidx.lifecycle.lifecycleScope
-import com.rk.DefaultScope
-import com.rk.activities.main.fileTreeViewModel
-import com.rk.resources.getString
-import com.rk.utils.application
-import com.rk.utils.toast
+
+import com.scto.mcs.app.scope.DefaultScope
+import com.scto.mcs.app.activities.fileTreeViewModel
+import com.scto.mcs.core.resources.getString
+import com.scto.mcs.core.utils.application
+import com.scto.mcs.core.utils.toast
+
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+
 import org.apache.commons.net.io.Util.copyStream
 
 var to_save_file: FileObject? = null

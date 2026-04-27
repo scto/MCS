@@ -1,14 +1,16 @@
-package com.rk.runner
+package com.scto.mcs.core.runner
 
 import android.content.Context
-import com.rk.file.BuiltinFileType
-import com.rk.file.FileObject
-import com.rk.icons.Icon
-import com.rk.runner.runners.UniversalRunner
-import com.rk.runner.runners.web.html.HtmlRunner
-import com.rk.runner.runners.web.markdown.MarkdownRunner
-import com.rk.settings.Settings
-import com.rk.utils.errorDialog
+
+import com.scto.mcs.core.files.BuiltinFileType
+import com.scto.mcs.core.files.FileObject
+import com.scto.mcs.core.ui.icons.Icon
+import com.scto.mcs.core.runner.runners.UniversalRunner
+import com.scto.mcs.core.runner.runners.web.html.HtmlRunner
+import com.scto.mcs.core.runner.runners.web.markdown.MarkdownRunner
+import com.scto.mcs.feature.settings.Settings
+import com.scto.mcs.core.utils.errorDialog
+
 import java.lang.ref.WeakReference
 
 abstract class RunnerImpl {

@@ -1,4 +1,4 @@
-package com.rk.filetree
+package com.scto.mcs.core.filetree
 
 import android.content.Context
 import android.graphics.drawable.Drawable
@@ -14,12 +14,14 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.caverock.androidsvg.SVG
-import com.rk.file.FileObject
-import com.rk.file.FileTypeManager
-import com.rk.icons.pack.currentIconPack
-import com.rk.icons.rememberSvgImageLoader
-import com.rk.resources.drawables
-import com.rk.resources.getDrawable
+
+import com.scto.mcs.core.files.FileObject
+import com.scto.mcs.core.files.FileTypeManager
+import com.scto.mcs.core.ui.icons.pack.currentIconPack
+import com.scto.mcs.core.ui.icons.rememberSvgImageLoader
+import com.scto.mcs.core.resources.drawables
+import com.scto.mcs.core.resources.getDrawable
+
 import java.io.InputStream
 
 private val plain_file = drawables.file

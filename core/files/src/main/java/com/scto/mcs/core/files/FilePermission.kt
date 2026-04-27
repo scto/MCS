@@ -11,10 +11,12 @@ import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.net.toUri
-import com.rk.resources.getString
-import com.rk.resources.strings
-import com.rk.settings.Settings
-import com.rk.utils.dialog
+
+import com.scto.mcs.core.resources.getString
+import com.scto.mcs.core.resources.strings
+import com.scto.mcs.core.utils.dialog
+import com.scto.mcs.feature.settings.Settings
+
 import java.lang.ref.WeakReference
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch

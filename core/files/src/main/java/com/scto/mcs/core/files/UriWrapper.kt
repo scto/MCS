@@ -1,11 +1,13 @@
-package com.rk.file
+package com.scto.mcs.core.files
 
 import android.content.Context
 import android.net.Uri
 import android.webkit.MimeTypeMap
 import androidx.documentfile.provider.DocumentFile
-import com.rk.utils.application
-import com.rk.utils.errorDialog
+
+import com.scto.mcs.core.utils.application
+import com.scto.mcs.core.utils.errorDialog
+
 import java.io.BufferedReader
 import java.io.File
 import java.io.FileNotFoundException

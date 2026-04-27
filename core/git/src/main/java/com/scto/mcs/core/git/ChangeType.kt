@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.rk.git
+package com.scto.mcs.core.git
 
 enum class ChangeType {
     ADDED,

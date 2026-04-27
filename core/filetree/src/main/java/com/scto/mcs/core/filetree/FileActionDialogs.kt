@@ -1,4 +1,4 @@
-package com.rk.filetree
+package com.scto.mcs.core.filetree
 
 import android.content.Context
 import androidx.compose.foundation.layout.Column
@@ -9,20 +9,22 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
-import com.rk.activities.main.MainActivity
-import com.rk.activities.main.drawerStateRef
-import com.rk.components.PropertiesDialog
-import com.rk.components.SingleInputDialog
-import com.rk.file.FileObject
-import com.rk.file.FileOperations
-import com.rk.resources.fillPlaceholders
-import com.rk.resources.getFilledString
-import com.rk.resources.getString
-import com.rk.resources.strings
-import com.rk.settings.Settings
-import com.rk.tabs.editor.EditorTab
-import com.rk.utils.errorDialog
-import com.rk.utils.toast
+
+import com.scto.mcs.core.activities.MainActivity
+import com.scto.mcs.core.activities.drawerStateRef
+import com.scto.mcs.core.ui.components.PropertiesDialog
+import com.scto.mcs.core.ui.components.SingleInputDialog
+import com.scto.mcs.core.files.FileObject
+import com.scto.mcs.core.files.FileOperations
+import com.scto.mcs.core.resources.fillPlaceholders
+import com.scto.mcs.core.resources.getFilledString
+import com.scto.mcs.core.resources.getString
+import com.scto.mcs.core.resources.strings
+import com.scto.mcs.feature.settings.Settings
+import com.scto.mcs.core.editor.tabs.editor.EditorTab
+import com.scto.mcs.core.utils.errorDialog
+import com.scto.mcs.core.utils.toast
+
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 

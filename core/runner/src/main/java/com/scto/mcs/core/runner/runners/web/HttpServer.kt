@@ -1,12 +1,14 @@
-package com.rk.runner.runners.web
+package com.scto.mcs.core.runner.runners.web
 
 import android.content.Context
-import com.rk.file.FileObject
-import com.rk.resources.getString
-import com.rk.resources.strings
-import com.rk.settings.Settings
-import com.rk.theme.amoled
-import com.rk.utils.isDarkTheme
+
+import com.scto.mcs.core.files.FileObject
+import com.scto.mcs.core.resources.getString
+import com.scto.mcs.core.resources.strings
+import com.scto.mcs.feature.settings.Settings
+import com.scto.mcs.core.ui.theme.amoled
+import com.scto.mcs.core.utils.isDarkTheme
+
 import fi.iki.elonen.NanoHTTPD
 import fi.iki.elonen.NanoHTTPD.Response.Status
 import java.net.URLConnection

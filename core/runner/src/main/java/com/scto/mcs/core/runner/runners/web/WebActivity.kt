@@ -1,4 +1,4 @@
-package com.rk.runner.runners.web
+package com.scto.mcs.core.runner.runners.web
 
 import android.annotation.SuppressLint
 import android.os.Bundle
@@ -27,7 +27,8 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.core.view.WindowCompat
-import com.rk.theme.XedTheme
+
+import com.scto.mcs.core.ui.theme.McsTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 abstract class WebActivity : ComponentActivity() {
@@ -51,7 +52,7 @@ abstract class WebActivity : ComponentActivity() {
         WindowCompat.setDecorFitsSystemWindows(window, false)
 
         setContent {
-            XedTheme {
+            McsTheme {
                 WebScreen(
                     title = "WebView",
                     onBackPressed = { handleBackPressed() },

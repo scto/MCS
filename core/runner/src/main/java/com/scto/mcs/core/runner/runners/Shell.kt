@@ -1,15 +1,16 @@
-package com.rk.runner.runners
+package com.scto.mcs.core.runner.runners
 
 import android.content.Context
-import com.rk.exec.TerminalCommand
-import com.rk.exec.launchTerminal
-import com.rk.file.FileObject
-import com.rk.file.FileWrapper
-import com.rk.icons.Icon
-import com.rk.resources.drawables
-import com.rk.resources.strings
-import com.rk.runner.RunnerImpl
-import com.rk.utils.errorDialog
+
+import com.scto.mcs.core.exec.TerminalCommand
+import com.scto.mcs.core.exec.launchTerminal
+import com.scto.mcs.core.files.FileObject
+import com.scto.mcs.core.files.FileWrapper
+import com.scto.mcs.core.ui.icons.Icon
+import com.scto.mcs.core.resources.drawables
+import com.scto.mcs.core.resources.strings
+import com.scto.mcs.core.runner.RunnerImpl
+import com.scto.mcs.core.utils.errorDialog
 
 class Shell : RunnerImpl() {
     override suspend fun run(context: Context, fileObject: FileObject) {

@@ -1,22 +1,24 @@
-package com.rk.runner.runners
+package com.scto.mcs.core.runner.runners
 
 import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Environment
-import com.rk.DefaultScope
-import com.rk.exec.TerminalCommand
-import com.rk.exec.launchTerminal
-import com.rk.file.FileObject
-import com.rk.file.FileWrapper
-import com.rk.file.child
-import com.rk.file.localBinDir
-import com.rk.icons.Icon
-import com.rk.resources.drawables
-import com.rk.resources.getString
-import com.rk.resources.strings
-import com.rk.runner.RunnerImpl
-import com.rk.terminal.setupAssetFile
-import com.rk.utils.dialog
+
+import com.scto.mcs.app.scope.DefaultScope
+import com.scto.mcs.core.exec.TerminalCommand
+import com.scto.mcs.core.exec.launchTerminal
+import com.scto.mcs.core.files.FileObject
+import com.scto.mcs.core.files.FileWrapper
+import com.scto.mcs.core.files.child
+import com.scto.mcs.core.files.localBinDir
+import com.scto.mcs.core.ui.icons.Icon
+import com.scto.mcs.core.resources.drawables
+import com.scto.mcs.core.resources.getString
+import com.scto.mcs.core.resources.strings
+import com.scto.mcs.core.runner.RunnerImpl
+import com.scto.mcs.core.terminal.setupAssetFile
+import com.scto.mcs.core.utils.dialog
+
 import kotlinx.coroutines.launch
 
 class UniversalRunner : RunnerImpl() {

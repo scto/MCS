@@ -14,6 +14,6 @@
  * limitations under the License.
  */
 
-package com.rk.git
+package com.scto.mcs.core.git
 
 data class GitChange(val path: String, val absolutePath: String, val type: ChangeType, val isChecked: Boolean = true)

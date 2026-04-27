@@ -1,8 +1,8 @@
-package com.rk.filetree
+package com.scto.mcs.core.filetree
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import com.rk.icons.Icon
+import com.scto.mcs.core.ui.icons.Icon
 import java.io.Serializable
 
 abstract class DrawerTab : Serializable {

@@ -1,4 +1,4 @@
-package com.rk.filetree
+package com.scto.mcs.core.filetree
 
 import android.content.Context
 import android.content.Intent
@@ -9,22 +9,24 @@ import androidx.compose.material.icons.outlined.Edit
 import androidx.compose.material.icons.outlined.Info
 import androidx.compose.material.icons.outlined.Refresh
 import androidx.lifecycle.viewModelScope
-import com.rk.activities.main.MainActivity
-import com.rk.activities.terminal.Terminal
-import com.rk.file.FileObject
-import com.rk.file.FileOperations
-import com.rk.file.FileWrapper
-import com.rk.icons.CreateNewFile
-import com.rk.icons.CreateNewFolder
-import com.rk.icons.Icon
-import com.rk.icons.XedIcons
-import com.rk.resources.drawables
-import com.rk.resources.getString
-import com.rk.resources.strings
-import com.rk.settings.app.InbuiltFeatures
-import com.rk.tabs.editor.EditorTab
-import com.rk.utils.showTerminalNotice
-import com.rk.utils.toast
+
+import com.scto.mcs.app.activities.MainActivity
+import com.scto.mcs.app.activities.TerminalActivity
+import com.scto.mcs.core.files.FileObject
+import com.scto.mcs.core.files.FileOperations
+import com.scto.mcs.core.files.FileWrapper
+import com.scto.mcs.core.ui.icons.CreateNewFile
+import com.scto.mcs.core.ui.icons.CreateNewFolder
+import com.scto.mcs.core.ui.icons.Icon
+import com.scto.mcs.core.ui.icons.McsIcons
+import com.scto.mcs.core.resources.drawables
+import com.scto.mcs.core.resources.getString
+import com.scto.mcs.core.resources.strings
+import com.scto.mcs.feature.settings.app.InbuiltFeatures
+import com.scto.mcs.core.editor.tabs.editor.EditorTab
+import com.scto.mcs.core.utils.showTerminalNotice
+import com.scto.mcs.core.utils.toast
+
 import kotlinx.coroutines.launch
 
 data class FileActionContext(
@@ -125,7 +127,7 @@ object TerminalAction : FileAction() {
 }
 
 object CreateNewFileAction : FileAction() {
-    override val icon = Icon.VectorIcon(XedIcons.CreateNewFile)
+    override val icon = Icon.VectorIcon(McsIcons.CreateNewFile)
     override val title = strings.new_file.getString()
 
     override fun action(context: FileActionContext) {
@@ -136,7 +138,7 @@ object CreateNewFileAction : FileAction() {
 }
 
 object CreateNewFolderAction : FileAction() {
-    override val icon = Icon.VectorIcon(XedIcons.CreateNewFolder)
+    override val icon = Icon.VectorIcon(McsIcons.CreateNewFolder)
     override val title = strings.new_folder.getString()
 
     override fun action(context: FileActionContext) {

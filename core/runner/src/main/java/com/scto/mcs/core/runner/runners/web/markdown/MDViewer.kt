@@ -1,21 +1,23 @@
-package com.rk.runner.runners.web.markdown
+package com.scto.mcs.core.runner.runners.web.markdown
 
 import android.os.Bundle
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import androidx.activity.compose.setContent
 import androidx.lifecycle.lifecycleScope
-import com.rk.file.FileObject
-import com.rk.resources.getFilledString
-import com.rk.resources.strings
-import com.rk.runner.runners.web.HttpServer
-import com.rk.runner.runners.web.WebActivity
-import com.rk.runner.runners.web.WebScreen
-import com.rk.runner.runners.web.html.HtmlRunner
-import com.rk.settings.Settings
-import com.rk.theme.XedTheme
-import com.rk.utils.isDarkTheme
-import com.rk.utils.toast
+
+import com.scto.mcs.core.files.FileObject
+import com.scto.mcs.core.resources.getFilledString
+import com.scto.mcs.core.resources.strings
+import com.scto.mcs.core.runner.runners.web.HttpServer
+import com.scto.mcs.core.runner.runners.web.WebActivity
+import com.scto.mcs.core.runner.runners.web.WebScreen
+import com.scto.mcs.core.runner.runners.web.html.HtmlRunner
+import com.scto.mcs.feature.settings.Settings
+import com.scto.mcs.core.ui.theme.McsTheme
+import com.scto.mcs.core.utils.isDarkTheme
+import com.scto.mcs.core.utils.toast
+
 import fi.iki.elonen.NanoHTTPD
 import fi.iki.elonen.NanoHTTPD.newFixedLengthResponse
 import java.lang.ref.WeakReference
@@ -49,7 +51,7 @@ class MDViewer : WebActivity() {
 
                 // Now load WebView inside Compose
                 setContent {
-                    XedTheme {
+                    McsTheme {
                         WebScreen(
                             title = file.getName(),
                             onBackPressed = { onBackPressedDispatcher.onBackPressed() },

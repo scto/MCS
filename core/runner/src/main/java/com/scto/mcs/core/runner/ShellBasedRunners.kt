@@ -1,19 +1,21 @@
-package com.rk.runner
+package com.scto.mcs.core.runner
 
 import android.content.Context
 import androidx.compose.runtime.mutableStateListOf
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import com.rk.DefaultScope
-import com.rk.exec.TerminalCommand
-import com.rk.exec.launchTerminal
-import com.rk.file.FileObject
-import com.rk.file.child
-import com.rk.file.createFileIfNot
-import com.rk.file.localDir
-import com.rk.file.runnerDir
-import com.rk.icons.Icon
-import com.rk.resources.drawables
+
+import com.scto.mcs.app.scope.DefaultScope
+import com.scto.mcs.core.exec.TerminalCommand
+import com.scto.mcs.core.exec.launchTerminal
+import com.scto.mcs.core.files.FileObject
+import com.scto.mcs.core.files.child
+import com.scto.mcs.core.files.createFileIfNot
+import com.scto.mcs.core.files.localDir
+import com.scto.mcs.core.files.runnerDir
+import com.scto.mcs.core.ui.icons.Icon
+import com.scto.mcs.core.resources.drawables
+
 import java.io.File
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

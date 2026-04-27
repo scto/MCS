@@ -1,4 +1,4 @@
-package com.rk.file
+package com.scto.mcs.core.files
 
 import android.content.Context
 import android.net.Uri

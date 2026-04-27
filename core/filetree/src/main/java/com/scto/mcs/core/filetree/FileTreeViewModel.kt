@@ -1,4 +1,4 @@
-package com.rk.filetree
+package com.scto.mcs.core.filetree
 
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
@@ -9,11 +9,13 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.rk.activities.main.gitViewModel
-import com.rk.activities.main.searchViewModel
-import com.rk.file.FileObject
-import com.rk.search.GlobExcluder
-import com.rk.settings.Settings
+
+import com.scto.mcs.app.activities.gitViewModel
+import com.scto.mcs.app.activities.searchViewModel
+import com.scto.mcs.core.files.FileObject
+import com.scto.mcs.core.ediror.search.GlobExcluder
+import com.scto.mcs.feature.settings.Settings
+
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch

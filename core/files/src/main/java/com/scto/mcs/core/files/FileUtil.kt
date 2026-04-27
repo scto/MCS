@@ -1,4 +1,4 @@
-package com.rk.file
+package com.scto.mcs.core.files
 
 import android.content.Context
 import android.content.Intent
@@ -7,9 +7,11 @@ import android.os.Build
 import android.os.Environment
 import android.widget.Toast
 import androidx.core.content.FileProvider
-import com.rk.resources.getString
-import com.rk.resources.strings
-import com.rk.utils.toast
+
+import com.scto.mcs.core.resources.getString
+import com.scto.mcs.core.resources.strings
+import com.scto.mcs.core.utils.toast
+
 import java.io.File
 
 fun File.child(fileName: String): File {

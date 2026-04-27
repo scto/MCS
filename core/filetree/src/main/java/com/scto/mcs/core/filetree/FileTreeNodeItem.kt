@@ -1,4 +1,4 @@
-package com.rk.filetree
+package com.scto.mcs.core.filetree
 
 import androidx.compose.animation.Animatable
 import androidx.compose.animation.AnimatedVisibility
@@ -34,14 +34,15 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import com.rk.components.compose.utils.addIf
-import com.rk.components.getDrawerWidth
-import com.rk.file.FileObject
-import com.rk.resources.drawables
-import com.rk.settings.Settings
-import com.rk.utils.drawErrorUnderline
-import com.rk.utils.getGitColor
-import com.rk.utils.getUnderlineColor
+
+import com.scto.mcs.core.ui.components.compose.utils.addIf
+import com.scto.mcs.core.ui.components.getDrawerWidth
+import com.scto.mcs.core.files.FileObject
+import com.scto.mcs.core.resources.drawables
+import com.scto.mcs.feature.settings.Settings
+import com.scto.mcs.core.utils.drawErrorUnderline
+import com.scto.mcs.core.utils.getGitColor
+import com.scto.mcs.core.utils.getUnderlineColor
 
 @Composable
 fun FileTreeNodeItem(

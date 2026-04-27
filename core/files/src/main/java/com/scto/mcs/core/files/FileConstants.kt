@@ -1,8 +1,11 @@
-package com.rk.file
+package com.scto.mcs.core.files
 
 import android.content.Context
-import com.rk.utils.application
+
+import com.scto.mcs.core.utils.application
+
 import java.io.File
+
 import kotlinx.coroutines.runBlocking
 
 fun getPrivateDir(context: Context = application!!): File {

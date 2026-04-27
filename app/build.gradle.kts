@@ -56,7 +56,7 @@ dependencies {
     implementation(project(":core:di"))
     
     implementation(project(":feature:editor"))
+    implementation(project(":feature:git"))
     implementation(project(":feature:settings"))
     implementation(project(":feature:terminal"))
-    implementation(project(":feature:git"))
 }

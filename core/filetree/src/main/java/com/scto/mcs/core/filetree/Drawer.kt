@@ -1,4 +1,4 @@
-package com.rk.filetree
+package com.scto.mcs.core.filetree
 
 import android.Manifest
 import android.content.Intent
@@ -63,32 +63,35 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
-import com.rk.DefaultScope
-import com.rk.activities.main.MainActivity
-import com.rk.activities.main.fileTreeViewModel
-import com.rk.activities.main.gitViewModel
-import com.rk.components.AddDialogItem
-import com.rk.components.DoubleInputDialog
-import com.rk.file.FileObject
-import com.rk.file.FileWrapper
-import com.rk.file.child
-import com.rk.file.sandboxHomeDir
-import com.rk.file.toFileObject
-import com.rk.git.GitTab
-import com.rk.git.ProgressCoordinator
-import com.rk.icons.Icon
-import com.rk.icons.XedIcon
-import com.rk.resources.drawables
-import com.rk.resources.getString
-import com.rk.resources.strings
-import com.rk.settings.Settings
-import com.rk.settings.app.InbuiltFeatures
-import com.rk.utils.application
-import com.rk.utils.dialog
-import com.rk.utils.readObject
-import com.rk.utils.toast
-import com.rk.utils.writeObject
+
+import com.scto.mcs.app.scope.DefaultScope
+import com.scto.mcs.app.activities.MainActivity
+import com.scto.mcs.app.activities.fileTreeViewModel
+import com.scto.mcs.app.activities.gitViewModel
+import com.scto.mcs.core.ui.components.AddDialogItem
+import com.scto.mcs.core.ui.components.DoubleInputDialog
+import com.scto.mcs.core.files.FileObject
+import com.scto.mcs.core.files.FileWrapper
+import com.scto.mcs.core.files.child
+import com.scto.mcs.core.files.sandboxHomeDir
+import com.scto.mcs.core.files.toFileObject
+import com.scto.mcs.core.git.GitTab
+import com.scto.mcs.core.git.ProgressCoordinator
+import com.scto.mcs.core.ui.icons.Icon
+import com.scto.mcs.core.ui.icons.McsIcon
+import com.scto.mcs.core.resources.drawables
+import com.scto.mcs.core.resources.getString
+import com.scto.mcs.core.resources.strings
+import com.scto.mcs.feature.settings.Settings
+import com.scto.mcs.feature.settings.app.InbuiltFeatures
+import com.scto.mcs.core.utils.application
+import com.scto.mcs.core.utils.dialog
+import com.scto.mcs.core.utils.readObject
+import com.scto.mcs.core.utils.toast
+import com.scto.mcs.core.utils.writeObject
+
 import java.io.File
+
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -391,7 +394,7 @@ fun DrawerContent(fullscreen: Boolean) {
                                 if (!tab.isSupported()) return@items
                                 NavigationRailItem(
                                     selected = currentDrawerTab == tab,
-                                    icon = { XedIcon(tab.getIcon()) },
+                                    icon = { McsIcon(tab.getIcon()) },
                                     onClick = {
                                         if (currentDrawerTab == tab && currentServiceTab == null) {
                                             closeProjectDialog = true
@@ -432,7 +435,7 @@ fun DrawerContent(fullscreen: Boolean) {
                                 if (!tab.isSupported()) return@forEach
                                 NavigationRailItem(
                                     selected = currentServiceTab == tab,
-                                    icon = { XedIcon(icon = tab.getIcon()) },
+                                    icon = { McsIcon(icon = tab.getIcon()) },
                                     onClick = {
                                         if (currentServiceTab == tab) {
                                             currentServiceTab = null

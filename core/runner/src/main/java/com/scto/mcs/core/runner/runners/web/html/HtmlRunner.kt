@@ -1,19 +1,21 @@
-package com.rk.runner.runners.web.html
+package com.scto.mcs.core.runner.runners.web.html
 
 import android.content.Context
 import android.content.Intent
 import androidx.browser.customtabs.CustomTabsIntent
 import androidx.core.net.toUri
-import com.rk.file.BuiltinFileType
-import com.rk.file.FileObject
-import com.rk.icons.Icon
-import com.rk.resources.getFilledString
-import com.rk.resources.getString
-import com.rk.resources.strings
-import com.rk.runner.RunnerImpl
-import com.rk.runner.runners.web.HttpServer
-import com.rk.settings.Settings
-import com.rk.utils.toast
+
+import com.scto.mcs.core.files.BuiltinFileType
+import com.scto.mcs.core.files.FileObject
+import com.scto.mcs.core.ui.icons.Icon
+import com.scto.mcs.core.resources.getFilledString
+import com.scto.mcs.core.resources.getString
+import com.scto.mcs.core.resources.strings
+import com.scto.mcs.core.runner.RunnerImpl
+import com.scto.mcs.core.runner.runners.web.HttpServer
+import com.scto.mcs.feature.settings.Settings
+import com.scto.mcs.core.utils.toast
+
 import java.net.BindException
 
 class HtmlRunner : RunnerImpl() {
