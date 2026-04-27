@@ -1,4 +1,4 @@
-package com.scto.msc.feature.settings.support
+package com.scto.mcs.feature.settings.support
 
 import android.app.Activity
 import android.content.Context
@@ -15,19 +15,19 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.core.net.toUri
-import com.rk.activities.settings.SettingsActivity
-import com.rk.activities.settings.SettingsRoutes
-import com.rk.components.SettingsToggle
-import com.rk.components.compose.preferences.base.PreferenceGroup
-import com.rk.components.compose.preferences.base.PreferenceLayout
-import com.rk.resources.drawables
-import com.rk.resources.getFilledString
-import com.rk.resources.getString
-import com.rk.resources.strings
-import com.rk.settings.Settings
-import com.rk.utils.dialog
-import com.rk.utils.isDialogShowing
-import com.rk.utils.toast
+import com.scto.mcs.app.ui.activities.settings.SettingsActivity
+import com.scto.mcs.feature.settings.SettingsRoutes
+import com.scto.mcs.core.ui.components.compose.preferences.base.SettingsToggle
+import com.scto.mcs.core.ui.components.compose.preferences.base.PreferenceGroup
+import com.scto.mcs.core.ui.components.compose.preferences.base.PreferenceLayout
+import com.scto.mcs.core.resources.drawables
+import com.scto.mcs.core.resources.getFilledString
+import com.scto.mcs.core.resources.getString
+import com.scto.mcs.core.resources.strings
+import com.scto.mcs.feature.settings.Settings
+import com.scto.mcs.core.utils.dialog
+import com.scto.mcs.core.utils.isDialogShowing
+import com.scto.mcs.core.utils.toast
 
 fun isUPISupported(context: Context): Boolean {
     // 1. Check if the user's region is India (Most reliable indicator for UPI)

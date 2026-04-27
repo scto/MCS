@@ -1,4 +1,4 @@
-package com.scto.msc.feature.settings.keybinds
+package com.scto.mcs.feature.settings.keybinds
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.combinedClickable
@@ -52,21 +52,21 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import com.rk.commands.Command
-import com.rk.commands.CommandProvider
-import com.rk.commands.KeyAction
-import com.rk.commands.KeyCombination
-import com.rk.commands.KeybindingsManager
-import com.rk.components.InfoBlock
-import com.rk.components.ResetButton
-import com.rk.components.compose.preferences.base.PreferenceLayoutLazyColumn
-import com.rk.components.compose.preferences.base.PreferenceTemplate
-import com.rk.icons.Error
-import com.rk.icons.XedIcon
-import com.rk.icons.XedIcons
-import com.rk.resources.drawables
-import com.rk.resources.strings
-import com.rk.theme.Typography
+import com.scto.mcs.core.commands.Command
+import com.scto.mcs.core.commands.CommandProvider
+import com.scto.mcs.core.commands.KeyAction
+import com.scto.mcs.core.commands.KeyCombination
+import com.scto.mcs.core.commands.KeybindingsManager
+import com.scto.mcs.core.ui.components.compose.preferences.base.InfoBlock
+import com.scto.mcs.core.ui.components.compose.preferences.base.ResetButton
+import com.scto.mcs.core.ui.components.compose.preferences.base.PreferenceLayoutLazyColumn
+import com.scto.mcs.core.ui.components.compose.preferences.base.PreferenceTemplate
+import com.scto.mcs.core.ui.icons.Error
+import com.scto.mcs.core.ui.icons.XedIcon
+import com.scto.mcs.core.ui.icons.XedIcons
+import com.scto.mcs.core.resources.drawables
+import com.scto.mcs.core.resources.strings
+import com.scto.mcs.core.ui.theme.Typography
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
