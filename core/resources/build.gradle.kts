@@ -5,7 +5,7 @@ plugins {
 }
 
 android {
-    namespace = "com.scto.msc.core.resources"
+    namespace = "com.scto.mcs.core.resources"
     compileSdk = libs.versions.compileSdk.get().toInt()
 
     lint.disable += "MissingTranslation"

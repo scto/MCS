@@ -7,7 +7,7 @@ plugins {
 }
 
 android {
-    namespace = "com.scto.msc.core.terminal"
+    namespace = "com.scto.mcs.core.terminal"
     compileSdk = libs.versions.compileSdk.get().toInt()
 
     defaultConfig {

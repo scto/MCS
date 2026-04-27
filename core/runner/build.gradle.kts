@@ -6,7 +6,7 @@ plugins {
 }
 
 android {
-    namespace = "com.scto.msc.core.runner"
+    namespace = "com.scto.mcs.core.runner"
     compileSdk = libs.versions.compileSdk.get().toInt()
 
     defaultConfig {

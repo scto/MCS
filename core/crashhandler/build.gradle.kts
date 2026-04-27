@@ -7,7 +7,7 @@ plugins {
 }
 
 android {
-    namespace = "com.scto.msc.core.crashhandler"
+    namespace = "com.scto.mcs.core.crashhandler"
     compileSdk = libs.versions.compileSdk.get().toInt()
 
     defaultConfig {

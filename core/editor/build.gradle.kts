@@ -7,7 +7,7 @@ plugins {
 }
 
 android {
-    namespace = "com.scto.msc.core.editor"
+    namespace = "com.scto.mcs.core.editor"
     compileSdk = libs.versions.compileSdk.get().toInt()
 
     defaultConfig {
