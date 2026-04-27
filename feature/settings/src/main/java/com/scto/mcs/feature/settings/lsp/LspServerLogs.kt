@@ -1,4 +1,4 @@
-package com.scto.msc.feature.settings.lsp
+package com.scto.mcs.feature.settings.lsp
 
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -12,17 +12,17 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.core.content.pm.PackageInfoCompat
-import com.rk.lsp.LspConnectionStatus
-import com.rk.lsp.LspRegistry
-import com.rk.lsp.LspServer
-import com.rk.lsp.LspServerInstance
-import com.rk.resources.drawables
-import com.rk.resources.getString
-import com.rk.resources.strings
-import com.rk.settings.debugOptions.LogLevel
-import com.rk.settings.debugOptions.LogScreen
-import com.rk.utils.application
-import com.rk.xededitor.BuildConfig
+import com.scto.mcs.core.editor.lsp.LspConnectionStatus
+import com.scto.mcs.core.editor.lsp.LspRegistry
+import com.scto.mcs.core.editor.lsp.LspServer
+import com.scto.mcs.core.editor.lsp.LspServerInstance
+import com.scto.mcs.core.resources.drawables
+import com.scto.mcs.core.resources.getString
+import com.scto.mcs.core.resources.strings
+import com.scto.mcs.feature.settings.debug.LogLevel
+import com.scto.mcs.feature.settings.debug.LogScreen
+import com.scto.mcs.core.utils.application
+import com.scto.mcs.app.BuildConfig
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)

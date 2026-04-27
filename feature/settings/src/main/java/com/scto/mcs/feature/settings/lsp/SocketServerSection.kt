@@ -3,6 +3,7 @@ package com.scto.mcs.feature.settings.lsp
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
@@ -10,6 +11,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import com.scto.mcs.core.ui.icons.Error
 import com.scto.mcs.core.ui.icons.XedIcons
@@ -17,38 +19,69 @@ import com.scto.mcs.core.resources.getString
 import com.scto.mcs.core.resources.strings
 
 @Composable
-fun ProcessServerSection(dialogState: ExternalLspDialogState) {
+fun SocketServerSection(dialogState: ExternalLspDialogState) {
     OutlinedTextField(
-        value = dialogState.lspCommand,
+        value = dialogState.lspHost,
         onValueChange = {
-            dialogState.lspCommand = it
-            dialogState.externalError = null
+            dialogState.lspHost = it
+            dialogState.hostError = null
 
-            if (dialogState.lspCommand.isBlank()) {
-                dialogState.externalError = strings.empty_command.getString()
+            if (dialogState.lspHost.isBlank()) {
+                dialogState.hostError = strings.invalid_address.getString()
             }
         },
-        label = { Text(stringResource(strings.command)) },
+        label = { Text(stringResource(strings.address)) },
         singleLine = true,
-        isError = dialogState.externalError != null,
+        isError = dialogState.hostError != null,
         supportingText =
-            if (dialogState.externalError != null) {
+            if (dialogState.hostError != null) {
                 {
                     Text(
-                        text = dialogState.externalError!!,
+                        text = dialogState.hostError!!,
                         color = MaterialTheme.colorScheme.error,
                         modifier = Modifier.fillMaxWidth(),
                     )
                 }
             } else null,
         trailingIcon =
-            if (dialogState.externalError != null) {
+            if (dialogState.hostError != null) {
                 { Icon(XedIcons.Error, stringResource(strings.error), tint = MaterialTheme.colorScheme.error) }
             } else null,
     )
 
     Spacer(Modifier.height(8.dp))
+    OutlinedTextField(
+        value = dialogState.lspPort,
+        onValueChange = {
+            dialogState.lspPort = it
+            dialogState.portError = null
 
+            val portInt = dialogState.lspPort.toIntOrNull()
+            if (dialogState.lspPort.isBlank() || portInt == null || portInt !in 0..65535) {
+                dialogState.portError = strings.invalid_port.getString()
+            }
+        },
+        label = { Text(stringResource(strings.port_number)) },
+        singleLine = true,
+        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+        isError = dialogState.portError != null,
+        supportingText =
+            if (dialogState.portError != null) {
+                {
+                    Text(
+                        text = dialogState.portError!!,
+                        color = MaterialTheme.colorScheme.error,
+                        modifier = Modifier.fillMaxWidth(),
+                    )
+                }
+            } else null,
+        trailingIcon =
+            if (dialogState.portError != null) {
+                { Icon(XedIcons.Error, stringResource(strings.error), tint = MaterialTheme.colorScheme.error) }
+            } else null,
+    )
+
+    Spacer(Modifier.height(8.dp))
     OutlinedTextField(
         value = dialogState.lspExtensions,
         onValueChange = { newValue -> dialogState.onExtensionsChange(newValue) },

@@ -1,4 +1,4 @@
-package com.scto.msc.feature.settings.extension
+package com.scto.mcs.feature.settings.extension
 
 import androidx.activity.compose.LocalActivity
 import androidx.appcompat.app.AppCompatActivity
@@ -46,16 +46,16 @@ import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import coil.request.CachePolicy
 import coil.request.ImageRequest
-import com.rk.App.Companion.extensionManager
-import com.rk.components.compose.preferences.base.RefreshablePreferenceLayout
-import com.rk.extension.Extension
-import com.rk.icons.Icon
-import com.rk.icons.XedIcon
-import com.rk.resources.drawables
-import com.rk.resources.getString
-import com.rk.resources.strings
-import com.rk.theme.Typography
-import com.rk.utils.formatNumberCompact
+import com.scto.mcs.app.App.Companion.extensionManager
+import com.scto.mcs.core.ui.components.compose.preferences.base.RefreshablePreferenceLayout
+import com.scto.mcs.core.extensions.Extension
+import com.scto.mcs.core.ui.icons.Icon
+import com.scto.mcs.core.ui.icons.XedIcon
+import com.scto.mcs.core.resources.drawables
+import com.scto.mcs.core.resources.getString
+import com.scto.mcs.core.resources.strings
+import com.scto.mcs.core.ui.theme.Typography
+import com.scto.mcs.core.utils.formatNumberCompact
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 

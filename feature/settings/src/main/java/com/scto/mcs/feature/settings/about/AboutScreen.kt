@@ -1,4 +1,4 @@
-package com.scto.msc.feature.settings.about
+package com.scto.mcs.feature.settings.about
 
 import android.content.Intent
 import androidx.compose.foundation.ExperimentalFoundationApi
@@ -24,15 +24,15 @@ import androidx.compose.ui.unit.dp
 import androidx.core.content.pm.PackageInfoCompat
 import androidx.core.net.toUri
 import coil.compose.AsyncImage
-import com.rk.components.SettingsToggle
-import com.rk.components.compose.preferences.base.PreferenceGroup
-import com.rk.components.compose.preferences.base.PreferenceLayout
-import com.rk.components.compose.preferences.base.PreferenceTemplate
-import com.rk.resources.drawables
-import com.rk.resources.getString
-import com.rk.resources.strings
-import com.rk.utils.copyToClipboard
-import com.rk.xededitor.BuildConfig
+import com.scto.mcs.core.ui.components.compose.preferences.base.SettingsToggle
+import com.scto.mcs.core.ui.components.compose.preferences.base.PreferenceGroup
+import com.scto.mcs.core.ui.components.compose.preferences.base.PreferenceLayout
+import com.scto.mcs.core.ui.components.compose.preferences.base.PreferenceTemplate
+import com.scto.mcs.core.resources.drawables
+import com.scto.mcs.core.resources.getString
+import com.scto.mcs.core.resources.strings
+import com.scto.mcs.core.utils.copyToClipboard
+import com.scto.mcs.app.BuildConfig
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import okhttp3.OkHttpClient
@@ -96,5 +96,6 @@ fun AboutScreen() {
                 },
                 description = { Text(text = versionCode.toString(), style = MaterialTheme.typography.titleSmall) },
             )
-
-            PreferenceTemplate(
+        }
+    }
+}

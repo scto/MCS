@@ -1,10 +1,10 @@
-package com.scto.msc.feature.settings.keybinds
+package com.scto.mcs.feature.settings.keybinds
 
 import android.view.KeyEvent
-import com.rk.icons.Icon
-import com.rk.resources.drawables
-import com.rk.resources.getString
-import com.rk.resources.strings
+import com.scto.mcs.core.ui.icons.Icon
+import com.scto.mcs.core.resources.drawables
+import com.scto.mcs.core.resources.getString
+import com.scto.mcs.core.resources.strings
 
 data object KeyUtils {
     fun getKeyDisplayName(keyCode: Int): String {

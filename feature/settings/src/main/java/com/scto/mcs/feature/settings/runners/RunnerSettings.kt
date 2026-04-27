@@ -1,4 +1,4 @@
-package com.scto.msc.feature.settings.runners
+package com.scto.mcs.feature.settings.runners
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -35,21 +35,21 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
-import com.rk.activities.main.MainActivity
-import com.rk.activities.settings.SettingsRoutes
-import com.rk.components.InfoBlock
-import com.rk.components.SettingsToggle
-import com.rk.components.compose.preferences.base.PreferenceGroup
-import com.rk.components.compose.preferences.base.PreferenceLayout
-import com.rk.file.FileWrapper
-import com.rk.icons.Error
-import com.rk.icons.XedIcons
-import com.rk.resources.getString
-import com.rk.resources.strings
-import com.rk.runner.ShellBasedRunner
-import com.rk.runner.ShellBasedRunners
-import com.rk.settings.Settings
-import com.rk.utils.toast
+import com.scto.mcs.app.ui.activities.main.MainActivity
+import com.scto.mcs.feature.settings.SettingsRoutes
+import com.scto.mcs.core.ui.components.compose.preferences.base.InfoBlock
+import com.scto.mcs.core.ui.components.compose.preferences.base.SettingsToggle
+import com.scto.mcs.core.ui.components.compose.preferences.base.PreferenceGroup
+import com.scto.mcs.core.ui.components.compose.preferences.base.PreferenceLayout
+import com.scto.mcs.core.files.FileWrapper
+import com.scto.mcs.core.ui.icons.Error
+import com.scto.mcs.core.ui.icons.XedIcons
+import com.scto.mcs.core.resources.getString
+import com.scto.mcs.core.resources.strings
+import com.scto.mcs.core.runner.ShellBasedRunner
+import com.scto.mcs.core.runner.ShellBasedRunners
+import com.scto.mcs.feature.settings.Settings
+import com.scto.mcs.core.utils.toast
 import kotlinx.coroutines.launch
 
 @Composable
