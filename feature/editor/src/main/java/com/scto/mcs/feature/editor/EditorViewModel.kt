@@ -5,8 +5,8 @@ import android.net.Uri
 import androidx.compose.runtime.*
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.scto.mcs.core.build_tools.indexing.api.ProjectIndexer
-import com.scto.mcs.core.build_tools.lsp.models.Position
+import com.scto.mcs.core.buildtools.indexing.api.ProjectIndexer
+import com.scto.mcs.core.buildtools.lsp.models.Position
 import com.scto.mcs.core.editor.lsp.LspClient
 import com.scto.mcs.core.domain.repository.GitRepository
 import com.scto.mcs.core.domain.repository.LineDiff

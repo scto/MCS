@@ -64,12 +64,10 @@ fun EditorScreen(
                 // Sora Editor Bereich
                 Box(modifier = Modifier.weight(1f).fillMaxWidth()) {
                     editorViewModel.activeFile?.let { file ->
-                        RosemoeEditorView(
-                            content = file.content.value,
-                            fileName = file.name,
-                            uri = file.uri.toString(),
-                            lspClient = null, // Wird später injiziert
-                            onContentChanged = { file.content.value = it }
+                        EditorView(
+                            editorFile = file,
+                            viewModel = editorViewModel,
+                            lspClient = null // Wird später injiziert
                         )
                     }
                 }
