@@ -1,15 +1,16 @@
-package com.rk.commands.editor
+package com.scto.mcs.core.commands.editor
 
 import android.view.KeyEvent
-import com.rk.commands.CommandContext
-import com.rk.commands.EditorActionContext
-import com.rk.commands.EditorCommand
-import com.rk.commands.EditorNonActionContext
-import com.rk.commands.KeyCombination
-import com.rk.icons.Icon
-import com.rk.resources.drawables
-import com.rk.resources.getString
-import com.rk.resources.strings
+
+import com.scto.mcs.core.commands.CommandContext
+import com.scto.mcs.core.commands.EditorActionContext
+import com.scto.mcs.core.commands.EditorCommand
+import com.scto.mcs.core.commands.EditorNonActionContext
+import com.scto.mcs.core.commands.KeyCombination
+import com.scto.mcs.core.ui.icons.Icon
+import com.scto.mcs.core.resources.drawables
+import com.scto.mcs.core.resources.getString
+import com.scto.mcs.core.resources.strings
 
 class PasteCommand(commandContext: CommandContext) : EditorCommand(commandContext) {
     override val id: String = "editor.paste"

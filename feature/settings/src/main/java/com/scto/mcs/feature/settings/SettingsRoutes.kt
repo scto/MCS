@@ -1,7 +1,10 @@
-package com.rk.activities.settings
+package com.scto.mcs.feature.settings
 
+/**
+ * Definiert alle Navigationsziele innerhalb der Einstellungen.
+ */
 sealed class SettingsRoutes(val route: String) {
-    data object Settings : SettingsRoutes("settings")
+    data object Settings : SettingsRoutes("settings_main")
 
     data object AppSettings : SettingsRoutes("app_settings")
 

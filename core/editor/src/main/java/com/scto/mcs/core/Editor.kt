@@ -1,18 +1,21 @@
-package com.srvhive.app.editor
+package com.scto.mcs.core.editor
 
 import android.content.Context
 import android.graphics.Typeface
 import android.util.AttributeSet
 import androidx.compose.material3.ColorScheme
 import androidx.compose.ui.graphics.toArgb
-import com.srvhive.app.editor.intelligent.IntelligentFeatureRegistry
-import com.srvhive.app.ui.screens.SettingsViewModel
+
+import com.scto.mcs.core.editor.intelligent.IntelligentFeatureRegistry
+import com.scto.mcs.feature.settings.SettingsViewModel
+
 import io.github.rosemoe.sora.event.ContentChangeEvent
 import io.github.rosemoe.sora.event.EditorKeyEvent
 import io.github.rosemoe.sora.widget.CodeEditor
 import io.github.rosemoe.sora.widget.EditorColorScheme
 import io.github.rosemoe.sora.widget.component.EditorAutoCompletion
 import io.github.rosemoe.sora.widget.subscribeEvent
+
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.cancel

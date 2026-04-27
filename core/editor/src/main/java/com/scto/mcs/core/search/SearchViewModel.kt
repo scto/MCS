@@ -1,4 +1,4 @@
-package com.rk.search
+package com.scto.mcs.core.editor.search
 
 import android.content.Context
 import androidx.compose.runtime.derivedStateOf
@@ -12,19 +12,22 @@ import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.room.withTransaction
-import com.rk.activities.main.MainViewModel
-import com.rk.file.FileObject
-import com.rk.file.toFileWrapper
-import com.rk.settings.Preference
-import com.rk.settings.Settings
-import com.rk.settings.editor.LineEnding
-import com.rk.tabs.editor.EditorTab
-import com.rk.utils.hasBinaryChars
-import com.rk.utils.isBinaryExtension
-import com.rk.utils.parseExtensions
+
+import com.scto.mcs.app.activities.MainViewModel
+import com.scto.mcs.core.files.FileObject
+import com.scto.mcs.core.files.toFileWrapper
+import com.scto.mcs.feature.settings.Preference
+import com.scto.mcs.feature.settings.Settings
+import com.scto.mcs.feature.settings.editor.LineEnding
+import com.scto.mcs.core.editor.tabs.editor.EditorTab
+import com.scto.mcs.core.utils.hasBinaryChars
+import com.scto.mcs.core.utils.isBinaryExtension
+import com.scto.mcs.core.utils.parseExtensions
+
 import java.io.File
 import java.io.InputStreamReader
 import java.nio.charset.Charset
+
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.currentCoroutineContext

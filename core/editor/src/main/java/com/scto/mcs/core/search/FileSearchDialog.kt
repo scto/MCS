@@ -1,4 +1,4 @@
-package com.rk.search
+package com.scto.mcs.core.editor.search
 
 import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.clickable
@@ -37,16 +37,18 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.rk.components.XedDialog
-import com.rk.components.compose.utils.addIf
-import com.rk.file.FileObject
-import com.rk.file.toFileWrapper
-import com.rk.filetree.FileIcon
-import com.rk.filetree.getAppropriateName
-import com.rk.resources.fillPlaceholders
-import com.rk.resources.strings
-import com.rk.utils.getGitColor
-import com.rk.utils.rememberNumberFormatter
+
+import com.scto.mcs.core.ui.components.McsDialog
+import com.scto.mcs.core.ui.components.compose.utils.addIf
+import com.scto.mcs.core.files.FileObject
+import com.scto.mcs.core.files.toFileWrapper
+import com.scto.mcs.core.filetree.FileIcon
+import com.scto.mcs.core.filetree.getAppropriateName
+import com.scto.mcs.core.resources.fillPlaceholders
+import com.scto.mcs.core.resources.strings
+import com.scto.mcs.core.utils.getGitColor
+import com.scto.mcs.core.utils.rememberNumberFormatter
+
 import java.io.File
 
 @Composable

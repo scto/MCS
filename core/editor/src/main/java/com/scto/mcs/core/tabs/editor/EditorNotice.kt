@@ -1,4 +1,4 @@
-package com.rk.tabs.editor
+package com.scto.mcs.core.editor.tabs.editor
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -13,7 +13,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.rk.theme.Typography
+
+import com.scto.mcs.core.ui.theme.Typography
 
 @Composable
 fun EditorNotice(text: String, actionButton: @Composable (() -> Unit)? = null) {

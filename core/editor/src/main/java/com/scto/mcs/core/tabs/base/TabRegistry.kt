@@ -1,10 +1,10 @@
-package com.rk.tabs.base
+package com.scto.mcs.core.editor.tabs.base
 
-import com.rk.activities.main.MainViewModel
-import com.rk.file.BuiltinFileType
-import com.rk.file.FileObject
-import com.rk.file.FileTypeManager
-import com.rk.tabs.image.ImageTab
+import com.scto.mcs.app.activities.MainViewModel
+import com.scto.mcs.core.files.BuiltinFileType
+import com.scto.mcs.core.files.FileObject
+import com.scto.mcs.core.files.FileTypeManager
+import com.scto.mcs.core.editor.tabs.image.ImageTab
 
 fun interface TabFactory {
     fun createTab(file: FileObject, projectRoot: FileObject?, viewModel: MainViewModel): Tab

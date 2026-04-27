@@ -1,7 +1,9 @@
-package com.srvhive.app.editor
+package com.scto.mcs.core.editor
 
 import android.content.Context
-import com.srvhive.app.ui.screens.SettingsViewModel
+
+import com.scto.mcs.feature.settings.SettingsViewModel
+
 import io.github.rosemoe.sora.langs.textmate.TextMateLanguage
 import io.github.rosemoe.sora.langs.textmate.registry.GrammarRegistry
 

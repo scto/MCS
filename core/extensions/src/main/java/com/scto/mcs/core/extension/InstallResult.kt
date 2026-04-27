@@ -1,4 +1,4 @@
-package com.rk.extension
+package com.scto.mcs.core.extension
 
 sealed interface InstallResult {
     data class Success(val extension: LocalExtension) : InstallResult

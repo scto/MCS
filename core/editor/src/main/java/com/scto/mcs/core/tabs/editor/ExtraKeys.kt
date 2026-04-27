@@ -1,4 +1,4 @@
-package com.rk.tabs.editor
+package com.scto.mcs.core.tabs.editor
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -22,13 +22,14 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.unit.dp
-import com.rk.activities.main.MainActivity
-import com.rk.commands.ActionContext
-import com.rk.commands.CommandProvider
-import com.rk.commands.ToggleableCommand
-import com.rk.icons.Icon
-import com.rk.icons.XedIcon
-import com.rk.settings.Settings
+
+import com.scto.mcs.app.activities.MainActivity
+import com.scto.mcs.core.commands.ActionContext
+import com.scto.mcs.core.commands.CommandProvider
+import com.scto.mcs.core.commands.ToggleableCommand
+import com.scto.mcs.core.ui.icons.Icon
+import com.scto.mcs.core.ui.icons.McsIcon
+import com.scto.mcs.feature.settings.Settings
 
 private data class ExtraKey(
     val label: String,

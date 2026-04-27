@@ -1,19 +1,21 @@
-package com.rk.commands.editor
+package com.scto.mcs.core.commands.editor
 
 import android.view.KeyEvent
-import com.rk.DefaultScope
-import com.rk.commands.CommandContext
-import com.rk.commands.CommandProvider
-import com.rk.commands.EditorActionContext
-import com.rk.commands.EditorCommand
-import com.rk.commands.EditorNonActionContext
-import com.rk.commands.KeyCombination
-import com.rk.icons.Icon
-import com.rk.resources.drawables
-import com.rk.resources.getString
-import com.rk.resources.strings
-import com.rk.runner.Runner
-import com.rk.settings.Settings
+
+import com.scto.mcs.core.DefaultScope
+import com.scto.mcs.core.commands.CommandContext
+import com.scto.mcs.core.commands.CommandProvider
+import com.scto.mcs.core.commands.EditorActionContext
+import com.scto.mcs.core.commands.EditorCommand
+import com.scto.mcs.core.commands.EditorNonActionContext
+import com.scto.mcs.core.commands.KeyCombination
+import com.scto.mcs.core.ui.icons.Icon
+import com.scto.mcs.core.resources.drawables
+import com.scto.mcs.core.resources.getString
+import com.scto.mcs.core.resources.strings
+import com.scto.mcs.core.runner.Runner
+import com.scto.mcs.feature.settings.Settings
+
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.launch
 

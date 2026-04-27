@@ -1,8 +1,10 @@
-package com.rk.extension
+package com.scto.mcs.core.extension
 
 import android.app.Activity
 import android.os.Bundle
-import com.rk.DefaultScope
+
+import com.scto.mcs.app.scope.DefaultScope
+
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.sync.Mutex

@@ -1,4 +1,4 @@
-package com.rk.search
+package com.scto.mcs.core.editor.search
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.horizontalScroll
@@ -21,8 +21,10 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.rememberTextMeasurer
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import com.rk.components.compose.utils.addIf
-import com.rk.file.FileObject
+
+import com.scto.mcs.core.ui.components.compose.utils.addIf
+import com.scto.mcs.core.files.FileObject
+
 import kotlinx.coroutines.launch
 
 data class CodeItem(

@@ -5,8 +5,8 @@ import android.view.KeyEvent
 import com.google.gson.Gson
 
 import com.scto.mcs.app.activities.MainActivity
-import com.scto.mcs.core.resourcess.getString
-import com.scto.mcs.core.resourcess.strings
+import com.scto.mcs.core.resources.getString
+import com.scto.mcs.core.resources.strings
 import com.scto.mcs.feature.settings.Preference
 import com.scto.mcs.feature.settings.keybinds.KeyUtils
 

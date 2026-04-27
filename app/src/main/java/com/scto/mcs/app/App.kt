@@ -9,31 +9,37 @@ import androidx.core.os.LocaleListCompat
 
 import com.github.anrwatchdog.ANRWatchDog
 
-import com.rk.activities.main.SessionManager
-import com.rk.commands.CommandProvider
-import com.rk.commands.KeybindingsManager
-import com.rk.crashhandler.CrashHandler
+import com.scto.mcs.app.BuildConfig
+import com.scto.mcs.app..activities.main.SessionManager
+import com.scto.mcs.core.commands.CommandProvider
+import com.scto.mcs.core.commands.KeybindingsManager
+import com.scto.mcs.core.crashhandler.CrashHandler
+
 import com.rk.editor.CodeHighlighter
 import com.rk.editor.FontCache
 import com.rk.editor.KeywordManager
 import com.rk.editor.LanguageManager
-import com.rk.extension.ExtensionAPIManager
-import com.rk.extension.ExtensionManager
-import com.rk.extension.loadAllExtensions
-import com.rk.icons.pack.IconPackManager
-import com.rk.lsp.FileIconProvider
-import com.rk.lsp.LspPersistence
-import com.rk.lsp.MarkdownImageProvider
-import com.rk.resources.Res
+
+import com.scto.mcs.core.extension.ExtensionAPIManager
+import com.scto.mcs.core.extension.ExtensionManager
+import com.scto.mcs.core.extension.loadAllExtensions
+import com.scto.mcs.core.ui.icons.pack.IconPackManager
+import com.scto.mcs.core.editor.lsp.FileIconProvider
+import com.scto.mcs.core.editor.lsp.LspPersistence
+import com.scto.mcs.core.editor.lsp.MarkdownImageProvider
+import com.scto.mcs.core.resources.Res
+
+import com.scto.mcs.core.ui.theme.updateThemes
+import com.scto.mcs.core.utils.application
+import com.scto.mcs.core.utils.getTempDir
+
 import com.rk.settings.Preference
 import com.rk.settings.Settings
 import com.rk.settings.debugOptions.startThemeFlipperIfNotRunning
 import com.rk.settings.editor.DEFAULT_APP_FONT_PATH
 import com.rk.settings.editor.DEFAULT_EDITOR_FONT_PATH
-import com.rk.theme.updateThemes
-import com.rk.utils.application
-import com.rk.utils.getTempDir
-import com.rk.xededitor.BuildConfig
+
+
 
 import java.util.Locale
 import java.util.concurrent.Executors

@@ -1,8 +1,9 @@
-package com.srvhive.app.editor
+package com.scto.mcs.core.editor
 
 import android.content.Context
-import com.srvhive.app.ui.screens.SettingsViewModel
-import com.srvhive.app.ui.screens.ThemeMode
+
+import com.scto.mcs.feature.settings.SettingsViewModel
+import com.scto.mcs.feature.settings.ThemeMode
 
 // Pfade zu den Assets
 const val TEXTMATE_PREFIX = "editor/languages/"

@@ -1,16 +1,21 @@
-package com.rk.extension
+package com.scto.mcs.core.extension
 
 import android.util.Log
-import com.rk.utils.application
-import com.rk.utils.errorDialog
+
+import com.scto.mcs.core.utils.application
+import com.scto.mcs.core.utils.errorDialog
+
 import java.io.File
 import java.util.concurrent.ConcurrentHashMap
+
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.withContext
+
 import okhttp3.OkHttpClient
 import okhttp3.Request
+
 import org.json.JSONObject
 
 object ExtensionRegistry {

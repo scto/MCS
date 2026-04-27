@@ -1,13 +1,16 @@
-package com.rk.extension
+package com.scto.mcs.core.extension
 
 import android.app.Application
 import android.content.Context
 import androidx.compose.runtime.mutableStateMapOf
 import androidx.core.content.pm.PackageInfoCompat
-import com.rk.file.child
-import com.rk.utils.errorDialog
+
+import com.scto.mcs.core.files.child
+import com.scto.mcs.core.utils.errorDialog
+
 import java.io.File
 import java.util.zip.ZipFile
+
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

@@ -1,4 +1,4 @@
-package com.rk.tabs.editor
+package com.scto.mcs.core.editor.tabs.editor
 
 import androidx.activity.compose.LocalActivity
 import androidx.compose.foundation.layout.Arrangement
@@ -30,18 +30,20 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.dp
-import com.rk.activities.main.MainViewModel
-import com.rk.commands.ActionContext
-import com.rk.commands.CommandProvider
-import com.rk.commands.KeybindingsManager
-import com.rk.commands.ToggleableCommand
-import com.rk.icons.Icon
-import com.rk.icons.XedIcon
-import com.rk.resources.strings
-import com.rk.settings.Settings
-import com.rk.terminal.isV
-import com.rk.theme.Typography
-import com.rk.utils.x
+
+import com.scto.mcs.app.activities.MainViewModel
+import com.scto.mcs.core.commands.ActionContext
+import com.scto.mcs.core.commands.CommandProvider
+import com.scto.mcs.core.commands.KeybindingsManager
+import com.scto.mcs.core.commands.ToggleableCommand
+import com.scto.mcs.core.ui.icons.Icon
+import com.scto.mcs.core.ui.icons.McsIcon
+import com.scto.mcs.core.resources.strings
+import com.scto.mcs.feature.settings.Settings
+import com.scto.mcs.core.terminal.isV
+import com.scto.mcs.core.ui.theme.Typography
+import com.scto.mcs.core.utils.x
+
 import kotlin.math.min
 
 @Composable

@@ -1,4 +1,4 @@
-package com.rk.tabs.editor
+package com.scto.mcs.core.editor.tabs.editor
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.animateContentSize
@@ -30,41 +30,45 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import com.rk.DefaultScope
-import com.rk.activities.main.EditorCursorState
-import com.rk.activities.main.EditorTabState
-import com.rk.activities.main.MainActivity
-import com.rk.activities.main.MainViewModel
-import com.rk.activities.main.TabState
-import com.rk.activities.main.gitViewModel
-import com.rk.activities.main.searchViewModel
-import com.rk.color.ColorPicker
-import com.rk.components.AddDialogItem
-import com.rk.components.SingleInputDialog
-import com.rk.editor.intelligent.IntelligentFeatureRegistry
-import com.rk.file.FileObject
-import com.rk.file.FileTypeManager
-import com.rk.file.child
-import com.rk.icons.Icon
-import com.rk.lsp.LspConnector
-import com.rk.lsp.formatDocumentSuspend
-import com.rk.resources.drawables
-import com.rk.resources.getString
-import com.rk.resources.strings
-import com.rk.runner.currentRunner
-import com.rk.search.EditorSearchPanel
-import com.rk.search.FindingsDialog
-import com.rk.settings.Settings
-import com.rk.settings.editor.refreshEditorSettings
-import com.rk.settings.support.handleSupport
-import com.rk.tabs.base.Tab
-import com.rk.utils.errorDialog
-import com.rk.utils.getTempDir
-import com.rk.utils.hasBinaryChars
+
+import com.scto.mcs.app.scope.DefaultScope
+import com.scto.mcs.app.activities.EditorCursorState
+import com.scto.mcs.app.activities.EditorTabState
+import com.scto.mcs.app.activities.MainActivity
+import com.scto.mcs.app.activities.MainViewModel
+import com.scto.mcs.app.activities.TabState
+import com.scto.mcs.app.activities.gitViewModel
+import com.scto.mcs.app.activities.searchViewModel
+import com.scto.mcs.core.ui.color.ColorPicker
+import com.scto.mcs.core.ui.components.AddDialogItem
+import com.scto.mcs.core.ui.components.SingleInputDialog
+import com.scto.mcs.core.editor.intelligent.IntelligentFeatureRegistry
+import com.scto.mcs.core.files.FileObject
+import com.scto.mcs.core.files.FileTypeManager
+import com.scto.mcs.core.files.child
+import com.scto.mcs.core.ui.icons.Icon
+import com.scto.mcs.core.editor.lsp.LspConnector
+import com.scto.mcs.core.editor.lsp.formatDocumentSuspend
+import com.scto.mcs.core.resources.drawables
+import com.scto.mcs.core.resources.getString
+import com.scto.mcs.core.resources.strings
+import com.scto.mcs.core.runner.currentRunner
+import com.scto.mcs.core.editor.search.EditorSearchPanel
+import com.scto.mcs.core.editor.search.FindingsDialog
+import com.scto.mcs.feature.settings.Settings
+import com.scto.mcs.feature.settings.editor.refreshEditorSettings
+import com.scto.mcs.feature.settings.support.handleSupport
+import com.scto.mcs.core.editor.tabs.base.Tab
+import com.scto.mcs.core.utils.errorDialog
+import com.scto.mcs.core.utils.getTempDir
+import com.scto.mcs.core.utils.hasBinaryChars
+
 import io.github.rosemoe.sora.text.ContentIO
+
 import java.lang.ref.WeakReference
 import java.nio.charset.Charset
 import java.nio.file.Paths
+
 import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.DelicateCoroutinesApi
@@ -76,6 +80,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import kotlinx.coroutines.withContext
+
 import org.ec4j.core.Cache.Caches
 import org.ec4j.core.EditorConfigLoader
 import org.ec4j.core.Resource

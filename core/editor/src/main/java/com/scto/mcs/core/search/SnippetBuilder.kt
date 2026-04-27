@@ -1,4 +1,4 @@
-package com.rk.search
+package com.scto.mcs.core.editor.search
 
 import android.content.Context
 import android.graphics.Typeface
@@ -7,16 +7,20 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
-import com.rk.activities.main.MainViewModel
-import com.rk.editor.ThemeManager
-import com.rk.editor.getSelectionColor
-import com.rk.file.FileObject
-import com.rk.tabs.editor.EditorTab
-import com.rk.utils.toAnnotatedString
+
+import com.scto.mcs.app.activities.MainViewModel
+import com.scto.mcs.core.editor.ThemeManager
+import com.scto.mcs.core.editor.getSelectionColor
+import com.scto.mcs.core.files.FileObject
+import com.scto.mcs.core.editor.tabs.editor.EditorTab
+import com.scto.mcs.core.utils.toAnnotatedString
+
 import io.github.rosemoe.sora.lsp.editor.text.MarkdownCodeHighlighterRegistry
 import io.github.rosemoe.sora.widget.schemes.EditorColorScheme
+
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+
 import org.eclipse.lsp4j.Range
 
 data class Snippet(val text: AnnotatedString, val highlight: Highlight)

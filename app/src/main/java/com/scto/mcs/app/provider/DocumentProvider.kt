@@ -1,4 +1,4 @@
-package com.rk
+package com.scto.mcs.app.provider
 
 import android.content.ComponentName
 import android.content.Context
@@ -12,11 +12,14 @@ import android.os.ParcelFileDescriptor
 import android.provider.DocumentsContract
 import android.provider.DocumentsProvider
 import android.util.Log
+
 import android.webkit.MimeTypeMap
-import com.rk.file.sandboxHomeDir
-import com.rk.resources.getString
-import com.rk.resources.strings
-import com.rk.xededitor.R
+
+import com.scto.mcs.core.files.sandboxHomeDir
+import com.scto.mcs.core.resources.getString
+import com.scto.mcs.core.resources.strings
+import com.scto.mcs.core.resources.R
+
 import java.io.File
 import java.io.FileNotFoundException
 import java.io.IOException

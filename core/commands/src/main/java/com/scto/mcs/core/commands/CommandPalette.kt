@@ -52,12 +52,12 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
-import com.rk.components.McsDialog
-import com.rk.components.compose.utils.addIf
-import com.rk.icons.McsIcon
-import com.rk.resources.strings
-import com.rk.settings.Settings
-import com.rk.theme.Typography
+import com.scto.mcs.core.ui.components.McsDialog
+import com.scto.mcs.core.ui.components.compose.utils.addIf
+import com.scto.mcs.core.ui.icons.McsIcon
+import com.scto.mcs.core.ui.theme.Typography
+import com.scto.mcs.core.resources.strings
+import com.scto.mcs.feature.settings.Settings
 
 import kotlinx.coroutines.DelicateCoroutinesApi
 

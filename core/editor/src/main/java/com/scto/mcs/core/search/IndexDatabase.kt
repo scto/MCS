@@ -1,4 +1,4 @@
-package com.rk.search
+package com.scto.mcs.core.editor.search
 
 import android.content.Context
 import androidx.room.Dao
@@ -10,7 +10,9 @@ import androidx.room.PrimaryKey
 import androidx.room.Query
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.rk.file.FileObject
+
+import com.scto.mcs.core.files.FileObject
+
 import java.io.Serializable
 
 @Entity(tableName = "files")

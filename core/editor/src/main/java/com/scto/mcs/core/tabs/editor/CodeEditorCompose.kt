@@ -1,4 +1,4 @@
-package com.rk.tabs.editor
+package com.scto.mcs.core.editor.tabs.editor
 
 import android.content.Context
 import android.content.Intent
@@ -19,30 +19,32 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.net.toUri
-import com.rk.activities.main.MainActivity
-import com.rk.activities.main.MainViewModel
-import com.rk.activities.main.fileTreeViewModel
-import com.rk.activities.main.snackbarHostStateRef
-import com.rk.color.ColorFormat
-import com.rk.color.parseUnknownColor
-import com.rk.commands.KeybindingsManager
-import com.rk.editor.Editor
-import com.rk.editor.LanguageManager
-import com.rk.editor.intelligent.IntelligentFeature
-import com.rk.file.FileObject
-import com.rk.lsp.LspConnector
-import com.rk.lsp.LspRegistry
-import com.rk.lsp.LspServer
-import com.rk.lsp.createLspTextActions
-import com.rk.resources.drawables
-import com.rk.resources.getFilledString
-import com.rk.resources.getString
-import com.rk.resources.strings
-import com.rk.settings.Preference
-import com.rk.settings.Settings
-import com.rk.utils.info
-import com.rk.utils.logWarn
-import com.rk.utils.toast
+
+import com.scto.mcs.app.activities.MainActivity
+import com.scto.mcs.app.activities.MainViewModel
+import com.scto.mcs.app.activities.main.fileTreeViewModel
+import com.scto.mcs.app.activities.main.snackbarHostStateRef
+import com.scto.mcs.core.ui.color.ColorFormat
+import com.scto.mcs.core.ui.color.parseUnknownColor
+import com.scto.mcs.core.commands.KeybindingsManager
+import com.scto.mcs.core.editor.Editor
+import com.scto.mcs.core.editor.LanguageManager
+import com.scto.mcs.core.editor.intelligent.IntelligentFeature
+import com.scto.mcs.core.files.FileObject
+import com.scto.mcs.core.editor.lsp.LspConnector
+import com.scto.mcs.core.editor.lsp.LspRegistry
+import com.scto.mcs.core.editor.lsp.LspServer
+import com.scto.mcs.core.editor.lsp.createLspTextActions
+import com.scto.mcs.core.resources.drawables
+import com.scto.mcs.core.resources.getFilledString
+import com.scto.mcs.core.resources.getString
+import com.scto.mcs.core.resources.strings
+import com.scto.mcs.feature.settings.Preference
+import com.scto.mcs.feature.settings.Settings
+import com.scto.mcs.core.utils.info
+import com.scto.mcs.core.utils.logWarn
+import com.scto.mcs.core.utils.toast
+
 import io.github.rosemoe.sora.event.ContentChangeEvent
 import io.github.rosemoe.sora.event.EditorKeyEvent
 import io.github.rosemoe.sora.event.InlayHintClickEvent
@@ -53,7 +55,9 @@ import io.github.rosemoe.sora.lang.styling.inlayHint.ColorInlayHint
 import io.github.rosemoe.sora.text.CharPosition
 import io.github.rosemoe.sora.text.TextRange
 import io.github.rosemoe.sora.widget.component.TextActionItem
+
 import java.lang.ref.WeakReference
+
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.Dispatchers

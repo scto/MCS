@@ -1,15 +1,15 @@
-package com.rk.commands.lsp
+package com.scto.mcs.core.commands.lsp
 
-import com.rk.DefaultScope
-import com.rk.commands.CommandContext
-import com.rk.commands.LspActionContext
-import com.rk.commands.LspCommand
-import com.rk.commands.LspNonActionContext
-import com.rk.icons.Icon
-import com.rk.lsp.goToReferences
-import com.rk.resources.drawables
-import com.rk.resources.getString
-import com.rk.resources.strings
+import com.scto.mcs.app.scope.DefaultScope
+import com.scto.mcs.core.commands.CommandContext
+import com.scto.mcs.core.commands.LspActionContext
+import com.scto.mcs.core.commands.LspCommand
+import com.scto.mcs.core.commands.LspNonActionContext
+import com.scto.mcs.core.ui.icons.Icon
+import com.scto.mcs.core.editor.lsp.goToReferences
+import com.scto.mcs.core.resources.drawables
+import com.scto.mcs.core.resources.getString
+import com.scto.mcs.core.resources.strings
 
 class GoToReferencesCommand(commandContext: CommandContext) : LspCommand(commandContext) {
     override val id: String = "lsp.go_to_references"

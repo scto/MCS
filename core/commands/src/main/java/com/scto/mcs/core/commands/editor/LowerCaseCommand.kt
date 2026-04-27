@@ -1,12 +1,12 @@
-package com.rk.commands.editor
+package com.scto.mcs.core.commands.editor
 
-import com.rk.commands.CommandContext
-import com.rk.commands.EditorActionContext
-import com.rk.commands.EditorCommand
-import com.rk.icons.Icon
-import com.rk.resources.drawables
-import com.rk.resources.getString
-import com.rk.resources.strings
+import com.scto.mcs.core.commands.CommandContext
+import com.scto.mcs.core.commands.EditorActionContext
+import com.scto.mcs.core.commands.EditorCommand
+import com.scto.mcs.core.ui.icons.Icon
+import com.scto.mcs.core.resources.drawables
+import com.scto.mcs.core.resources.getString
+import com.scto.mcs.core.resources.strings
 
 class LowerCaseCommand(commandContext: CommandContext) : EditorCommand(commandContext) {
     override val id: String = "editor.lowercase"

@@ -1,8 +1,10 @@
-package com.srvhive.app.editor
+package com.scto.mcs.core.editor
 
 import android.content.Context
 import android.graphics.Typeface
+
 import androidx.compose.ui.text.font.Font
+
 import java.io.File
 
 /**

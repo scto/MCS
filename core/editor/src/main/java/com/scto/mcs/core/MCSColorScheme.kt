@@ -1,7 +1,9 @@
-package com.srvhive.app.ui.screens
+package com.scto.mcs.core.editor
 
 import android.graphics.Color
-import com.srvhive.app.ui.theme.currentTheme
+
+import com.scto.mcs.core.ui.theme.currentTheme
+
 import io.github.rosemoe.sora.langs.textmate.TextMateColorScheme
 import io.github.rosemoe.sora.langs.textmate.registry.ThemeRegistry
 import io.github.rosemoe.sora.langs.textmate.registry.model.ThemeModel

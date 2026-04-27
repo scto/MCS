@@ -1,4 +1,4 @@
-package com.rk.tabs.editor
+package com.scto.mcs.core.editor.tabs.editor
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -6,11 +6,13 @@ import androidx.compose.runtime.mutableStateMapOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.graphics.Color
-import com.rk.color.ColorFormat
-import com.rk.editor.Editor
-import com.rk.runner.RunnerImpl
-import com.rk.search.CodeItem
-import com.rk.settings.Settings
+
+import com.scto.mcs.core.ui.color.ColorFormat
+import com.scto.mcs.core.editor.Editor
+import com.scto.mcs.core.runner.RunnerImpl
+import com.scto.mcs.core.editor.search.CodeItem
+import com.scto.mcs.feature.settings.Settings
+
 import io.github.rosemoe.sora.text.Content
 import io.github.rosemoe.sora.text.TextRange
 import java.lang.ref.WeakReference

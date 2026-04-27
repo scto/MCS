@@ -2,11 +2,11 @@ package com.scto.mcs.core.commands
 
 import android.app.Activity
 
-import com.rk.activities.main.MainViewModel
-import com.rk.editor.Editor
-import com.rk.icons.Icon
-import com.rk.lsp.LspConnector
-import com.rk.tabs.editor.EditorTab
+import com.scto.mcs.app.activities.MainViewModel
+import com.scto.mcs.core.editor.Editor
+import com.scto.mcs.core.ui.icons.Icon
+import com.scto.mcs.core.editor.lsp.LspConnector
+import com.scto.mcs.core.editor.tabs.editor.EditorTab
 
 data class CommandContext(private val provider: () -> MainViewModel) {
     val mainViewModel: MainViewModel

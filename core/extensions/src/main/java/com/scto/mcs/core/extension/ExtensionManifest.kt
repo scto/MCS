@@ -1,4 +1,4 @@
-package com.rk.extension
+package com.scto.mcs.core.extension
 
 import kotlinx.serialization.Serializable
 

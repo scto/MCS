@@ -1,12 +1,14 @@
-package com.rk.extension
+package com.scto.mcs.core.extension
 
 import android.app.Application
 import androidx.core.content.pm.PackageInfoCompat
-import com.rk.file.FileObject
-import com.rk.file.copyToTempDir
-import com.rk.utils.application
-import com.rk.utils.errorDialog
-import com.rk.utils.isMainThread
+
+import com.scto.mcs.core.files.FileObject
+import com.scto.mcs.core.files.copyToTempDir
+import com.scto.mcs.core.utils.application
+import com.scto.mcs.core.utils.errorDialog
+import com.scto.mcs.core.utils.isMainThread
+
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext

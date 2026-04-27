@@ -1,4 +1,4 @@
-package com.rk.search
+package com.scto.mcs.core.editor.search
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -22,11 +22,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import com.rk.components.compose.utils.addIf
-import com.rk.filetree.FileIcon
-import com.rk.resources.fillPlaceholders
-import com.rk.resources.strings
-import com.rk.utils.rememberNumberFormatter
+
+import com.scto.mcs.core.ui.components.compose.utils.addIf
+import com.scto.mcs.core.filetree.FileIcon
+import com.scto.mcs.core.resources.fillPlaceholders
+import com.scto.mcs.core.resources.strings
+import com.scto.mcs.core.utils.rememberNumberFormatter
 
 @Composable
 fun FindingsDialog(title: String, description: String, codeItems: List<CodeItem>, onFinish: () -> Unit) {

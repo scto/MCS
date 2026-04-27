@@ -1,4 +1,4 @@
-package com.rk.search
+package com.scto.mcs.core.editor.search
 
 import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.clickable
@@ -56,17 +56,19 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewModelScope
-import com.rk.activities.main.MainViewModel
-import com.rk.components.SingleInputDialog
-import com.rk.components.XedDialog
-import com.rk.components.compose.utils.addIf
-import com.rk.file.FileObject
-import com.rk.filetree.FileIcon
-import com.rk.resources.drawables
-import com.rk.resources.fillPlaceholders
-import com.rk.resources.strings
-import com.rk.settings.Settings
-import com.rk.utils.rememberNumberFormatter
+
+import com.scto.mcs.app.activities.main.MainViewModel
+import com.scto.mcs.core.ui.components.SingleInputDialog
+import com.scto.mcs.core.ui.components.XedDialog
+import com.scto.mcs.core.ui.components.compose.utils.addIf
+import com.scto.mcs.core.files.FileObject
+import com.scto.mcs.core.filetree.FileIcon
+import com.scto.mcs.core.resources.drawables
+import com.scto.mcs.core.resources.fillPlaceholders
+import com.scto.mcs.core.resources.strings
+import com.scto.mcs.feature.settings.Settings
+import com.scto.mcs.core.utils.rememberNumberFormatter
+
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.launch
 

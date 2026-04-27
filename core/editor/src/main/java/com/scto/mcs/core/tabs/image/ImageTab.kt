@@ -1,4 +1,4 @@
-package com.rk.tabs.image
+package com.scto.mcs.core.editor.tabs.image
 
 import android.graphics.drawable.Drawable
 import android.widget.ImageView
@@ -29,17 +29,19 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
+
 import com.bumptech.glide.Glide
 import com.github.chrisbanes.photoview.PhotoView
-import com.rk.activities.main.FileTabState
-import com.rk.activities.main.TabState
-import com.rk.file.FileObject
-import com.rk.icons.Error
-import com.rk.icons.Photo
-import com.rk.icons.XedIcons
-import com.rk.resources.getString
-import com.rk.resources.strings
-import com.rk.tabs.base.Tab
+import com.scto.mcs.app.activities.FileTabState
+import com.scto.mcs.app.activities.TabState
+import com.scto.mcs.core.files.FileObject
+import com.scto.mcs.core.ui.icons.Error
+import com.scto.mcs.core.ui.icons.Photo
+import com.scto.mcs.core.ui.icons.McsIcons
+import com.scto.mcs.core.resources.getString
+import com.scto.mcs.core.resources.strings
+import com.scto.mcs.core.editor.tabs.base.Tab
+
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 

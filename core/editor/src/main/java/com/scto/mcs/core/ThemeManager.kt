@@ -1,14 +1,19 @@
-package com.srvhive.app.editor
+package com.scto.mcs.core.editor
 
 import android.content.Context
-import com.srvhive.app.ui.screens.SettingsViewModel
-import com.srvhive.app.ui.screens.ThemeMode
+
+import com.scto.mcs.feature.settings.SettingsViewModel
+import com.scto.mcs.feature.settings.ThemeMode
+
 import io.github.rosemoe.sora.langs.textmate.TextMateColorScheme
 import io.github.rosemoe.sora.langs.textmate.registry.ThemeRegistry
 import io.github.rosemoe.sora.langs.textmate.registry.model.ThemeModel
+
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+
 import org.eclipse.tm4e.core.registry.IThemeSource
+
 import java.io.ByteArrayInputStream
 
 /**
