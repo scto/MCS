@@ -314,4 +314,6 @@
     <string name="git_push_dialog_checkbox_force">Force push</string>
     <string name="core_commands_share_file_chooser_title">Share file</string>
     <string name="core_commands_command_prefix_label">%s:</string>
+    <string name="select_word">Select word</string>
+    <string name="search_code">Search in code</string>
 </resources>
