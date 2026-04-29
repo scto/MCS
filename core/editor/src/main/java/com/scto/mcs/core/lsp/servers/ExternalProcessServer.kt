@@ -1,9 +1,9 @@
-package com.rk.lsp.servers
+package com.scto.mcs.core.editor.lsp.servers
 
 import android.content.Context
-import com.rk.file.FileTypeManager
-import com.rk.lsp.LspConnectionConfig
-import com.rk.lsp.LspServer
+import com.scto.mcs.core.files.FileTypeManager
+import com.scto.mcs.core.editor.lsp.LspConnectionConfig
+import com.scto.mcs.core.editor.lsp.LspServer
 import kotlin.random.Random
 
 // DO not put this in lsp registry

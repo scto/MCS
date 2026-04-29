@@ -10,6 +10,8 @@ import com.scto.mcs.core.file.localBinDir
 import com.scto.mcs.core.file.sandboxDir
 import com.scto.mcs.core.editor.lsp.LspConnectionConfig
 import com.scto.mcs.core.editor.lsp.ScriptedLspServer
+import com.scto.mcs.core.resources.getString
+import com.scto.mcs.core.resources.strings
 
 object JSON : ScriptedLspServer() {
     override val id: String = "json"

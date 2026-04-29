@@ -74,7 +74,7 @@ fun FileSearchDialog(
                 maxLines = 1,
                 keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Search),
                 modifier = Modifier.fillMaxWidth().focusRequester(focusRequester),
-                placeholder = { Text(text = stringResource(strings.enter_name)) },
+                placeholder = { Text(text = stringResource(strings.core_editor_file_search_enter_name)) },
             )
 
             Row(

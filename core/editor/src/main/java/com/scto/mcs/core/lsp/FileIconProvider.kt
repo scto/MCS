@@ -1,8 +1,8 @@
-package com.rk.lsp
+package com.scto.mcs.core.editor.lsp
 
 import android.graphics.drawable.Drawable
-import com.rk.activities.main.MainActivity
-import com.rk.filetree.getDrawableFileIcon
+import com.scto.mcs.app.activities.MainActivity
+import com.scto.mcs.core.filetree.getDrawableFileIcon
 import io.github.rosemoe.sora.lang.completion.SimpleCompletionIconDrawer
 
 /**

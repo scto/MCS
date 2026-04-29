@@ -58,7 +58,7 @@ class ImageTab(override val file: FileObject) : Tab() {
     override var tabTitle: MutableState<String> = mutableStateOf(file.getName())
 
     override val icon: ImageVector
-        get() = XedIcons.Photo
+        get() = McsIcons.Photo
 
     override val name: String
         get() = strings.core_editor_image_viewer_name.getString()
@@ -75,7 +75,7 @@ class ImageTab(override val file: FileObject) : Tab() {
                     val drawable = withContext(Dispatchers.IO) { requestManager.load(file.toUri()).submit().get() }
                     ImageState.Success(drawable)
                 } catch (_: Exception) {
-                    ImageState.Error(strings.resource_loading_error.getString())
+                    ImageState.Error(strings.core_editor_image_viewer_resource_loading_error.getString())
                 }
         }
 
@@ -105,7 +105,7 @@ class ImageTab(override val file: FileObject) : Tab() {
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             Icon(
-                imageVector = XedIcons.Error,
+                imageVector = McsIcons.Error,
                 contentDescription = stringResource(strings.error),
                 tint = MaterialTheme.colorScheme.onSurface,
                 modifier = Modifier.size(48.dp),

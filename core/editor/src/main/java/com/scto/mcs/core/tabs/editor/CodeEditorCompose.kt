@@ -22,8 +22,8 @@ import androidx.core.net.toUri
 
 import com.scto.mcs.app.activities.MainActivity
 import com.scto.mcs.app.activities.MainViewModel
-import com.scto.mcs.app.activities.main.fileTreeViewModel
-import com.scto.mcs.app.activities.main.snackbarHostStateRef
+import com.scto.mcs.app.activities.fileTreeViewModel
+import com.scto.mcs.app.activities.snackbarHostStateRef
 import com.scto.mcs.core.ui.color.ColorFormat
 import com.scto.mcs.core.ui.color.parseUnknownColor
 import com.scto.mcs.core.commands.KeybindingsManager
@@ -171,7 +171,7 @@ fun Editor.registerXedEvents(
                 editorTab.editorState.showColorPicker = parsedColor
                 editorTab.editorState.colorPickerRange = indexedColorRange
             } else {
-                toast(strings.invalid_color)
+                toast(strings.core_editor_lsp_invalid_color)
             }
         }
     }

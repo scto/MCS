@@ -339,7 +339,7 @@ fun CodeSearchDialog(
                     )
                     Spacer(modifier = Modifier.height(8.dp))
                     Text(
-                        stringResource(strings.enter_query_to_search),
+                        stringResource(strings.core_editor_code_search_enter_query),
                         modifier = Modifier.fillMaxWidth(0.5f),
                         color = MaterialTheme.colorScheme.onSurface,
                         textAlign = TextAlign.Center,

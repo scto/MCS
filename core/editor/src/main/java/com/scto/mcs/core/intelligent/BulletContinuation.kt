@@ -1,7 +1,7 @@
-package com.srvhive.app.editor.intelligent
+package com.scto.mcs.core.editor.intelligent
 
 import android.view.KeyEvent
-import com.srvhive.app.editor.Editor
+import com.scto.mcs.core.editor.Editor
 import io.github.rosemoe.sora.event.EditorKeyEvent
 
 /**

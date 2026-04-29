@@ -38,6 +38,7 @@ import com.scto.mcs.core.commands.KeybindingsManager
 import com.scto.mcs.core.commands.ToggleableCommand
 import com.scto.mcs.core.ui.icons.Icon
 import com.scto.mcs.core.ui.icons.McsIcon
+import com.scto.mcs.core.resources.getString
 import com.scto.mcs.core.resources.strings
 import com.scto.mcs.feature.settings.Settings
 import com.scto.mcs.core.terminal.isV

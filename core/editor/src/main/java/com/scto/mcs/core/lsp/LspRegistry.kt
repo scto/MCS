@@ -1,15 +1,15 @@
-package com.rk.lsp
+package com.scto.mcs.core.editor.lsp
 
 import android.content.Context
 import androidx.compose.runtime.mutableStateListOf
-import com.rk.lsp.servers.Bash
-import com.rk.lsp.servers.CSS
-import com.rk.lsp.servers.Emmet
-import com.rk.lsp.servers.HTML
-import com.rk.lsp.servers.JSON
-import com.rk.lsp.servers.Python
-import com.rk.lsp.servers.TypeScript
-import com.rk.lsp.servers.XML
+import com.scto.mcs.core.editor.lsp.servers.Bash
+import com.scto.mcs.core.editor.lsp.servers.CSS
+import com.scto.mcs.core.editor.lsp.servers.Emmet
+import com.scto.mcs.core.editor.lsp.servers.HTML
+import com.scto.mcs.core.editor.lsp.servers.JSON
+import com.scto.mcs.core.editor.lsp.servers.Python
+import com.scto.mcs.core.editor.lsp.servers.TypeScript
+import com.scto.mcs.core.editor.lsp.servers.XML
 
 object LspRegistry {
     private val _extensionServers = mutableStateListOf<LspServer>()

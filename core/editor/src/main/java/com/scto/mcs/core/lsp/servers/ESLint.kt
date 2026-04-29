@@ -1,17 +1,20 @@
-package com.rk.lsp.servers
+package com.scto.mcs.core.editor.lsp.servers
 
 import android.content.Context
-import com.rk.exec.NpmUtils
-import com.rk.exec.isTerminalInstalled
-import com.rk.file.BuiltinFileType
-import com.rk.file.child
-import com.rk.file.localBinDir
-import com.rk.file.sandboxDir
-import com.rk.lsp.LspConnectionConfig
-import com.rk.lsp.ScriptedLspServer
+import com.scto.mcs.core.exec.NpmUtils
+import com.scto.mcs.core.exec.isTerminalInstalled
+import com.scto.mcs.core.file.BuiltinFileType
+import com.scto.mcs.core.file.child
+import com.scto.mcs.core.file.localBinDir
+import com.scto.mcs.core.file.sandboxDir
+import com.scto.mcs.core.editor.lsp.LspConnectionConfig
+import com.scto.mcs.core.editor.lsp.ScriptedLspServer
+import com.scto.mcs.core.resources.getString
+import com.scto.mcs.core.resources.strings
 
 object ESLint : ScriptedLspServer() {
     override val id: String = "eslint"
+    override val languageName: String = strings.core_editor_lsp_server_eslint_language_name.getString()
     override val languageName: String = strings.core_editor_lsp_server_eslint_language_name.getString()
     override val serverName = "vscode-eslint-language-server"
     override val supportedExtensions =

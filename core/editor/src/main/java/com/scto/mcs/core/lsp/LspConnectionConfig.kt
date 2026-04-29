@@ -1,4 +1,4 @@
-package com.rk.lsp
+package com.scto.mcs.core.editor.lsp
 
 import io.github.rosemoe.sora.lsp.client.connection.StreamConnectionProvider
 

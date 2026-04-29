@@ -1,7 +1,7 @@
-package com.srvhive.app.editor.intelligent
+package com.scto.mcs.core.editor.intelligent
 
 import androidx.compose.runtime.mutableStateListOf
-import com.srvhive.app.editor.Editor
+import com.scto.mcs.core.editor.Editor
 import io.github.rosemoe.sora.event.EditorKeyEvent
 import io.github.rosemoe.sora.event.KeyBindingEvent
 

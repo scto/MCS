@@ -1,11 +1,11 @@
-package com.rk.lsp
+package com.scto.mcs.core.editor.lsp
 
-import com.rk.file.child
-import com.rk.file.createFileIfNot
-import com.rk.lsp.servers.ExternalProcessServer
-import com.rk.lsp.servers.ExternalSocketServer
-import com.rk.settings.Preference
-import com.rk.utils.application
+import com.scto.mcs.core.files.child
+import com.scto.mcs.core.files.createFileIfNot
+import com.scto.mcs.core.editor.lsp.servers.ExternalProcessServer
+import com.scto.mcs.core.editor.lsp.servers.ExternalSocketServer
+import com.scto.mcs.feature.settings.Preference
+import com.scto.mcs.core.utils.application
 import kotlin.random.Random
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
