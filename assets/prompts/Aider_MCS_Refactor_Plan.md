@@ -36,7 +36,7 @@ Alter Pfad (com.rk / com.srvhive)
 	com.rk.terminal.*
 	com.scto.mcs.core.terminal.*
 	com.rk.terminal.virtualkeys.*
-	com.scto.mcs.core.terminal.xed.virtualkeys.*
+	com.scto.mcs.core.terminal.virtualkeys.*
 	com.rk.git.*
 	com.scto.mcs.feature.git.*
 	com.rk.settings.*
