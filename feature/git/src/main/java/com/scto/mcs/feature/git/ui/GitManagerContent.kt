@@ -186,7 +186,7 @@ fun CommitHistoryItem(commit: GitCommit) {
             Text(commit.message, style = MaterialTheme.typography.bodySmall, fontWeight = FontWeight.Medium)
         }
         Text(
-            "${commit.id.take(7)} by ${commit.author}",
+            stringResource(id = R.string.feature_git_commit_info, commit.id.take(7), commit.author),
             style = MaterialTheme.typography.labelSmall,
             color = MaterialTheme.colorScheme.outline,
             modifier = Modifier.padding(start = 22.dp)

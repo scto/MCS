@@ -666,4 +666,5 @@
     <string name="feature_git_branch_name">Branch Name</string>
     <string name="feature_git_create">Create</string>
     <string name="feature_git_cancel">Cancel</string>
+    <string name="feature_git_commit_info">%1$s by %2$s</string>
 </resources>
