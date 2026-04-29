@@ -11,9 +11,6 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -22,7 +19,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.core.content.pm.PackageInfoCompat
-import androidx.core.net.toUri
 import coil.compose.AsyncImage
 import com.scto.mcs.core.ui.components.compose.preferences.base.SettingsToggle
 import com.scto.mcs.core.ui.components.compose.preferences.base.PreferenceGroup
@@ -33,11 +29,6 @@ import com.scto.mcs.core.resources.getString
 import com.scto.mcs.core.resources.strings
 import com.scto.mcs.core.utils.copyToClipboard
 import com.scto.mcs.app.BuildConfig
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
-import okhttp3.OkHttpClient
-import okhttp3.Request
-import org.json.JSONObject
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable

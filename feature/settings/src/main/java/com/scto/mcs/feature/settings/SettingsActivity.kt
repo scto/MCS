@@ -36,6 +36,9 @@ var snackbarHostStateRef: WeakReference<SnackbarHostState?> = WeakReference(null
 class SettingsActivity : AppCompatActivity() {
     // Initialisierung des ViewModels über den Hilt-Delegate
     private val viewModel: SettingsViewModel by viewModels()
+    
+    // FileManager Instanz
+    val fileManager by lazy { FileManager(this) }
 
     companion object {
         private var activityRef = WeakReference<SettingsActivity?>(null)

@@ -70,7 +70,7 @@ fun ExtensionActionButton(
         InstallState.Installed -> {
             Button(
                 onClick = { scope.launch { onUninstallClick(extension) } },
-                shape = androidx.compose.foundation.shape.RoundedCornerShape(10.dp),
+                shape = RoundedCornerShape(10.dp),
                 elevation = ButtonDefaults.buttonElevation(defaultElevation = 4.dp),
                 colors =
                     ButtonDefaults.buttonColors(

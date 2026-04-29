@@ -21,7 +21,7 @@ import androidx.core.net.toUri
 import androidx.navigation.NavController
 import com.google.gson.GsonBuilder
 import com.google.gson.reflect.TypeToken
-import com.scto.mcs.app.ui.activities.settings.SettingsActivity
+import com.scto.mcs.feature.settings.SettingsActivity
 import com.scto.mcs.feature.settings.SettingsRoutes
 import com.scto.mcs.core.ui.components.compose.preferences.base.BasicToggle
 import com.scto.mcs.core.ui.components.compose.preferences.base.NextScreenCard
@@ -135,7 +135,7 @@ fun SettingsAppScreen(activity: SettingsActivity, navController: NavController) 
             NextScreenCard(
                 label = stringResource(strings.manage_app_font),
                 description = stringResource(strings.manage_app_font),
-                route = SettingsRoutes.AppFontScreen,
+                route = SettingsRoutes.AppFontScreen.route,
             )
         }
 

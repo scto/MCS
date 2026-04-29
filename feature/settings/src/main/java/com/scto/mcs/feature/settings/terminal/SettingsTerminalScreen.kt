@@ -23,13 +23,15 @@ import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavController
 import com.scto.mcs.core.files.DocumentProvider
 import com.scto.mcs.app.ui.activities.main.MainActivity
-import com.scto.mcs.app.ui.activities.settings.SettingsActivity
+import com.scto.mcs.feature.settings.SettingsActivity
 import com.scto.mcs.feature.settings.SettingsRoutes
-import com.scto.mcs.app.ui.activities.settings.settingsNavController
+import com.scto.mcs.feature.settings.settingsNavController
 import com.scto.mcs.core.ui.components.compose.preferences.base.PreferenceGroup
 import com.scto.mcs.core.ui.components.compose.preferences.base.PreferenceLayout
 import com.scto.mcs.core.ui.components.compose.preferences.base.PreferenceTemplate
-import com.scto.mcs.core.ui.components.compose.preferences.switch.PreferenceSwitch
+import com.scto.mcs.core.ui.components.compose.preferences.base.SettingsToggle
+import com.scto.mcs.core.ui.components.compose.preferences.base.ValueSlider
+import com.scto.mcs.core.ui.components.compose.preferences.base.NextScreenCard
 import com.scto.mcs.core.files.child
 import com.scto.mcs.core.files.createFileIfNot
 import com.scto.mcs.core.files.localBinDir
@@ -97,7 +99,7 @@ fun SettingsTerminalScreen(overrideNavController: NavController? = null) {
                 label = stringResource(strings.manage_terminal_font),
                 description = stringResource(strings.manage_terminal_font),
                 navController = overrideNavController ?: settingsNavController.get(),
-                route = SettingsRoutes.TerminalFontScreen,
+                route = SettingsRoutes.TerminalFontScreen.route,
             )
 
             SettingsToggle(
@@ -341,7 +343,7 @@ fun SettingsTerminalScreen(overrideNavController: NavController? = null) {
                 label = stringResource(strings.change_extra_keys),
                 description = stringResource(strings.change_extra_keys_desc),
                 navController = overrideNavController ?: settingsNavController.get(),
-                route = SettingsRoutes.TerminalExtraKeys,
+                route = SettingsRoutes.TerminalExtraKeys.route,
             )
 
             ValueSlider(

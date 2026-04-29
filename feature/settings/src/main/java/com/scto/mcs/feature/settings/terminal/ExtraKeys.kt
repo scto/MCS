@@ -1,4 +1,4 @@
-package com.scto.msc.feature.settings.terminal
+package com.scto.mcs.feature.settings.terminal
 
 import android.content.Intent
 import androidx.activity.compose.LocalOnBackPressedDispatcherOwner
@@ -28,15 +28,15 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.core.net.toUri
-import com.rk.components.ResetButton
-import com.rk.editor.Editor
-import com.rk.file.BuiltinFileType
-import com.rk.resources.drawables
-import com.rk.resources.strings
-import com.rk.settings.Preference
-import com.rk.settings.Settings
-import com.rk.tabs.editor.EditorNotice
-import com.rk.utils.isSystemInDarkTheme
+import com.scto.mcs.core.ui.components.compose.preferences.base.ResetButton
+import com.scto.mcs.core.editor.Editor
+import com.scto.mcs.core.files.BuiltinFileType
+import com.scto.mcs.core.resources.drawables
+import com.scto.mcs.core.resources.strings
+import com.scto.mcs.feature.settings.Preference
+import com.scto.mcs.feature.settings.Settings
+import com.scto.mcs.core.ui.components.compose.preferences.base.EditorNotice
+import com.scto.mcs.core.utils.isSystemInDarkTheme
 import io.github.rosemoe.sora.event.ContentChangeEvent
 import java.lang.ref.WeakReference
 import kotlinx.coroutines.launch

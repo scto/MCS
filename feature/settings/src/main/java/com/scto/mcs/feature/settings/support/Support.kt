@@ -15,7 +15,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.core.net.toUri
-import com.scto.mcs.app.ui.activities.settings.SettingsActivity
+import com.scto.mcs.feature.settings.SettingsActivity
 import com.scto.mcs.feature.settings.SettingsRoutes
 import com.scto.mcs.core.ui.components.compose.preferences.base.SettingsToggle
 import com.scto.mcs.core.ui.components.compose.preferences.base.PreferenceGroup

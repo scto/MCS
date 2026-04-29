@@ -40,7 +40,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.core.net.toUri
-import com.scto.mcs.app.ui.activities.settings.SettingsActivity
+import com.scto.mcs.feature.settings.SettingsActivity
 import com.scto.mcs.core.ui.components.compose.preferences.base.StyledTextField
 import com.scto.mcs.core.crashhandler.CrashHandler.logErrorOrExit
 import com.scto.mcs.core.editor.Editor

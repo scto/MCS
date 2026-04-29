@@ -184,9 +184,11 @@ fun ExcludeFiles(isDrawer: Boolean) {
 
 /** Reset order of commands and symbols to default */
 private fun resetFiles(editor: Editor?, isDrawer: Boolean) {
-    Preference.removeKey("excluded_files_drawer")
-    editor?.setText(DEFAULT_EXCLUDED_FILES_DRAWER.joinToString("\n"))
-} else {
-    Preference.removeKey("excluded_files_search")
-    editor?.setText(DEFAULT_EXCLUDED_FILES_SEARCH.joinToString("\n"))
+    if (isDrawer) {
+        Preference.removeKey("excluded_files_drawer")
+        editor?.setText(DEFAULT_EXCLUDED_FILES_DRAWER.joinToString("\n"))
+    } else {
+        Preference.removeKey("excluded_files_search")
+        editor?.setText(DEFAULT_EXCLUDED_FILES_SEARCH.joinToString("\n"))
+    }
 }
