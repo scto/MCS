@@ -184,7 +184,7 @@ class GitTab(val viewModel: GitViewModel) : DrawerTab() {
                                 Row(verticalAlignment = Alignment.CenterVertically) {
                                     Icon(imageVector = Icons.Outlined.Add, contentDescription = null)
                                     Spacer(Modifier.width(12.dp))
-                                    Text(stringResource(strings.new_branch))
+                                    Text(stringResource(strings.git_new_branch))
                                 }
                             },
                             onClick = {
@@ -252,7 +252,7 @@ class GitTab(val viewModel: GitViewModel) : DrawerTab() {
                         tint = MaterialTheme.colorScheme.onSurface,
                     )
                     Spacer(modifier = Modifier.height(8.dp))
-                    Text(stringResource(strings.no_changes), color = MaterialTheme.colorScheme.onSurface)
+                    Text(stringResource(strings.git_no_changes), color = MaterialTheme.colorScheme.onSurface)
                 }
             }
 
@@ -280,14 +280,14 @@ class GitTab(val viewModel: GitViewModel) : DrawerTab() {
                     onCheckedChange = null,
                 )
                 Spacer(Modifier.width(8.dp))
-                Text(stringResource(strings.amend))
+                Text(stringResource(strings.git_amend))
             }
             OutlinedTextField(
                 enabled = !viewModel.isLoading,
                 modifier = Modifier.fillMaxWidth().height(120.dp),
                 value = commitMessage,
                 onValueChange = { viewModel.changeCommitMessage(it) },
-                placeholder = { Text(stringResource(strings.commit_message)) },
+                placeholder = { Text(stringResource(strings.git_commit_message)) },
             )
 
             Column(modifier = Modifier.fillMaxWidth().padding(vertical = 8.dp)) {
@@ -304,7 +304,7 @@ class GitTab(val viewModel: GitViewModel) : DrawerTab() {
                     )
                     Spacer(Modifier.size(ButtonDefaults.IconSpacing))
                     Text(
-                        stringResource(if (amend) strings.amend_commit else strings.commit),
+                        stringResource(if (amend) strings.git_amend_commit else strings.commit),
                         maxLines = 1,
                         overflow = TextOverflow.Ellipsis,
                     )
@@ -327,7 +327,7 @@ class GitTab(val viewModel: GitViewModel) : DrawerTab() {
                     )
                     Spacer(Modifier.size(ButtonDefaults.IconSpacing))
                     Text(
-                        stringResource(if (amend) strings.amend_commit_and_push else strings.commit_and_push),
+                        stringResource(if (amend) strings.git_amend_commit_and_push else strings.git_commit_and_push),
                         maxLines = 1,
                         overflow = TextOverflow.Ellipsis,
                     )
@@ -337,8 +337,8 @@ class GitTab(val viewModel: GitViewModel) : DrawerTab() {
 
         if (showNewBranchDialog) {
             SingleInputDialog(
-                title = stringResource(id = strings.new_branch),
-                inputLabel = stringResource(id = strings.new_branch_label, viewModel.currentBranch),
+                title = stringResource(id = strings.git_new_branch),
+                inputLabel = stringResource(id = strings.git_new_branch_label, viewModel.currentBranch),
                 inputValue = newBranch,
                 errorMessage = newBranchError,
                 confirmText = stringResource(strings.ok),
@@ -372,8 +372,8 @@ class GitTab(val viewModel: GitViewModel) : DrawerTab() {
                     Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
                         Text(
                             stringResource(
-                                if (commitCount > 0) strings.push_dialog_message_commits
-                                else strings.push_dialog_message_empty,
+                                if (commitCount > 0) strings.git_push_dialog_message_commits
+                                else strings.git_push_dialog_message_empty,
                                 commitCount,
                                 viewModel.currentBranch,
                             )
@@ -395,7 +395,7 @@ class GitTab(val viewModel: GitViewModel) : DrawerTab() {
                             ) {
                                 Checkbox(checked = force, interactionSource = interactionSource, onCheckedChange = null)
                                 Spacer(Modifier.width(8.dp))
-                                Text(stringResource(strings.push_dialog_checkbox_force))
+                                Text(stringResource(strings.git_push_dialog_checkbox_force))
                             }
                         }
                     }
@@ -475,7 +475,7 @@ class GitTab(val viewModel: GitViewModel) : DrawerTab() {
             Spacer(Modifier.width(8.dp))
 
             Text(
-                text = stringResource(strings.conflicts),
+                text = stringResource(strings.git_conflicts),
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurface,
             )
@@ -534,7 +534,7 @@ class GitTab(val viewModel: GitViewModel) : DrawerTab() {
             Spacer(Modifier.width(8.dp))
 
             Text(
-                text = stringResource(strings.changes),
+                text = stringResource(strings.git_changes),
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurface,
             )
@@ -593,7 +593,7 @@ class GitTab(val viewModel: GitViewModel) : DrawerTab() {
             Spacer(Modifier.width(8.dp))
 
             Text(
-                text = stringResource(strings.untracked),
+                text = stringResource(strings.git_untracked),
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurface,
             )

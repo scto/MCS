@@ -297,4 +297,19 @@
     <string name="find_definitions_error">Unable to find definitions.</string>
     <string name="find_references_error">Unable to find references.</string>
     <string name="rename_symbol_error">Unable to rename symbol.</string>
-    <string name="cannot_
+    <string name="cannot_rename_symbol">Cannot rename symbol.</string>
+    <string name="git_changes">Changes</string>
+    <string name="git_conflicts">Conflicts</string>
+    <string name="git_untracked">Untracked</string>
+    <string name="git_no_changes">No changes</string>
+    <string name="git_amend">Amend</string>
+    <string name="git_commit_message">Commit message</string>
+    <string name="git_amend_commit">Amend commit</string>
+    <string name="git_commit_and_push">Commit and push</string>
+    <string name="git_amend_commit_and_push">Amend commit and push</string>
+    <string name="git_new_branch">New branch</string>
+    <string name="git_new_branch_label">New branch name (base: %s)</string>
+    <string name="git_push_dialog_message_commits">You have %d commits to push to %s.</string>
+    <string name="git_push_dialog_message_empty">No new commits to push to %s.</string>
+    <string name="git_push_dialog_checkbox_force">Force push</string>
+</resources>
