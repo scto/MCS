@@ -197,7 +197,7 @@ class LspConnector(
                         val snackbarHost = snackbarHostStateRef.get() ?: return@launch
                         val result =
                             snackbarHost.showSnackbar(
-                                message = strings.lsp_connection_error.getString(),
+                                message = strings.core_editor_lsp_connection_error.getString(),
                                 actionLabel = strings.manage.getString(),
                                 duration = SnackbarDuration.Short,
                             )
@@ -313,14 +313,14 @@ class LspConnector(
 
                             val statusMessage =
                                 when (newStatus) {
-                                    ServerStatus.IDLE -> "LSP server is in idle state"
-                                    ServerStatus.STARTING -> "Starting LSP server..."
-                                    ServerStatus.INITIALIZED -> "LSP server initialized"
-                                    ServerStatus.STARTED -> "Connected to LSP server successfully"
+                                    ServerStatus.IDLE -> strings.core_editor_lsp_status_idle.getString()
+                                    ServerStatus.STARTING -> strings.core_editor_lsp_status_starting.getString()
+                                    ServerStatus.INITIALIZED -> strings.core_editor_lsp_status_initialized.getString()
+                                    ServerStatus.STARTED -> strings.core_editor_lsp_status_connected_successfully.getString()
                                     is ServerStatus.STOPPING ->
-                                        "Disconnecting from LSP server... (reason: ${newStatus.reason})"
+                                        strings.core_editor_lsp_status_disconnecting.getFilledString(newStatus.reason.name)
                                     is ServerStatus.STOPPED ->
-                                        "Disconnected from LSP server (reason: ${newStatus.reason})\n"
+                                        strings.core_editor_lsp_status_disconnected.getFilledString(newStatus.reason.name)
                                 }
                             instance.addLog(LspLogEntry(MessageType.Info, statusMessage))
 

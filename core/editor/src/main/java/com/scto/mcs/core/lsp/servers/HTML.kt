@@ -12,13 +12,13 @@ import com.rk.lsp.ScriptedLspServer
 
 object HTML : ScriptedLspServer() {
     override val id: String = "html"
-    override val languageName: String = "HTML"
+    override val languageName: String = strings.core_editor_lsp_server_html_language_name.getString()
     override val serverName = "vscode-html-language-server"
     override val supportedExtensions = BuiltinFileType.HTML.extensions + BuiltinFileType.HTMX.extensions
     override val icon = BuiltinFileType.HTML.icon
 
     override val installScript = localBinDir().child("lsp/html")
-    override val installId = "HTML language server"
+    override val installId = strings.core_editor_lsp_server_html_install_id.getString()
 
     override suspend fun isInstalled(context: Context): Boolean {
         if (!isTerminalInstalled()) {

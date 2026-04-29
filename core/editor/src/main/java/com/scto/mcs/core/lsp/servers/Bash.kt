@@ -13,13 +13,13 @@ import com.scto.mcs.core.editor.lsp.ScriptedLspServer
 
 object Bash : ScriptedLspServer() {
     override val id: String = "bash"
-    override val languageName: String = "Bash"
+    override val languageName: String = strings.core_editor_lsp_server_bash_language_name.getString()
     override val serverName = "bash-language-server"
     override val supportedExtensions = BuiltinFileType.SHELL.extensions
     override val icon = BuiltinFileType.SHELL.icon
 
     override val installScript = localBinDir().child("lsp/bash")
-    override val installId = "Bash language server"
+    override val installId = strings.core_editor_lsp_server_bash_install_id.getString()
 
     override suspend fun isInstalled(context: Context): Boolean {
         if (!isTerminalInstalled()) {

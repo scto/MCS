@@ -11,13 +11,13 @@ import com.rk.lsp.ScriptedLspServer
 
 object XML : ScriptedLspServer() {
     override val id: String = "xml"
-    override val languageName: String = "XML"
+    override val languageName: String = strings.core_editor_lsp_server_xml_language_name.getString()
     override val serverName = "lemminx"
     override val supportedExtensions = BuiltinFileType.XML.extensions
     override val icon = BuiltinFileType.XML.icon
 
     override val installScript = localBinDir().child("lsp/xml")
-    override val installId = "XML language server"
+    override val installId = strings.core_editor_lsp_server_xml_install_id.getString()
 
     // Has to be manually updated when a new version is released (Don't forgot to also update xml.sh)
     const val LATEST_VERSION = "0.31.0"

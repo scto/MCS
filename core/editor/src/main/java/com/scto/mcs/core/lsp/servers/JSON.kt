@@ -13,13 +13,13 @@ import com.scto.mcs.core.editor.lsp.ScriptedLspServer
 
 object JSON : ScriptedLspServer() {
     override val id: String = "json"
-    override val languageName: String = "JSON"
+    override val languageName: String = strings.core_editor_lsp_server_json_language_name.getString()
     override val serverName = "vscode-json-language-server"
     override val supportedExtensions = BuiltinFileType.JSON.extensions
     override val icon = BuiltinFileType.JSON.icon
 
     override val installScript = localBinDir().child("lsp/json")
-    override val installId = "JSON language server"
+    override val installId = strings.core_editor_lsp_server_json_install_id.getString()
 
     override suspend fun isInstalled(context: Context): Boolean {
         if (!isTerminalInstalled()) {

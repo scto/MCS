@@ -104,7 +104,7 @@ open class EditorTab(override var file: FileObject, var projectRoot: FileObject?
         get() = Icons.Outlined.Edit
 
     override val name: String
-        get() = strings.editor.getString()
+        get() = strings.editor.getString() // Already a resource string
 
     val scope = CoroutineScope(Dispatchers.Default)
 
@@ -116,7 +116,7 @@ open class EditorTab(override var file: FileObject, var projectRoot: FileObject?
                 if (
                     viewModel.tabs.any { it.tabTitle.value == tabTitle.value && it != this@EditorTab } && parent != null
                 ) {
-                    val title = "${parent.getName()}/${tabTitle.value}"
+                    val title = "${parent.getName()}/${tabTitle.value}" // This is a composition, not a fixed string to externalize
                     withContext(Dispatchers.Main) { tabTitle.value = title }
                 }
             }
@@ -181,7 +181,7 @@ open class EditorTab(override var file: FileObject, var projectRoot: FileObject?
     @Composable
     private fun BinaryNotice(id: String) {
         EditorNotice(
-            stringResource(strings.binary_file_notice),
+            stringResource(strings.core_editor_binary_file_notice),
             actionButton = {
                 IconButton(onClick = { removeNotice(id) }) {
                     Icon(
@@ -197,7 +197,7 @@ open class EditorTab(override var file: FileObject, var projectRoot: FileObject?
     @Composable
     private fun EditorConfigNotice(id: String) {
         EditorNotice(
-            text = stringResource(strings.editorconfig_changed),
+            text = stringResource(strings.core_editor_editorconfig_changed),
             actionButton = {
                 TextButton(
                     onClick = {
@@ -416,7 +416,7 @@ open class EditorTab(override var file: FileObject, var projectRoot: FileObject?
 
                 if (editorState.showJumpToLineDialog) {
                     SingleInputDialog(
-                        title = stringResource(strings.jump_to_line),
+                        title = stringResource(strings.core_editor_jump_to_line),
                         inputLabel = stringResource(strings.line_number),
                         inputValue = editorState.jumpToLineValue,
                         errorMessage = editorState.jumpToLineError,

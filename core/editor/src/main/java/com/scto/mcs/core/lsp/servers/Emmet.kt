@@ -12,13 +12,13 @@ import com.rk.lsp.ScriptedLspServer
 
 object Emmet : ScriptedLspServer() {
     override val id: String = "emmet"
-    override val languageName: String = "Emmet"
+    override val languageName: String = strings.core_editor_lsp_server_emmet_language_name.getString()
     override val serverName = "emmet-language-server"
     override val supportedExtensions = BuiltinFileType.HTML.extensions + BuiltinFileType.HTMX.extensions
     override val icon = BuiltinFileType.HTML.icon
 
     override val installScript = localBinDir().child("lsp/emmet")
-    override val installId = "Emmet language server"
+    override val installId = strings.core_editor_lsp_server_emmet_install_id.getString()
 
     override suspend fun isInstalled(context: Context): Boolean {
         if (!isTerminalInstalled()) {

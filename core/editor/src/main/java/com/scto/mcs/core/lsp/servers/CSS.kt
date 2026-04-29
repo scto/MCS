@@ -12,14 +12,14 @@ import com.rk.lsp.ScriptedLspServer
 
 object CSS : ScriptedLspServer() {
     override val id: String = "css"
-    override val languageName: String = "CSS"
+    override val languageName: String = strings.core_editor_lsp_server_css_language_name.getString()
     override val serverName = "vscode-css-language-server"
     override val supportedExtensions =
         BuiltinFileType.CSS.extensions + BuiltinFileType.SCSS.extensions + BuiltinFileType.LESS.extensions
     override val icon = BuiltinFileType.CSS.icon
 
     override val installScript = localBinDir().child("lsp/css")
-    override val installId = "CSS language server"
+    override val installId = strings.core_editor_lsp_server_css_install_id.getString()
 
     override suspend fun isInstalled(context: Context): Boolean {
         if (!isTerminalInstalled()) {

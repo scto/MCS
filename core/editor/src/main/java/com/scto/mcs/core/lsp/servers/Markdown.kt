@@ -12,13 +12,13 @@ import com.rk.lsp.ScriptedLspServer
 
 object Markdown : ScriptedLspServer() {
     override val id: String = "markdown"
-    override val languageName: String = "Markdown"
+    override val languageName: String = strings.core_editor_lsp_server_markdown_language_name.getString()
     override val serverName = "vscode-markdown-language-server"
     override val supportedExtensions = BuiltinFileType.MARKDOWN.extensions
     override val icon = BuiltinFileType.MARKDOWN.icon
 
     override val installScript = localBinDir().child("lsp/markdown")
-    override val installId = "Markdown language server"
+    override val installId = strings.core_editor_lsp_server_markdown_install_id.getString()
 
     override suspend fun isInstalled(context: Context): Boolean {
         if (!isTerminalInstalled()) {

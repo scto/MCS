@@ -254,7 +254,7 @@ fun renameSymbol(scope: CoroutineScope, editorTab: EditorTab) {
                                 // Edits only supported in currently opened file
                                 // TODO: Support edits in other files
                                 if (changes.size > 1) {
-                                    toast(strings.rename_symbol_multiple_files)
+                                    toast(strings.core_editor_lsp_rename_symbol_multiple_files)
                                     return@launch
                                 }
 
@@ -304,7 +304,7 @@ suspend fun formatDocumentSuspend(editorTab: EditorTab) {
         }
         .onFailure {
             it.printStackTrace()
-            toast(strings.format_document_error)
+            toast(strings.core_editor_lsp_format_document_error)
         }
 }
 
@@ -329,7 +329,7 @@ fun formatDocumentRange(scope: CoroutineScope, editorTab: EditorTab) {
             }
             .onFailure {
                 it.printStackTrace()
-                toast(strings.format_selection_error)
+                toast(strings.core_editor_lsp_format_selection_error)
             }
     }
 }

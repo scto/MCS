@@ -12,7 +12,7 @@ import com.rk.lsp.ScriptedLspServer
 
 object TypeScript : ScriptedLspServer() {
     override val id: String = "typescript"
-    override val languageName: String = "TypeScript"
+    override val languageName: String = strings.core_editor_lsp_server_typescript_language_name.getString()
     override val serverName = "typescript-language-server"
     override val supportedExtensions =
         BuiltinFileType.JAVASCRIPT.extensions +
@@ -22,7 +22,7 @@ object TypeScript : ScriptedLspServer() {
     override val icon = BuiltinFileType.TYPESCRIPT.icon
 
     override val installScript = localBinDir().child("lsp/typescript")
-    override val installId = "TypeScript language server"
+    override val installId = strings.core_editor_lsp_server_typescript_install_id.getString()
 
     override suspend fun isInstalled(context: Context): Boolean {
         if (!isTerminalInstalled()) {

@@ -14,13 +14,13 @@ import org.eclipse.lsp4j.DidChangeConfigurationParams
 
 object Python : ScriptedLspServer() {
     override val id: String = "python"
-    override val languageName: String = "Python"
+    override val languageName: String = strings.core_editor_lsp_server_python_language_name.getString()
     override val serverName = "python-lsp-server"
     override val supportedExtensions = BuiltinFileType.PYTHON.extensions
     override val icon = BuiltinFileType.PYTHON.icon
 
     override val installScript = localBinDir().child("lsp/python")
-    override val installId = "Python language server"
+    override val installId = strings.core_editor_lsp_server_python_install_id.getString()
 
     override suspend fun isInstalled(context: Context): Boolean {
         if (!isTerminalInstalled()) {

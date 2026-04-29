@@ -90,7 +90,7 @@ data class LspServerInstance(val server: LspServer, internal val lspProject: Lsp
         }
             ?: run {
                 hasError = true
-                addLog(LspLogEntry(MessageType.Error, "Language server instance not found..."))
+                addLog(LspLogEntry(MessageType.Error, strings.core_editor_lsp_server_instance_not_found.getString()))
                 return null
             }
     }
@@ -98,7 +98,7 @@ data class LspServerInstance(val server: LspServer, internal val lspProject: Lsp
     /** Stops this language server instance */
     suspend fun stop() {
         withContext(Dispatchers.IO) {
-            addLog(LspLogEntry(MessageType.Info, "User stopped language server instance..."))
+            addLog(LspLogEntry(MessageType.Info, strings.core_editor_lsp_user_stopped_server.getString()))
             val wrapper = getWrapper() ?: return@withContext
             DefinitionPrevention.register(lspProject, server)
             try {
@@ -112,7 +112,7 @@ data class LspServerInstance(val server: LspServer, internal val lspProject: Lsp
     /** Restarts this language server instance */
     suspend fun restart() {
         withContext(Dispatchers.IO) {
-            addLog(LspLogEntry(MessageType.Info, "User restarted language server instance..."))
+            addLog(LspLogEntry(MessageType.Info, strings.core_editor_lsp_user_restarted_server.getString()))
             val wrapper = getWrapper() ?: return@withContext
             try {
                 wrapper.restartAndReconnect()
@@ -129,7 +129,7 @@ data class LspServerInstance(val server: LspServer, internal val lspProject: Lsp
      */
     suspend fun start(): List<EditorTab> {
         return withContext(Dispatchers.IO) {
-            addLog(LspLogEntry(MessageType.Info, "User started language server instance..."))
+            addLog(LspLogEntry(MessageType.Info, strings.core_editor_lsp_user_started_server.getString()))
             val wrapper = getWrapper() ?: return@withContext emptyList()
             hasError = false
             DefinitionPrevention.unregister(lspProject, server)
