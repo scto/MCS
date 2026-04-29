@@ -3,34 +3,23 @@ package com.scto.mcs.feature.terminal
 import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+
 import com.scto.mcs.core.terminal.TerminalService
 import com.scto.mcs.core.terminal.config.TerminalConfig
 import com.scto.mcs.core.terminal.session.TerminalSessionManager
 import com.scto.mcs.core.terminal.setup.TerminalSetupService
 import com.scto.mcs.core.terminal.setup.TerminalSetupService.SetupState
-import dagger.hilt.android.lifecycle.HiltViewModel
-import dagger.hilt.android.qualifiers.ApplicationContext
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.launch
-import java.io.File
-import javax.inject.Inject
-import com.scto.mcs.core.terminal.TerminalService
-import com.scto.mcs.core.terminal.config.TerminalConfig
-import com.scto.mcs.core.terminal.session.TerminalSessionManager
-import com.scto.mcs.core.terminal.setup.TerminalSetupService
-import com.scto.mcs.core.terminal.setup.TerminalSetupService.SetupState
-import dagger.hilt.android.lifecycle.HiltViewModel
-import dagger.hilt.android.qualifiers.ApplicationContext
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.launch
-import java.io.File
-import javax.inject.Inject
 import com.scto.mcs.core.resources.getString
 import com.scto.mcs.core.resources.strings
+
+import dagger.hilt.android.lifecycle.HiltViewModel
+import dagger.hilt.android.qualifiers.ApplicationContext
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.launch
+import java.io.File
+import javax.inject.Inject
 
 @HiltViewModel
 class TerminalViewModel @Inject constructor(
