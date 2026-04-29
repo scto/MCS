@@ -57,7 +57,7 @@ fun TerminalInput(onSend: (String) -> Unit) {
         onValueChange = { text = it },
         modifier = Modifier.fillMaxWidth(),
         colors = TextFieldDefaults.colors(focusedContainerColor = Color.DarkGray),
-        placeholder = { Text("$ command...") },
+        placeholder = { Text(stringResource(id = R.string.feature_terminal_command_placeholder)) },
         keyboardOptions = KeyboardOptions(imeAction = ImeAction.Send),
         keyboardActions = KeyboardActions(onSend = {
             if (text.isNotBlank()) {
