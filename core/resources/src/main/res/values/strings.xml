@@ -312,4 +312,5 @@
     <string name="git_push_dialog_message_commits">You have %d commits to push to %s.</string>
     <string name="git_push_dialog_message_empty">No new commits to push to %s.</string>
     <string name="git_push_dialog_checkbox_force">Force push</string>
+    <string name="core_commands_share_file_chooser_title">Share file</string>
 </resources>

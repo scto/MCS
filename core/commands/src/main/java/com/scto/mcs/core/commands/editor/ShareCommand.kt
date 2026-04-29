@@ -48,7 +48,7 @@ class ShareCommand(commandContext: CommandContext) : EditorCommand(commandContex
                     flags = Intent.FLAG_GRANT_READ_URI_PERMISSION
                 }
 
-            activity.startActivity(Intent.createChooser(intent, "Share file"))
+            activity.startActivity(Intent.createChooser(intent, strings.core_commands_share_file_chooser_title.getString()))
         }
     }
 
