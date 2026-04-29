@@ -4,21 +4,22 @@ import android.content.Context
 import android.net.Uri
 import androidx.core.net.toUri
 
-import com.rk.activities.main.EditorManager
-import com.rk.activities.main.MainViewModel
-import com.rk.file.FileObject
-import com.rk.file.child
-import com.rk.file.sandboxDir
-import com.rk.file.sandboxHomeDir
-import com.rk.file.toFileObject
-import com.rk.file.toFileWrapper
-import com.rk.resources.drawables
-import com.rk.resources.getString
-import com.rk.resources.strings
-import com.rk.search.CodeItem
-import com.rk.search.SnippetBuilder
-import com.rk.tabs.editor.EditorTab
-import com.rk.utils.toast
+import com.scto.mcs.app.activities.EditorManager
+import com.scto.mcs.app.activities.MainViewModel
+import com.scto.mcs.app.activities.snackbarHostStateRef
+import com.scto.mcs.core.files.FileObject
+import com.scto.mcs.core.files.child
+import com.scto.mcs.core.files.sandboxDir
+import com.scto.mcs.core.files.sandboxHomeDir
+import com.scto.mcs.core.files.toFileObject
+import com.scto.mcs.core.files.toFileWrapper
+import com.scto.mcs.core.resources.drawables
+import com.scto.mcs.core.resources.getString
+import com.scto.mcs.core.resources.strings
+import com.scto.mcs.core.editor.search.CodeItem
+import com.scto.mcs.core.editor.search.SnippetBuilder
+import com.scto.mcs.core.editor.tabs.editor.EditorTab
+import com.scto.mcs.core.utils.toast
 
 import io.github.rosemoe.sora.lsp.editor.LspEventManager
 import io.github.rosemoe.sora.lsp.editor.getOption
