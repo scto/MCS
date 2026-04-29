@@ -2,6 +2,7 @@
 
 compileSdk = "36"
 targetSdk = "35"
+minSdk = "26"
 java = "17"
 
 agp = "8.11.2"
