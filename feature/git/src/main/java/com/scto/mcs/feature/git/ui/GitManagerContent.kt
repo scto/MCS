@@ -12,6 +12,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -19,6 +20,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.scto.mcs.feature.git.GitViewModel
 import com.scto.mcs.core.domain.model.GitCommit
 import com.scto.mcs.core.domain.model.GitBranch
+import com.scto.mcs.core.resources.R
 
 @Composable
 fun GitManagerContent(
@@ -33,7 +35,7 @@ fun GitManagerContent(
     var showBranchMenu by remember { mutableStateOf(false) }
     var showNewBranchDialog by remember { mutableStateOf(false) }
 
-    val currentBranch = branches.find { it.isCurrent }?.name ?: "No Branch"
+    val currentBranch = branches.find { it.isCurrent }?.name ?: stringResource(id = R.string.feature_git_no_branch)
 
     Column(modifier = Modifier.fillMaxSize().padding(8.dp)) {
         // Branch Selector Header
@@ -47,7 +49,7 @@ fun GitManagerContent(
             Icon(Icons.Default.AccountTree, null, modifier = Modifier.size(18.dp), tint = MaterialTheme.colorScheme.primary)
             Spacer(Modifier.width(8.dp))
             Column(modifier = Modifier.weight(1f)) {
-                Text("Current Branch", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.outline)
+                Text(stringResource(id = R.string.feature_git_current_branch), style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.outline)
                 Text(currentBranch, style = MaterialTheme.typography.bodyMedium, fontWeight = FontWeight.Bold)
             }
             Icon(Icons.Default.ArrowDropDown, null)
@@ -67,7 +69,7 @@ fun GitManagerContent(
                 }
                 Divider()
                 DropdownMenuItem(
-                    text = { Text("New Branch...") },
+                    text = { Text(stringResource(id = R.string.feature_git_new_branch_ellipsis)) },
                     onClick = {
                         showNewBranchDialog = true
                         showBranchMenu = false
@@ -84,13 +86,13 @@ fun GitManagerContent(
             value = commitMessage,
             onValueChange = { commitMessage = it },
             modifier = Modifier.fillMaxWidth(),
-            placeholder = { Text("Commit Message...") },
+            placeholder = { Text(stringResource(id = R.string.feature_git_commit_message_placeholder)) },
             trailingIcon = {
                 IconButton(onClick = { 
                     viewModel.commit(commitMessage)
                     commitMessage = ""
                 }, enabled = commitMessage.isNotBlank() && !isLoading) {
-                    Icon(Icons.Default.Check, "Commit")
+                    Icon(Icons.Default.Check, stringResource(id = R.string.feature_git_commit))
                 }
             },
             maxLines = 3,
@@ -105,7 +107,7 @@ fun GitManagerContent(
             // Staged Changes
             status?.staged?.let { staged ->
                 if (staged.isNotEmpty()) {
-                    item { GitSectionHeader("Staged Changes (${staged.size})") }
+                    item { GitSectionHeader(stringResource(id = R.string.feature_git_staged_changes, staged.size)) }
                     items(staged) { file ->
                         GitFileItem(file, Color(0xFF4CAF50), Icons.Default.RemoveCircleOutline) {
                             viewModel.unstageFile(file)
@@ -118,7 +120,7 @@ fun GitManagerContent(
             status?.let { s ->
                 val unstaged = s.unstaged + s.untracked
                 if (unstaged.isNotEmpty()) {
-                    item { GitSectionHeader("Changes (${unstaged.size})") }
+                    item { GitSectionHeader(stringResource(id = R.string.feature_git_changes, unstaged.size)) }
                     items(unstaged) { file ->
                         val color = if (s.untracked.contains(file)) Color(0xFFE91E63) else Color(0xFFFFC107)
                         GitFileItem(file, color, Icons.Default.AddCircleOutline) {
@@ -130,7 +132,7 @@ fun GitManagerContent(
 
             // History
             if (history.isNotEmpty()) {
-                item { GitSectionHeader("History") }
+                item { GitSectionHeader(stringResource(id = R.string.feature_git_history)) }
                 items(history) { commit ->
                     CommitHistoryItem(commit)
                 }
@@ -197,22 +199,22 @@ fun NewBranchDialog(onDismiss: () -> Unit, onConfirm: (String) -> Unit) {
     var name by remember { mutableStateOf("") }
     AlertDialog(
         onDismissRequest = onDismiss,
-        title = { Text("Create New Branch") },
+        title = { Text(stringResource(id = R.string.feature_git_create_new_branch)) },
         text = {
             OutlinedTextField(
                 value = name,
                 onValueChange = { name = it },
-                label = { Text("Branch Name") },
+                label = { Text(stringResource(id = R.string.feature_git_branch_name)) },
                 singleLine = true
             )
         },
         confirmButton = {
             Button(onClick = { onConfirm(name) }, enabled = name.isNotBlank()) {
-                Text("Create")
+                Text(stringResource(id = R.string.feature_git_create))
             }
         },
         dismissButton = {
-            TextButton(onClick = onDismiss) { Text("Cancel") }
+            TextButton(onClick = onDismiss) { Text(stringResource(id = R.string.feature_git_cancel)) }
         }
     )
 }

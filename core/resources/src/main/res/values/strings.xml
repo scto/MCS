@@ -654,4 +654,16 @@
     <string name="feature_terminal_command_placeholder">Type command</string>
     <string name="feature_terminal_session_name">Terminal</string>
     <string name="feature_terminal_command_prefix">&gt; %s</string>
+    <string name="feature_git_no_branch">No Branch</string>
+    <string name="feature_git_current_branch">Current Branch</string>
+    <string name="feature_git_new_branch_ellipsis">New Branch…</string>
+    <string name="feature_git_commit_message_placeholder">Commit Message…</string>
+    <string name="feature_git_commit">Commit</string>
+    <string name="feature_git_staged_changes">Staged Changes (%d)</string>
+    <string name="feature_git_changes">Changes (%d)</string>
+    <string name="feature_git_history">History</string>
+    <string name="feature_git_create_new_branch">Create New Branch</string>
+    <string name="feature_git_branch_name">Branch Name</string>
+    <string name="feature_git_create">Create</string>
+    <string name="feature_git_cancel">Cancel</string>
 </resources>
