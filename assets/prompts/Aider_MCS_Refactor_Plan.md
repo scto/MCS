@@ -50,7 +50,7 @@ Alter Pfad (com.rk / com.srvhive)
 	com.rk.animations.*
 	com.scto.mcs.core.ui.animations.*
 
-	Schritt 1: Zentrale Build-Konfiguration & Version Catalog
+Schritt 1: Zentrale Build-Konfiguration & Version Catalog
 Aider-Aufruf: /add build.gradle.kts settings.gradle.kts gradle/libs.versions.toml
 1. Überprüfe libs.versions.toml auf Vollständigkeit (Hilt, KSP, Compose).
 2. Stelle sicher, dass settings.gradle.kts alle Module (:core:* und :feature:*) korrekt inkludiert sind.
@@ -84,51 +84,36 @@ Aider-Aufruf: /add feature/settings/**/*.kt feature/settings/src/main/AndroidMan
 Aider-Aufruf: /add feature/terminal/**/*.kt feature/terminal/src/main/AndroidManifest.xml Anweisungen: Migration auf com.scto.mcs.feature.terminal. Nutze die Globale Mapping Tabelle.
 
 Schritt 5: Quellcode-Refactoring (Core-Submodule)
-Für alle Schritte gilt: Migration auf com.scto.mcs.core.<name> unter Verwendung der Mapping-Tabelle.
+Migration auf com.scto.mcs.core.<name> unter Verwendung der Mapping-Tabelle.
 
-* 5.1 DI: /add core/di/**/*.kt
-
-* 5.2 Exec: /add core/exec/**/*.kt
-
-* 5.3 Files: /add core/files/**/*.kt
-
-* 5.4 Navigation: /add core/navigation/**/*.kt
-
-* 5.5 Network: /add core/network/**/*.kt
-* 5.6 Resources: /add core/resources/**/*.kt
-
-* 5.7 UI: /add core/ui/**/*.kt
-
-* 5.8 Utils: /add core/utils/**/*.kt
-
-* 5.9 Terminal (Logik): /add core/terminal/**/*.kt
+* 5.1 bis 5.9: Refactoring von DI, Exec, Files, Navigation, Network, Resources, UI, Utils und Terminal-Logik.
 
 Schritt 6: Ressourcen & Strings (Zentralisierung)
-
 6.1 Ressourcen-Verschiebung (Core Submodule)
-Aider-Aufruf: /add core/**/src/main/res/**/*.xml Anweisungen:
-1. Verschiebe alle Ressourcen aus allen Core-Submodulen nach :core:resources (core/resources/src/main/res/).
+Aider-Aufruf: /add core/**/src/main/res/**/*.xml Anweisungen: Verschiebe alle Ressourcen aus Core-Submodulen nach :core:resources.
 
 6.2 Ressourcen-Verschiebung (Feature Submodule)
-Aider-Aufruf: /add feature/**/src/main/res/**/*.xml Anweisungen:
-1. Verschiebe alle Ressourcen aus allen Feature-Submodulen nach :core:resources (core/resources/src/main/res/).
+Aider-Aufruf: /add feature/**/src/main/res/**/*.xml Anweisungen: Verschiebe alle Ressourcen aus Feature-Submodulen nach :core:resources.
 
 6.3 String-Management & Code-Anpassung (Core Submodule)
-Aider-Aufruf: /add core/**/src/main/java/**/*.kt core/**/src/main/java/**/*.java core/resources/src/main/res/values/strings.xml Anweisungen:
-1. Betrifft alle Core-Submodule außer termux-*.
-2. Führe alle strings.xml in der zentralen Datei zusammen (Duplikate entfernen).
-3. Ersetze hardkodierte UI-Strings im Code durch R.string-Referenzen.
-4. Aktualisiere alle Ressourcen-Imports auf com.scto.mcs.core.resources.R.
+Anweisungen: Betrifft Core (außer termux-*). Zusammenführung in core/resources/src/main/res/values/strings.xml.
 
 6.4 String-Management & Code-Anpassung (Feature Submodule)
-Aider-Aufruf: /add feature/**/src/main/java/**/*.kt feature/**/src/main/java/**/*.java core/resources/src/main/res/values/strings.xml Anweisungen:
-1. Betrifft alle Feature-Submodule außer dem Ordner feature/settings/xed.
-2. Führe verbleibende strings.xml zusammen.
-3. Ersetze hardkodierte UI-Strings im Code durch R.string-Referenzen.
-4. Aktualisiere alle Ressourcen-Imports auf com.scto.mcs.core.resources.R.
-
+Aider-Aufruf: /add feature/**/src/main/java/**/*.kt feature/**/src/main/java/**/*.java core/resources/src/main/res/values/strings.xml
+Detaillierte Anweisungen für Aider:
+1. Ziel-Datei: Modifiziere die zentrale Datei core/resources/src/main/res/values/strings.xml, indem du neue <string>-Elemente am Ende des <resources>-Blocks einfügst.
+2. Ausschluss: Ignoriere alle Dateien im Verzeichnis feature/settings/xed.
+3. String-Extraktion:
+   * Suche in allen .kt und .java Dateien der Feature-Module nach hartkodierten Strings, die im User-Interface sichtbar sind (z.B. Button-Labels, Dialog-Texte, Toasts).
+   * Ignoriere: Log-Ausgaben (Log.d, println), interne Tags, Datenbank-Keys und technische Konstanten.
+4. Schlüssel-Generierung: Erstelle für jeden extrahierten String einen eindeutigen Namen im Format feature_<modulname>_<deskriptiver_name> (z.B. feature_terminal_start_session).
+5. Code-Ersetzung:
+   * In Compose: Ersetze "Text" durch stringResource(id = R.string.key).
+   * In Standard-Android: Ersetze "Text" durch context.getString(R.string.key) oder getString(R.string.key).
+   * Nutze immer com.scto.mcs.core.resources.R für den Ressourcen-Zugriff.
+6. Import-Fix: Entferne alle lokalen R-Imports in den Feature-Modulen und ersetze sie durch import com.scto.mcs.core.resources.R.
+ 
 Schritt 7: App-Modul & Finale Integration
 Aider-Aufruf: /add app/build.gradle.kts app/src/main/AndroidManifest.xml
 1. Finalisiere :app auf com.scto.mcs.app.
-2. Validiere Manifest-Pfade (Activities, Services) und Permissions.
-3. Behebe letzte Kompilierfehler durch Namespace-Mismatch.
+2. Behebe letzte Kompilierfehler.
