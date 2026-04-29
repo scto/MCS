@@ -1,4 +1,4 @@
-package com.scto.msc.feature.settings.extension
+package com.scto.mcs.feature.settings.extension
 
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.runtime.Composable
@@ -8,8 +8,8 @@ import androidx.compose.ui.platform.LocalContext
 import coil.compose.AsyncImage
 import coil.request.CachePolicy
 import coil.request.ImageRequest
-import com.rk.extension.ExtensionAuthor
-import com.rk.resources.drawables
+import com.scto.mcs.core.extensions.ExtensionAuthor
+import com.scto.mcs.core.resources.drawables
 
 @Composable
 fun ExtensionAuthorIcon(author: ExtensionAuthor, modifier: Modifier = Modifier) {
