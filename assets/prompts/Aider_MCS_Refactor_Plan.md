@@ -36,7 +36,7 @@ Alter Pfad (com.rk / com.srvhive)
 	com.rk.terminal.*
 	com.scto.mcs.core.terminal.*
 	com.rk.terminal.virtualkeys.*
-	com.scto.mcs.core.terminal.virtualkeys.*
+	com.scto.mcs.core.terminal.xed.virtualkeys.*
 	com.rk.git.*
 	com.scto.mcs.feature.git.*
 	com.rk.settings.*
@@ -53,7 +53,7 @@ Alter Pfad (com.rk / com.srvhive)
 	Schritt 1: Zentrale Build-Konfiguration & Version Catalog
 Aider-Aufruf: /add build.gradle.kts settings.gradle.kts gradle/libs.versions.toml
 1. Überprüfe libs.versions.toml auf Vollständigkeit (Hilt, KSP, Compose).
-2. Stelle sicher, dass settings.gradle.kts alle Module (:core:* und :feature:*) korrekt inkludiert.
+2. Stelle sicher, dass settings.gradle.kts alle Module (:core:* und :feature:*) korrekt inkludiert sind.
 3. Bereinige harte Versions-Strings in allen Gradle-Dateien.
 
 Schritt 2: Audit der Core-Module (Build-Logik)
@@ -76,7 +76,7 @@ Aider-Aufruf: /add feature/git/**/*.kt feature/git/src/main/AndroidManifest.xml 
 
 4.3 Feature Settings (Zusammenführung & Refactoring)
 Aider-Aufruf: /add feature/settings/**/*.kt feature/settings/src/main/AndroidManifest.xml Anweisungen:
-1. XED Integration: Arbeite die Funktionalität aus feature/settings/xed vollständig in das Hauptmodul feature/settings ein und lösche die xed Dateien.
+1. XED Integration: Arbeite die Funktionalität aus feature/settings/xed vollständig in das Hauptmodul feature/settings ein und lösche danach die xed Dateien.
 2. Namespace: Setze Package auf com.scto.mcs.feature.settings.
 3. Import-Korrektur: Nutze strikt die Globale Mapping Tabelle, um alle com.rk-Referenzen zu ersetzen.
 
@@ -95,7 +95,6 @@ Für alle Schritte gilt: Migration auf com.scto.mcs.core.<name> unter Verwendung
 * 5.4 Navigation: /add core/navigation/**/*.kt
 
 * 5.5 Network: /add core/network/**/*.kt
-
 * 5.6 Resources: /add core/resources/**/*.kt
 
 * 5.7 UI: /add core/ui/**/*.kt
@@ -104,17 +103,29 @@ Für alle Schritte gilt: Migration auf com.scto.mcs.core.<name> unter Verwendung
 
 * 5.9 Terminal (Logik): /add core/terminal/**/*.kt
 
-Schritt 6: Ressourcen & Strings
+Schritt 6: Ressourcen & Strings (Zentralisierung)
 
-6.1 Ressourcen-Verschiebung
-Aider-Aufruf: /add **/*.xml
-1. Verschiebe alle Ressourcen aus allen Modulen nach :core:resources (core/resources/src/main/res/).
+6.1 Ressourcen-Verschiebung (Core Submodule)
+Aider-Aufruf: /add core/**/src/main/res/**/*.xml Anweisungen:
+1. Verschiebe alle Ressourcen aus allen Core-Submodulen nach :core:resources (core/resources/src/main/res/).
 
-6.2 String-Management & Code-Anpassung
-Aider-Aufruf: /add core/resources/src/main/res/values/*.xml **/*.kt **/*.java
-1. Führe alle strings.xml zentral zusammen (Duplikate entfernen).
-2. Ersetze hardkodierte UI-Strings durch R.string-Referenzen.
-3. Aktualisiere alle Ressourcen-Imports projektweit auf com.scto.mcs.core.resources.R.
+6.2 Ressourcen-Verschiebung (Feature Submodule)
+Aider-Aufruf: /add feature/**/src/main/res/**/*.xml Anweisungen:
+1. Verschiebe alle Ressourcen aus allen Feature-Submodulen nach :core:resources (core/resources/src/main/res/).
+
+6.3 String-Management & Code-Anpassung (Core Submodule)
+Aider-Aufruf: /add core/**/src/main/java/**/*.kt core/**/src/main/java/**/*.java core/resources/src/main/res/values/strings.xml Anweisungen:
+1. Betrifft alle Core-Submodule außer termux-*.
+2. Führe alle strings.xml in der zentralen Datei zusammen (Duplikate entfernen).
+3. Ersetze hardkodierte UI-Strings im Code durch R.string-Referenzen.
+4. Aktualisiere alle Ressourcen-Imports auf com.scto.mcs.core.resources.R.
+
+6.4 String-Management & Code-Anpassung (Feature Submodule)
+Aider-Aufruf: /add feature/**/src/main/java/**/*.kt feature/**/src/main/java/**/*.java core/resources/src/main/res/values/strings.xml Anweisungen:
+1. Betrifft alle Feature-Submodule außer dem Ordner feature/settings/xed.
+2. Führe verbleibende strings.xml zusammen.
+3. Ersetze hardkodierte UI-Strings im Code durch R.string-Referenzen.
+4. Aktualisiere alle Ressourcen-Imports auf com.scto.mcs.core.resources.R.
 
 Schritt 7: App-Modul & Finale Integration
 Aider-Aufruf: /add app/build.gradle.kts app/src/main/AndroidManifest.xml
