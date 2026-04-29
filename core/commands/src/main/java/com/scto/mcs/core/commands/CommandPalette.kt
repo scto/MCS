@@ -244,7 +244,9 @@ fun CommandItem(
 
         Column(modifier = Modifier.fillMaxWidth().weight(1f)) {
             Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.fillMaxWidth()) {
-                command.prefix?.let { Text(text = "$it: ", color = MaterialTheme.colorScheme.primary) }
+                command.prefix?.let {
+                    Text(text = stringResource(strings.core_commands_command_prefix_label, it), color = MaterialTheme.colorScheme.primary)
+                }
                 Text(
                     text = highlightedString,
                     maxLines = 1,
