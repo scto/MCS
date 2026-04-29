@@ -648,6 +648,7 @@
     <string name="git_status">Git status</string>
     <string name="invalid_color">Invalid color</string>
     <string name="color_picker">Pick a color</string>
-
-
+    <string name="no_active_document">No active document</string>
+    <string name="open_file_desc">Open a file in the explorer or use the terminal for commands.</string>
+    <string name="open_terminal">Open terminal</string>
 </resources>

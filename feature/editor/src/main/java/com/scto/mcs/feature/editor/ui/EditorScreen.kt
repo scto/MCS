@@ -7,6 +7,7 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 
@@ -15,6 +16,7 @@ import com.scto.mcs.feature.settings.SettingsViewModel
 import com.scto.mcs.feature.terminal.ui.TerminalScreen
 import com.scto.mcs.feature.terminal.TerminalViewModel
 import com.scto.mcs.core.ui.components.sidepanel.filetree.FileTreeViewModel
+import com.scto.mcs.core.resources.R
 
 import kotlinx.coroutines.launch
 
@@ -129,13 +131,13 @@ private fun EmptyEditorState(onExpandTerminal: () -> Unit) {
                 tint = MaterialTheme.colorScheme.outlineVariant
             )
             Text(
-                "Kein aktives Dokument",
+                stringResource(id = R.string.no_active_document),
                 style = MaterialTheme.typography.headlineSmall,
                 color = MaterialTheme.colorScheme.onSurface
             )
             Spacer(Modifier.height(8.dp))
             Text(
-                "Öffne eine Datei im Explorer oder nutze das Terminal für Befehle.",
+                stringResource(id = R.string.open_file_desc),
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                 modifier = Modifier.padding(horizontal = 48.dp)
@@ -144,7 +146,7 @@ private fun EmptyEditorState(onExpandTerminal: () -> Unit) {
             OutlinedButton(onClick = onExpandTerminal) {
                 Icon(Icons.Default.Terminal, null)
                 Spacer(Modifier.width(8.dp))
-                Text("Terminal öffnen")
+                Text(stringResource(id = R.string.open_terminal))
             }
         }
     }
