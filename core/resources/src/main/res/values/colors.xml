@@ -146,11 +146,11 @@
     <color name="md_theme_surfaceContainerHigh_highContrast">#282A2F</color>
     <color name="md_theme_surfaceContainerHighest_highContrast">#33353A</color>
 
-    <!-- ── Editor / UI chrome ─────────────────────────────────────────────── -->
+    <!-- editor -->
     <color name="defaultSymbolInputBackgroundColor">@android:color/transparent</color>
     <color name="defaultSymbolInputTextColor">@android:color/white</color>
     <color name="bg">#1C1B20</color>
-    
+
     <color name="ide_background">#1E1E1E</color>
     <color name="ide_surface">#252526</color>
     <color name="ide_primary">#007ACC</color>
