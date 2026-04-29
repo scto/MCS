@@ -76,7 +76,8 @@ class TerminalViewModel @Inject constructor(
 
         viewModelScope.launch {
             _isExecuting.value = true
-            appendLineToActiveSession("> $command")
+            val formattedCommand = context.getString(R.string.feature_terminal_command_prefix, command)
+            appendLineToActiveSession(formattedCommand)
 
             terminalService.execute(command).collect { line ->
                 appendLineToActiveSession(line)

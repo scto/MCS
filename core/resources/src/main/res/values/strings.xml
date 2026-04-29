@@ -653,4 +653,5 @@
     <string name="open_terminal">Open terminal</string>
     <string name="feature_terminal_command_placeholder">Type command</string>
     <string name="feature_terminal_session_name">Terminal</string>
+    <string name="feature_terminal_command_prefix">&gt; %s</string>
 </resources>
