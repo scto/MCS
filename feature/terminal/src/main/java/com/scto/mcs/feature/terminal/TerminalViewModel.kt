@@ -16,6 +16,8 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import java.io.File
 import javax.inject.Inject
+import com.scto.mcs.core.resources.getString
+import com.scto.mcs.core.resources.strings
 
 @HiltViewModel
 class TerminalViewModel @Inject constructor(

@@ -18,6 +18,8 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.scto.mcs.feature.terminal.TerminalViewModel
 import com.scto.mcs.core.terminal.setup.TerminalSetupService.SetupState
 import com.scto.mcs.core.ui.components.components.TerminalSetupView
+import com.scto.mcs.core.resources.getString
+import com.scto.mcs.core.resources.strings
 
 @Composable
 fun TerminalScreen(viewModel: TerminalViewModel = hiltViewModel()) {
