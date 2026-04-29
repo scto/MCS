@@ -1,4 +1,4 @@
-﻿MSC Projekt-Refactoring & Ressourcen-Zentralisierungs Plan (Final)
+﻿MCS Projekt-Refactoring & Ressourcen-Zentralisierungs Plan (Final)
 Dieses Dokument dient als Master-Plan für die Konsolidierung des Projekts auf den Namespace com.scto.mcs. Es umfasst das Audit der Gradle-Konfigurationen, die Zentralisierung der Ressourcen und ein vollständiges Refactoring der Imports.
 Projekt-Kontext
 * Ziel-Package: com.scto.mcs
@@ -67,49 +67,34 @@ Aider-Aufruf: /add feature/**/build.gradle.kts
 2. Verknüpfe die notwendigen :core-Module korrekt via implementation(project(":core:<name>")).
 
 Schritt 4: Quellcode-Refactoring (Feature-Module)
-
 4.1 Feature Editor
 Aider-Aufruf: /add feature/editor/**/*.kt feature/editor/src/main/AndroidManifest.xml Anweisungen: Migration auf com.scto.mcs.feature.editor. Nutze die Globale Mapping Tabelle.
-
 4.2 Feature Git
 Aider-Aufruf: /add feature/git/**/*.kt feature/git/src/main/AndroidManifest.xml Anweisungen: Migration auf com.scto.mcs.feature.git. Nutze die Globale Mapping Tabelle.
-
 4.3 Feature Settings (Zusammenführung & Refactoring)
 Aider-Aufruf: /add feature/settings/**/*.kt feature/settings/src/main/AndroidManifest.xml Anweisungen:
-1. XED Integration: Arbeite die Funktionalität aus feature/settings/xed vollständig in das Hauptmodul feature/settings ein.
+1. XED Integration: Arbeite die Funktionalität aus feature/settings/xed vollständig in das Hauptmodul feature/settings ein und lösche die xed Dateien.
 2. Namespace: Setze Package auf com.scto.mcs.feature.settings.
 3. Import-Korrektur: Nutze strikt die Globale Mapping Tabelle, um alle com.rk-Referenzen zu ersetzen.
-
 4.4 Feature Terminal
 Aider-Aufruf: /add feature/terminal/**/*.kt feature/terminal/src/main/AndroidManifest.xml Anweisungen: Migration auf com.scto.mcs.feature.terminal. Nutze die Globale Mapping Tabelle.
 
 Schritt 5: Quellcode-Refactoring (Core-Submodule)
 Für alle Schritte gilt: Migration auf com.scto.mcs.core.<name> unter Verwendung der Mapping-Tabelle.
-
 * 5.1 DI: /add core/di/**/*.kt
-
 * 5.2 Exec: /add core/exec/**/*.kt
-
 * 5.3 Files: /add core/files/**/*.kt
-
 * 5.4 Navigation: /add core/navigation/**/*.kt
-
 * 5.5 Network: /add core/network/**/*.kt
-
 * 5.6 Resources: /add core/resources/**/*.kt
-
 * 5.7 UI: /add core/ui/**/*.kt
-
 * 5.8 Utils: /add core/utils/**/*.kt
-
 * 5.9 Terminal (Logik): /add core/terminal/**/*.kt
 
 Schritt 6: Ressourcen & Strings
-
 6.1 Ressourcen-Verschiebung
 Aider-Aufruf: /add **/*.xml
 1. Verschiebe alle Ressourcen aus allen Modulen nach :core:resources (core/resources/src/main/res/).
-
 6.2 String-Management & Code-Anpassung
 Aider-Aufruf: /add core/resources/src/main/res/values/*.xml **/*.kt **/*.java
 1. Führe alle strings.xml zentral zusammen (Duplikate entfernen).

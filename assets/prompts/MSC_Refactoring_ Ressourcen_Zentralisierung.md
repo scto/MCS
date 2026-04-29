@@ -5,7 +5,7 @@ Projekt-Kontext
 * Struktur: App, Core, Feature.
 * Zu ersetzende Namespaces: com.rk, com.srvhive, com.scto.msc.
 Schritt 1: Zentrale Build-Konfiguration & Version Catalog
-Aider-Aufruf: aider build.gradle.kts settings.gradle.kts gradle/libs.versions.toml
+Aider-Aufruf: /add build.gradle.kts settings.gradle.kts gradle/libs.versions.toml
 1. Überprüfung: Untersuche libs.versions.toml auf Vollständigkeit (Hilt, KSP, Compose).
 2. Inklusion: Stelle sicher, dass settings.gradle.kts alle Module (:core:*, :feature:*) inkludiert.
 3. Plugins: Validiere Plugin-Definitionen im Root-Build-Script.

@@ -10,15 +10,16 @@ import androidx.core.os.LocaleListCompat
 import com.github.anrwatchdog.ANRWatchDog
 
 import com.scto.mcs.app.BuildConfig
-import com.scto.mcs.app..activities.main.SessionManager
+import com.scto.mcs.app.ui.activities.main.SessionManager
+
 import com.scto.mcs.core.commands.CommandProvider
 import com.scto.mcs.core.commands.KeybindingsManager
 import com.scto.mcs.core.crashhandler.CrashHandler
 
-import com.rk.editor.CodeHighlighter
-import com.rk.editor.FontCache
-import com.rk.editor.KeywordManager
-import com.rk.editor.LanguageManager
+import com.scto.mcs.core.editor.CodeHighlighter
+import com.scto.mcs.core.editor.FontCache
+import com.scto.mcs.core.editor.KeywordManager
+import com.scto.mcs.core.editor.LanguageManager
 
 import com.scto.mcs.core.extension.ExtensionAPIManager
 import com.scto.mcs.core.extension.ExtensionManager
@@ -33,13 +34,11 @@ import com.scto.mcs.core.ui.theme.updateThemes
 import com.scto.mcs.core.utils.application
 import com.scto.mcs.core.utils.getTempDir
 
-import com.rk.settings.Preference
-import com.rk.settings.Settings
-import com.rk.settings.debugOptions.startThemeFlipperIfNotRunning
-import com.rk.settings.editor.DEFAULT_APP_FONT_PATH
-import com.rk.settings.editor.DEFAULT_EDITOR_FONT_PATH
-
-
+import com.scto.mcs.feature.settings.Preference
+import com.scto.mcs.feature.settings.Settings
+import com.scto.mcs.feature.settings.debugOptions.startThemeFlipperIfNotRunning
+import com.scto.mcs.feature.settings.editor.DEFAULT_APP_FONT_PATH
+import com.scto.mcs.feature.settings.editor.DEFAULT_EDITOR_FONT_PATH
 
 import java.util.Locale
 import java.util.concurrent.Executors

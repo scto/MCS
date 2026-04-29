@@ -9,7 +9,7 @@ import io.github.rosemoe.sora.langs.textmate.registry.ThemeRegistry
 import io.github.rosemoe.sora.langs.textmate.registry.model.ThemeModel
 import io.github.rosemoe.sora.widget.schemes.EditorColorScheme
 
-class MSCColorScheme(
+class McsColorScheme(
     private val patchArgs: Editor.PatchArgs?,
     themeModel: ThemeModel,
     themeRegistry: ThemeRegistry = ThemeRegistry.getInstance(),

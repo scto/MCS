@@ -1,108 +1,134 @@
-package com.srvhive.app.ui.theme
+package com.scto.mcs.core.ui.theme
 
-import android.app.Activity
 import android.os.Build
+import androidx.annotation.ChecksSdkIntAtLeast
 import androidx.compose.foundation.isSystemInDarkTheme
-import androidx.compose.material3.*
+import androidx.compose.material3.ColorScheme
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
+import androidx.compose.material3.dynamicDarkColorScheme
+import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.SideEffect
+import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.platform.LocalView
-import androidx.core.view.WindowCompat
-import com.srvhive.app.ui.screens.ThemeMode
+import com.google.android.material.color.MaterialColors
 
-/**
- * Standard-Farbschemata als Fallback.
- */
-private val LightColorScheme = lightColorScheme(
-    primary = md_theme_light_primary,
-    onPrimary = md_theme_light_onPrimary,
-    primaryContainer = md_theme_light_primaryContainer,
-    onPrimaryContainer = md_theme_light_onPrimaryContainer,
-    secondary = md_theme_light_secondary,
-    onSecondary = md_theme_light_onSecondary,
-    secondaryContainer = md_theme_light_secondaryContainer,
-    onSecondaryContainer = md_theme_light_onSecondaryContainer,
-    background = md_theme_light_background,
-    surface = md_theme_light_surface,
-    onBackground = md_theme_light_onBackground,
-    onSurface = md_theme_light_onSurface
-)
+import com.scto.mcs.feature.settings.Settings
+import com.scto.mcs.feature.settings.editor.rememberAppTypography
+import com.scto.mcs.feature.settings.theme.themes
+import com.scto.mcs.core.utils.isDarkTheme
+import com.scto.mcs.core.utils.toast
 
-private val DarkColorScheme = darkColorScheme(
-    primary = md_theme_dark_primary,
-    onPrimary = md_theme_dark_onPrimary,
-    primaryContainer = md_theme_dark_primaryContainer,
-    onPrimaryContainer = md_theme_dark_onPrimaryContainer,
-    secondary = md_theme_dark_secondary,
-    onSecondary = md_theme_dark_onSecondary,
-    secondaryContainer = md_theme_dark_secondaryContainer,
-    onSecondaryContainer = md_theme_dark_onSecondaryContainer,
-    background = md_theme_dark_background,
-    surface = md_theme_dark_surface,
-    onBackground = md_theme_dark_onBackground,
-    onSurface = md_theme_dark_onSurface
-)
+val currentTheme = mutableStateOf<ThemeHolder?>(null)
+val dynamicTheme = mutableStateOf(Settings.monet)
+val amoled = mutableStateOf(Settings.amoled)
+
+val LocalThemeHolder = staticCompositionLocalOf<ThemeHolder> { error("No ThemeHolder state provided") }
 
 @Composable
-fun MCSTheme(
-    themeMode: ThemeMode = ThemeMode.SYSTEM,
-    dynamicColor: Boolean = true,
-    amoled: Boolean = false,
-    customColorScheme: ColorScheme? = null,
-    content: @Composable () -> Unit
+fun McsTheme(
+    darkTheme: Boolean = isDarkTheme(LocalContext.current),
+    highContrastDarkTheme: Boolean = amoled.value,
+    dynamicColor: Boolean = dynamicTheme.value,
+    content: @Composable () -> Unit,
 ) {
-    // Bestimme, ob das dunkle Design aktiv ist
-    val darkTheme = when (themeMode) {
-        ThemeMode.LIGHT -> false
-        ThemeMode.DARK -> true
-        ThemeMode.SYSTEM -> isSystemInDarkTheme()
-    }
-
-    // Farbschema-Hierarchie: Custom -> Dynamisch -> Statisch
-    var colorScheme = when {
-        customColorScheme != null -> customColorScheme
-        dynamicColor && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S -> {
+    var themeHolder = blueberry
+    val colorScheme =
+        if (dynamicColor && supportsDynamicTheming()) {
             val context = LocalContext.current
-            if (darkTheme) dynamicDarkColorScheme(context) else dynamicLightColorScheme(context)
-        }
-        darkTheme -> DarkColorScheme
-        else -> LightColorScheme
-    }
+            val baseColorScheme =
+                when {
+                    darkTheme && highContrastDarkTheme ->
+                        dynamicDarkColorScheme(context)
+                            .copy(background = Color.Black, surface = Color.Black, surfaceDim = Color.Black)
 
-    // AMOLED Logik: Ersetzt dunkle Hintergründe durch echtes Schwarz
-    if (darkTheme && amoled) {
-        colorScheme = colorScheme.copy(
-            background = Color.Black,
-            surface = Color.Black,
-            surfaceVariant = Color(0xFF121212),
-            onBackground = Color.White,
-            onSurface = Color.White
-        )
-    }
-    
-    val view = LocalView.current
-    if (!view.isInEditMode) {
-        SideEffect {
-            val window = (view.context as Activity).window
-            // Zeichnet die App unter die Systemleisten
-            WindowCompat.setDecorFitsSystemWindows(window, false)
-            
-            // Transparente Leisten für nahtlose Übergänge
-            window.statusBarColor = Color.Transparent.toArgb()
-            window.navigationBarColor = Color.Transparent.toArgb()
-            
-            val controller = WindowCompat.getInsetsController(window, view)
-            // Icons automatisch an Helligkeit anpassen
-            controller.isAppearanceLightStatusBars = !darkTheme
-            controller.isAppearanceLightNavigationBars = !darkTheme
+                    darkTheme -> dynamicDarkColorScheme(context)
+                    else -> dynamicLightColorScheme(context)
+                }
+
+            // Use default theme
+            themeHolder = blueberry
+
+            baseColorScheme
+        } else {
+            if (currentTheme.value == null) {
+                themeHolder = themes.find { it.id == Settings.theme } ?: themeHolder
+                currentTheme.value = themeHolder
+            } else {
+                themeHolder = currentTheme.value ?: themeHolder
+            }
+
+            val theme =
+                if (darkTheme) {
+                    if (highContrastDarkTheme) {
+                        themeHolder.darkScheme.copy(
+                            background = Color.Black,
+                            surface = Color.Black,
+                            surfaceDim = Color.Black,
+                        )
+                    } else {
+                        themeHolder.darkScheme
+                    }
+                } else {
+                    themeHolder.lightScheme
+                }
+
+            // Is possible?
+            if (currentTheme.value == null) {
+                LaunchedEffect(theme) { toast("No theme selected") }
+                if (darkTheme) {
+                    blueberry.darkScheme
+                } else {
+                    blueberry.lightScheme
+                }
+            } else {
+                theme
+            }
+        }
+
+    CompositionLocalProvider(LocalThemeHolder provides themeHolder) {
+        MaterialTheme(colorScheme = colorScheme, typography = rememberAppTypography(LocalContext.current)) {
+            Surface(color = MaterialTheme.colorScheme.background) { content() }
         }
     }
-
-    MaterialTheme(
-        colorScheme = colorScheme,
-        content = content
-    )
 }
+
+@ChecksSdkIntAtLeast(api = Build.VERSION_CODES.S)
+fun supportsDynamicTheming() = Build.VERSION.SDK_INT >= Build.VERSION_CODES.S
+
+@Composable
+fun harmonize(color: Long): Int {
+    val context = LocalContext.current
+    return MaterialColors.harmonizeWithPrimary(context, color.toInt())
+}
+
+// Custom warning colors
+val ColorScheme.warningSurface: Color
+    @Composable get() = if (isSystemInDarkTheme()) Color(harmonize(0xFF633F00)) else Color(harmonize(0xFFFFDDB4))
+
+val ColorScheme.onWarningSurface: Color
+    @Composable get() = if (isSystemInDarkTheme()) Color(harmonize(0xFFFFDDB4)) else Color(harmonize(0xFF633F00))
+
+// Status colors
+val ColorScheme.greenStatus: Color
+    @Composable get() = if (isSystemInDarkTheme()) Color(harmonize(0xFFA6DA95)) else Color(harmonize(0xFF44842E))
+
+val ColorScheme.yellowStatus: Color
+    @Composable get() = if (isSystemInDarkTheme()) Color(harmonize(0xFFFFE082)) else Color(harmonize(0xFFE6AC00))
+
+// Git change colors
+val ColorScheme.gitAdded: Color
+    @Composable get() = if (isSystemInDarkTheme()) Color(harmonize(0xFF81C784)) else Color(harmonize(0xFF2E7D32))
+
+val ColorScheme.gitModified: Color
+    @Composable get() = if (isSystemInDarkTheme()) Color(harmonize(0xFF64B5F6)) else Color(harmonize(0xFF1565C0))
+
+val ColorScheme.gitDeleted: Color
+    get() = this.onSurface.copy(alpha = 0.6f)
+
+val ColorScheme.gitConflicted: Color
+    @Composable get() = if (isSystemInDarkTheme()) Color(harmonize(0xFFE57373)) else Color(harmonize(0xFFC62828))

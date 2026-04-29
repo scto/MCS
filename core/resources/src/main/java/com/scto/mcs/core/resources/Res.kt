@@ -2,7 +2,6 @@ package com.scto.mcs.core.resources
 
 import android.app.Application
 import android.graphics.drawable.Drawable
-
 import androidx.annotation.DrawableRes
 import androidx.core.content.ContextCompat
 
