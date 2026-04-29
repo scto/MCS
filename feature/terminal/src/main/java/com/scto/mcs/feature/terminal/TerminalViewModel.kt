@@ -9,8 +9,7 @@ import com.scto.mcs.core.terminal.config.TerminalConfig
 import com.scto.mcs.core.terminal.session.TerminalSessionManager
 import com.scto.mcs.core.terminal.setup.TerminalSetupService
 import com.scto.mcs.core.terminal.setup.TerminalSetupService.SetupState
-import com.scto.mcs.core.resources.getString
-import com.scto.mcs.core.resources.strings
+import com.scto.mcs.core.resources.R
 
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
@@ -55,7 +54,7 @@ class TerminalViewModel @Inject constructor(
         } else {
             _setupState.value = SetupState.Completed
             if (sessionManager.sessions.value.isEmpty()) {
-                sessionManager.createNewSession("Terminal")
+                sessionManager.createNewSession(context.getString(R.string.feature_terminal_session_name))
             }
         }
     }
@@ -65,7 +64,7 @@ class TerminalViewModel @Inject constructor(
             setupService.runFullSetup(context).collect { state ->
                 _setupState.value = state
                 if (state is SetupState.Completed) {
-                    sessionManager.createNewSession("Terminal")
+                    sessionManager.createNewSession(context.getString(R.string.feature_terminal_session_name))
                 }
             }
         }

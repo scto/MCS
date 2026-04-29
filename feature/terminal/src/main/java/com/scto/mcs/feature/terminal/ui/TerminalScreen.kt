@@ -10,6 +10,7 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
@@ -19,8 +20,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 
 import com.scto.mcs.core.terminal.setup.TerminalSetupService.SetupState
 import com.scto.mcs.core.ui.components.components.TerminalSetupView
-import com.scto.mcs.core.resources.getString
-import com.scto.mcs.core.resources.strings
+import com.scto.mcs.core.resources.R
 import com.scto.mcs.feature.terminal.TerminalViewModel
 
 @Composable
