@@ -15,7 +15,6 @@ import com.scto.mcs.core.resources.strings
 object TypeScript : ScriptedLspServer() {
     override val id: String = "typescript"
     override val languageName: String = strings.core_editor_lsp_server_typescript_language_name.getString()
-    override val languageName: String = strings.core_editor_lsp_server_typescript_language_name.getString()
     override val serverName = "typescript-language-server"
     override val supportedExtensions =
         BuiltinFileType.JAVASCRIPT.extensions +

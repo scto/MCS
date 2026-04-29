@@ -15,7 +15,6 @@ import com.scto.mcs.core.resources.strings
 object CSS : ScriptedLspServer() {
     override val id: String = "css"
     override val languageName: String = strings.core_editor_lsp_server_css_language_name.getString()
-    override val languageName: String = strings.core_editor_lsp_server_css_language_name.getString()
     override val serverName = "vscode-css-language-server"
     override val supportedExtensions =
         BuiltinFileType.CSS.extensions + BuiltinFileType.SCSS.extensions + BuiltinFileType.LESS.extensions

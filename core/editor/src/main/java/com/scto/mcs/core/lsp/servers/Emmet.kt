@@ -15,7 +15,6 @@ import com.scto.mcs.core.resources.strings
 object Emmet : ScriptedLspServer() {
     override val id: String = "emmet"
     override val languageName: String = strings.core_editor_lsp_server_emmet_language_name.getString()
-    override val languageName: String = strings.core_editor_lsp_server_emmet_language_name.getString()
     override val serverName = "emmet-language-server"
     override val supportedExtensions = BuiltinFileType.HTML.extensions + BuiltinFileType.HTMX.extensions
     override val icon = BuiltinFileType.HTML.icon

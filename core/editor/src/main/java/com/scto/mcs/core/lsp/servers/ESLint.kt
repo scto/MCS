@@ -15,7 +15,6 @@ import com.scto.mcs.core.resources.strings
 object ESLint : ScriptedLspServer() {
     override val id: String = "eslint"
     override val languageName: String = strings.core_editor_lsp_server_eslint_language_name.getString()
-    override val languageName: String = strings.core_editor_lsp_server_eslint_language_name.getString()
     override val serverName = "vscode-eslint-language-server"
     override val supportedExtensions =
         BuiltinFileType.JAVASCRIPT.extensions +

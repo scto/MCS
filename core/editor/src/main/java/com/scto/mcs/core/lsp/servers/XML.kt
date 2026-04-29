@@ -14,7 +14,6 @@ import com.scto.mcs.core.resources.strings
 object XML : ScriptedLspServer() {
     override val id: String = "xml"
     override val languageName: String = strings.core_editor_lsp_server_xml_language_name.getString()
-    override val languageName: String = strings.core_editor_lsp_server_xml_language_name.getString()
     override val serverName = "lemminx"
     override val supportedExtensions = BuiltinFileType.XML.extensions
     override val icon = BuiltinFileType.XML.icon

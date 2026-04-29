@@ -15,7 +15,6 @@ import com.scto.mcs.core.resources.strings
 object HTML : ScriptedLspServer() {
     override val id: String = "html"
     override val languageName: String = strings.core_editor_lsp_server_html_language_name.getString()
-    override val languageName: String = strings.core_editor_lsp_server_html_language_name.getString()
     override val serverName = "vscode-html-language-server"
     override val supportedExtensions = BuiltinFileType.HTML.extensions + BuiltinFileType.HTMX.extensions
     override val icon = BuiltinFileType.HTML.icon

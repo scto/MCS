@@ -15,7 +15,6 @@ import com.scto.mcs.core.resources.strings
 object Markdown : ScriptedLspServer() {
     override val id: String = "markdown"
     override val languageName: String = strings.core_editor_lsp_server_markdown_language_name.getString()
-    override val languageName: String = strings.core_editor_lsp_server_markdown_language_name.getString()
     override val serverName = "vscode-markdown-language-server"
     override val supportedExtensions = BuiltinFileType.MARKDOWN.extensions
     override val icon = BuiltinFileType.MARKDOWN.icon

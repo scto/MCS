@@ -354,4 +354,16 @@
     <string name="core_editor_lsp_status_disconnected">Disconnected from LSP server (reason: %s)</string>
     <string name="core_editor_lsp_server_xml_language_name">XML</string>
     <string name="core_editor_lsp_server_xml_install_id">XML language server</string>
+    <string name="core_editor_lsp_status_crashed">Crashed</string>
+    <string name="core_editor_lsp_status_timeout">Timeout</string>
+    <string name="core_editor_lsp_status_restarting">Restarting LSP server...</string>
+    <string name="core_editor_lsp_status_running">Running</string>
+    <string name="core_editor_lsp_status_stopping">Stopping LSP server...</string>
+    <string name="core_editor_lsp_status_not_running_forced">Not running (forced by user)</string>
+    <string name="core_editor_lsp_status_not_running">Not running</string>
+    <string name="core_editor_file_search_enter_name">Enter name to search...</string>
+    <string name="core_editor_code_search_enter_query">Enter query to search...</string>
+    <string name="core_editor_code_search_file_mask_hint">File mask (e.g., *.kt, *.java)</string>
+    <string name="core_editor_image_viewer_resource_loading_error">Failed to load image resource.</string>
+    <string name="core_editor_lsp_invalid_color">Invalid color format.</string>
 </resources>

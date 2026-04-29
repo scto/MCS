@@ -356,7 +356,7 @@ fun ExcludeFilesDialog(searchViewModel: SearchViewModel) {
 
     SingleInputDialog(
         title = stringResource(id = strings.file_mask),
-        inputLabel = stringResource(id = strings.file_mask_hint),
+        inputLabel = stringResource(id = strings.core_editor_code_search_file_mask_hint),
         inputValue = fileMaskText,
         onInputValueChange = { fileMaskText = it },
         onConfirm = {
