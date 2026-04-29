@@ -7,11 +7,11 @@ plugins {
 }
 
 android {
-    namespace = "com.scto.msc.app"
+    namespace = "com.scto.mcs.app"
     compileSdk = libs.versions.compileSdk.get().toInt()
 
     defaultConfig {
-        applicationId = "com.scto.msc.app"
+        applicationId = "com.scto.mcs.app"
         minSdk = 26
         targetSdk = 35
         versionCode = 1
