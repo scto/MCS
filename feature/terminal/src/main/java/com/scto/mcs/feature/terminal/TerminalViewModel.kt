@@ -3,104 +3,129 @@ package com.scto.mcs.feature.terminal
 import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-
+import com.scto.mcs.core.resources.R
 import com.scto.mcs.core.terminal.TerminalService
 import com.scto.mcs.core.terminal.config.TerminalConfig
 import com.scto.mcs.core.terminal.session.TerminalSessionManager
 import com.scto.mcs.core.terminal.setup.TerminalSetupService
 import com.scto.mcs.core.terminal.setup.TerminalSetupService.SetupState
-import com.scto.mcs.core.resources.R
-
+import com.termux.terminal.TerminalSession
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import java.io.File
 import javax.inject.Inject
 
+/**
+ * Modernisiertes ViewModel für die Terminal-Funktionalität.
+ * Verwaltet echte Terminal-Sitzungen und den Setup-Prozess.
+ */
 @HiltViewModel
 class TerminalViewModel @Inject constructor(
     @ApplicationContext private val context: Context,
-    private val terminalService: TerminalService,
     private val setupService: TerminalSetupService,
+    private val terminalService: TerminalService,
     val sessionManager: TerminalSessionManager
 ) : ViewModel() {
 
     private val _setupState = MutableStateFlow<SetupState?>(null)
-    val setupState: StateFlow<SetupState?> = _setupState.asStateFlow()
+    val setupState = _setupState.asStateFlow()
 
-    private val _textSize = MutableStateFlow(12)
-    val textSize: StateFlow<Int> = _textSize.asStateFlow()
+    // Liste der aktiven Termux-Sessions
+    private val _sessions = MutableStateFlow<List<TerminalSession>>(emptyList())
+    val sessions = _sessions.asStateFlow()
 
-    private val _isExecuting = MutableStateFlow(false)
-    val isExecuting: StateFlow<Boolean> = _isExecuting.asStateFlow()
+    private val _activeSessionId = MutableStateFlow<String?>(null)
+    val activeSessionId = _activeSessionId.asStateFlow()
+
+    // Kombinierter State für die aktuell angezeigte Session
+    val activeSession = combine(_sessions, _activeSessionId) { sessions, id ->
+        sessions.find { it.mHandle == id }
+    }.stateIn(viewModelScope, SharingStarted.Lazily, null)
 
     init {
         checkInstallationStatus()
     }
 
     /**
-     * Prüft, ob das Terminal bereits installiert ist.
+     * Prüft die Existenz der RootFS und Binärdateien.
      */
     private fun checkInstallationStatus() {
         val rootFs = TerminalConfig.getRootFsDir(context)
-        val proot = File(File(context.filesDir, TerminalConfig.TERMINAL_ROOT_DIR), "${TerminalConfig.BIN_DIR}/proot")
+        val proot = File(
+            File(context.filesDir, TerminalConfig.TERMINAL_ROOT_DIR), 
+            "${TerminalConfig.BIN_DIR}/proot"
+        )
         
         if (!rootFs.exists() || !proot.exists()) {
-            // Setup erforderlich
-            _setupState.value = null 
+            _setupState.value = null // Setup erforderlich
         } else {
             _setupState.value = SetupState.Completed
-            if (sessionManager.sessions.value.isEmpty()) {
-                sessionManager.createNewSession(context.getString(R.string.feature_terminal_session_name))
-            }
+            loadSessions()
         }
     }
 
+    /**
+     * Startet das komplette Setup der Linux-Umgebung.
+     */
     fun startInstallation() {
         viewModelScope.launch {
             setupService.runFullSetup(context).collect { state ->
                 _setupState.value = state
                 if (state is SetupState.Completed) {
-                    sessionManager.createNewSession(context.getString(R.string.feature_terminal_session_name))
+                    loadSessions()
                 }
             }
         }
     }
 
-    fun runCommand(command: String) {
-        val activeId = sessionManager.activeSessionId.value ?: return
-        if (command.isBlank() || _isExecuting.value) return
-
+    /**
+     * Erstellt eine neue interaktive Shell-Sitzung.
+     */
+    fun createNewSession(name: String? = null) {
         viewModelScope.launch {
-            _isExecuting.value = true
-            val formattedCommand = context.getString(R.string.feature_terminal_command_prefix, command)
-            appendLineToActiveSession(formattedCommand)
-
-            terminalService.execute(command).collect { line ->
-                appendLineToActiveSession(line)
-            }
+            val sessionName = name ?: "Session #${_sessions.value.size + 1}"
+            // Erstellt eine neue Session über den Core-Dienst
+            val newSession = terminalService.createTerminalSession(sessionName)
             
-            _isExecuting.value = false
+            val updatedList = _sessions.value.toMutableList().apply { add(newSession) }
+            _sessions.value = updatedList
+            _activeSessionId.value = newSession.mHandle
         }
     }
 
-    private fun appendLineToActiveSession(line: String) {
-        val activeId = sessionManager.activeSessionId.value ?: return
-        val currentSessions = sessionManager.sessions.value.toMutableList()
-        val index = currentSessions.indexOfFirst { it.id == activeId }
+    fun switchSession(id: String?) {
+        _activeSessionId.value = id
+    }
+
+    fun removeSession(id: String?) {
+        val current = _sessions.value.toMutableList()
+        val sessionToRemove = current.find { it.mHandle == id }
         
-        if (index != -1) {
-            val session = currentSessions[index]
-            val updatedOutput = session.output.toMutableList().apply { add(line) }
-            currentSessions[index] = session.copy(output = updatedOutput)
-            // Hinweis: Der Manager sorgt normalerweise für das State-Update
+        sessionToRemove?.let {
+            it.finishIfRunning()
+            current.remove(it)
+            _sessions.value = current
+            
+            if (_activeSessionId.value == id) {
+                _activeSessionId.value = current.firstOrNull()?.mHandle
+            }
         }
     }
 
-    fun setTextSize(size: Int) {
-        _textSize.value = size.coerceIn(8, 24)
+    /**
+     * Sendet einen Befehl an die aktuell aktive Session.
+     */
+    fun runCommand(command: String) {
+        activeSession.value?.let { session ->
+            session.write(command + "\n")
+        }
+    }
+
+    private fun loadSessions() {
+        if (_sessions.value.isEmpty()) {
+            createNewSession()
+        }
     }
 }
