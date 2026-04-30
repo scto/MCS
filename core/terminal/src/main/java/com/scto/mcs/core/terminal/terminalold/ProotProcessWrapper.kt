@@ -2,6 +2,7 @@ package com.scto.mcs.core.terminal.terminalold
 
 import java.io.InputStream
 import java.io.OutputStream
+import java.io.File
 
 class ProotProcessWrapper(private val config: TerminalConfig) {
 
@@ -20,7 +21,7 @@ class ProotProcessWrapper(private val config: TerminalConfig) {
 
         val processBuilder = ProcessBuilder(command)
         processBuilder.environment().putAll(config.environmentVariables)
-        processBuilder.directory(java.io.File(config.workingDirectory))
+        processBuilder.directory(File(config.workingDirectory))
         
         process = processBuilder.start()
         return process!!

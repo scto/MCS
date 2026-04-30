@@ -3,6 +3,7 @@ package com.scto.mcs.core.terminal.terminalold
 import com.scto.mcs.core.domain.repository.FileRepository
 import javax.inject.Inject
 import javax.inject.Singleton
+import java.io.File
 
 @Singleton
 class TerminalSetupService @Inject constructor(
@@ -10,11 +11,21 @@ class TerminalSetupService @Inject constructor(
 ) {
     suspend fun setupEnvironment(): Result<Unit> {
         // Ensure necessary directories exist using the domain repository
-        val sandboxDir = fileRepository.getSandboxDir()
-        return if (sandboxDir.isSuccess) {
-            Result.success(Unit)
+        val sandboxResult = fileRepository.getSandboxDir()
+        
+        return if (sandboxResult.isSuccess) {
+            val sandboxDir = sandboxResult.getOrNull()
+            if (sandboxDir != null) {
+                val file = File(sandboxDir.path)
+                if (!file.exists()) {
+                    file.mkdirs()
+                }
+                Result.success(Unit)
+            } else {
+                Result.failure(Exception("Sandbox directory path is null"))
+            }
         } else {
-            Result.failure(Exception("Failed to setup terminal environment"))
+            Result.failure(Exception("Failed to retrieve sandbox directory: ${sandboxResult.exceptionOrNull()?.message}"))
         }
     }
 }
