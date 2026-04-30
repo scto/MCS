@@ -1,8 +1,6 @@
 package com.scto.mcs.core.terminalold
 
-import android.content.Context
 import com.scto.mcs.core.terminal.TerminalService as ModernTerminalService
-import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 import javax.inject.Singleton

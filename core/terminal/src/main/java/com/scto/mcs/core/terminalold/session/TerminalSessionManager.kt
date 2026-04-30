@@ -1,7 +1,7 @@
 package com.scto.mcs.core.terminalold.session
 
 import com.scto.mcs.core.terminal.session.TerminalSessionManager as ModernTerminalSessionManager
-import com.scto.mcs.core.terminal.TerminalService
+import kotlinx.uuid.UUID
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -19,11 +19,11 @@ class TerminalSessionManager @Inject constructor(
         modernManager.createNewSession(title)
     }
 
-    fun switchSession(id: kotlinx.uuid.UUID) {
+    fun switchSession(id: UUID) {
         modernManager.switchSession(id)
     }
 
-    fun closeSession(id: kotlinx.uuid.UUID) {
+    fun closeSession(id: UUID) {
         modernManager.closeSession(id)
     }
 }

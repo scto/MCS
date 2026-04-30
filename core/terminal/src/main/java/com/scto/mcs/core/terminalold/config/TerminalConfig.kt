@@ -2,11 +2,14 @@ package com.scto.mcs.core.terminalold.config
 
 import com.scto.mcs.core.terminal.config.TerminalConfig as ModernTerminalConfig
 import java.io.File
+import javax.inject.Inject
+import javax.inject.Singleton
 
 /**
  * Wrapper für die Terminal-Konfiguration, die auf die moderne Implementierung verweist.
  */
-object TerminalConfig {
+@Singleton
+class TerminalConfig @Inject constructor() {
     val TERMINAL_ROOT_DIR = ModernTerminalConfig.TERMINAL_ROOT_DIR
     val ROOTFS_DIR = ModernTerminalConfig.ROOTFS_DIR
     val BIN_DIR = ModernTerminalConfig.BIN_DIR
