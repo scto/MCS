@@ -7,6 +7,10 @@ class ProotProcessWrapper(private val config: TerminalConfig) {
 
     private var process: Process? = null
 
+    val inputStream: InputStream? get() = process?.inputStream
+    val errorStream: InputStream? get() = process?.errorStream
+    val outputStream: OutputStream? get() = process?.outputStream
+
     fun start(): Process {
         val command = if (config.useProot) {
             listOf("proot", "-r", config.workingDirectory, config.initialCommand)
@@ -24,5 +28,6 @@ class ProotProcessWrapper(private val config: TerminalConfig) {
 
     fun stop() {
         process?.destroy()
+        process = null
     }
 }

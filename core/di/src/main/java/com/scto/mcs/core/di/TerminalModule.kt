@@ -1,6 +1,8 @@
 package com.scto.mcs.core.di
 
-import com.scto.mcs.core.terminal.TerminalService
+import com.scto.mcs.core.terminal.terminalold.TerminalService
+import com.scto.mcs.core.terminal.terminalold.TerminalSessionManager
+import com.scto.mcs.core.terminal.terminalold.TerminalSetupService
 
 import dagger.Module
 import dagger.Provides
@@ -15,5 +17,8 @@ object TerminalModule {
 
     @Provides
     @Singleton
-    fun provideTerminalService(): TerminalService = TerminalService()
+    fun provideTerminalService(
+        sessionManager: TerminalSessionManager,
+        setupService: TerminalSetupService
+    ): TerminalService = TerminalService(sessionManager, setupService)
 }
