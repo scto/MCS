@@ -2,7 +2,6 @@ package com.scto.mcs.core.terminalold
 
 import android.content.Context
 import com.srvhive.app.utils.ProotProcessWrapper as ModernProotProcessWrapper
-import java.io.File
 import javax.inject.Inject
 
 /**
@@ -16,7 +15,7 @@ class ProotProcessWrapper @Inject constructor(
         return ModernProotProcessWrapper.Builder(context)
     }
 
-    // Beispiel für eine direkte Delegierung, falls benötigt
+    // Delegierung der Start-Funktionalität
     fun start(builder: ModernProotProcessWrapper.Builder, vararg command: String): Process {
         return builder.build().start(*command)
     }
