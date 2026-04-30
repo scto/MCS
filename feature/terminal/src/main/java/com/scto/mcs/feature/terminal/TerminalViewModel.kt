@@ -6,11 +6,9 @@ import androidx.lifecycle.viewModelScope
 import com.scto.mcs.core.terminal.TerminalService
 import com.scto.mcs.core.terminal.session.TerminalSessionManager
 import com.scto.mcs.core.terminal.setup.TerminalSetupService
-import com.termux.terminal.TerminalSession
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.*
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
@@ -29,9 +27,19 @@ class TerminalViewModel @Inject constructor(
         list.find { it.mHandle == id }
     }.stateIn(viewModelScope, SharingStarted.Lazily, null)
 
+    val setupState = setupService.runFullSetup(context).stateIn(viewModelScope, SharingStarted.Lazily, TerminalSetupService.SetupState.Initializing("Warte..."))
+
+    fun startInstallation() {
+        // Setup wird bereits durch den Flow in setupState gestartet
+    }
+
     fun createNewSession() {
         val session = sessionManager.createNewSession("Session")
         _activeSessionId.value = session.mHandle
+    }
+
+    fun switchSession(id: String?) {
+        _activeSessionId.value = id
     }
 
     fun runCommand(command: String) {

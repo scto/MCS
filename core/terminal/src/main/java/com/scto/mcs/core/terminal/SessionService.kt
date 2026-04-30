@@ -4,8 +4,10 @@ import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.Service
+import android.content.Context
 import android.content.Intent
 import android.os.IBinder
+import android.os.PowerManager
 import com.scto.mcs.core.terminal.session.TerminalSessionManager
 import com.termux.terminal.TerminalSession
 import com.termux.terminal.TerminalSessionClient
@@ -16,15 +18,25 @@ import javax.inject.Inject
 class SessionService : Service(), TerminalSessionClient {
 
     @Inject lateinit var sessionManager: TerminalSessionManager
+    private var wakeLock: PowerManager.WakeLock? = null
 
     override fun onCreate() {
         super.onCreate()
         createNotificationChannel()
         startForeground(1, createNotification())
+        
+        val powerManager = getSystemService(Context.POWER_SERVICE) as PowerManager
+        wakeLock = powerManager.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "MCS:TerminalService")
+        wakeLock?.acquire()
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         return START_STICKY
+    }
+
+    override fun onDestroy() {
+        wakeLock?.release()
+        super.onDestroy()
     }
 
     override fun onBind(intent: Intent?): IBinder? = null
