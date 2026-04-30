@@ -17,13 +17,9 @@ enum class NEXT_STAGE {
     EXTRACTION,
 }
 
-/**
- * Ermittelt die nächste Phase der Terminal-Installation.
- * Verhindert IO-Operationen auf dem Main-Thread.
- */
 suspend fun CoroutineScope.getNextStage(context: Context): NEXT_STAGE {
     if (isMainThread()) {
-        throw RuntimeException("IO-Operation auf dem Main-Thread erkannt!")
+        throw RuntimeException("IO operation on the main thread")
     }
 
     val sandboxFile = File(getTempDir(), "sandbox.tar.gz")
