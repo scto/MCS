@@ -91,7 +91,11 @@ class TerminalClientImpl @Inject constructor(
     override fun copyModeChanged(copyMode: Boolean) {}
 
     override fun onKeyDown(keyCode: Int, e: KeyEvent, session: TerminalSession): Boolean {
-        // Basic key handling logic
+        // Migrated logic: Handle specific key events if necessary
+        if (keyCode == KeyEvent.KEYCODE_ENTER && !session.isRunning) {
+            // TODO: Integrate session handling logic here if needed
+            return true
+        }
         return false
     }
 
