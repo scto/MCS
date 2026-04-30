@@ -8,6 +8,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.IBinder
 import android.os.PowerManager
+import com.scto.mcs.core.domain.repository.FileRepository
 import com.scto.mcs.core.terminal.session.TerminalSessionManager
 import com.termux.terminal.TerminalSession
 import com.termux.terminal.TerminalSessionClient
@@ -18,6 +19,8 @@ import javax.inject.Inject
 class SessionService : Service(), TerminalSessionClient {
 
     @Inject lateinit var sessionManager: TerminalSessionManager
+    @Inject lateinit var fileRepository: FileRepository
+    
     private var wakeLock: PowerManager.WakeLock? = null
 
     override fun onCreate() {
