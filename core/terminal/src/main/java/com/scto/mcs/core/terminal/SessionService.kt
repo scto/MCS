@@ -66,4 +66,6 @@ class SessionService : Service(), TerminalSessionClient {
     override fun onBell(session: TerminalSession?) {}
     override fun onColorsChanged(session: TerminalSession?) {}
     override fun getEmulatorDimensions(session: TerminalSession?): IntArray = intArrayOf(80, 24)
+    override fun onTextChanged(changedSession: TerminalSession?) {}
+    override fun onTitleChanged(changedSession: TerminalSession?) {}
 }
