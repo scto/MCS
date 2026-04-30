@@ -1,10 +1,8 @@
 package com.scto.mcs.core.di
 
 import com.scto.mcs.core.terminal.TerminalService
-import com.scto.mcs.core.terminal.TerminalServiceImpl
 import com.scto.mcs.core.terminal.session.TerminalSessionManager
-
-import dagger.Binds
+import com.scto.mcs.core.terminal.session.TabManager
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -13,15 +11,14 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-abstract class TerminalModule {
+object TerminalModule {
 
-    @Binds
+    @Provides
     @Singleton
-    abstract fun bindTerminalService(impl: TerminalServiceImpl): TerminalService
+    fun provideTerminalService(): TerminalService = TerminalService()
 
-    companion object {
-        @Provides
-        @Singleton
-        fun provideTerminalSessionManager(): TerminalSessionManager = TerminalSessionManager()
-    }
+    @Provides
+    @Singleton
+    fun provideTerminalSessionManager(tabManager: TabManager): TerminalSessionManager = 
+        TerminalSessionManager(tabManager)
 }

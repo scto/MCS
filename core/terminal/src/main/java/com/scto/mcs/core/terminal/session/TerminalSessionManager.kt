@@ -2,6 +2,7 @@ package com.scto.mcs.core.terminal.session
 
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
+import com.scto.mcs.feature.settings.Settings
 import com.termux.terminal.TerminalSession
 import kotlinx.uuid.UUID
 import javax.inject.Inject
@@ -18,9 +19,7 @@ class TerminalSessionManager @Inject constructor(
     val activeSessionId = mutableStateOf<String?>(null)
 
     fun createNewSession(title: String = "Session") {
-        // Logik zur Erstellung einer neuen Session
-        // Hier würde normalerweise die Terminal-Emulation initialisiert werden
-        val newSession = TerminalSession() // Vereinfacht
+        val newSession = TerminalSession() 
         sessions.add(newSession)
         activeSessionId.value = newSession.mHandle
     }
@@ -37,8 +36,18 @@ class TerminalSessionManager @Inject constructor(
         }
     }
 
+    /**
+     * Ermittelt das aktuelle Arbeitsverzeichnis.
+     * Wenn Settings.project_as_pwd aktiv ist, wird der Pfad des aktuellen Editor-Tabs verwendet.
+     */
     fun getPwd(): String {
-        // Wenn Settings.project_as_pwd wahr ist, frage TabManager ab
-        return tabManager.getCurrentTabPath() ?: System.getProperty("user.home") ?: "/"
+        return if (Settings.project_as_pwd) {
+            tabManager.getCurrentTabPath()?.let { path ->
+                // Extrahiere Parent-Verzeichnis der Datei
+                java.io.File(path).parent ?: path
+            } ?: System.getProperty("user.home") ?: "/"
+        } else {
+            System.getProperty("user.home") ?: "/"
+        }
     }
 }

@@ -15,6 +15,8 @@ class TerminalConfig @Inject constructor() {
         const val TERMINAL_ROOT_DIR = "terminal"
         const val ROOTFS_DIR = "rootfs"
         const val BIN_DIR = "bin"
+        const val TMP_DIR = "tmp"
+        const val HOME_DIR = "home"
         
         var debugLevel = 1
         var isDebugEnabled = true
@@ -33,5 +35,17 @@ class TerminalConfig @Inject constructor() {
         
         fun getRootFsDir(context: Context): File = 
             File(context.filesDir, "$TERMINAL_ROOT_DIR/$ROOTFS_DIR")
+
+        fun getProotPath(context: Context): File = 
+            File(getRootFsDir(context), "$BIN_DIR/proot")
+
+        fun getHomeDir(context: Context): File = 
+            File(getRootFsDir(context), HOME_DIR)
+
+        fun getTmpDir(context: Context): File = 
+            File(getRootFsDir(context), TMP_DIR)
+
+        fun getBinDir(context: Context): File = 
+            File(getRootFsDir(context), BIN_DIR)
     }
 }
