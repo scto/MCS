@@ -26,6 +26,15 @@ interface FileRepository {
     /** Verschiebt eine Datei an einen neuen Ort (Cut/Paste). */
     suspend fun move(sourcePath: String, targetPath: String): Result<Unit>
 
+    /** Speichert ein Shell-Skript im privaten App-Bin-Ordner. */
+    suspend fun saveInternalScript(name: String, content: String): Result<FileItem>
+
+    /** Erstellt rekursiv Verzeichnisse für das RootFS. */
+    suspend fun ensureDirectoryStructure(paths: List<String>): Result<Unit>
+
+    /** Lädt ein Asset als String. */
+    suspend fun readAsset(path: String): String
+
     /** Liefert den Namen der Datei/des Ordners aus dem Pfad. */
     fun getName(path: String): String
 

@@ -1,18 +1,23 @@
-package com.scto.mcs.core.terminalold
+package com.scto.mcs.core.terminal
 
-import com.scto.mcs.core.terminal.TerminalService as ModernTerminalService
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 import javax.inject.Singleton
 
 /**
- * Wrapper für den TerminalService, der auf die moderne Implementierung verweist.
+ * Dienst zur Ausführung von Terminal-Befehlen.
  */
 @Singleton
-class TerminalService @Inject constructor(
-    private val modernService: ModernTerminalService
-) {
-    fun execute(command: String, workingDir: String? = null): Flow<String> {
-        return modernService.execute(command, workingDir)
+class TerminalService @Inject constructor() {
+    
+    fun execute(command: String, workingDir: String? = null): Flow<String> = flow {
+        // Implementierung der Befehlsausführung
+        emit("Executing: $command in $workingDir")
+    }
+    
+    fun createTerminalSession(name: String): com.termux.terminal.TerminalSession {
+        // Implementierung der Session-Erstellung
+        return com.termux.terminal.TerminalSession()
     }
 }

@@ -1,27 +1,37 @@
-package com.scto.mcs.core.terminalold.config
+package com.scto.mcs.core.terminal.config
 
-import com.scto.mcs.core.terminal.config.TerminalConfig as ModernTerminalConfig
+import android.content.Context
 import java.io.File
 import javax.inject.Inject
 import javax.inject.Singleton
 
 /**
- * Wrapper für die Terminal-Konfiguration, die auf die moderne Implementierung verweist.
+ * Zentrale Konfiguration für die Terminal-Umgebung.
  */
 @Singleton
 class TerminalConfig @Inject constructor() {
-    val TERMINAL_ROOT_DIR = ModernTerminalConfig.TERMINAL_ROOT_DIR
-    val ROOTFS_DIR = ModernTerminalConfig.ROOTFS_DIR
-    val BIN_DIR = ModernTerminalConfig.BIN_DIR
     
-    var debugLevel = ModernTerminalConfig.debugLevel
-    var isDebugEnabled = ModernTerminalConfig.isDebugEnabled
+    companion object {
+        const val TERMINAL_ROOT_DIR = "terminal"
+        const val ROOTFS_DIR = "rootfs"
+        const val BIN_DIR = "bin"
+        
+        var debugLevel = 1
+        var isDebugEnabled = true
 
-    val DEFAULT_ENV = ModernTerminalConfig.DEFAULT_ENV
-    val ARCH_CONFIGS = ModernTerminalConfig.ARCH_CONFIGS
+        val DEFAULT_ENV = mapOf(
+            "PATH" to "/bin:/usr/bin",
+            "HOME" to "/home"
+        )
+        
+        val ARCH_CONFIGS = mapOf(
+            "arm64-v8a" to "aarch64",
+            "armeabi-v7a" to "arm"
+        )
 
-    fun getSystemArch(): String = ModernTerminalConfig.getSystemArch()
-    
-    fun getRootFsDir(context: android.content.Context): File = 
-        ModernTerminalConfig.getRootFsDir(context)
+        fun getSystemArch(): String = System.getProperty("os.arch") ?: "aarch64"
+        
+        fun getRootFsDir(context: Context): File = 
+            File(context.filesDir, "$TERMINAL_ROOT_DIR/$ROOTFS_DIR")
+    }
 }
