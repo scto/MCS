@@ -1,4 +1,4 @@
-﻿/add core/terminal//*.kt feature/terminal//.kt core/files/src/main/java/com/scto/mcs/core/files/repository/.kt core/di//*.kt core/domain//.kt core/editor/src/main/java/com/scto/mcs/core/editor/tabs/**/.kt
+﻿/add core/terminal/**/*.kt feature/terminal/**/.kt core/files/src/main/java/com/scto/mcs/core/files/repository/.kt core/di/**/*.kt core/domain/**/.kt core/editor/src/main/java/com/scto/mcs/core/editor/tabs/**/.kt
 Führe eine tiefgreifende Integration von :core:terminalxed in :core:terminal durch. Implementiere die moderne Architektur unter Einbeziehung von DI, Domain und Files.
 
 1. Erweiterung :core:files (Repository):
