@@ -1,28 +1,54 @@
 package com.scto.mcs.core.terminal
 
+import android.app.Notification
+import android.app.NotificationChannel
+import android.app.NotificationManager
 import android.app.Service
 import android.content.Intent
 import android.os.IBinder
+import com.scto.mcs.core.terminal.session.TerminalSessionManager
+import com.termux.terminal.TerminalSession
+import com.termux.terminal.TerminalSessionClient
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
-/**
- * Service zur Verwaltung von Terminal-Sitzungen.
- */
 @AndroidEntryPoint
-class SessionService : Service() {
-    
-    override fun onBind(intent: Intent?): IBinder? = null
+class SessionService : Service(), TerminalSessionClient {
+
+    @Inject lateinit var sessionManager: TerminalSessionManager
 
     override fun onCreate() {
         super.onCreate()
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
+        createNotificationChannel()
+        startForeground(1, createNotification())
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         return START_STICKY
     }
+
+    override fun onBind(intent: Intent?): IBinder? = null
+
+    private fun createNotificationChannel() {
+        val channel = NotificationChannel("terminal_service", "Terminal Service", NotificationManager.IMPORTANCE_LOW)
+        getSystemService(NotificationManager::class.java).createNotificationChannel(channel)
+    }
+
+    private fun createNotification(): Notification {
+        return Notification.Builder(this, "terminal_service")
+            .setContentTitle("Terminal läuft")
+            .setSmallIcon(android.R.drawable.ic_menu_mylocation)
+            .build()
+    }
+
+    // TerminalSessionClient Implementierung
+    override fun onSessionFinished(session: TerminalSession?) {
+        session?.let { sessionManager.closeSession(it.mHandle) }
+    }
+
+    override fun onCopyTextToClipboard(session: TerminalSession?, text: String?) {}
+    override fun onPasteTextFromClipboard(session: TerminalSession?) {}
+    override fun onBell(session: TerminalSession?) {}
+    override fun onColorsChanged(session: TerminalSession?) {}
+    override fun getEmulatorDimensions(session: TerminalSession?): IntArray = intArrayOf(80, 24)
 }
