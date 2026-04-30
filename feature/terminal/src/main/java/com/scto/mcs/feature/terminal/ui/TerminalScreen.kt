@@ -37,7 +37,8 @@ import androidx.navigation.compose.rememberNavController
 
 import com.scto.mcs.core.resources.R
 import com.scto.mcs.core.resources.strings
-import com.scto.mcs.core.terminalold.setup.TerminalSetupService.SetupState
+import com.scto.mcs.core.terminal.setup.TerminalSetupService.SetupState
+import com.scto.mcs.core.terminal.virtualkeys.*
 import com.scto.mcs.core.ui.components.setup.TerminalSetupView
 import com.scto.mcs.core.ui.theme.LocalThemeHolder
 import com.scto.mcs.core.ui.animations.NavigationAnimationTransitions
@@ -45,7 +46,6 @@ import com.scto.mcs.core.utils.dpToPx
 import com.scto.mcs.feature.settings.Settings
 import com.scto.mcs.feature.settings.SettingsRoutes
 import com.scto.mcs.feature.terminal.TerminalViewModel
-import com.scto.mcs.core.terminalold.virtualkeys.*
 import com.termux.view.TerminalView
 import kotlinx.coroutines.launch
 import java.util.Properties
