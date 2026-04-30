@@ -11,7 +11,7 @@ android {
     lint.disable += "MissingTranslation"
 
     defaultConfig {
-        minSdk = 26
+        minSdk = libs.versions.minSdk.get().toInt()
         targetSdk = libs.versions.targetSdk.get().toInt()
         
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
@@ -24,7 +24,7 @@ android {
     }
     
     kotlinOptions {
-        jvmTarget = "17"
+        jvmTarget = libs.versions.java.get()
     }
 }
 
