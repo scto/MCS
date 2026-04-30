@@ -1,4 +1,4 @@
-package com.scto.mcs.core.terminal.xed
+package com.scto.mcs.core.terminal
 
 import android.annotation.SuppressLint
 import android.app.Notification
@@ -14,11 +14,11 @@ import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.core.app.NotificationCompat
 
-import com.scto.mcs.app.activities.terminal.TerminalActivity
+import com.scto.mcs.app.ui.activities.terminal.TerminalActivity
 import com.scto.mcs.core.resources.drawables
 import com.scto.mcs.core.resources.getString
 import com.scto.mcs.core.resources.strings
-import com.scto.mcs.feature.settings.SettingsViewModel
+import com.scto.mcs.feature.settings.Settings
 import com.termux.terminal.TerminalSession
 import com.termux.terminal.TerminalSessionClient
 

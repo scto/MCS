@@ -1,10 +1,11 @@
-package com.rk.activities.main
+package com.scto.mcs.app.ui.activities.main
 
-import com.rk.file.child
-import com.rk.resources.strings
-import com.rk.tabs.base.Tab
-import com.rk.utils.application
-import com.rk.utils.toast
+import com.scto.mcs.core.editor.tabs.base.Tab
+import com.scto.mcs.core.files.child
+import com.scto.mcs.core.resources.strings
+import com.scto.mcs.core.utils.application
+import com.scto.mcs.core.utils.toast
+
 import java.io.FileInputStream
 import java.io.FileOutputStream
 import java.io.ObjectInputStream

@@ -1,4 +1,4 @@
-package com.rk.activities.main
+package com.scto.mcs.app.ui.activities.main
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -41,33 +41,36 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+
 import com.mohamedrejeb.compose.dnd.reorder.ReorderContainer
 import com.mohamedrejeb.compose.dnd.reorder.ReorderState
 import com.mohamedrejeb.compose.dnd.reorder.ReorderableItem
 import com.mohamedrejeb.compose.dnd.reorder.rememberReorderState
-import com.rk.commands.CommandPalette
-import com.rk.commands.CommandProvider
-import com.rk.components.compose.utils.addIf
-import com.rk.editor.preloadSelectionColor
-import com.rk.filetree.FileAction
-import com.rk.filetree.FileActionContext
-import com.rk.filetree.FileActionDialogs
-import com.rk.filetree.FileIcon
-import com.rk.filetree.FileTreeViewModel
-import com.rk.filetree.MultiFileAction
-import com.rk.filetree.MultiFileActionContext
-import com.rk.filetree.getActions
-import com.rk.icons.XedIcon
-import com.rk.resources.drawables
-import com.rk.resources.getString
-import com.rk.resources.strings
-import com.rk.settings.Settings
-import com.rk.tabs.base.Tab
-import com.rk.tabs.editor.EditorTab
-import com.rk.utils.dialog
-import com.rk.utils.drawErrorUnderline
-import com.rk.utils.getGitColor
-import com.rk.utils.getUnderlineColor
+
+import com.scto.mcs.core.commands.CommandPalette
+import com.scto.mcs.core.commands.CommandProvider
+import com.scto.mcs.core.editor.preloadSelectionColor
+import com.scto.mcs.core.editor.tabs.base.Tab
+import com.scto.mcs.core.editor.tabs.editor.EditorTab
+import com.scto.mcs.core.filetree.FileAction
+import com.scto.mcs.core.filetree.FileActionContext
+import com.scto.mcs.core.filetree.FileActionDialogs
+import com.scto.mcs.core.filetree.FileIcon
+import com.scto.mcs.core.filetree.FileTreeViewModel
+import com.scto.mcs.core.filetree.MultiFileAction
+import com.scto.mcs.core.filetree.MultiFileActionContext
+import com.scto.mcs.core.filetree.getActions
+import com.scto.mcs.core.resources.drawables
+import com.scto.mcs.core.resources.getString
+import com.scto.mcs.core.resources.strings
+import com.scto.mcs.core.ui.components.compose.utils.addIf
+import com.scto.mcs.core.ui.icons.McsIcon
+import com.scto.mcs.core.utils.dialog
+import com.scto.mcs.core.utils.drawErrorUnderline
+import com.scto.mcs.core.utils.getGitColor
+import com.scto.mcs.core.utils.getUnderlineColor
+import com.scto.mcs.feature.settings.Settings
+
 import kotlinx.coroutines.launch
 
 @Composable
@@ -379,7 +382,7 @@ private fun TabItemContent(
                         is FileAction -> {
                             DropdownMenuItem(
                                 text = { Text(action.title) },
-                                leadingIcon = { XedIcon(action.icon, contentDescription = action.title) },
+                                leadingIcon = { McsIcon(action.icon, contentDescription = action.title) },
                                 enabled = action.isEnabled(it),
                                 onClick = {
                                     val context = FileActionContext(it, root, fileTreeViewModel, context)
@@ -392,7 +395,7 @@ private fun TabItemContent(
                             val files = listOf(it)
                             DropdownMenuItem(
                                 text = { Text(action.title) },
-                                leadingIcon = { XedIcon(action.icon, contentDescription = action.title) },
+                                leadingIcon = { McsIcon(action.icon, contentDescription = action.title) },
                                 enabled = action.isEnabled(files),
                                 onClick = {
                                     val context = MultiFileActionContext(files, root, fileTreeViewModel, context)

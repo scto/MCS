@@ -1,4 +1,4 @@
-package com.rk.activities.main
+package com.scto.mcs.app.ui.activities.main
 
 import androidx.activity.compose.BackHandler
 import androidx.compose.animation.core.spring
@@ -28,20 +28,22 @@ import androidx.compose.ui.unit.dp
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.rk.components.ResponsiveDrawer
-import com.rk.filetree.DrawerContent
-import com.rk.filetree.DrawerPersistence
-import com.rk.filetree.FileTreeViewModel
-import com.rk.filetree.createServices
-import com.rk.filetree.isLoading
-import com.rk.git.GitViewModel
-import com.rk.resources.getString
-import com.rk.resources.strings
-import com.rk.search.SearchViewModel
-import com.rk.settings.Settings
-import com.rk.tabs.editor.EditorTab
-import com.rk.theme.XedTheme
-import com.rk.utils.dialog
+
+import com.scto.mcs.core.editor.search.SearchViewModel
+import com.scto.mcs.core.editor.tabs.editor.EditorTab
+import com.scto.mcs.core.filetree.DrawerContent
+import com.scto.mcs.core.filetree.DrawerPersistence
+import com.scto.mcs.core.filetree.FileTreeViewModel
+import com.scto.mcs.core.filetree.createServices
+import com.scto.mcs.core.filetree.isLoading
+import com.scto.mcs.core.git.GitViewModel
+import com.scto.mcs.core.resources.getString
+import com.scto.mcs.core.resources.strings
+import com.scto.mcs.core.ui.components.ResponsiveDrawer
+import com.scto.mcs.core.ui.theme.McsTheme
+import com.scto.mcs.core.utils.dialog
+import com.scto.mcs.feature.settings.Settings
+
 import java.lang.ref.WeakReference
 import kotlinx.coroutines.launch
 
@@ -59,9 +61,9 @@ fun MainActivity.MainContentHost(
     fileTreeViewModel: FileTreeViewModel = viewModel(),
     searchViewModel: SearchViewModel = viewModel(),
 ) {
-    com.rk.activities.main.fileTreeViewModel = WeakReference(fileTreeViewModel)
-    com.rk.activities.main.gitViewModel = WeakReference(gitViewModel)
-    com.rk.activities.main.searchViewModel = WeakReference(searchViewModel)
+    com.scto.mcs.app.ui.activities.main.fileTreeViewModel = WeakReference(fileTreeViewModel)
+    com.scto.mcs.app.ui.activities.main.gitViewModel = WeakReference(gitViewModel)
+    com.scto.mcs.app.ui.activities.main.searchViewModel = WeakReference(searchViewModel)
 
     XedTheme {
         Surface(modifier = Modifier.fillMaxSize()) {

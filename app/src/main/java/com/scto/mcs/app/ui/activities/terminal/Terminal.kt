@@ -1,4 +1,4 @@
-package com.rk.activities.terminal
+package com.scto.mcs.app.ui.activities.terminal
 
 import android.Manifest
 import android.app.Activity
@@ -43,25 +43,27 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
-import com.rk.XedConstants
-import com.rk.exec.isTerminalInstalled
-import com.rk.file.child
-import com.rk.file.localBinDir
-import com.rk.file.localLibDir
-import com.rk.file.sandboxDir
-import com.rk.resources.getString
-import com.rk.resources.strings
-import com.rk.terminal.NEXT_STAGE
-import com.rk.terminal.SessionService
-import com.rk.terminal.TerminalBackEnd
-import com.rk.terminal.TerminalScreen
-import com.rk.terminal.changeSession
-import com.rk.terminal.getNextStage
-import com.rk.terminal.terminalView
-import com.rk.theme.XedTheme
-import com.rk.utils.errorDialog
-import com.rk.utils.getTempDir
-import com.rk.utils.toast
+
+import com.scto.mcs.core.exec.isTerminalInstalled
+import com.scto.mcs.core.files.child
+import com.scto.mcs.core.files.localBinDir
+import com.scto.mcs.core.files.localLibDir
+import com.scto.mcs.core.files.sandboxDir
+import com.scto.mcs.core.resources.getString
+import com.scto.mcs.core.resources.strings
+import com.scto.mcs.core.terminal.config.TerminalConfig
+import com.scto.mcs.core.terminal.NEXT_STAGE
+import com.scto.mcs.core.terminal.SessionService
+import com.scto.mcs.core.terminal.TerminalBackEnd
+import com.scto.mcs.core.terminal.TerminalScreen
+import com.scto.mcs.core.terminal.changeSession
+import com.scto.mcs.core.terminal.getNextStage
+import com.scto.mcs.core.terminal.terminalView
+import com.scto.mcs.core.ui.theme.McsTheme
+import com.scto.mcs.core.utils.errorDialog
+import com.scto.mcs.core.utils.getTempDir
+import com.scto.mcs.core.utils.toast
+
 import java.io.File
 import java.lang.ref.WeakReference
 import java.net.SocketTimeoutException
@@ -171,7 +173,7 @@ class Terminal : AppCompatActivity() {
         }
 
         setContent {
-            XedTheme {
+            McsTheme {
                 Surface {
                     if (sessionBinder != null) {
                         TerminalScreenHost(this)
@@ -220,11 +222,11 @@ class Terminal : AppCompatActivity() {
                             DownloadFile(
                                 url =
                                     if (abi.contains("x86_64")) {
-                                        XedConstants.TALLOC_X64
+                                        TerminalConfig.TALLOC_X64
                                     } else if (abi.contains("arm64-v8a")) {
-                                        XedConstants.TALLOC_ARM64
+                                        TerminalConfig.TALLOC_ARM64
                                     } else if (abi.contains("armeabi-v7a")) {
-                                        XedConstants.TALLOC_ARM
+                                        TerminalConfig.TALLOC_ARM
                                     } else {
                                         throw RuntimeException("Unsupported CPU")
                                     },
@@ -233,11 +235,11 @@ class Terminal : AppCompatActivity() {
                             DownloadFile(
                                 url =
                                     if (abi.contains("x86_64")) {
-                                        XedConstants.PROOT_X64
+                                        TerminalConfig.PROOT_X64
                                     } else if (abi.contains("arm64-v8a")) {
-                                        XedConstants.PROOT_ARM64
+                                        TerminalConfig.PROOT_ARM64
                                     } else if (abi.contains("armeabi-v7a")) {
-                                        XedConstants.PROOT_ARM
+                                        TerminalConfig.PROOT_ARM
                                     } else {
                                         throw RuntimeException("Unsupported CPU")
                                     },
@@ -251,11 +253,11 @@ class Terminal : AppCompatActivity() {
                         DownloadFile(
                             url =
                                 if (abi.contains("x86_64")) {
-                                    XedConstants.ROOTFS_X64
+                                    TerminalConfig.ROOTFS_X64
                                 } else if (abi.contains("arm64-v8a")) {
-                                    XedConstants.ROOTFS_ARM64
+                                    TerminalConfig.ROOTFS_ARM64
                                 } else if (abi.contains("armeabi-v7a")) {
-                                    XedConstants.ROOTFS_ARM
+                                    TerminalConfig.ROOTFS_ARM
                                 } else {
                                     throw RuntimeException("Unsupported CPU")
                                 },

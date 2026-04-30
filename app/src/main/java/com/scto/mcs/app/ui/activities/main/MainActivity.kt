@@ -1,4 +1,4 @@
-package com.rk.activities.main
+package com.scto.mcs.app.ui.activities.main
 
 import android.content.Intent
 import android.os.Build
@@ -15,20 +15,22 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.rk.commands.KeybindingsManager
-import com.rk.file.FileManager
-import com.rk.file.FilePermission
-import com.rk.file.toFileObject
-import com.rk.filetree.DrawerPersistence
-import com.rk.lsp.LspRegistry
-import com.rk.resources.getFilledString
-import com.rk.resources.strings
-import com.rk.settings.Settings
-import com.rk.settings.support.handleSupport
-import com.rk.tabs.editor.EditorTab
-import com.rk.tabs.editor.applyHighlightingAndConnectLSP
-import com.rk.utils.errorDialog
-import com.rk.utils.toast
+
+import com.scto.mcs.core.commands.KeybindingsManager
+import com.scto.mcs.core.editor.lsp.LspRegistry
+import com.scto.mcs.core.editor.tabs.editor.EditorTab
+import com.scto.mcs.core.editor.tabs.editor.applyHighlightingAndConnectLSP
+import com.scto.mcs.core.files.FileManager
+import com.scto.mcs.core.files.FilePermission
+import com.scto.mcs.core.files.toFileObject
+import com.scto.mcs.core.filetree.DrawerPersistence
+import com.scto.mcs.core.resources.getFilledString
+import com.scto.mcs.core.resources.strings
+import com.scto.mcs.core.utils.errorDialog
+import com.scto.mcs.core.utils.toast
+import com.scto.mcs.feature.settings.Settings
+import com.scto.mcs.feature.settings.support.handleSupport
+
 import java.lang.ref.WeakReference
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.Dispatchers

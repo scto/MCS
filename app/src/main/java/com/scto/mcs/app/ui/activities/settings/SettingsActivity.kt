@@ -1,4 +1,4 @@
-package com.rk.activities.settings
+package com.scto.mcs.app.ui.activities.settings
 
 import android.os.Bundle
 import androidx.activity.compose.setContent
@@ -10,10 +10,12 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
-import com.rk.file.FileManager
-import com.rk.resources.strings
-import com.rk.theme.XedTheme
-import com.rk.utils.toast
+
+import com.scto.mcs.core.files.FileManager
+import com.scto.mcs.core.resources.strings
+import com.scto.mcs.core.ui.theme.McsTheme
+import com.scto.mcs.core.utils.toast
+
 import java.lang.ref.WeakReference
 
 var settingsNavController = WeakReference<NavController?>(null)
@@ -36,7 +38,7 @@ class SettingsActivity : AppCompatActivity() {
         instance = this
         enableEdgeToEdge()
         setContent {
-            XedTheme {
+            McsTheme {
                 Surface {
                     val navController = rememberNavController()
                     settingsNavController = WeakReference(navController)

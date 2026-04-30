@@ -1,14 +1,16 @@
-package com.rk.activities.main
+package com.scto.mcs.app.ui.activities.main
 
 import androidx.lifecycle.viewModelScope
-import com.rk.file.FileObject
-import com.rk.resources.getString
-import com.rk.resources.strings
-import com.rk.settings.Settings
-import com.rk.tabs.base.TabRegistry
-import com.rk.tabs.editor.EditorTab
-import com.rk.utils.dialog
-import com.rk.utils.expectOOM
+
+import com.scto.mcs.core.editor.tabs.base.TabRegistry
+import com.scto.mcs.core.editor.tabs.editor.EditorTab
+import com.scto.mcs.core.files.FileObject
+import com.scto.mcs.core.resources.getString
+import com.scto.mcs.core.resources.strings
+import com.scto.mcs.core.utils.dialog
+import com.scto.mcs.core.utils.expectOOM
+import com.scto.mcs.feature.settings.Settings
+
 import io.github.rosemoe.sora.event.SelectionChangeEvent
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

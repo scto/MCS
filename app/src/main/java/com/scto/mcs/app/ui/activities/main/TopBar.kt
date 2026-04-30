@@ -1,4 +1,4 @@
-package com.rk.activities.main
+package com.scto.mcs.app.ui.activities.main
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.expandVertically
@@ -17,11 +17,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.pointer.pointerInput
-import com.rk.components.GlobalToolbarActions
-import com.rk.components.isPermanentDrawer
-import com.rk.resources.strings
-import com.rk.terminal.isV
-import com.rk.utils.toast
+
+import com.scto.mcs.core.ui.components.GlobalToolbarActions
+import com.scto.mcs.core.ui.components.isPermanentDrawer
+import com.scto.mcs.core.resources.strings
+import com.scto.mcs.core.terminal.isV
+import com.scto.mcs.core.utils.toast
+
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)

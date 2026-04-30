@@ -1,9 +1,11 @@
-package com.rk.activities.main
+package com.scto.mcs.app.ui.activities.main
 
 import androidx.lifecycle.viewModelScope
-import com.rk.file.FileObject
-import com.rk.tabs.base.Tab
-import com.rk.tabs.base.TabRegistry
+
+import com.scto.mcs.core.files.FileObject
+import com.scto.mcs.core.editor.tabs.base.Tab
+import com.scto.mcs.core.editor.tabs.base.TabRegistry
+
 import java.io.Serializable
 import kotlinx.coroutines.launch
 

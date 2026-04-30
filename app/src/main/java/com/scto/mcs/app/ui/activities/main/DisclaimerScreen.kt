@@ -1,4 +1,4 @@
-package com.rk.activities.main
+package com.scto.mcs.app.ui.activities.main
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -25,13 +25,14 @@ import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
-import com.rk.resources.strings
-import com.rk.settings.Settings
-import com.rk.theme.XedTheme
+
+import com.scto.mcs.core.resources.strings
+import com.scto.mcs.core.ui.theme.XedTheme
+import com.scto.mcs.feature.settings.Settings
 
 @Composable
 fun DisclaimerScreen(navController: NavHostController, onDecline: () -> Unit) {
-    XedTheme {
+    McsTheme {
         Column(
             modifier = Modifier.fillMaxWidth().safeContentPadding().padding(24.dp),
             horizontalAlignment = Alignment.CenterHorizontally,

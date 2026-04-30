@@ -1,4 +1,4 @@
-package com.scto.mcs.core.terminal.xed
+package com.scto.mcs.core.terminal
 
 import android.content.Context
 

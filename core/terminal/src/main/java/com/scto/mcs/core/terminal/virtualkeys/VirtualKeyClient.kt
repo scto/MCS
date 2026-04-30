@@ -1,8 +1,8 @@
-package com.rk.terminal.virtualkeys
+package com.scto.mcs.core.terminal.virtualkeys
 
 import android.view.View
 import android.widget.Button
-import com.rk.terminal.virtualkeys.VirtualKeysView.IVirtualKeysView
+import com.scto.mcs.core.terminal.virtualkeys.VirtualKeysView.IVirtualKeysView
 import com.termux.terminal.TerminalSession
 
 class VirtualKeyClient(val session: TerminalSession) : IVirtualKeysView {

@@ -1,4 +1,4 @@
-package com.rk.activities.main
+package com.scto.mcs.app.ui.activities.main
 
 import androidx.compose.animation.core.Animatable
 import androidx.compose.runtime.getValue
@@ -6,8 +6,10 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.rk.commands.Command
-import com.rk.settings.Settings
+
+import com.scto.mcs.core.commands.Command
+import com.scto.mcs.feature.settings.Settings
+
 import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

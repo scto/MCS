@@ -1,4 +1,4 @@
-package com.rk.activities.settings
+package com.scto.mcs.app.ui.activities.settings
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -8,37 +8,38 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
-import com.rk.App
-import com.rk.animations.NavigationAnimationTransitions
-import com.rk.lsp.LspRegistry
-import com.rk.settings.SettingsScreen
-import com.rk.settings.about.AboutScreen
-import com.rk.settings.app.SettingsAppScreen
-import com.rk.settings.debugOptions.AppLogs
-import com.rk.settings.debugOptions.DeveloperOptions
-import com.rk.settings.editor.AppFontScreen
-import com.rk.settings.editor.DefaultEncoding
-import com.rk.settings.editor.DefaultLineEnding
-import com.rk.settings.editor.EditExtraKeys
-import com.rk.settings.editor.EditToolbarActions
-import com.rk.settings.editor.EditorFontScreen
-import com.rk.settings.editor.ExcludeFiles
-import com.rk.settings.editor.SettingsEditorScreen
-import com.rk.settings.editor.TerminalFontScreen
-import com.rk.settings.extension.ExtensionDetail
-import com.rk.settings.extension.ExtensionScreen
-import com.rk.settings.git.GitSettings
-import com.rk.settings.keybinds.KeybindingsScreen
-import com.rk.settings.language.LanguageScreen
-import com.rk.settings.lsp.LspServerDetail
-import com.rk.settings.lsp.LspServerLogs
-import com.rk.settings.lsp.LspSettings
-import com.rk.settings.runners.HtmlRunnerSettings
-import com.rk.settings.runners.RunnerSettings
-import com.rk.settings.support.Support
-import com.rk.settings.terminal.SettingsTerminalScreen
-import com.rk.settings.terminal.TerminalExtraKeys
-import com.rk.settings.theme.ThemeScreen
+
+import com.scto.mcs.app.App
+import com.scto.mcs.core.ui.animations.NavigationAnimationTransitions
+import com.scto.mcs.core.editor.lsp.LspRegistry
+import com.scto.mcs.feature.settings.SettingsScreen
+import com.scto.mcs.feature.settings.about.AboutScreen
+import com.scto.mcs.feature.settings.app.SettingsAppScreen
+import com.scto.mcs.feature.settings.debugOptions.AppLogs
+import com.scto.mcs.feature.settings.debugOptions.DeveloperOptions
+import com.scto.mcs.feature.settings.editor.AppFontScreen
+import com.scto.mcs.feature.settings.editor.DefaultEncoding
+import com.scto.mcs.feature.settings.editor.DefaultLineEnding
+import com.scto.mcs.feature.settings.editor.EditExtraKeys
+import com.scto.mcs.feature.settings.editor.EditToolbarActions
+import com.scto.mcs.feature.settings.editor.EditorFontScreen
+import com.scto.mcs.feature.settings.editor.ExcludeFiles
+import com.scto.mcs.feature.settings.editor.SettingsEditorScreen
+import com.scto.mcs.feature.settings.editor.TerminalFontScreen
+import com.scto.mcs.feature.settings.extension.ExtensionDetail
+import com.scto.mcs.feature.settings.extension.ExtensionScreen
+import com.scto.mcs.feature.settings.git.GitSettings
+import com.scto.mcs.feature.settings.keybinds.KeybindingsScreen
+import com.scto.mcs.feature.settings.language.LanguageScreen
+import com.scto.mcs.feature.settings.lsp.LspServerDetail
+import com.scto.mcs.feature.settings.lsp.LspServerLogs
+import com.scto.mcs.feature.settings.lsp.LspSettings
+import com.scto.mcs.feature.settings.runners.HtmlRunnerSettings
+import com.scto.mcs.feature.settings.runners.RunnerSettings
+import com.scto.mcs.feature.settings.support.Support
+import com.scto.mcs.feature.settings.terminal.SettingsTerminalScreen
+import com.scto.mcs.feature.settings.terminal.TerminalExtraKeys
+import com.scto.mcs.feature.settings.theme.ThemeScreen
 
 @Composable
 fun SettingsNavHost(navController: NavHostController, activity: SettingsActivity) {

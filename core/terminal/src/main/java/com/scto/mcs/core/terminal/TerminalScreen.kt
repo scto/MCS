@@ -1,4 +1,4 @@
-package com.scto.mcs.core.terminal.xed
+package com.scto.mcs.core.terminal
 
 import android.graphics.Typeface
 import android.view.KeyEvent
@@ -69,24 +69,25 @@ import androidx.navigation.compose.rememberNavController
 
 import com.scto.mcs.app.ui.activities.settings.SettingsRoutes
 import com.scto.mcs.app.ui.activities.terminal.TerminalActivity
-import com.scto.mcs.core.animations.NavigationAnimationTransitions
 import com.scto.mcs.core.editor.FontCache
 import com.scto.mcs.core.exec.pendingCommand
 import com.scto.mcs.core.files.child
 import com.scto.mcs.core.files.sandboxDir
 import com.scto.mcs.core.resources.strings
-import com.scto.mcs.feature.settings.SettingsViewModel
+import com.scto.mcs.core.terminal.virtualkeys.VirtualKeysConstants
+import com.scto.mcs.core.terminal.virtualkeys.VirtualKeysInfo
+import com.scto.mcs.core.terminal.virtualkeys.VirtualKeysListener
+import com.scto.mcs.core.terminal.virtualkeys.VirtualKeysView
+import com.scto.mcs.core.ui.animations.NavigationAnimationTransitions
+import com.scto.mcs.core.ui.animations.NavigationAnimationTransitions
+import com.scto.mcs.core.ui.theme.LocalThemeHolder
+import com.scto.mcs.core.ui.theme.ThemeHolder
+import com.scto.mcs.core.utils.dpToPx
+import com.scto.mcs.feature.settings.Settings
 import com.scto.mcs.feature.settings.editor.DEFAULT_TERMINAL_FONT_PATH
 import com.scto.mcs.feature.settings.editor.TerminalFontScreen
 import com.scto.mcs.feature.settings.terminal.SettingsTerminalScreen
 import com.scto.mcs.feature.settings.terminal.TerminalExtraKeys
-import com.scto.mcs.core.terminal.xed.virtualkeys.VirtualKeysConstants
-import com.scto.mcs.core.terminal.xed.virtualkeys.VirtualKeysInfo
-import com.scto.mcs.core.terminal.xed.virtualkeys.VirtualKeysListener
-import com.scto.mcs.core.terminal.xed.virtualkeys.VirtualKeysView
-import com.scto.mcs.core.ui.theme.LocalThemeHolder
-import com.scto.mcs.core.ui.theme.ThemeHolder
-import com.scto.mcs.core.utils.dpToPx
 
 import com.termux.terminal.TerminalColors
 import com.termux.terminal.TextStyle

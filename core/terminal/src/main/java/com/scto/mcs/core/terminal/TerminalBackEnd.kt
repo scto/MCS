@@ -1,4 +1,4 @@
-package com.scto.mcs.core.xed.terminal
+package com.scto.mcs.core.terminal
 
 import android.util.Log
 import android.view.KeyEvent
@@ -7,10 +7,10 @@ import android.view.MotionEvent
 import com.blankj.utilcode.util.ClipboardUtils
 import com.blankj.utilcode.util.KeyboardUtils
 
-import com.scto.mcs.app.ui..activities.terminal.TerminalActivity
+import com.scto.mcs.app.ui.activities.terminal.TerminalActivity
 import com.scto.mcs.feature.settings.SettingsViewModel
 import com.scto.mcs.feature.settings.terminal.TerminalCursorStyle
-import com.scto.mcs.core.terminal.xed.virtualkeys.SpecialButton
+import com.scto.mcs.core.terminal.virtualkeys.SpecialButton
 
 import com.termux.terminal.TerminalEmulator
 import com.termux.terminal.TerminalSession

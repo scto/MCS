@@ -17,18 +17,18 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 
-import com.scto.mcs.app.activities.MainActivity
+import com.scto.mcs.app.ui.activities.main.MainActivity
 import com.scto.mcs.core.files.FileObject
-import com.scto.mcs.core.ui.icons.Error
-import com.scto.mcs.core.ui.icons.McsIcons
-import com.scto.mcs.core.resources.getString
-import com.scto.mcs.core.resources.strings
-import com.scto.mcs.feature.settings.debugOptions.LogEntry
-import com.scto.mcs.feature.settings.debugOptions.LogLevel
 import com.scto.mcs.core.editor.tabs.editor.EditorTab
 import com.scto.mcs.core.editor.tabs.editor.applyHighlightingAndConnectLSP
+import com.scto.mcs.core.resources.getString
+import com.scto.mcs.core.resources.strings
+import com.scto.mcs.core.ui.icons.Error
+import com.scto.mcs.core.ui.icons.McsIcons
 import com.scto.mcs.core.ui.theme.greenStatus
 import com.scto.mcs.core.ui.theme.yellowStatus
+import com.scto.mcs.feature.settings.debugOptions.LogEntry
+import com.scto.mcs.feature.settings.debugOptions.LogLevel
 
 import io.github.rosemoe.sora.lsp.client.languageserver.wrapper.LanguageServerWrapper
 import io.github.rosemoe.sora.lsp.editor.LspProject

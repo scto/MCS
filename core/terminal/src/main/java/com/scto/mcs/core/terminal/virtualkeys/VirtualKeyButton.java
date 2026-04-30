@@ -1,4 +1,4 @@
-package com.rk.terminal.virtualkeys;
+package com.scto.mcs.core.terminal.virtualkeys;
 
 import android.text.TextUtils;
 

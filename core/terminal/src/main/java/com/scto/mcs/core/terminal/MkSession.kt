@@ -1,9 +1,9 @@
-package com.scto.mcs.core.terminal.xed
+package com.scto.mcs.core.terminal
 
 import android.os.Build
 
-import com.scto.mcs.app.activities.MainActivity
-import com.scto.mcs.app.activities.TerminalActivity
+import com.scto.mcs.app.ui.activities.main.MainActivity
+import com.scto.mcs.app.ui.activities.terminal.TerminalActivity
 import com.scto.mcs.core.exec.pendingCommand
 import com.scto.mcs.core.files.FileWrapper
 import com.scto.mcs.core.files.child
@@ -11,8 +11,8 @@ import com.scto.mcs.core.files.localBinDir
 import com.scto.mcs.core.files.localDir
 import com.scto.mcs.core.files.localLibDir
 import com.scto.mcs.core.files.sandboxHomeDir
-import com.scto.mcs.feature.settings.SettingsViewModel
-import com.scto.mcs.core.tabs.editor.EditorTab
+import com.scto.mcs.feature.settings.Settings
+import com.scto.mcs.core.editor.tabs.editor.EditorTab
 import com.scto.mcs.core.utils.getSourceDirOfPackage
 import com.scto.mcs.core.utils.getTempDir
 import com.scto.mcs.core.utils.isFDroid

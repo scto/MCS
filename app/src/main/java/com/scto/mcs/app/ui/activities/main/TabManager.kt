@@ -1,10 +1,11 @@
-package com.rk.activities.main
+package com.scto.mcs.app.ui.activities.main
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.setValue
-import com.rk.tabs.base.Tab
+
+import com.scto.mcs.core.editor.tabs.base.Tab
 
 class TabManager {
     private val _tabs = mutableStateListOf<Tab>()

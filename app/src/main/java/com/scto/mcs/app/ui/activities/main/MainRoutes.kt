@@ -1,4 +1,4 @@
-package com.rk.activities.main
+package com.scto.mcs.app.ui.activities.main
 
 sealed class MainRoutes(val route: String) {
     object Main : MainRoutes("main")

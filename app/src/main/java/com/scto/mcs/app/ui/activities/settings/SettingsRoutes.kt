@@ -1,4 +1,4 @@
-package com.rk.activities.settings
+package com.scto.mcs.app.ui.activities.settings
 
 sealed class SettingsRoutes(val route: String) {
     data object Settings : SettingsRoutes("settings")
