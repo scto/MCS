@@ -1,6 +1,7 @@
 package com.scto.mcs.core.di
 
 import com.scto.mcs.core.terminal.TerminalService
+import com.scto.mcs.core.terminal.TerminalSessionFactory
 import com.scto.mcs.core.terminal.session.TerminalSessionManager
 import com.scto.mcs.core.terminal.session.TabManager
 import dagger.Module
@@ -15,10 +16,16 @@ object TerminalModule {
 
     @Provides
     @Singleton
-    fun provideTerminalService(): TerminalService = TerminalService()
+    fun provideTerminalService(service: TerminalService): TerminalService = service
 
     @Provides
     @Singleton
-    fun provideTerminalSessionManager(tabManager: TabManager): TerminalSessionManager = 
-        TerminalSessionManager(tabManager)
+    fun provideTerminalSessionFactory(): TerminalSessionFactory = TerminalSessionFactory()
+
+    @Provides
+    @Singleton
+    fun provideTerminalSessionManager(
+        tabManager: TabManager,
+        sessionFactory: TerminalSessionFactory
+    ): TerminalSessionManager = TerminalSessionManager(tabManager, sessionFactory)
 }

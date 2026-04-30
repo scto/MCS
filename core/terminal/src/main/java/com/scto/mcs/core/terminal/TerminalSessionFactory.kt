@@ -10,7 +10,7 @@ class TerminalSessionFactory @Inject constructor() {
 
     fun createEnv(): Map<String, String> {
         val env = TerminalConfig.DEFAULT_ENV.toMutableMap()
-        env["HOME"] = Settings.sandbox // Nutzt Settings aus dem feature:settings Modul
+        env["HOME"] = Settings.sandbox
         return env
     }
 }

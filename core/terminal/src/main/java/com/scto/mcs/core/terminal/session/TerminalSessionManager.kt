@@ -29,8 +29,8 @@ class TerminalSessionManager @Inject constructor(
         // PWD berechnen
         val pwd = getPwd()
         
-        // Session initialisieren (Logik aus MkSession)
-        // Hier würde normalerweise die TerminalSession mit den Parametern konfiguriert werden
+        // Session initialisieren
+        // Hier würde die TerminalSession mit den Parametern konfiguriert werden
         
         _sessions.value = _sessions.value + newSession
         return newSession
