@@ -10,7 +10,6 @@ class TerminalSetupService @Inject constructor(
     private val fileRepository: FileRepository
 ) {
     suspend fun setupEnvironment(): Result<Unit> {
-        // Ensure necessary directories exist using the domain repository
         val sandboxResult = fileRepository.getSandboxDir()
         
         return if (sandboxResult.isSuccess) {
