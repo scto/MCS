@@ -1,31 +1,37 @@
-﻿/add core/terminal/**/*.kt feature/terminal/**/.kt core/files/src/main/java/com/scto/mcs/core/files/repository/.kt core/di/**/*.kt core/domain/**/.kt core/editor/src/main/java/com/scto/mcs/core/editor/tabs/**/.kt
-Führe eine tiefgreifende Integration von :core:terminalxed in :core:terminal durch. Implementiere die moderne Architektur unter Einbeziehung von DI, Domain und Files.
+﻿/add core/terminal/**/*.kt feature/terminal/**/*.kt core/files/src/main/java/com/scto/mcs/core/files/repository/*.kt core/di/**/*.kt core/domain/**/*.kt core/editor/src/main/java/com/scto/mcs/core/editor/tabs/**/*.kt
+Führe einen vollständigen Rebuild der Terminal-Logik durch. Migriere die Funktionalität aus den Legacy-Dateien (MkSession, MkRootfs, TerminalBackEnd, TerminalFiles, SessionService) in die neue MCS-Architektur.
 
-1. Erweiterung :core:files (Repository):
-   * Aktualisiere FileRepository und FileRepositoryImpl. Implementiere:
-      * saveInternalScript(name: String, content: String): Speichert Shell-Skripte im privaten App-Bin-Ordner.
-      * ensureDirectoryStructure(paths: List<String>): Erstellt rekursiv Verzeichnisse für das RootFS.
-      * readAsset(path: String): String: Hilfsmethode zum Laden der Shell-Templates.
+STRIKTE IMPLEMENTIERUNGS-REGELN:
+1. SessionService & Hilt (Kernaufgabe):
+   * Nimm die vollständige Logik aus dem alten SessionService (Foreground-Notification, WakeLock, Session-Liste) und implementiere sie in der neuen @AndroidEntryPoint Klasse SessionService.
+   * Injektiere das FileRepository und den TerminalSessionManager via Hilt.
+   * Der Service muss TerminalSessionClient implementieren, um auf Session-Ende zu reagieren.
 
-2. Migration TerminalConfig:
-   * Ersetze XedConstants durch TerminalConfig (:core:terminal/config).
-   * Alle Pfade für proot, home, tmp und bin müssen reaktiv über die Config bezogen werden.
+2. TerminalSessionManager (Logik-Zentrum):
+   * Erstelle/Update den TerminalSessionManager als @Singleton.
+   * Er muss einen StateFlow<List<TerminalSession>> bereitstellen.
+   * Implementiere createNewSession(name: String): Nutze hierbei die Logik aus MkSession.kt.
+   * Integration Editor-Tabs: Injektiere TabManager. Wenn eine Session erstellt wird, berechne das PWD: Falls Settings.project_as_pwd aktiv ist, nimm den Pfad des aktuellen EditorTab.
 
-3. Session-Logik & Editor-Integration:
-   * Der TerminalSessionManager muss den TabManager (:core:editor/tabs) injiziert bekommen.
-   * Logik für getPwd(): Wenn eine neue Session erstellt wird und Settings.project_as_pwd wahr ist, frage TabManager.currentTab ab. Falls dieser ein EditorTab ist, setze das Arbeitsverzeichnis auf den Parent-Ordner der Datei.
-   * Nutze den SessionService als Foreground-Komponente für die Prozess-Persistenz.
+3. MkSession & Umgebungsvariablen:
+   * Integriere die gesamte env-Map Logik aus MkSession.kt in einen TerminalSessionFactory Dienst.
+   * Ersetze SettingsViewModel.sandbox Referenzen durch Settings.sandbox (aus dem feature:settings Modul).
+   * Nutze TerminalConfig für alle Pfade (proot, home, bin).
+4. TerminalBackEnd (Die Brücke):
+   * Implementiere TerminalViewClient und TerminalSessionClient.
+   * Übernimm die Logik für Clipboard (Copy/Paste), Skalierung (onScale) und Key-Events (Ctrl/Alt/Fn) aus der alten Datei.
+   * WICHTIG: Die Sondertasten-Logik muss reaktiv über das TerminalViewModel oder die VirtualKeysView abgefragt werden.
 
-4. UI & ViewModel Modernisierung:
-   * Der TerminalScreen (:feature:terminal/ui) muss das Pager-System (Virtual Keys & Input) und den Session-Drawer aus der xed-Sicherung übernehmen.
-   * Das TerminalViewModel steuert den TerminalSessionManager und den TerminalSetupService.
-   * Binde die native TerminalView (Termux) via AndroidView im Screen ein.
+5. FileRepository Erweiterung:
+   * Implementiere in FileRepositoryImpl:
+      * saveInternalScript(name: String, content: String): Zum Schreiben der stat/vmstat/setup Dateien.
+      * provideTerminalAsset(path: String): Zum Streamen der Shell-Skripte aus den Assets.
 
-5. Virtual Keys:
-   * Migriere die VirtualKeysView nach com.scto.mcs.core.terminal.virtualkeys.
-   * Sorge dafür, dass TerminalBackEnd die Sondertasten-Status (Ctrl/Alt) direkt vom ViewModel bezieht (reaktive Kopplung).
-6. Hilt Integration:
-   * Nutze die bereitgestellten Module in :core:di, um TerminalService, FileRepository und TerminalSessionManager als Singletons zu registrieren.
-7. Cleanup:
-   * Nutze die globale Import-Mapping-Tabelle. Entferne alle "Xed"-Präfixe und ungenutzten Code.
-Erkläre nach Abschluss kurz, wie die Kommunikation zwischen Terminal und Editor-Tabs architektonisch gelöst wurde.
+6. UI (TerminalScreen & ViewModel):
+   * Der TerminalScreen muss den ModalNavigationDrawer zur Session-Auswahl und den HorizontalPager für die Virtual Keys enthalten.
+   * Binde die native TerminalView via AndroidView ein und verknüpfe sie mit der activeSession aus dem ViewModel.
+
+7. Cleanup & Mapping:
+   * Ersetze alle com.rk.* durch com.scto.mcs.*.
+   * Lösche die alten Dateien MkSession.kt, MkRootfs.kt, TerminalFiles.kt und TerminalBackEnd.kt nachdem deren Logik erfolgreich in die neuen Hilt-Services/Repositories integriert wurde.
+Bestätige die erfolgreiche Migration der Session-Logik und zeige die neuen Hilt-Module an.
