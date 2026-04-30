@@ -21,6 +21,10 @@ class TerminalSessionFactory @Inject constructor() {
         env["TMPDIR"] = TerminalConfig.TMPDIR
         env["LANG"] = "en_US.UTF-8"
         
+        // Terminal-spezifische Variablen
+        env["TERM"] = "xterm-256color"
+        env["COLORTERM"] = "truecolor"
+        
         // PATH erweitern, um die Terminal-Binaries einzubinden
         val currentPath = System.getenv("PATH") ?: ""
         env["PATH"] = "${TerminalConfig.BIN_PATH}:$currentPath"
