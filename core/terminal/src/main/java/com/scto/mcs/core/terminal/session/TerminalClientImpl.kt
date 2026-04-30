@@ -4,12 +4,17 @@ import android.util.Log
 import android.view.KeyEvent
 import android.view.MotionEvent
 import com.blankj.utilcode.util.ClipboardUtils
+import com.blankj.utilcode.util.KeyboardUtils
 import com.scto.mcs.core.terminal.config.TerminalConfig
+import com.scto.mcs.core.terminalxed.virtualkeys.SpecialButton
+import com.scto.mcs.core.terminalxed.virtualkeys.VirtualKeysView
 import com.scto.mcs.feature.settings.Settings
 import com.termux.terminal.TerminalEmulator
 import com.termux.terminal.TerminalSession
 import com.termux.terminal.TerminalSessionClient
+import com.termux.view.TerminalView
 import com.termux.view.TerminalViewClient
+import java.lang.ref.WeakReference
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -18,9 +23,20 @@ class TerminalClientImpl @Inject constructor(
     private val terminalConfig: TerminalConfig
 ) : TerminalSessionClient, TerminalViewClient {
 
+    private var terminalView: WeakReference<TerminalView>? = null
+    private var virtualKeysView: WeakReference<VirtualKeysView>? = null
+
+    fun setTerminalView(view: TerminalView) {
+        terminalView = WeakReference(view)
+    }
+
+    fun setVirtualKeysView(view: VirtualKeysView) {
+        virtualKeysView = WeakReference(view)
+    }
+
     // TerminalSessionClient implementation
     override fun onTextChanged(changedSession: TerminalSession) {
-        // TODO: Notify UI via ViewModel
+        terminalView?.get()?.onScreenUpdated()
     }
 
     override fun onTitleChanged(changedSession: TerminalSession) {}
@@ -33,7 +49,7 @@ class TerminalClientImpl @Inject constructor(
     override fun onPasteTextFromClipboard(session: TerminalSession?) {
         val clip = ClipboardUtils.getText().toString()
         if (clip.isNotBlank()) {
-            session?.emulator?.paste(clip)
+            terminalView?.get()?.mEmulator?.paste(clip)
         }
     }
 
@@ -59,12 +75,13 @@ class TerminalClientImpl @Inject constructor(
 
     // TerminalViewClient implementation
     override fun onScale(scale: Float): Float {
-        // TODO: Handle scaling via ViewModel
-        return scale
+        val fontScale = scale.coerceIn(11f, 45f)
+        terminalView?.get()?.setTextSize(fontScale.toInt())
+        return fontScale
     }
 
     override fun onSingleTapUp(e: MotionEvent) {
-        // TODO: Show soft input via ViewModel
+        showSoftInput()
     }
 
     override fun shouldBackButtonBeMappedToEscape(): Boolean = false
@@ -74,7 +91,7 @@ class TerminalClientImpl @Inject constructor(
     override fun copyModeChanged(copyMode: Boolean) {}
 
     override fun onKeyDown(keyCode: Int, e: KeyEvent, session: TerminalSession): Boolean {
-        // TODO: Handle key events via ViewModel
+        // Basic key handling logic
         return false
     }
 
@@ -82,26 +99,21 @@ class TerminalClientImpl @Inject constructor(
     override fun onLongPress(event: MotionEvent): Boolean = false
 
     // Virtual Keys Support
-    override fun readControlKey(): Boolean {
-        // TODO: Reactive check via VirtualKeysViewModel
-        return false
-    }
-    override fun readAltKey(): Boolean {
-        // TODO: Reactive check via VirtualKeysViewModel
-        return false
-    }
-    override fun readShiftKey(): Boolean {
-        // TODO: Reactive check via VirtualKeysViewModel
-        return false
-    }
-    override fun readFnKey(): Boolean {
-        // TODO: Reactive check via VirtualKeysViewModel
-        return false
-    }
+    override fun readControlKey(): Boolean = virtualKeysView?.get()?.readSpecialButton(SpecialButton.CTRL, true) ?: false
+    override fun readAltKey(): Boolean = virtualKeysView?.get()?.readSpecialButton(SpecialButton.ALT, true) ?: false
+    override fun readShiftKey(): Boolean = virtualKeysView?.get()?.readSpecialButton(SpecialButton.SHIFT, true) ?: false
+    override fun readFnKey(): Boolean = virtualKeysView?.get()?.readSpecialButton(SpecialButton.FN, true) ?: false
 
     override fun onCodePoint(codePoint: Int, ctrlDown: Boolean, session: TerminalSession): Boolean = false
 
     override fun onEmulatorSet() {
-        // TODO: Set cursor blinker state
+        terminalView?.get()?.setTerminalCursorBlinkerState(true, true)
+    }
+
+    private fun showSoftInput() {
+        terminalView?.get()?.apply {
+            requestFocus()
+            KeyboardUtils.showSoftInput(this)
+        }
     }
 }
