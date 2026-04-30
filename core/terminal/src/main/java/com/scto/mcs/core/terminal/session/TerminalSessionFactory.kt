@@ -3,6 +3,7 @@ package com.scto.mcs.core.terminal.session
 import android.content.Context
 import android.os.Build
 import com.scto.mcs.app.BuildConfig
+import com.scto.mcs.core.exec.PendingCommand
 import com.scto.mcs.core.files.*
 import com.scto.mcs.core.terminal.config.TerminalConfig
 import com.scto.mcs.core.utils.getSourceDirOfPackage
@@ -97,5 +98,25 @@ class TerminalSessionFactory @Inject constructor(
         }
 
         return env
+    }
+
+    /**
+     * Determines the shell and arguments for a new terminal session.
+     * Migrated from MkSession.kt.
+     */
+    fun getShellAndArgs(pendingCommand: PendingCommand?): Pair<String, Array<String>> {
+        val sandboxSH = terminalConfig.localBinDir().child("sandbox")
+        
+        return when {
+            pendingCommand == null -> {
+                val a = if (Settings.sandbox) arrayOf(sandboxSH.absolutePath) else arrayOf()
+                "/system/bin/sh" to a
+            }
+            pendingCommand.sandbox.not() -> pendingCommand.exe to pendingCommand.args
+            else -> {
+                val a = mutableListOf(sandboxSH.absolutePath, pendingCommand.exe, *pendingCommand.args).toTypedArray()
+                "/system/bin/sh" to a
+            }
+        }
     }
 }
