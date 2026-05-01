@@ -12,6 +12,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.scto.mcs.core.terminal.session.TerminalClientImpl
 import com.scto.mcs.core.terminalxed.virtualkeys.VirtualKeysView
 import com.termux.view.TerminalView
+import kotlinx.coroutines.launch
 
 @Composable
 fun TerminalScreen(
@@ -34,10 +35,14 @@ fun TerminalScreen(
                         selected = session == activeSession,
                         onClick = { 
                             viewModel.switchSession(session.mHandle)
+                            scope.launch { drawerState.close() }
                         }
                     )
                 }
-                Button(onClick = { viewModel.createNewSession() }) {
+                Button(
+                    onClick = { viewModel.createNewSession() },
+                    modifier = Modifier.padding(16.dp)
+                ) {
                     Text("Neue Session")
                 }
             }
