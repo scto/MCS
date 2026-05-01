@@ -29,10 +29,6 @@ class TerminalViewModel @Inject constructor(
 
     val setupState = setupService.runFullSetup(context).stateIn(viewModelScope, SharingStarted.Lazily, TerminalSetupService.SetupState.Initializing("Warte..."))
 
-    fun startInstallation() {
-        // Setup wird bereits durch den Flow in setupState gestartet
-    }
-
     fun createNewSession() {
         val session = sessionManager.createNewSession("Session")
         _activeSessionId.value = session.mHandle
@@ -48,5 +44,8 @@ class TerminalViewModel @Inject constructor(
     
     fun removeSession(id: String?) {
         sessionManager.closeSession(id)
+        if (_activeSessionId.value == id) {
+            _activeSessionId.value = sessions.value.firstOrNull()?.mHandle
+        }
     }
 }
