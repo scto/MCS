@@ -10,8 +10,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.scto.mcs.core.terminal.session.TerminalClientImpl
+import com.scto.mcs.core.terminalxed.virtualkeys.VirtualKeysView
 import com.termux.view.TerminalView
-import javax.inject.Inject
 
 @Composable
 fun TerminalScreen(
@@ -65,8 +65,14 @@ fun TerminalScreen(
                 // Virtual Keys Pager
                 val pagerState = rememberPagerState(pageCount = { 2 })
                 HorizontalPager(state = pagerState, modifier = Modifier.height(100.dp)) { page ->
-                    // Hier würde die VirtualKeysView eingebunden werden
-                    Text("Virtual Keys Page $page")
+                    AndroidView(
+                        factory = { context ->
+                            VirtualKeysView(context).apply {
+                                terminalClient.setVirtualKeysView(this)
+                            }
+                        },
+                        modifier = Modifier.fillMaxSize()
+                    )
                 }
             }
         }
