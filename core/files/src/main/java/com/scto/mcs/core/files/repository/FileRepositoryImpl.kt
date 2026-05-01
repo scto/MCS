@@ -9,6 +9,7 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.withContext
 import java.io.File
+import java.io.InputStream
 import java.util.Locale
 import javax.inject.Inject
 
@@ -104,6 +105,10 @@ class FileRepositoryImpl @Inject constructor(
             file.setExecutable(true)
             FileItem(name = name, path = file.absolutePath, isDirectory = false)
         }
+    }
+
+    override suspend fun provideTerminalAsset(path: String): InputStream = withContext(Dispatchers.IO) {
+        context.assets.open(path)
     }
 
     override suspend fun ensureDirectoryStructure(paths: List<String>): Result<Unit> = withContext(Dispatchers.IO) {
