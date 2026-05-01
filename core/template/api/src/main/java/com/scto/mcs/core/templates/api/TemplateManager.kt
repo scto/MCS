@@ -8,7 +8,4 @@ interface TemplateManager {
     suspend fun updateTemplates()
     suspend fun upgradeTemplates()
     suspend fun clearTemplates()
-    
-    // Optional: Flow to observe status if needed
-    // val status: Flow<TemplateStatus>
 }
