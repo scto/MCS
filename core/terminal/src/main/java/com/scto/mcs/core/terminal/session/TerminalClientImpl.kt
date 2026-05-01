@@ -18,6 +18,10 @@ import java.lang.ref.WeakReference
 import javax.inject.Inject
 import javax.inject.Singleton
 
+/**
+ * Implementation of TerminalSessionClient and TerminalViewClient.
+ * Migrated from legacy TerminalBackEnd.kt.
+ */
 @Singleton
 class TerminalClientImpl @Inject constructor(
     private val terminalConfig: TerminalConfig
