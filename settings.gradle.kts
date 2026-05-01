@@ -58,6 +58,7 @@ include(
 include(
     ":feature:editor",
     ":feature:git",
+    ":feature:onboarding",
     ":feature:settings",
     ":feature:terminal"
 )
