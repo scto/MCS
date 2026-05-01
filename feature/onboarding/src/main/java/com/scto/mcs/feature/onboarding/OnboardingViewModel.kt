@@ -11,11 +11,15 @@ class OnboardingViewModel @Inject constructor() : ViewModel() {
     private val _state = MutableStateFlow(OnboardingState())
     val state: StateFlow<OnboardingState> = _state
 
-    fun nextPage() {
-        _state.value = _state.value.copy(currentPage = _state.value.currentPage + 1)
+    fun setCurrentPage(page: Int) {
+        _state.value = _state.value.copy(currentPage = page)
     }
 
     fun setPermissionGranted(granted: Boolean) {
         _state.value = _state.value.copy(isPermissionGranted = granted)
+    }
+
+    fun completeOnboarding() {
+        _state.value = _state.value.copy(isCompleted = true)
     }
 }
