@@ -44,6 +44,7 @@ include(
     ":core:git",
     ":core:navigation",
     ":core:network",
+    ":core:onboarding",
     ":core:resources",
     ":core:runner",
     ":core:terminal",
