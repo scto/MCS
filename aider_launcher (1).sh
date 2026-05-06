@@ -10,9 +10,6 @@ SECRET_ANTHROPIC="/data/data/jkas.androidpe/files/home/.anthropic_api_key.secret
 SECRET_OPENAI="/data/data/jkas.androidpe/files/home/.openai_api_key.secrets"
 SECRET_DEEPSEEK="/data/data/jkas.androidpe/files/home/.deepseek_api_key.secrets"
 
-# Globaler Status für Optimierungen
-SUBTREE_MODE=false
-
 load_secrets() {
     export UV_LINK_MODE=copy
     [ -f "$SECRET_GEMINI" ] && export GEMINI_API_KEY=$(cat "$SECRET_GEMINI" | xargs)
@@ -24,16 +21,7 @@ load_secrets() {
 run_aider() {
     local model=$1
     local flags=$2
-    
-    # Füge subtree-only hinzu, falls im Menü aktiviert (Lösung für >1000 Dateien)
-    if [ "$SUBTREE_MODE" = true ]; then
-        flags="$flags --subtree-only"
-    fi
-
-    echo -e "\n${G}Starte Aider mit ${W}$model${NC}..."
-    [ "$SUBTREE_MODE" = true ] && echo -e "${Y}Info: Large Repo Mode (--subtree-only) ist AKTIV.${NC}"
-    echo -e ""
-
+    echo -e "\n${G}Starte Aider mit ${W}$model${NC}...\n"
     source "$VENV_PATH_VAL/bin/activate"
     export AIDER_MODEL="$model"
     aider --model "$model" $flags
@@ -46,25 +34,19 @@ choose_run_mode() {
 
     while true; do
         clear
-        local status_color=$R; [ "$SUBTREE_MODE" = true ] && status_color=$G
-        
         echo -e "${C}=== AUSFÜHRUNGSMODUS ===${NC}"
         echo -e "Modell: ${W}$model${NC}"
-        echo -e "Subtree-only (Large Repo Fix): ${status_color}$( [ "$SUBTREE_MODE" = true ] && echo "AN" || echo "AUS" )${NC}"
         echo -e "------------------------------------------------------"
         echo -e "${G}1) Run Aider Console${NC}"
         echo -e "${C}2) Run Aider Browser${NC}"
-        echo -e "------------------------------------------------------"
-        echo -e "${Y}3) Toggle Large Repo Mode (--subtree-only)${NC}"
         echo -e "------------------------------------------------------"
         echo -e "${Y}0) Zurück${NC}"
         read -p "Wahl: " run_choice
 
         case $run_choice in
             1) run_aider "$model" "$base_flags" ;;
-            2) run_aider "$model" "$base_flags --browser" ;;
-            3) 
-                if [ "$SUBTREE_MODE" = true ]; then SUBTREE_MODE=false; else SUBTREE_MODE=true; fi
+            2) 
+                run_aider "$model" "$base_flags --browser" 
                 ;;
             0) return ;;
             *) echo -e "${R}Ungültige Eingabe!${NC}"; sleep 1 ;;
@@ -94,12 +76,12 @@ menu_gemini_flash() {
             "Gemini 2.5 Audio (09-25)|gemini/gemini-2.5-flash-native-audio-preview-09-2025|Audio Build"
             "Gemini 2.5 Audio (12-25)|gemini/gemini-2.5-flash-native-audio-preview-12-2025|Audio Build"
             "Gemini 2.0 Flash|gemini/gemini-2.0-flash|V2.0 Speed"
-            "Gemini 2.0 Flash Exp|gemini/gemini-2.0-flash-exp|Lightning fast and clever"
+            "Gemini 2.0 Flash Exp|gemini/gemini-2.0-flash-exp|Latest experimental model, lightning fast and clever"
             "Gemini 2.0 Flash (001)|gemini/gemini-2.0-flash-001|V2.0.1"
             "Gemini 2.0 Flash Lite|gemini/gemini-2.0-flash-lite|V2.0 Lite"
             "Gemini 2.0 Flash Lite (001)|gemini/gemini-2.0-flash-lite-001|V2.0.1 Lite"
             "Gemini 1.5 Flash (002)|gemini/gemini-1.5-flash-002|V1.5.2"
-            "Gemini 1.5 Flash Latest|gemini/gemini-1.5-flash-latest|Efficient context processing"
+            "Gemini 1.5 Flash Latest|gemini/gemini-1.5-flash-latest|1M/2M Tokens Extremely fast, ideal for efficiently processing huge contexts/many files."
             "Gemini Flash Latest|gemini/gemini-flash-latest|Auto-Update Flash"
             "Gemini Flash Lite Latest|gemini/gemini-flash-lite-latest|Auto-Update Lite"
             "Gemma 3 27b IT|gemini/gemma-3-27b-it|Open Model V3"
@@ -183,6 +165,10 @@ menu_gemini() {
         esac
     done
 }
+
+# ==========================================
+# PROVIDER MENÜS
+# ==========================================
 
 menu_openai() {
     while true; do
