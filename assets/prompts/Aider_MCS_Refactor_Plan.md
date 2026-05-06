@@ -1,36 +1,16 @@
 # MCS Projekt-Refactoring & Ressourcen-Zentralisierungs Plan (Final)
-Dieses Dokument dient als Master-Plan für die Konsolidierung des Projekts auf den Namespace com.scto.mcs. Die manuellen Verzeichnislisten wurden entfernt; stattdessen nutzt dieser Plan die Datei MCS_20260506_143519.md (Project Tree), um alle Pfade und Module dynamisch zu ermitteln.
+Dieses Dokument dient als Master-Plan für die Konsolidierung des Projekts auf den Namespace com.scto.mcs. Dieser Plan nutzt die Datei MCS_20260506_143519.md (Project Tree), um alle Pfade, Module und Import-Korrekturen dynamisch zu ermitteln, teilt aber hochkomplexe Modul-Zusammenführungen (wie die XED-Migration) in sichere, granulare Teilschritte auf.
 ## Projekt-Kontext
  * **Ziel-Package:** com.scto.mcs
  * **Struktur-Referenz:** Nutze zwingend das Attachment MCS_20260506_143519.md (Project Tree), um Pfade und Module (:core:* und :feature:*) dynamisch aufzulösen.
  * **Zu ersetzende Namespaces:** com.rk, com.srvhive, com.scto.msc
-## Globale Import-Mapping Tabelle (Alt -> Neu)
-Aider soll bei jedem Refactoring-Schritt diese Tabelle nutzen, um alte Referenzen zu ersetzen:
-| Alter Pfad (com.rk / com.srvhive) | Neuer Pfad (com.scto.mcs) |
-|---|---|
-| com.rk.App | com.scto.mcs.app.App |
-| com.rk.activities.main.MainActivity | com.scto.mcs.app.ui.activities.main.MainActivity |
-| com.rk.activities.settings.SettingsActivity | com.scto.mcs.app.ui.activities.settings.SettingsActivity |
-| com.rk.activities.terminal.Terminal | com.scto.mcs.app.ui.activities.terminal.TerminalActivity |
-| com.rk.file.* | com.scto.mcs.core.files.* |
-| com.rk.utils.* | com.scto.mcs.core.utils.* |
-| com.rk.resources.* | com.scto.mcs.core.resources.* |
-| com.rk.editor.* | com.scto.mcs.core.editor.* |
-| com.rk.lsp.* | com.scto.mcs.core.editor.lsp.* |
-| com.rk.search.* | com.scto.mcs.core.editor.search.* |
-| com.rk.tabs.* | com.scto.mcs.core.editor.tabs.* |
-| com.rk.terminal.* | com.scto.mcs.core.terminal.* |
-| com.rk.terminal.virtualkeys.* | com.scto.mcs.core.terminal.xed.virtualkeys.* |
-| com.rk.git.* | com.scto.mcs.feature.git.* |
-| com.rk.settings.* | com.scto.mcs.feature.settings.* |
-| com.rk.components.compose.preferences.* | com.scto.mcs.core.ui.components.compose.preferences.* |
-| com.rk.icons.* | com.scto.mcs.core.ui.icons.* |
-| com.rk.color.* | com.scto.mcs.core.ui.color.* |
-| com.rk.animations.* | com.scto.mcs.core.ui.animations.* |
+## Globale Import-Mapping Anweisung
+**WICHTIG für alle Imports:** Anstatt einer fest einprogrammierten Tabelle sollst du bei *jedem Refactoring-Schritt* zwingend die Struktur aus der angehängten Datei MCS_20260506_143519.md (Project Tree) ableiten.
+Analysiere den dortigen Verzeichnisbaum, um herauszufinden, in welchem Modul sich eine Klasse nun befindet, und ersetze alle veralteten com.rk.* oder com.srvhive.* Referenzen dynamisch durch den neuen, korrekten com.scto.mcs.* Pfad (z. B. alte com.rk.file-Imports werden durch den korrekten Pfad im :core:files Modul ersetzt).
 ## Schritt 1: Zentrale Build-Konfiguration & Version Catalog
 **Aider-Aufruf:** /add build.gradle.kts settings.gradle.kts gradle/libs.versions.toml
  1. Überprüfe libs.versions.toml auf Vollständigkeit (Hilt, KSP, Compose).
- 2. Stelle sicher, dass settings.gradle.kts alle Module (:core:* und :feature:*) korrekt inkludiert sind.
+ 2. Stelle sicher, dass settings.gradle.kts alle Module (:core:* und :feature:*) korrekt inkludiert.
  3. Bereinige harte Versions-Strings in allen Gradle-Dateien.
 ## Schritt 2: Audit der Core-Module (Build-Logik)
 **Aider-Aufruf:** /add MCS_20260506_143519.md core/**/build.gradle.kts
@@ -42,45 +22,84 @@ Aider soll bei jedem Refactoring-Schritt diese Tabelle nutzen, um alte Referenze
  1. Nutze den Project Tree, um alle Feature-Module zu finden.
  2. Setze in jedem Modul unter :feature den Namespace auf com.scto.mcs.feature.<modulname>.
  3. Verknüpfe die notwendigen :core-Module korrekt via implementation(project(":core:<name>")).
-## Schritt 4: Quellcode-Refactoring (Feature-Module)
+## Schritt 4: Quellcode-Refactoring (Feature-Module Allgemein)
 **Aider-Aufruf:** /add MCS_20260506_143519.md feature/**/*.kt feature/**/src/main/AndroidManifest.xml
 **Anweisungen:**
- 1. **Dynamische Analyse:** Nutze den Project Tree, um alle Feature-Module dynamisch zu durchlaufen. Migriere sie auf com.scto.mcs.feature.<modulname>.
- 2. **Feature Settings (Zusammenführung & Refactoring):**
-   * **XED Integration:** Arbeite die Funktionalität aus feature/settings/xed vollständig in das Hauptmodul feature/settings ein und lösche danach die xed Dateien.
-   * **Namespace:** Setze Package auf com.scto.mcs.feature.settings.
-   * **Import-Korrektur:** Nutze strikt die Globale Mapping Tabelle, um alle com.rk-Referenzen zu ersetzen.
-## Schritt 5: Quellcode-Refactoring (Core-Submodule)
+ 1. **Dynamische Analyse:** Nutze den Project Tree, um alle Feature-Module (außer feature:settings) dynamisch zu durchlaufen. Migriere sie auf com.scto.mcs.feature.<modulname>.
+ 2. **WICHTIG:** Ignoriere bei diesem Schritt das Verzeichnis feature/settings/xed komplett! Das Refactoring hierfür erfolgt separat in Schritt 5.
+## Schritt 5: Granulare Zusammenführung von Feature Settings (XED Migration)
+Führe die folgenden Aider-Aufrufe **nacheinander** aus, um Kontext-Abbrüche zu vermeiden. Nutze für jeden Schritt die **Project Tree Datei (MCS_20260506_143519.md)** zur Ableitung der neuen Import-Pfade.
+### 5.1 Migration: about
+**Aider-Aufruf:** /add MCS_20260506_143519.md feature/settings/src/main/java/com/scto/mcs/feature/settings/xed/about/**/*.kt
+ 1. Verschiebe alle Dateien von .../xed/about/ nach .../about/ (eine Ebene nach oben).
+ 2. Setze das Package auf com.scto.mcs.feature.settings.about.
+ 3. Korrigiere interne Imports basierend auf der Tree-Datei.
+### 5.2 Migration: app
+**Aider-Aufruf:** /add MCS_20260506_143519.md feature/settings/src/main/java/com/scto/mcs/feature/settings/xed/app/**/*.kt
+ 1. Verschiebe alle Dateien von .../xed/app/ nach .../app/.
+ 2. Setze das Package auf com.scto.mcs.feature.settings.app.
+ 3. Korrigiere interne Imports basierend auf der Tree-Datei.
+### 5.3 Migration: editor
+**Aider-Aufruf:** /add MCS_20260506_143519.md feature/settings/src/main/java/com/scto/mcs/feature/settings/xed/editor/**/*.kt
+ 1. Verschiebe alle Dateien von .../xed/editor/ nach .../editor/.
+ 2. Setze das Package auf com.scto.mcs.feature.settings.editor.
+ 3. Korrigiere interne Imports basierend auf der Tree-Datei.
+### 5.4 Migration: terminal
+**Aider-Aufruf:** /add MCS_20260506_143519.md feature/settings/src/main/java/com/scto/mcs/feature/settings/xed/terminal/**/*.kt
+ 1. Verschiebe alle Dateien von .../xed/terminal/ nach .../terminal/.
+ 2. Setze das Package auf com.scto.mcs.feature.settings.terminal.
+ 3. Korrigiere interne Imports basierend auf der Tree-Datei.
+### 5.5 Migration: git, theme, extension
+**Aider-Aufruf:** /add MCS_20260506_143519.md feature/settings/src/main/java/com/scto/mcs/feature/settings/xed/git/**/*.kt feature/settings/src/main/java/com/scto/mcs/feature/settings/xed/theme/**/*.kt feature/settings/src/main/java/com/scto/mcs/feature/settings/xed/extension/**/*.kt
+ 1. Verschiebe die Dateien aus den xed-Unterordnern eine Ebene nach oben in ihre jeweiligen Module.
+ 2. Setze das Package auf com.scto.mcs.feature.settings.<ordner>.
+ 3. Korrigiere interne Imports basierend auf der Tree-Datei.
+### 5.6 Migration: Restliche Sub-Ordner
+**Aider-Aufruf:** /add MCS_20260506_143519.md feature/settings/src/main/java/com/scto/mcs/feature/settings/xed/keybinds/**/*.kt feature/settings/src/main/java/com/scto/mcs/feature/settings/xed/language/**/*.kt feature/settings/src/main/java/com/scto/mcs/feature/settings/xed/lsp/**/*.kt feature/settings/src/main/java/com/scto/mcs/feature/settings/xed/runners/**/*.kt feature/settings/src/main/java/com/scto/mcs/feature/settings/xed/support/**/*.kt feature/settings/src/main/java/com/scto/mcs/feature/settings/xed/debugOptions/**/*.kt
+ 1. Verschiebe auch diese restlichen Ordner eine Ebene nach oben.
+ 2. Aktualisiere Packages und Imports basierend auf der Tree-Datei.
+### 5.7 Migration: Root-Dateien in XED
+**Aider-Aufruf:** /add MCS_20260506_143519.md feature/settings/src/main/java/com/scto/mcs/feature/settings/xed/*.kt
+ 1. Verschiebe alle noch direkt im xed-Ordner verbliebenen Dateien nach feature/settings/src/main/java/com/scto/mcs/feature/settings/.
+ 2. Setze das Package auf com.scto.mcs.feature.settings.
+### 5.8 Globale Import-Korrektur (Feature & App)
+**Aider-Aufruf:** /add MCS_20260506_143519.md feature/settings/**/*.kt app/src/main/java/com/scto/mcs/app/**/*.kt
+ 1. Suche in allen geladenen Dateien nach verbliebenen Imports mit dem Präfix .xed..
+ 2. Entferne das .xed aus diesen Pfaden.
+ 3. Lösche redundante/doppelte Imports.
+### 5.9 XED Cleanup
+**Aider-Aufruf:** /run rm -rf feature/settings/src/main/java/com/scto/mcs/feature/settings/xed
+ 1. Lösche das nun leere xed Verzeichnis final aus dem Dateibaum.
+## Schritt 6: Quellcode-Refactoring (Core-Submodule)
 **Aider-Aufruf:** /add MCS_20260506_143519.md core/**/*.kt
 **Anweisungen:**
- 1. **Dynamische Ermittlung:** Nutze den Project Tree (MCS_20260506_143519.md), um alle Core-Submodule dynamisch zu identifizieren (eine manuelle Auflistung der Verzeichnisse entfällt).
+ 1. **Dynamische Ermittlung:** Nutze den Project Tree (MCS_20260506_143519.md), um alle Core-Submodule dynamisch zu identifizieren.
  2. **Migration:** Führe für jedes identifizierte Core-Modul eine Migration auf com.scto.mcs.core.<modulname> durch.
- 3. **Import-Korrektur:** Wende für alle Anpassungen ausnahmslos die Globale Mapping Tabelle an.
-## Schritt 6: Ressourcen & Strings (Zentralisierung)
-### 6.1 Ressourcen-Verschiebung (Core Submodule)
+ 3. **Import-Korrektur:** Leite die neuen Pfade zwingend aus dem angehängten Project Tree ab.
+## Schritt 7: Ressourcen & Strings (Zentralisierung)
+### 7.1 Ressourcen-Verschiebung (Core Submodule)
 **Aider-Aufruf:** /add MCS_20260506_143519.md core/**/src/main/res/**/*.xml
 **Anweisungen:**
  1. Verschiebe alle Ressourcen aus den im Tree gelisteten Core-Submodulen nach :core:resources (core/resources/src/main/res/).
-### 6.2 Ressourcen-Verschiebung (Feature Submodule)
+### 7.2 Ressourcen-Verschiebung (Feature Submodule)
 **Aider-Aufruf:** /add MCS_20260506_143519.md feature/**/src/main/res/**/*.xml
 **Anweisungen:**
  1. Verschiebe alle Ressourcen aus den im Tree gelisteten Feature-Submodulen nach :core:resources (core/resources/src/main/res/).
-### 6.3 String-Management & Code-Anpassung (Core Submodule)
+## Schritt 8: String-Management & Code-Anpassung
+### 8.1 Core Submodule
 **Aider-Aufruf:** /add MCS_20260506_143519.md core/**/src/main/java/**/*.kt core/**/src/main/java/**/*.java core/resources/src/main/res/values/strings.xml
 **Anweisungen:**
- 1. Betrifft alle Core-Submodule laut Tree **außer** termux-*.
- 2. Führe alle strings.xml in der zentralen Datei zusammen (Duplikate entfernen).
- 3. Ersetze hardkodierte UI-Strings im Code durch R.string-Referenzen.
- 4. Aktualisiere alle Ressourcen-Imports auf com.scto.mcs.core.resources.R.
-### 6.4 String-Management & Code-Anpassung (Feature Submodule)
+ 1. Führe alle strings.xml in der zentralen Datei zusammen (Duplikate entfernen).
+ 2. Ersetze hardkodierte UI-Strings im Code durch R.string-Referenzen.
+ 3. Aktualisiere alle Ressourcen-Imports auf com.scto.mcs.core.resources.R.
+### 8.2 Feature Submodule
 **Aider-Aufruf:** /add MCS_20260506_143519.md feature/**/src/main/java/**/*.kt feature/**/src/main/java/**/*.java core/resources/src/main/res/values/strings.xml
 **Anweisungen:**
- 1. Betrifft alle Feature-Submodule **außer** dem Ordner feature/settings/xed (falls dieser noch nicht gelöscht wurde).
- 2. Ziel-Datei: Modifiziere die zentrale Datei core/resources/src/main/res/values/strings.xml, indem du neue <string>-Elemente am Ende des <resources>-Blocks einfügst.
- 3. Extrahiere hartkodierte UI-Strings (Ignoriere Log-Ausgaben, Keys etc.).
- 4. Generiere eindeutige Keys (feature_<modulname>_<deskriptiver_name>).
- 5. Ersetze die Strings in Compose (stringResource) oder Standard-Android (getString) unter Nutzung von com.scto.mcs.core.resources.R.
-## Schritt 7: App-Modul & Finale Integration
+ 1. Modifiziere die zentrale Datei core/resources/src/main/res/values/strings.xml, indem du neue <string>-Elemente am Ende des <resources>-Blocks einfügst.
+ 2. Extrahiere hartkodierte UI-Strings (Ignoriere Log-Ausgaben, Keys etc.).
+ 3. Generiere eindeutige Keys (feature_<modulname>_<deskriptiver_name>).
+ 4. Ersetze die Strings im Code und nutze immer com.scto.mcs.core.resources.R.
+## Schritt 9: App-Modul & Finale Integration
 **Aider-Aufruf:** /add MCS_20260506_143519.md app/build.gradle.kts app/src/main/AndroidManifest.xml
  1. Finalisiere :app auf com.scto.mcs.app.
  2. Validiere Manifest-Pfade (Activities, Services) und Permissions.
