@@ -1,4 +1,4 @@
-package com.rk.utils
+package com.scto.mcs.core.utils
 
 import android.app.Activity
 import android.util.Log
@@ -24,12 +24,13 @@ import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.rk.activities.main.MainActivity
-import com.rk.components.compose.preferences.base.DividerColumn
-import com.rk.resources.getString
-import com.rk.resources.strings
-import com.rk.settings.Settings
-import com.rk.theme.XedTheme
+
+import com.scto.mcs.apo.ui.activities.main.MainActivity
+import com.scto.mcs.core.ui.components.compose.preferences.base.DividerColumn
+import com.scto.mcs.core.resources.getString
+import com.scto.mcs.core.resources.strings
+import com.scto.mcs.feature.settings.Settings
+import com.scto.mcs.core.ui.theme.McsTheme
 
 fun errorDialog(msg: String, activity: Activity? = MainActivity.instance, title: String = strings.error.getString()) {
     Log.e("ERROR_DIALOG", msg)

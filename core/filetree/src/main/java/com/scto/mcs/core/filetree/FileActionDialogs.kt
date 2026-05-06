@@ -10,8 +10,8 @@ import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
 
-import com.scto.mcs.core.activities.MainActivity
-import com.scto.mcs.core.activities.drawerStateRef
+import com.scto.mcs.app.ui.activities.main.MainActivity
+import com.scto.mcs.app.ui.activities.main.drawerStateRef
 import com.scto.mcs.core.ui.components.PropertiesDialog
 import com.scto.mcs.core.ui.components.SingleInputDialog
 import com.scto.mcs.core.files.FileObject

@@ -1,4 +1,4 @@
-package com.rk.utils
+package com.scto.mcs.core.utils
 
 import android.app.Application
 

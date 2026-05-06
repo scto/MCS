@@ -65,9 +65,9 @@ import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
 
 import com.scto.mcs.app.scope.DefaultScope
-import com.scto.mcs.app.activities.MainActivity
-import com.scto.mcs.app.activities.fileTreeViewModel
-import com.scto.mcs.app.activities.gitViewModel
+import com.scto.mcs.app.ui.activities.main.MainActivity
+import com.scto.mcs.app.uiactivities.main.fileTreeViewModel
+import com.scto.mcs.app.ui.activities.main.gitViewModel
 import com.scto.mcs.core.ui.components.AddDialogItem
 import com.scto.mcs.core.ui.components.DoubleInputDialog
 import com.scto.mcs.core.files.FileObject

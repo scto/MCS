@@ -1,4 +1,4 @@
-package com.rk.utils
+package com.scto.mcs.core.utils
 
 import android.app.Activity
 import android.content.ClipData
@@ -37,23 +37,26 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.core.net.toUri
 import com.blankj.utilcode.util.ThreadUtils
-import com.rk.activities.main.gitViewModel
-import com.rk.file.BuiltinFileType
-import com.rk.file.FileObject
-import com.rk.filetree.FileTreeViewModel
-import com.rk.git.ChangeType
-import com.rk.resources.getQuantityString
-import com.rk.resources.getString
-import com.rk.resources.plurals
-import com.rk.resources.strings
-import com.rk.settings.Settings
-import com.rk.settings.app.InbuiltFeatures
-import com.rk.theme.currentTheme
-import com.rk.theme.gitAdded
-import com.rk.theme.gitConflicted
-import com.rk.theme.gitDeleted
-import com.rk.theme.gitModified
+
+import com.scto.mcs.app.ui.activities.main.gitViewModel
+import com.scto.mcs.core.files.BuiltinFileType
+import com.scto.mcs.core.files.FileObject
+import com.scto.mcs.core.filetree.FileTreeViewModel
+import com.scto.mcs.core.git.ChangeType
+import com.scto.mcs.core.resources.getQuantityString
+import com.scto.mcs.core.resources.getString
+import com.scto.mcs.core.resources.plurals
+import com.scto.mcs.core.resources.strings
+import com.scto.mcs.feature.settings.Settings
+import com.scto.mcs.feature.settings.app.InbuiltFeatures
+import com.scto.mcs.core.ui.theme.currentTheme
+import com.scto.mcs.core.ui.theme.gitAdded
+import com.scto.mcs.core.ui.theme.gitConflicted
+import com.scto.mcs.core.ui.theme.gitDeleted
+import com.scto.mcs.core.ui.theme.gitModified
+
 import io.github.rosemoe.sora.widget.schemes.EditorColorScheme
+
 import java.io.File
 import java.io.ObjectInputStream
 import java.io.ObjectOutputStream
@@ -164,7 +167,7 @@ fun copyToClipboard(label: String, text: String, showToast: Boolean = true) {
 }
 
 fun copyToClipboard(text: String, showToast: Boolean = true) {
-    copyToClipboard(label = "Xed-Editor", text, showToast = showToast)
+    copyToClipboard(label = "Mcs", text, showToast = showToast)
 }
 
 fun expectOOM(requiredMemBytes: Long): Boolean {

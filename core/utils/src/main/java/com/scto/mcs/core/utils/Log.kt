@@ -1,7 +1,7 @@
-package com.rk.utils
+package com.scto.mcs.core.utils
 
 import android.util.Log
-import com.rk.settings.debugOptions.LogCollector
+import com.scto.mcs.feature.settings.debugOptions.LogCollector
 
 fun Any.debug(msg: String) {
     Log.d(this::class.java.simpleName, msg)

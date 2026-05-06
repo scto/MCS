@@ -23,17 +23,18 @@ android {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
     }
+    
     kotlinOptions {
         jvmTarget = libs.versions.java.get()
     }
 }
 
 dependencies {
-    implementation(project(":core:ui"))
-    implementation(project(":core:navigation"))
-    implementation(project(":core:utils"))
-    implementation(project(":core:resources"))
     implementation(project(":core:domain"))
+    implementation(project(":core:navigation"))
+    implementation(project(":core:resources"))
+    implementation(project(":core:ui"))
+    implementation(project(":core:utils"))
     
     implementation(platform(libs.androidx.compose.bom))
     implementation(libs.androidx.compose.ui)

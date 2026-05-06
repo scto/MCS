@@ -1,4 +1,4 @@
-package com.rk.crashhandler
+package com.scto.mcs.core.crashhandler
 
 import android.content.Context
 import android.content.Intent
@@ -31,14 +31,16 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.core.content.pm.PackageInfoCompat
 import androidx.core.net.toUri
-import com.rk.crashhandler.CrashHandler.logErrorOrExit
-import com.rk.editor.Editor
-import com.rk.resources.getString
-import com.rk.resources.strings
-import com.rk.theme.XedTheme
-import com.rk.utils.copyToClipboard
-import com.rk.utils.origin
-import com.rk.xededitor.BuildConfig
+
+import com.scto.mcs.core.crashhandler.CrashHandler.logErrorOrExit
+import com.scto.mcs.core.editor.Editor
+import com.scto.mcs.core.resources.getString
+import com.scto.mcs.core.resources.strings
+import com.scto.mcs.core.ui.theme.McsTheme
+import com.scto.mcs.core.utils.copyToClipboard
+import com.scto.mcs.core.utils.origin
+import com.scto.mcs.app.BuildConfig
+
 import java.net.URLEncoder
 import java.nio.charset.StandardCharsets
 import java.security.MessageDigest

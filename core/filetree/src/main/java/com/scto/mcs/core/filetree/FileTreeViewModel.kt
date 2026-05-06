@@ -10,8 +10,8 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 
-import com.scto.mcs.app.activities.gitViewModel
-import com.scto.mcs.app.activities.searchViewModel
+import com.scto.mcs.app.ui.activities.main.gitViewModel
+import com.scto.mcs.app.ui.activities.main.searchViewModel
 import com.scto.mcs.core.files.FileObject
 import com.scto.mcs.core.ediror.search.GlobExcluder
 import com.scto.mcs.feature.settings.Settings

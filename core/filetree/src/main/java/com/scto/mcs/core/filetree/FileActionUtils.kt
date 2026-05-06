@@ -1,6 +1,6 @@
-package com.rk.filetree
+package com.scto.mcs.core.filetree
 
-import com.rk.file.FileObject
+import com.scto.mcs.core.files.FileObject
 
 val fileActions =
     listOf(

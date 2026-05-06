@@ -38,11 +38,11 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 
-import com.scto.mcs.app.activities.MainActivity
-import com.scto.mcs.app.activities.drawerStateRef
-import com.scto.mcs.app.activities.fileTreeViewModel
-import com.scto.mcs.app.activities.gitViewModel
-import com.scto.mcs.app.activities.searchViewModel
+import com.scto.mcs.app.ui.activities.main.MainActivity
+import com.scto.mcs.app.ui.activities.main.drawerStateRef
+import com.scto.mcs.app.ui.activities.main.fileTreeViewModel
+import com.scto.mcs.app.ui.activities.main.gitViewModel
+import com.scto.mcs.app.ui.activities.main.searchViewModel
 import com.scto.mcs.core.ui.components.AddDialogItem
 import com.scto.mcs.core.ui.components.codeSearchDialog
 import com.scto.mcs.core.ui.components.fileSearchDialog

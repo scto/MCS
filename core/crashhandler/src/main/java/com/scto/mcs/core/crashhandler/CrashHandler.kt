@@ -1,12 +1,14 @@
-package com.rk.crashhandler
+package com.scto.mcs.core.crashhandler
 
 import android.content.Intent
 import android.os.Looper
 import android.util.Log
-import com.rk.file.child
-import com.rk.file.createFileIfNot
-import com.rk.settings.debugOptions.HarmlessException
-import com.rk.utils.application
+
+import com.scto.mcs.core.files.child
+import com.scto.mcs.core.files.createFileIfNot
+import com.scto.mcs.core.utils.application
+import com.scto.mcs.feature.settings.debugOptions.HarmlessException
+
 import java.io.PrintWriter
 import java.io.StringWriter
 import kotlin.system.exitProcess

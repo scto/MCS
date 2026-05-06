@@ -10,8 +10,8 @@ import androidx.compose.material.icons.outlined.Info
 import androidx.compose.material.icons.outlined.Refresh
 import androidx.lifecycle.viewModelScope
 
-import com.scto.mcs.app.activities.MainActivity
-import com.scto.mcs.app.activities.TerminalActivity
+import com.scto.mcs.app.ui.activities.main.MainActivity
+import com.scto.mcs.app.ui.activities.terminal.TerminalActivity
 import com.scto.mcs.core.files.FileObject
 import com.scto.mcs.core.files.FileOperations
 import com.scto.mcs.core.files.FileWrapper

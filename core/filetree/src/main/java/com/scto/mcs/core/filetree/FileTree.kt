@@ -44,10 +44,11 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewModelScope
-import com.scto.mcs.app.activities.MainActivity
-import com.scto.mcs.app.activities.searchViewModel
+
+import com.scto.mcs.app.ui.activities.main.MainActivity
+import com.scto.mcs.app.ui.activities.main.searchViewModel
 import com.scto.mcs.core.files.FileObject
-import com.scto.mcs.core.ui.icons.XedIcon
+import com.scto.mcs.core.ui.icons.McsIcon
 import com.scto.mcs.core.resources.getString
 import com.scto.mcs.core.resources.strings
 import com.scto.mcs.feature.settings.Settings
@@ -181,7 +182,7 @@ private fun SelectionActions(viewModel: FileTreeViewModel, rootNode: FileTreeNod
                                 viewModel.unselectAllFiles(rootNode.file)
                             },
                         ) {
-                            XedIcon(action.icon, contentDescription = action.title)
+                            McsIcon(action.icon, contentDescription = action.title)
                         }
                     }
                     is MultiFileAction -> {
@@ -194,7 +195,7 @@ private fun SelectionActions(viewModel: FileTreeViewModel, rootNode: FileTreeNod
                                 viewModel.unselectAllFiles(rootNode.file)
                             },
                         ) {
-                            XedIcon(action.icon, contentDescription = action.title)
+                            McsIcon(action.icon, contentDescription = action.title)
                         }
                     }
                 }
@@ -213,7 +214,7 @@ private fun SelectionActions(viewModel: FileTreeViewModel, rootNode: FileTreeNod
                                     val file = selectedFiles.first() // Is safe because of the check in getActions()
                                     DropdownMenuItem(
                                         text = { Text(action.title) },
-                                        leadingIcon = { XedIcon(action.icon, contentDescription = action.title) },
+                                        leadingIcon = { McsIcon(action.icon, contentDescription = action.title) },
                                         enabled = action.isEnabled(file),
                                         onClick = {
                                             val context = FileActionContext(file, rootNode.file, viewModel, context)
@@ -227,7 +228,7 @@ private fun SelectionActions(viewModel: FileTreeViewModel, rootNode: FileTreeNod
                                 is MultiFileAction -> {
                                     DropdownMenuItem(
                                         text = { Text(action.title) },
-                                        leadingIcon = { XedIcon(action.icon, contentDescription = action.title) },
+                                        leadingIcon = { McsIcon(action.icon, contentDescription = action.title) },
                                         enabled = action.isEnabled(selectedFiles),
                                         onClick = {
                                             val context =
