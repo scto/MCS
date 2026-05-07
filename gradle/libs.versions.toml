@@ -50,6 +50,12 @@ aboutlibraries = "13.2.1"
 accompanist = "0.36.0"
 utilcode = "1.31.1"
 
+monarch = "1.0.3"
+monarchPack = "1.0.2"
+monarchJson = "1.0.2"
+regexOnig = "1.0.3"
+regexRe2j = "1.0.2"
+
 coilCompose = "2.7.0"
 coilSvg = "2.7.0"
 
@@ -70,6 +76,13 @@ tree-sitter-log = "4.3.2"
 tree-sitter-properties = "4.3.2"
 tree-sitter-python = "4.3.2"
 tree-sitter-xml = "4.3.2"
+
+# Regex / Monarch
+monarch-code = { module = "io.github.dingyi222666.monarch:monarch", version.ref = "monarch" }
+monarch-language-pack = { module = "io.github.dingyi222666.monarch:monarch-language-pack", version.ref = "monarchPack" }
+monarch-json = { module = "io.github.dingyi222666.monarch:monarch-json-loader", version.ref = "monarchJson" }
+regex-onig = { module = "io.github.dingyi222666.regex-lib:regex-lib-oniguruma", version.ref = "regexOnig" }
+regex-re2j = { module = "io.github.dingyi222666.regex-lib:regex-lib-re2j", version.ref = "regexRe2j" }
 
 commonsCompress = "1.26.1"
 commonsNet = "3.13.0"
