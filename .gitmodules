@@ -7,3 +7,6 @@
 [submodule "grammars/html"]
 	path = grammars/html
 	url = https://github.com/tree-sitter/tree-sitter-html.git
+[submodule "soraX"]
+	path = soraX
+	url = https://github.com/RohitKushvaha01/soraX.git

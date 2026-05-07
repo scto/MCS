@@ -100,6 +100,7 @@ menu_gemini_flash() {
             "Gemini 2.0 Flash Lite (001)|gemini/gemini-2.0-flash-lite-001|V2.0.1 Lite"
             "Gemini 1.5 Flash (002)|gemini/gemini-1.5-flash-002|V1.5.2"
             "Gemini 1.5 Flash Latest|gemini/gemini-1.5-flash-latest|Efficient context processing"
+            "Gemini 1.5 Flash|gemini/gemini-1.5-flash|Efficient context processing"
             "Gemini Flash Latest|gemini/gemini-flash-latest|Auto-Update Flash"
             "Gemini Flash Lite Latest|gemini/gemini-flash-lite-latest|Auto-Update Lite"
             "Gemma 3 27b IT|gemini/gemma-3-27b-it|Open Model V3"
