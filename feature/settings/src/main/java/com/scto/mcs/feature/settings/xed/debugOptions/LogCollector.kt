@@ -1,14 +1,13 @@
-package com.rk.settings.debugOptions
+package com.scto.mcs.feature.settings.debugOptions
 
 import androidx.compose.runtime.mutableStateListOf
-import com.rk.resources.getString
-import com.rk.resources.strings
+import com.scto.mcs.core.resources.R
 
-enum class LogLevel(val label: String) {
-    DEBUG(strings.debug.getString()),
-    INFO(strings.info.getString()),
-    WARN(strings.warning.getString()),
-    ERROR(strings.error.getString()),
+enum class LogLevel(val labelResId: Int) {
+    DEBUG(R.string.debug),
+    INFO(R.string.info),
+    WARN(R.string.warning),
+    ERROR(R.string.error),
 }
 
 data class LogEntry(val level: LogLevel, val message: String, val timestamp: Long = System.currentTimeMillis())

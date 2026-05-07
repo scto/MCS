@@ -1,4 +1,4 @@
-package com.rk.settings.debugOptions
+package com.scto.mcs.feature.settings.debugOptions
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -6,8 +6,8 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.core.content.pm.PackageInfoCompat
-import com.rk.utils.application
-import com.rk.xededitor.BuildConfig
+import com.scto.mcs.core.ui.utils.application
+import com.scto.mcs.feature.settings.BuildConfig
 
 @Composable
 fun AppLogs() {

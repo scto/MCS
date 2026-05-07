@@ -1,4 +1,4 @@
-package com.rk.settings.debugOptions
+package com.scto.mcs.feature.settings.debugOptions
 
 import android.content.Intent
 import androidx.activity.compose.LocalOnBackPressedDispatcherOwner
@@ -40,19 +40,17 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.core.net.toUri
-import com.rk.activities.settings.SettingsActivity
-import com.rk.components.StyledTextField
-import com.rk.crashhandler.CrashHandler.logErrorOrExit
-import com.rk.editor.Editor
-import com.rk.file.BuiltinFileType
-import com.rk.resources.drawables
-import com.rk.resources.getString
-import com.rk.resources.strings
-import com.rk.search.EditorSearchPanel
-import com.rk.tabs.editor.CodeEditorState
-import com.rk.theme.XedTheme
-import com.rk.utils.copyToClipboard
-import com.rk.utils.dialog
+import com.scto.mcs.core.crashhandler.CrashHandler.logErrorOrExit
+import com.scto.mcs.core.editor.CodeEditorState
+import com.scto.mcs.core.editor.Editor
+import com.scto.mcs.core.files.BuiltinFileType
+import com.scto.mcs.core.resources.R
+import com.scto.mcs.core.search.EditorSearchPanel
+import com.scto.mcs.core.ui.components.compose.preferences.StyledTextField
+import com.scto.mcs.core.ui.utils.copyToClipboard
+import com.scto.mcs.core.ui.utils.dialog
+import com.scto.mcs.core.ui.theme.XedTheme
+import com.scto.mcs.feature.settings.SettingsActivity
 import java.lang.ref.WeakReference
 import java.net.URLEncoder
 import java.nio.charset.StandardCharsets
@@ -84,10 +82,10 @@ fun LogScreen(
                                 Icon(imageVector = Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back")
                             }
                         },
-                        title = { Text(stringResource(strings.logs)) },
+                        title = { Text(stringResource(R.string.logs)) },
                         actions = {
                             TextButton(onClick = { copyToClipboard(copyLabel, logText, true) }) {
-                                Text(stringResource(strings.copy))
+                                Text(stringResource(R.string.copy))
                             }
 
                             TextButton(
@@ -96,7 +94,7 @@ fun LogScreen(
                                         .onFailure { logErrorOrExit(it) }
                                 }
                             ) {
-                                Text(stringResource(strings.report_issue))
+                                Text(stringResource(R.string.report_issue))
                             }
                         },
                     )
@@ -113,8 +111,8 @@ fun LogScreen(
                         Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.padding(8.dp)) {
                             IconButton(onClick = { editorState.isSearching = !editorState.isSearching }) {
                                 Icon(
-                                    painter = painterResource(drawables.search),
-                                    contentDescription = stringResource(strings.search),
+                                    painter = painterResource(R.drawable.search),
+                                    contentDescription = stringResource(R.string.search),
                                 )
                             }
 
@@ -124,7 +122,7 @@ fun LogScreen(
                                 modifier = Modifier.weight(1f).padding(horizontal = 8.dp),
                             ) {
                                 StyledTextField(
-                                    value = logLevel.label,
+                                    value = stringResource(logLevel.labelResId),
                                     onValueChange = {},
                                     shape = RoundedCornerShape(8.dp),
                                     maxLines = 1,
@@ -141,7 +139,7 @@ fun LogScreen(
                                 ) {
                                     LogLevel.entries.forEach { level ->
                                         DropdownMenuItem(
-                                            text = { Text(text = level.label) },
+                                            text = { Text(text = stringResource(level.labelResId)) },
                                             onClick = {
                                                 onLogLevelChange(level)
                                                 dropdownMenuExpanded = false
@@ -212,9 +210,9 @@ private fun reportLogs(logText: String, issueTitle: String, copyLabel: String) {
             urlStart + URLEncoder.encode("```log \nPaste the logs here\n ```", StandardCharsets.UTF_8.toString())
         dialog(
             context = context,
-            title = strings.logs_too_long.getString(),
-            msg = strings.logs_too_long_desc.getString(),
-            okString = strings.continue_action,
+            title = stringResource(R.string.logs_too_long),
+            msg = stringResource(R.string.logs_too_long_desc),
+            okString = R.string.continue_action,
             onOk = {
                 copyToClipboard(copyLabel, logText, true)
                 val browserIntent = Intent(Intent.ACTION_VIEW, trimmedUrl.toUri())
