@@ -1,3 +1,0 @@
-[submodule "oniguruma-native/src/main/cpp/oniguruma"]
-	path = oniguruma-native/src/main/cpp/oniguruma
-	url = https://github.com/project-sora/oniguruma.git
