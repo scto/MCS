@@ -80,7 +80,7 @@ fun EditorFontScreen(modifier: Modifier = Modifier) {
 fun TerminalFontScreen(modifier: Modifier = Modifier) {
     val selectedFontPath = Settings.terminal_font_path
     val etcFontExists = sandboxDir().child("etc/font.ttf").exists()
-    val warningMessage = if (etcFontExists) stringResource(strings.terminal_font_warning) else null
+    val warningMessage = if (etcFontExists) stringResource(R.string.terminal_font_warning) else null
 
     FontScreen(modifier, selectedFontPath, DEFAULT_TERMINAL_FONT_PATH, warningMessage) { font ->
         Settings.terminal_font_path = font.pathOrAsset
@@ -120,7 +120,7 @@ fun FontScreen(
     warningMessage: String? = null,
     onSelectFont: (FontRegistry.Font) -> Unit,
 ) {
-    PreferenceLayout(label = stringResource(strings.fonts), backArrowVisible = true) {
+    PreferenceLayout(label = stringResource(R.string.fonts), backArrowVisible = true) {
         warningMessage?.let {
             InfoBlock(
                 icon = { Icon(imageVector = Icons.Outlined.Warning, contentDescription = null) },
@@ -176,7 +176,7 @@ fun FontScreen(
                                     )
                                 )
                                 FontRegistry.saveFonts()
-                                toast(strings.font_added.getString())
+                                toast(R.string.font_added.getString())
                             }
                             .onFailure {
                                 if (it.message?.isNotBlank() == true) {
@@ -189,7 +189,7 @@ fun FontScreen(
             FontRegistry.fonts.forEach { font ->
                 val interactionSource = remember { MutableInteractionSource() }
                 val isDefault = font.pathOrAsset == defaultFontPath
-                val defaultSuffix = if (isDefault) " (${strings.default_option.getString()})" else ""
+                val defaultSuffix = if (isDefault) " (${R.string.default_option.getString()})" else ""
                 PreferenceTemplate(
                     modifier =
                         modifier.clickable(indication = ripple(), interactionSource = interactionSource) {
@@ -215,7 +215,7 @@ fun FontScreen(
                             ) {
                                 Icon(
                                     imageVector = Icons.Outlined.Delete,
-                                    contentDescription = stringResource(strings.delete_font),
+                                    contentDescription = stringResource(R.string.delete_font),
                                 )
                             }
                         }
@@ -230,8 +230,8 @@ fun FontScreen(
                         filePickerLauncher.launch("font/ttf")
                     },
                 contentModifier = Modifier.fillMaxHeight(),
-                title = { Text(fontWeight = FontWeight.Bold, text = stringResource(strings.add_font)) },
-                description = { Text(text = stringResource(strings.add_font_desc)) },
+                title = { Text(fontWeight = FontWeight.Bold, text = stringResource(R.string.add_font)) },
+                description = { Text(text = stringResource(R.string.add_font_desc)) },
                 enabled = true,
                 applyPaddings = true,
                 startWidget = { Icon(imageVector = Icons.Filled.Add, contentDescription = null) },
