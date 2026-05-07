@@ -32,13 +32,13 @@ object DefaultEncoding {
 
 @Composable
 fun DefaultEncoding(modifier: Modifier = Modifier) {
-    PreferenceLayout(label = stringResource(strings.default_encoding), backArrowVisible = true) {
+    PreferenceLayout(label = stringResource(R.string.default_encoding), backArrowVisible = true) {
         var selectedEncoding by remember { mutableStateOf(Settings.encoding) }
         val interaction = remember { MutableInteractionSource() }
 
         InfoBlock(
             icon = { Icon(imageVector = Icons.Outlined.Warning, contentDescription = null) },
-            text = strings.encoding_warning.getString(),
+            text = R.string.encoding_warning.getString(),
             warning = true,
         )
 
@@ -54,7 +54,7 @@ fun DefaultEncoding(modifier: Modifier = Modifier) {
                 title = {
                     Text(
                         fontWeight = FontWeight.Bold,
-                        text = Charset.defaultCharset().name() + " (${stringResource(strings.default_option)})",
+                        text = Charset.defaultCharset().name() + " (${stringResource(R.string.default_option)})",
                     )
                 },
                 enabled = true,

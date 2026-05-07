@@ -50,7 +50,7 @@ fun buildAddActions(
         object : Command(command.commandContext) {
             override val id: String = command.id
 
-            override fun getLabel(): String = strings.add_parent_command.getString()
+            override fun getLabel(): String = R.string.add_parent_command.getString()
 
             override fun action(actionContext: ActionContext) {
                 commandIds.add(command.id)
@@ -61,7 +61,7 @@ fun buildAddActions(
 
             override fun isEnabled(): Boolean = !commandIds.contains(command.id)
 
-            override fun getIcon(): Icon = Icon.DrawableRes(drawables.arrow_outward)
+            override fun getIcon(): Icon = Icon.DrawableRes(R.drawable.arrow_outward)
         }
     )
     addAll(

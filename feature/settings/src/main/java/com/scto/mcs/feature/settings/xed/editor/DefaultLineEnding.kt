@@ -62,12 +62,12 @@ enum class LineEnding(val label: String, val value: String, val char: String, va
 fun DefaultLineEnding(modifier: Modifier = Modifier) {
     val scope = rememberCoroutineScope()
 
-    PreferenceLayout(label = stringResource(strings.line_ending), backArrowVisible = true) {
+    PreferenceLayout(label = stringResource(R.string.line_ending), backArrowVisible = true) {
         var selectedEnding by remember { mutableStateOf(Settings.line_ending) }
 
         InfoBlock(
             icon = { Icon(imageVector = Icons.Outlined.Warning, contentDescription = null) },
-            text = strings.line_ending_info.getString(),
+            text = R.string.line_ending_info.getString(),
         )
 
         PreferenceGroup {

@@ -59,14 +59,14 @@ fun EditToolbarActions(modifier: Modifier = Modifier) {
     val commands by remember { derivedStateOf { commandIds.mapNotNull { id -> CommandProvider.getForId(id) } } }
 
     PreferenceScaffold(
-        label = stringResource(strings.toolbar_actions),
+        label = stringResource(R.string.toolbar_actions),
         backArrowVisible = true,
         isExpandedScreen = LocalIsExpandedScreen.current,
         actions = { ResetButton { resetOrder(commandIds) } },
         fab = {
             ExtendedFloatingActionButton(onClick = { showCommandSelectionDialog = true }) {
                 Icon(imageVector = Icons.Outlined.Add, contentDescription = null)
-                Text(stringResource(strings.add_command))
+                Text(stringResource(R.string.add_command))
             }
         },
     ) { paddingValues ->
@@ -93,7 +93,7 @@ fun EditToolbarActions(modifier: Modifier = Modifier) {
                     item {
                         InfoBlock(
                             icon = { Icon(imageVector = Icons.Outlined.Info, contentDescription = null) },
-                            text = stringResource(strings.info_toolbar_actions),
+                            text = stringResource(R.string.info_toolbar_actions),
                             modifier = Modifier.padding(bottom = 8.dp),
                         )
                     }

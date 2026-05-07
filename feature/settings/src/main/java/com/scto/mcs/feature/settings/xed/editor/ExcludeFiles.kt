@@ -113,7 +113,7 @@ fun ExcludeFiles(isDrawer: Boolean) {
                     },
                     title = {
                         Text(
-                            stringResource(if (isDrawer) strings.exclude_files_drawer else strings.exclude_files_search)
+                            stringResource(if (isDrawer) R.string.exclude_files_drawer else R.string.exclude_files_search)
                         )
                     },
                     actions = { ResetButton { resetFiles(editorRef.get(), isDrawer) } },
@@ -128,7 +128,7 @@ fun ExcludeFiles(isDrawer: Boolean) {
 
         Column(modifier = Modifier.fillMaxSize().padding(paddingValues)) {
             EditorNotice(
-                text = stringResource(strings.glob_docs),
+                text = stringResource(R.string.glob_docs),
                 actionButton = {
                     IconButton(
                         onClick = {
@@ -138,8 +138,8 @@ fun ExcludeFiles(isDrawer: Boolean) {
                         }
                     ) {
                         Icon(
-                            painter = painterResource(drawables.open_in_new),
-                            contentDescription = stringResource(strings.open),
+                            painter = painterResource(R.drawable.open_in_new),
+                            contentDescription = stringResource(R.string.open),
                         )
                     }
                 },

@@ -39,7 +39,7 @@ fun DraggableCommand(modifier: Modifier = Modifier, command: Command, onRemove: 
             title = {
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Icon(
-                        imageVector = ImageVector.vectorResource(drawables.drag_indicator),
+                        imageVector = ImageVector.vectorResource(R.drawable.drag_indicator),
                         contentDescription = null,
                         tint = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.5f),
                         modifier = Modifier.padding(end = 12.dp).size(20.dp),
@@ -70,7 +70,7 @@ fun DraggableCommand(modifier: Modifier = Modifier, command: Command, onRemove: 
             },
             endWidget = {
                 IconButton(onClick = { onRemove() }) {
-                    Icon(imageVector = Icons.Outlined.Delete, stringResource(strings.delete))
+                    Icon(imageVector = Icons.Outlined.Delete, stringResource(R.string.delete))
                 }
             },
         )

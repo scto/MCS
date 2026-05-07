@@ -68,8 +68,8 @@ fun EditExtraKeys(modifier: Modifier = Modifier) {
 
     if (showExtraKeysDialog) {
         SingleInputDialog(
-            title = stringResource(id = strings.extra_keys),
-            inputLabel = stringResource(id = strings.extra_keys),
+            title = stringResource(id = R.string.extra_keys),
+            inputLabel = stringResource(id = R.string.extra_keys),
             inputValue = extraKeysValue.value,
             onInputValueChange = { extraKeysValue.value = it },
             onConfirm = { Settings.extra_keys_symbols = extraKeysValue.value },
@@ -81,14 +81,14 @@ fun EditExtraKeys(modifier: Modifier = Modifier) {
     }
 
     PreferenceScaffold(
-        label = stringResource(strings.extra_keys),
+        label = stringResource(R.string.extra_keys),
         backArrowVisible = true,
         isExpandedScreen = LocalIsExpandedScreen.current,
         actions = { ResetButton { resetOrder(commandIds, extraKeysValue) } },
         fab = {
             ExtendedFloatingActionButton(onClick = { showCommandSelectionDialog = true }) {
                 Icon(imageVector = Icons.Outlined.Add, contentDescription = null)
-                Text(stringResource(strings.add_command))
+                Text(stringResource(R.string.add_command))
             }
         },
     ) { paddingValues ->
@@ -114,12 +114,12 @@ fun EditExtraKeys(modifier: Modifier = Modifier) {
                     item {
                         InfoBlock(
                             icon = { Icon(imageVector = Icons.Outlined.Info, contentDescription = null) },
-                            text = stringResource(strings.info_extra_keys),
+                            text = stringResource(R.string.info_extra_keys),
                             modifier = Modifier.padding(bottom = 16.dp),
                         )
                     }
 
-                    item { PreferenceGroupHeading(heading = stringResource(strings.commands)) }
+                    item { PreferenceGroupHeading(heading = stringResource(R.string.commands)) }
                     items(commands, key = { it.id }) { command ->
                         ReorderableItem(
                             state = reorderState,
@@ -154,13 +154,13 @@ fun EditExtraKeys(modifier: Modifier = Modifier) {
                     }
 
                     item {
-                        PreferenceGroup(heading = stringResource(strings.symbols), modifier = Modifier.animateItem()) {
+                        PreferenceGroup(heading = stringResource(R.string.symbols), modifier = Modifier.animateItem()) {
                             EditorSettingsToggle(
-                                label = stringResource(id = strings.change_extra_symbols),
-                                description = stringResource(id = strings.change_extra_symbols_desc),
+                                label = stringResource(id = R.string.change_extra_symbols),
+                                description = stringResource(id = R.string.change_extra_symbols_desc),
                                 showSwitch = false,
                                 default = false,
-                                iconRes = drawables.edit,
+                                iconRes = R.drawable.edit,
                                 sideEffect = { showExtraKeysDialog = true },
                             )
                         }
