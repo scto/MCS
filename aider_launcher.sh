@@ -1,3 +1,4 @@
+```bash
 #!/bin/bash
 
 # --- FARBEN ---
@@ -10,8 +11,21 @@ SECRET_ANTHROPIC="/data/data/jkas.androidpe/files/home/.anthropic_api_key.secret
 SECRET_OPENAI="/data/data/jkas.androidpe/files/home/.openai_api_key.secrets"
 SECRET_DEEPSEEK="/data/data/jkas.androidpe/files/home/.deepseek_api_key.secrets"
 
-# Globaler Status für Optimierungen
+# --- GLOBALE STATUS-VARIABLEN ---
 SUBTREE_MODE=false
+
+# Arrays für Chat-Modes
+CHAT_MODES=("auto" "code" "architect" "ask" "help")
+CHAT_MODE_DESCS=(
+    "Launcher-Empfehlung (Standard)" 
+    "Direktes Coden (am besten für Flash)" 
+    "Planen & Coden (am besten für Pro/Komplexes)" 
+    "Nur Fragen stellen (keine Dateiänderungen)" 
+    "Fragen zur Bedienung von Aider"
+)
+CHAT_MODE_IDX=0
+CURRENT_CHAT_MODE=${CHAT_MODES[$CHAT_MODE_IDX]}
+CURRENT_CHAT_DESC=${CHAT_MODE_DESCS[$CHAT_MODE_IDX]}
 
 load_secrets() {
     export UV_LINK_MODE=copy
@@ -30,8 +44,16 @@ run_aider() {
         flags="$flags --subtree-only"
     fi
 
+    # Füge Chat-Mode Logik hinzu
+    if [ "$CURRENT_CHAT_MODE" != "auto" ]; then
+        # Entferne eventuelles hartcodiertes --architect aus base_flags, um Konflikte zu vermeiden
+        flags=${flags//--architect/}
+        flags="$flags --chat-mode $CURRENT_CHAT_MODE"
+    fi
+
     echo -e "\n${G}Starte Aider mit ${W}$model${NC}..."
     [ "$SUBTREE_MODE" = true ] && echo -e "${Y}Info: Large Repo Mode (--subtree-only) ist AKTIV.${NC}"
+    echo -e "${Y}Info: Chat-Mode: ${W}${CURRENT_CHAT_MODE}${NC}"
     echo -e ""
 
     source "$VENV_PATH_VAL/bin/activate"
@@ -56,6 +78,7 @@ choose_run_mode() {
         echo -e "${C}2) Run Aider Browser${NC}"
         echo -e "------------------------------------------------------"
         echo -e "${Y}3) Toggle Large Repo Mode (--subtree-only)${NC}"
+        echo -e "${M}4) Cycle Chat-Mode: ${W}${CURRENT_CHAT_MODE}${NC} ${C}(${CURRENT_CHAT_DESC})${NC}"
         echo -e "------------------------------------------------------"
         echo -e "${Y}0) Zurück${NC}"
         read -p "Wahl: " run_choice
@@ -65,6 +88,12 @@ choose_run_mode() {
             2) run_aider "$model" "$base_flags --browser" ;;
             3) 
                 if [ "$SUBTREE_MODE" = true ]; then SUBTREE_MODE=false; else SUBTREE_MODE=true; fi
+                ;;
+            4) 
+                # Rotiere durch die Chat-Modi
+                CHAT_MODE_IDX=$(( (CHAT_MODE_IDX + 1) % 5 ))
+                CURRENT_CHAT_MODE=${CHAT_MODES[$CHAT_MODE_IDX]}
+                CURRENT_CHAT_DESC=${CHAT_MODE_DESCS[$CHAT_MODE_IDX]}
                 ;;
             0) return ;;
             *) echo -e "${R}Ungültige Eingabe!${NC}"; sleep 1 ;;
@@ -79,38 +108,32 @@ choose_run_mode() {
 menu_gemini_flash() {
     while true; do
         clear
-        echo -e "${C}=== GEMINI FLASH MODELLE (High Speed & Special) ===${NC}"
+        echo -e "${C}=== GEMINI FLASH MODELLE (High Speed & Effizienz) ===${NC}"
         local mods=(
-            "Gemini 3.1 Flash Lite|gemini/gemini-3.1-flash-lite-preview|Lite Preview"
-            "Gemini 3.1 Flash Live|gemini/gemini-3.1-flash-live-preview|Live Interaction"
-            "Gemini 3 Flash Preview|gemini/gemini-3-flash-preview|Early Access V3"
-            "Gemini 2.5 Flash|gemini/gemini-2.5-flash|Recommended Speed"
-            "Gemini 2.5 Flash Lite|gemini/gemini-2.5-flash-lite|Stable Lite"
-            "Gemini 2.5 Flash Lite (06-17)|gemini/gemini-2.5-flash-lite-preview-06-17|Build 06-17"
-            "Gemini 2.5 Flash Lite (09-25)|gemini/gemini-2.5-flash-lite-preview-09-2025|Build 09-25"
-            "Gemini 2.5 Flash Preview (09-25)|gemini/gemini-2.5-flash-preview-09-2025|V2.5 Preview"
-            "Gemini 2.5 Computer Use|gemini/gemini-2.5-computer-use-preview-10-2025|UI Control"
-            "Gemini 2.5 Flash Native Audio|gemini/gemini-2.5-flash-native-audio-latest|Audio Focus"
-            "Gemini 2.5 Audio (09-25)|gemini/gemini-2.5-flash-native-audio-preview-09-2025|Audio Build"
-            "Gemini 2.5 Audio (12-25)|gemini/gemini-2.5-flash-native-audio-preview-12-2025|Audio Build"
-            "Gemini 2.0 Flash|gemini/gemini-2.0-flash|V2.0 Speed"
-            "Gemini 2.0 Flash Exp|gemini/gemini-2.0-flash-exp|Lightning fast and clever"
-            "Gemini 2.0 Flash (001)|gemini/gemini-2.0-flash-001|V2.0.1"
-            "Gemini 2.0 Flash Lite|gemini/gemini-2.0-flash-lite|V2.0 Lite"
-            "Gemini 2.0 Flash Lite (001)|gemini/gemini-2.0-flash-lite-001|V2.0.1 Lite"
-            "Gemini 1.5 Flash (002)|gemini/gemini-1.5-flash-002|V1.5.2"
-            "Gemini 1.5 Flash Latest|gemini/gemini-1.5-flash-latest|Efficient context processing"
-            "Gemini 1.5 Flash|gemini/gemini-1.5-flash|Efficient context processing"
-            "Gemini Flash Latest|gemini/gemini-flash-latest|Auto-Update Flash"
-            "Gemini Flash Lite Latest|gemini/gemini-flash-lite-latest|Auto-Update Lite"
-            "Gemma 3 27b IT|gemini/gemma-3-27b-it|Open Model V3"
-            "Gemma 2 27b IT|gemini/gemini-gemma-2-27b-it|Open Model V2"
-            "Gemma 2 9b IT|gemini/gemini-gemma-2-9b-it|Open Model V2 Small"
-            "Gemini Robotics ER 1.5|gemini/gemini-robotics-er-1.5-preview|Robotics Focus"
+            "Flash Latest|gemini/gemini-flash-latest|Standard-Modell (Auto-Update)"
+            "2.0 Flash|gemini/gemini-2.0-flash|Stabile V2.0"
+            "2.0 Flash (001)|gemini/gemini-2.0-flash-001|Stabile V2.0.1"
+            "2.5 Flash|gemini/gemini-2.5-flash|High Speed & Logik"
+            "2.5 Flash (09-25)|gemini/gemini-2.5-flash-preview-09-2025|V2.5 Preview"
+            "3.0 Flash Preview|gemini/gemini-3-flash-preview|Early Access V3"
+            "Flash Lite Latest|gemini/gemini-flash-lite-latest|Günstigstes Auto-Update"
+            "2.0 Flash Lite|gemini/gemini-2.0-flash-lite|V2.0 Lite"
+            "2.0 Flash Lite (001)|gemini/gemini-2.0-flash-lite-001|V2.0.1 Lite"
+            "2.5 Flash Lite|gemini/gemini-2.5-flash-lite|V2.5 Lite"
+            "2.5 Flash Lite (06-17)|gemini/gemini-2.5-flash-lite-preview-06-17|Build 06-17"
+            "2.5 Flash Lite (09-25)|gemini/gemini-2.5-flash-lite-preview-09-2025|Build 09-25"
+            "3.1 Flash Lite Preview|gemini/gemini-3.1-flash-lite-preview|V3.1 Lite"
+            "2.5 Flash Audio Latest|gemini/gemini-2.5-flash-native-audio-latest|Native Audio"
+            "2.5 Flash Audio (09-25)|gemini/gemini-2.5-flash-native-audio-preview-09-2025|Audio Build"
+            "2.5 Flash Audio (12-25)|gemini/gemini-2.5-flash-native-audio-preview-12-2025|Audio Build"
+            "3.1 Flash Live Preview|gemini/gemini-3.1-flash-live-preview|Echtzeit Interaktion"
+            "Gemma 2 9b IT|gemini/gemini-gemma-2-9b-it|Open Weights Klein"
+            "Gemma 2 27b IT|gemini/gemini-gemma-2-27b-it|Open Weights Mittel"
+            "Gemma 3 27b IT|gemini/gemma-3-27b-it|Open Weights V3"
         )
         for i in "${!mods[@]}"; do
             IFS='|' read -r name id desc <<< "${mods[$i]}"
-            printf "${W}%2d)${NC} ${C}%-32s${NC} %s\n" "$((i+1))" "$name" "$desc"
+            printf "${W}%2d)${NC} ${C}%-28s${NC} %s\n" "$((i+1))" "$name" "$desc"
         done
         echo -e "------------------------------------------------------"
         echo -e "${Y}0) Zurück${NC}"
@@ -118,9 +141,8 @@ menu_gemini_flash() {
         [[ "$c" == "0" ]] && return
         if [[ "$c" -ge 1 && "$c" -le "${#mods[@]}" ]]; then
             IFS='|' read -r name id desc <<< "${mods[$((c-1))]}"
-            local f=""
-            [[ "$id" == *"computer-use"* ]] && f="--browser"
-            choose_run_mode "$id" "$f"
+            # Standardmäßig keinen --architect Flag für Flash (Code-Modus ist meist besser)
+            choose_run_mode "$id" ""
         fi
     done
 }
@@ -130,24 +152,26 @@ menu_gemini_pro() {
         clear
         echo -e "${M}=== GEMINI PRO MODELLE (Intelligence & Experimental) ===${NC}"
         local mods=(
-            "Gemini 3.1 Pro|gemini/gemini-3.1-pro-preview|Top Logic"
-            "Gemini 3.1 Pro Tools|gemini/gemini-3.1-pro-preview-customtools|Custom Tools"
-            "Gemini 3 Pro Preview|gemini/gemini-3-pro-preview|Next Gen Pro"
-            "Gemini 2.5 Pro (Kotlin Best)|gemini/gemini-2.5-pro|Recommended for Coding"
-            "Gemini 2.5 Pro Exp (03-25)|gemini/gemini-2.5-pro-exp-03-25|Experimental Build"
-            "Gemini 2.5 Pro (05-06)|gemini/gemini-2.5-pro-preview-05-06|Build 05-06"
-            "Gemini 2.5 Pro (06-05)|gemini/gemini-2.5-pro-preview-06-05|Build 06-05"
-            "Gemini 2.5 Pro TTS|gemini/gemini-2.5-pro-preview-tts|Speech Synth"
-            "Gemini Exp 1206|gemini/gemini-exp-1206|Experimental Dec"
-            "Gemini Exp 1114|gemini/gemini-exp-1114|Experimental Nov"
-            "Gemini Pro Latest|gemini/gemini-pro-latest|Auto-Update Pro"
+            "Pro Latest|gemini/gemini-pro-latest|Top Modell (Auto-Update)"
+            "2.5 Pro (Kotlin Best)|gemini/gemini-2.5-pro|Hochkomplexe Logik"
+            "2.5 Pro Exp (03-25)|gemini/gemini-2.5-pro-exp-03-25|Experimental Build"
+            "2.5 Pro (05-06)|gemini/gemini-2.5-pro-preview-05-06|Build 05-06"
+            "2.5 Pro (06-05)|gemini/gemini-2.5-pro-preview-06-05|Build 06-05"
+            "3.0 Pro Preview|gemini/gemini-3-pro-preview|Next Gen Pro"
+            "3.1 Pro Preview|gemini/gemini-3.1-pro-preview|V3.1 Flaggschiff"
+            "2.5 Pro TTS|gemini/gemini-2.5-pro-preview-tts|Text-To-Speech Spezial"
+            "3.1 Pro Custom Tools|gemini/gemini-3.1-pro-preview-customtools|Agenten & Tools"
+            "2.5 Computer Use|gemini/gemini-2.5-computer-use-preview-10-2025|UI Control / Agent"
+            "Robotics ER 1.5|gemini/gemini-robotics-er-1.5-preview|Robotics Focus"
             "LearnLM 1.5 Pro|gemini/learnlm-1.5-pro-experimental|Education Focus"
-            "Lyria 3 Pro Preview|gemini/lyria-3-pro-preview|Music/Audio Gen"
             "Lyria 3 Clip Preview|gemini/lyria-3-clip-preview|Audio Embedding"
+            "Lyria 3 Pro Preview|gemini/lyria-3-pro-preview|Music/Audio Gen"
+            "Exp 1114|gemini/gemini-exp-1114|Experimental Nov"
+            "Exp 1206|gemini/gemini-exp-1206|Experimental Dec"
         )
         for i in "${!mods[@]}"; do
             IFS='|' read -r name id desc <<< "${mods[$i]}"
-            printf "${W}%2d)${NC} ${M}%-32s${NC} %s\n" "$((i+1))" "$name" "$desc"
+            printf "${W}%2d)${NC} ${M}%-28s${NC} %s\n" "$((i+1))" "$name" "$desc"
         done
         echo -e "------------------------------------------------------"
         echo -e "${Y}0) Zurück${NC}"
@@ -155,7 +179,9 @@ menu_gemini_pro() {
         [[ "$c" == "0" ]] && return
         if [[ "$c" -ge 1 && "$c" -le "${#mods[@]}" ]]; then
             IFS='|' read -r name id desc <<< "${mods[$((c-1))]}"
-            choose_run_mode "$id" "--architect"
+            local f="--architect"
+            [[ "$id" == *"computer-use"* ]] && f="--browser"
+            choose_run_mode "$id" "$f"
         fi
     done
 }
@@ -164,8 +190,8 @@ menu_gemini() {
     while true; do
         clear
         echo -e "${C}=== PROVIDER: GEMINI ===${NC}"
-        echo -e "${C}1) Flash Modelle${NC} (Schnell & Günstig)"
-        echo -e "${M}2) Pro Modelle${NC} (Intelligent & Kotlin-Spezialisten)"
+        echo -e "${C}1) Flash Modelle${NC} (Schnell, Effizient, Standard Coding)"
+        echo -e "${M}2) Pro Modelle${NC}   (Intelligent, Planung, Kotlin-Architektur)"
         echo -e "${W}3) Liste Modelle${NC} (Befehl: list-models gemini/)"
         echo -e "------------------------------------------------------"
         echo -e "${Y}0) Zurück${NC}"
@@ -271,3 +297,5 @@ while true; do
         *) echo -e "${R}Ungültige Eingabe!${NC}"; sleep 1 ;;
     esac
 done
+
+```
