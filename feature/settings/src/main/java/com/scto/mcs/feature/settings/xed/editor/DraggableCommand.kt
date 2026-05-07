@@ -1,4 +1,4 @@
-package com.rk.settings.editor
+package com.scto.mcs.feature.settings.editor
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
@@ -22,12 +22,11 @@ import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.rk.commands.Command
-import com.rk.commands.CommandProvider
-import com.rk.components.compose.preferences.base.PreferenceTemplate
-import com.rk.icons.XedIcon
-import com.rk.resources.drawables
-import com.rk.resources.strings
+import com.scto.mcs.core.commands.Command
+import com.scto.mcs.core.commands.CommandProvider
+import com.scto.mcs.core.resources.R
+import com.scto.mcs.core.ui.components.compose.preferences.base.PreferenceTemplate
+import com.scto.mcs.core.ui.icons.XedIcon
 
 @Composable
 fun DraggableCommand(modifier: Modifier = Modifier, command: Command, onRemove: () -> Unit) {

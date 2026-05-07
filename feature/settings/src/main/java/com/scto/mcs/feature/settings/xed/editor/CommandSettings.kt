@@ -1,15 +1,13 @@
-package com.rk.settings.editor
+package com.scto.mcs.feature.settings.editor
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.snapshots.SnapshotStateList
-import com.rk.commands.ActionContext
-import com.rk.commands.Command
-import com.rk.commands.CommandPalette
-import com.rk.commands.CommandProvider
-import com.rk.icons.Icon
-import com.rk.resources.drawables
-import com.rk.resources.getString
-import com.rk.resources.strings
+import com.scto.mcs.core.commands.ActionContext
+import com.scto.mcs.core.commands.Command
+import com.scto.mcs.core.commands.CommandPalette
+import com.scto.mcs.core.commands.CommandProvider
+import com.scto.mcs.core.resources.R
+import com.scto.mcs.core.ui.icons.Icon
 
 @Composable
 fun CommandSelectionDialog(

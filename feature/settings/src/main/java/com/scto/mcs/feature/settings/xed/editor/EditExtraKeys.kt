@@ -1,4 +1,4 @@
-package com.rk.settings.editor
+package com.scto.mcs.feature.settings.editor
 
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.calculateEndPadding
@@ -32,21 +32,20 @@ import androidx.compose.ui.unit.dp
 import com.mohamedrejeb.compose.dnd.reorder.ReorderContainer
 import com.mohamedrejeb.compose.dnd.reorder.ReorderableItem
 import com.mohamedrejeb.compose.dnd.reorder.rememberReorderState
-import com.rk.commands.CommandProvider
-import com.rk.components.EditorSettingsToggle
-import com.rk.components.InfoBlock
-import com.rk.components.ResetButton
-import com.rk.components.SingleInputDialog
-import com.rk.components.compose.preferences.base.LocalIsExpandedScreen
-import com.rk.components.compose.preferences.base.NestedScrollStretch
-import com.rk.components.compose.preferences.base.PreferenceGroup
-import com.rk.components.compose.preferences.base.PreferenceGroupHeading
-import com.rk.components.compose.preferences.base.PreferenceScaffold
-import com.rk.resources.drawables
-import com.rk.resources.strings
-import com.rk.settings.Preference
-import com.rk.settings.Settings
-import com.rk.utils.handleLazyListScroll
+import com.scto.mcs.core.commands.CommandProvider
+import com.scto.mcs.core.resources.R
+import com.scto.mcs.core.ui.components.compose.preferences.EditorSettingsToggle
+import com.scto.mcs.core.ui.components.compose.preferences.InfoBlock
+import com.scto.mcs.core.ui.components.compose.preferences.ResetButton
+import com.scto.mcs.core.ui.components.compose.preferences.SingleInputDialog
+import com.scto.mcs.core.ui.components.compose.preferences.base.LocalIsExpandedScreen
+import com.scto.mcs.core.ui.components.compose.preferences.base.NestedScrollStretch
+import com.scto.mcs.core.ui.components.compose.preferences.base.PreferenceGroup
+import com.scto.mcs.core.ui.components.compose.preferences.base.PreferenceGroupHeading
+import com.scto.mcs.core.ui.components.compose.preferences.base.PreferenceScaffold
+import com.scto.mcs.core.ui.utils.handleLazyListScroll
+import com.scto.mcs.feature.settings.Preference
+import com.scto.mcs.feature.settings.Settings
 import kotlinx.coroutines.launch
 
 const val DEFAULT_EXTRA_KEYS_COMMANDS =

@@ -1,9 +1,9 @@
-package com.rk.settings.editor
+package com.scto.mcs.feature.settings.editor
 
 import androidx.compose.runtime.mutableStateListOf
 import com.google.gson.GsonBuilder
-import com.rk.settings.Settings
-import com.rk.utils.application
+import com.scto.mcs.core.ui.utils.application
+import com.scto.mcs.feature.settings.Settings
 
 object FontRegistry {
     val fonts = mutableStateListOf<Font>()
