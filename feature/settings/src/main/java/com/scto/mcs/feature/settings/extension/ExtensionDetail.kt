@@ -1,0 +1,245 @@
+package com.scto.mcs.feature.settings.extension
+
+import androidx.activity.compose.LocalActivity
+import androidx.appcompat.app.AppCompatActivity
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.pager.HorizontalPager
+import androidx.compose.foundation.pager.rememberPagerState
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Star
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.LeadingIconTab
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.PrimaryScrollableTabRow
+import androidx.compose.material3.Text
+import androidx.compose.material3.contentColorFor
+import androidx.compose.material3.surfaceColorAtElevation
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.produceState
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.unit.dp
+import coil.compose.AsyncImage
+import coil.request.CachePolicy
+import coil.request.ImageRequest
+import com.scto.mcs.core.extension.Extension
+import com.scto.mcs.core.resources.R
+import com.scto.mcs.core.ui.components.compose.preferences.base.RefreshablePreferenceLayout
+import com.scto.mcs.core.ui.icons.Icon
+import com.scto.mcs.core.ui.icons.XedIcon
+import com.scto.mcs.core.ui.theme.Typography
+import com.scto.mcs.core.ui.utils.formatNumberCompact
+import com.scto.mcs.feature.settings.SettingsRoutes
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.launch
+
+@Composable
+fun ExtensionDetail(extension: Extension?) {
+    val scope = rememberCoroutineScope()
+
+    var isRefreshing by remember { mutableStateOf(false) }
+    var refreshKey by remember { mutableIntStateOf(0) }
+
+    RefreshablePreferenceLayout(
+        label = extension?.name ?: stringResource(R.strings.ext_not_found),
+        backArrowVisible = true,
+        isExpandedScreen = true,
+        isRefreshing = isRefreshing,
+        onRefresh = {
+            isRefreshing = true
+            refreshKey++
+        },
+    ) {
+        if (extension == null) {
+            Text(stringResource(R.strings.ext_not_found_desc), modifier = Modifier.padding(horizontal = 16.dp))
+        } else {
+            var installState by remember {
+                mutableStateOf(
+                    if (com.scto.mcs.core.extension.ExtensionManager.isInstalled(extension.id)) {
+                        InstallState.Installed
+                    } else {
+                        InstallState.Idle
+                    }
+                )
+            }
+
+            Column(modifier = Modifier.padding(horizontal = 16.dp)) {
+                AboutSection(extension, installState, { installState = it }, scope)
+            }
+            TabSection(extension, scope, refreshKey, onLoaded = { isRefreshing = false })
+        }
+    }
+}
+
+@Composable
+private fun AboutSection(
+    extension: Extension,
+    installState: InstallState,
+    updateInstallState: (InstallState) -> Unit,
+    scope: CoroutineScope,
+) {
+    val context = LocalContext.current
+    val activity = LocalActivity.current as? AppCompatActivity
+
+    var showSourceCodeSheet by remember { mutableStateOf(false) }
+
+    var iconUrl by remember { mutableStateOf<String?>(null) }
+
+    LaunchedEffect(extension) { iconUrl = extension.iconUrl() }
+
+    Row(verticalAlignment = Alignment.CenterVertically) {
+        AsyncImage(
+            model =
+                ImageRequest.Builder(LocalContext.current)
+                    .data(iconUrl)
+                    .fallback(R.drawables.extension)
+                    .crossfade(true)
+                    .diskCachePolicy(CachePolicy.ENABLED)
+                    .memoryCachePolicy(CachePolicy.ENABLED)
+                    .build(),
+            modifier = Modifier.size(64.dp).clip(RoundedCornerShape(8.dp)).padding(end = 16.dp),
+            contentDescription = null,
+        )
+
+        Column(modifier = Modifier.weight(1f)) {
+            Text(
+                text = extension.name,
+                style = Typography.titleLarge,
+                fontWeight = FontWeight.SemiBold,
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis,
+            )
+
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                ExtensionAuthorIcon(extension.authors.first(), Modifier.size(16.dp).padding(end = 4.dp))
+                Text(
+                    text = "${extension.authors} • v${extension.version}",
+                    style = Typography.labelMedium,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis,
+                )
+            }
+        }
+
+        IconButton(onClick = { showSourceCodeSheet = true }) {
+            Icon(painter = painterResource(R.drawables.xml), contentDescription = null)
+        }
+
+        ExtensionActionButton(
+            extension = extension,
+            installState = installState,
+            scope = scope,
+            onInstallClick = { runExtensionInstallAction(extension, updateInstallState, scope, context, activity) },
+            onUninstallClick = { runExtensionUninstallAction(extension, updateInstallState, activity) },
+        )
+    }
+
+    val rating by
+        produceState<Pair<String, ImageVector?>>("---" to null) {
+            val rating = extension.getRating() ?: return@produceState
+            value = rating.toString() to Icons.Default.Star
+        }
+    val downloadCount by
+        produceState("---") {
+            val count = extension.getDownloadCount() ?: return@produceState
+            value = formatNumberCompact(count)
+        }
+    Row(modifier = Modifier.padding(top = 8.dp), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+        ExtensionStats(Modifier.weight(1f), stringResource(R.strings.downloads).uppercase(), downloadCount)
+        ExtensionStats(Modifier.weight(1f), stringResource(R.strings.rating).uppercase(), rating.first, rating.second)
+    }
+
+    if (showSourceCodeSheet) {
+        SourceCodeSheet(extension) { showSourceCodeSheet = false }
+    }
+}
+
+@Composable
+fun ExtensionStats(modifier: Modifier = Modifier, title: String, value: String, trailingVector: ImageVector? = null) {
+    val cardColor = MaterialTheme.colorScheme.surfaceColorAtElevation(1.dp)
+
+    Card(
+        colors = CardDefaults.cardColors(containerColor = cardColor, contentColor = contentColorFor(cardColor)),
+        modifier = modifier,
+    ) {
+        Column(Modifier.padding(16.dp)) {
+            Text(title, style = Typography.labelSmall, color = MaterialTheme.colorScheme.primary)
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                Text(value, style = Typography.titleMedium, fontWeight = FontWeight.Bold)
+                trailingVector?.let {
+                    Icon(
+                        imageVector = it,
+                        contentDescription = null,
+                        tint = MaterialTheme.colorScheme.primary,
+                        modifier = Modifier.size(16.dp),
+                    )
+                }
+            }
+        }
+    }
+}
+
+enum class ExtensionRoutes(val icon: Icon, val label: String, val route: String) {
+    OVERVIEW(Icon.DrawableRes(R.drawables.file), R.strings.overview.getString(), "overview"),
+    REVIEWS(Icon.DrawableRes(R.drawables.comment), R.strings.reviews.getString(), "reviews"),
+}
+
+@Composable
+private fun TabSection(extension: Extension, scope: CoroutineScope, refreshKey: Int, onLoaded: () -> Unit) {
+    val pagerState = rememberPagerState(initialPage = 0) { ExtensionRoutes.entries.size }
+
+    PrimaryScrollableTabRow(edgePadding = 0.dp, selectedTabIndex = pagerState.currentPage) {
+        ExtensionRoutes.entries.forEachIndexed { index, destination ->
+            LeadingIconTab(
+                icon = { XedIcon(destination.icon) },
+                selected = pagerState.currentPage == index,
+                onClick = { scope.launch { pagerState.animateScrollToPage(index) } },
+                text = { Text(text = destination.label, maxLines = 2, overflow = TextOverflow.Ellipsis) },
+            )
+        }
+    }
+
+    var readmeUrl by remember { mutableStateOf<String?>(null) }
+
+    LaunchedEffect(extension) { readmeUrl = extension.readmeUrl() }
+
+    HorizontalPager(
+        state = pagerState,
+        verticalAlignment = Alignment.Top,
+        pageSpacing = 16.dp,
+        beyondViewportPageCount = 2,
+        modifier = Modifier.fillMaxSize(),
+    ) { page ->
+        Column(modifier = Modifier.fillMaxWidth().padding(16.dp)) {
+            when (ExtensionRoutes.entries[page]) {
+                ExtensionRoutes.OVERVIEW -> MarkdownViewer(readmeUrl, refreshKey, onLoaded)
+                ExtensionRoutes.REVIEWS -> ReviewsPage(extension, refreshKey, onLoaded)
+            }
+        }
+    }
+}
