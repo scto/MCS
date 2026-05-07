@@ -46,5 +46,10 @@ dependencies {
     implementation(libs.hilt.android)
     ksp(libs.hilt.compiler)
     
+    implementation(project(":editor"))
+    implementation(project(":editor-lsp"))
+    implementation(project(":language-textmate"))
+    /*
     implementation(libs.sora.editor)
+    */
 }

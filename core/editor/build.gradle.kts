@@ -33,4 +33,8 @@ dependencies {
     implementation(libs.androidx.hilt.navigation.compose)
     implementation(libs.hilt.android)
     ksp(libs.hilt.compiler)
+    
+    implementation(project(":editor"))
+    implementation(project(":editor-lsp"))
+    implementation(project(":language-textmate"))
 }
