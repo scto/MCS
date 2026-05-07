@@ -1,4 +1,4 @@
-package com.rk.settings.app
+package com.scto.mcs.feature.settings.app
 
 import android.content.Intent
 import android.os.Build
@@ -21,26 +21,24 @@ import androidx.core.net.toUri
 import androidx.navigation.NavController
 import com.google.gson.GsonBuilder
 import com.google.gson.reflect.TypeToken
-import com.rk.activities.settings.SettingsActivity
-import com.rk.activities.settings.SettingsRoutes
-import com.rk.components.BasicToggle
-import com.rk.components.NextScreenCard
-import com.rk.components.SettingsToggle
-import com.rk.components.compose.preferences.base.PreferenceGroup
-import com.rk.components.compose.preferences.base.PreferenceLayout
-import com.rk.file.toFileObject
-import com.rk.resources.drawables
-import com.rk.resources.getString
-import com.rk.resources.strings
-import com.rk.settings.Preference
-import com.rk.settings.Settings
-import com.rk.settings.editor.refreshEditors
-import com.rk.theme.amoled
-import com.rk.theme.currentTheme
-import com.rk.theme.dynamicTheme
-import com.rk.utils.dialog
-import com.rk.utils.toast
-import com.rk.xededitor.BuildConfig
+import com.scto.mcs.core.files.toFileObject
+import com.scto.mcs.core.resources.R
+import com.scto.mcs.core.ui.components.compose.preferences.BasicToggle
+import com.scto.mcs.core.ui.components.compose.preferences.NextScreenCard
+import com.scto.mcs.core.ui.components.compose.preferences.SettingsToggle
+import com.scto.mcs.core.ui.components.compose.preferences.base.PreferenceGroup
+import com.scto.mcs.core.ui.components.compose.preferences.base.PreferenceLayout
+import com.scto.mcs.core.ui.theme.amoled
+import com.scto.mcs.core.ui.theme.currentTheme
+import com.scto.mcs.core.ui.theme.dynamicTheme
+import com.scto.mcs.core.ui.utils.dialog
+import com.scto.mcs.core.ui.utils.toast
+import com.scto.mcs.feature.settings.BuildConfig
+import com.scto.mcs.feature.settings.Preference
+import com.scto.mcs.feature.settings.Settings
+import com.scto.mcs.feature.settings.SettingsActivity
+import com.scto.mcs.feature.settings.SettingsRoutes
+import com.scto.mcs.feature.settings.editor.refreshEditors
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -64,22 +62,22 @@ data class Feature(
 }
 
 object InbuiltFeatures {
-    val terminal = Feature(nameRes = strings.terminal_feature, key = "feature_terminal", default = true)
-    val debugMode = Feature(nameRes = strings.debug_options, key = "debug_mode", default = BuildConfig.DEBUG)
-    val extensions = Feature(nameRes = strings.ext, key = "enable_extension", default = true)
-    val git = Feature(nameRes = strings.git, key = "enable_git", default = true)
+    val terminal = Feature(nameRes = R.string.terminal_feature, key = "feature_terminal", default = true)
+    val debugMode = Feature(nameRes = R.string.debug_options, key = "debug_mode", default = BuildConfig.DEBUG)
+    val extensions = Feature(nameRes = R.string.ext, key = "enable_extension", default = true)
+    val git = Feature(nameRes = R.string.git, key = "enable_git", default = true)
 }
 
 @Composable
 fun SettingsAppScreen(activity: SettingsActivity, navController: NavController) {
-    PreferenceLayout(label = stringResource(id = strings.app), backArrowVisible = true) {
+    PreferenceLayout(label = stringResource(id = R.string.app), backArrowVisible = true) {
         val scope = rememberCoroutineScope()
         val gson = remember { GsonBuilder().setPrettyPrinting().create() }
 
         PreferenceGroup {
             SettingsToggle(
-                label = stringResource(strings.lang),
-                description = stringResource(strings.lang_desc),
+                label = stringResource(R.string.lang),
+                description = stringResource(R.string.lang_desc),
                 showSwitch = false,
                 default = false,
                 endWidget = {
@@ -93,30 +91,30 @@ fun SettingsAppScreen(activity: SettingsActivity, navController: NavController) 
             )
 
             SettingsToggle(
-                label = stringResource(strings.check_for_updates),
-                description = stringResource(strings.check_for_updates_desc),
+                label = stringResource(R.string.check_for_updates),
+                description = stringResource(R.string.check_for_updates_desc),
                 default = Settings.check_for_update,
                 sideEffect = { Settings.check_for_update = it },
             )
 
             SettingsToggle(
-                label = stringResource(strings.fullscreen),
-                description = stringResource(strings.fullscreen_desc),
+                label = stringResource(R.string.fullscreen),
+                description = stringResource(R.string.fullscreen_desc),
                 default = Settings.fullscreen,
                 sideEffect = { Settings.fullscreen = it },
             )
 
             SettingsToggle(
-                label = stringResource(strings.smart_toolbar),
-                description = stringResource(strings.smart_toolbar_desc),
+                label = stringResource(R.string.smart_toolbar),
+                description = stringResource(R.string.smart_toolbar_desc),
                 default = Settings.smart_toolbar,
                 sideEffect = { Settings.smart_toolbar = it },
             )
 
             if (Build.VERSION.SDK_INT > Build.VERSION_CODES.Q) {
                 SettingsToggle(
-                    label = stringResource(strings.manage_storage),
-                    description = stringResource(strings.manage_storage_desc),
+                    label = stringResource(R.string.manage_storage),
+                    description = stringResource(R.string.manage_storage_desc),
                     showSwitch = false,
                     default = false,
                     endWidget = {
@@ -135,13 +133,13 @@ fun SettingsAppScreen(activity: SettingsActivity, navController: NavController) 
             }
 
             NextScreenCard(
-                label = stringResource(strings.manage_app_font),
-                description = stringResource(strings.manage_app_font),
+                label = stringResource(R.string.manage_app_font),
+                description = stringResource(R.string.manage_app_font),
                 route = SettingsRoutes.AppFontScreen,
             )
         }
 
-        PreferenceGroup(heading = stringResource(strings.feature_toggles)) {
+        PreferenceGroup(heading = stringResource(R.string.feature_toggles)) {
             val activity = LocalActivity.current
 
             BasicToggle(
@@ -151,8 +149,8 @@ fun SettingsAppScreen(activity: SettingsActivity, navController: NavController) 
                     if (it) {
                         dialog(
                             context = activity,
-                            title = strings.attention.getString(),
-                            msg = strings.debug_mode_warn.getString(),
+                            title = activity.getString(R.string.attention),
+                            msg = activity.getString(R.string.debug_mode_warn),
                             onCancel = { InbuiltFeatures.debugMode.setEnable(false) },
                             onOk = { InbuiltFeatures.debugMode.setEnable(true) },
                         )
@@ -162,8 +160,8 @@ fun SettingsAppScreen(activity: SettingsActivity, navController: NavController) 
                 },
                 startWidget = {
                     Icon(
-                        painter = painterResource(drawables.build),
-                        contentDescription = stringResource(strings.debug_options),
+                        painter = painterResource(R.drawable.build),
+                        contentDescription = stringResource(R.string.debug_options),
                         modifier = Modifier.padding(start = 16.dp),
                     )
                 },
@@ -176,8 +174,8 @@ fun SettingsAppScreen(activity: SettingsActivity, navController: NavController) 
                 sideEffect = { InbuiltFeatures.terminal.setEnable(it) },
                 startWidget = {
                     Icon(
-                        painter = painterResource(drawables.terminal),
-                        contentDescription = stringResource(strings.terminal),
+                        painter = painterResource(R.drawable.terminal),
+                        contentDescription = stringResource(R.string.terminal),
                         modifier = Modifier.padding(start = 16.dp),
                     )
                 },
@@ -190,8 +188,8 @@ fun SettingsAppScreen(activity: SettingsActivity, navController: NavController) 
                 sideEffect = { InbuiltFeatures.extensions.setEnable(it) },
                 startWidget = {
                     Icon(
-                        painter = painterResource(drawables.extension),
-                        contentDescription = stringResource(strings.ext),
+                        painter = painterResource(R.drawable.extension),
+                        contentDescription = stringResource(R.string.ext),
                         modifier = Modifier.padding(start = 16.dp),
                     )
                 },
@@ -204,8 +202,8 @@ fun SettingsAppScreen(activity: SettingsActivity, navController: NavController) 
                 sideEffect = { InbuiltFeatures.git.setEnable(it) },
                 startWidget = {
                     Icon(
-                        painter = painterResource(drawables.git),
-                        contentDescription = stringResource(strings.git),
+                        painter = painterResource(R.drawable.git),
+                        contentDescription = stringResource(R.string.git),
                         modifier = Modifier.padding(start = 16.dp),
                     )
                 },
@@ -213,10 +211,10 @@ fun SettingsAppScreen(activity: SettingsActivity, navController: NavController) 
             )
         }
 
-        PreferenceGroup(heading = stringResource(strings.backup)) {
+        PreferenceGroup(heading = stringResource(R.string.backup)) {
             SettingsToggle(
-                label = stringResource(id = strings.backup),
-                description = stringResource(id = strings.settings_backup_desc),
+                label = stringResource(id = R.string.backup),
+                description = stringResource(id = R.string.settings_backup_desc),
                 showSwitch = false,
                 default = false,
                 sideEffect = {
@@ -228,18 +226,18 @@ fun SettingsAppScreen(activity: SettingsActivity, navController: NavController) 
                                 fileObject.getOutPutStream(false).use { outputStream ->
                                     outputStream.write(json.toByteArray())
                                 }
-                                toast(strings.export_successful)
+                                toast(R.string.export_successful)
                             } catch (e: Exception) {
                                 e.printStackTrace()
-                                toast(strings.export_failed)
+                                toast(R.string.export_failed)
                             }
                         }
                     }
                 },
             )
             SettingsToggle(
-                label = stringResource(id = strings.restore),
-                description = stringResource(id = strings.settings_restore_desc),
+                label = stringResource(id = R.string.restore),
+                description = stringResource(id = R.string.settings_restore_desc),
                 showSwitch = false,
                 default = false,
                 sideEffect = {
@@ -277,10 +275,10 @@ fun SettingsAppScreen(activity: SettingsActivity, navController: NavController) 
                                     refreshEditors()
                                 }
 
-                                toast(strings.import_successful)
+                                toast(R.string.import_successful)
                             } catch (e: Exception) {
                                 e.printStackTrace()
-                                toast(strings.import_failed)
+                                toast(R.string.import_failed)
                             }
                         }
                     }
