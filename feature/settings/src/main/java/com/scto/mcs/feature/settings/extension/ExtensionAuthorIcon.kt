@@ -8,8 +8,8 @@ import androidx.compose.ui.platform.LocalContext
 import coil.compose.AsyncImage
 import coil.request.CachePolicy
 import coil.request.ImageRequest
-import com.scto.mcs.core.resources.R
 import com.scto.mcs.core.extension.ExtensionAuthor
+import com.scto.mcs.core.resources.R
 
 @Composable
 fun ExtensionAuthorIcon(author: ExtensionAuthor, modifier: Modifier = Modifier) {

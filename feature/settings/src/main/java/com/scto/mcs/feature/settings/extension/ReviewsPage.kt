@@ -18,6 +18,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import com.scto.mcs.core.extension.Extension
+import com.scto.mcs.core.extension.Review
 import com.scto.mcs.core.resources.R
 import com.scto.mcs.core.ui.components.StateScreen
 
@@ -32,7 +33,7 @@ sealed interface ReviewsStatus {
         object NotSupported : Error(R.strings.reviews_not_supported, R.drawables.comment)
     }
 
-    data class Success(val reviews: List<com.scto.mcs.core.extension.Review>) : ReviewsStatus
+    data class Success(val reviews: List<Review>) : ReviewsStatus
 }
 
 @Composable

@@ -47,7 +47,9 @@ import coil.compose.AsyncImage
 import coil.request.CachePolicy
 import coil.request.ImageRequest
 import com.scto.mcs.core.extension.Extension
+import com.scto.mcs.core.extension.ExtensionManager
 import com.scto.mcs.core.resources.R
+import com.scto.mcs.core.resources.getString
 import com.scto.mcs.core.ui.components.compose.preferences.base.RefreshablePreferenceLayout
 import com.scto.mcs.core.ui.icons.Icon
 import com.scto.mcs.core.ui.icons.XedIcon
@@ -79,7 +81,7 @@ fun ExtensionDetail(extension: Extension?) {
         } else {
             var installState by remember {
                 mutableStateOf(
-                    if (com.scto.mcs.core.extension.ExtensionManager.isInstalled(extension.id)) {
+                    if (ExtensionManager.isInstalled(extension.id)) {
                         InstallState.Installed
                     } else {
                         InstallState.Idle

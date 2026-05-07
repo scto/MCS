@@ -16,10 +16,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.scto.mcs.core.extension.Extension
 import com.scto.mcs.core.resources.R
 import com.scto.mcs.core.ui.icons.XedIcons
-import com.scto.mcs.feature.settings.extension.InstallState
-import com.scto.mcs.feature.settings.extension.Extension
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
