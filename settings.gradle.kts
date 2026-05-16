@@ -46,6 +46,8 @@ include(
     ":core:network",
     ":core:resources",
     ":core:runner",
+    ":core:template:api",
+    ":core:template:data",
     ":core:terminal",
     ":core:terminal-emulator",
     ":core:terminal-view",
