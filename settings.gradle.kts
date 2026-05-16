@@ -31,7 +31,7 @@ include(":app")
 
 // Core modules
 include(
-    ":core:build-tools",
+    ":core:buildtools",
     ":core:commands",
     ":core:crashhandler",
     ":core:di",
@@ -44,7 +44,6 @@ include(
     ":core:git",
     ":core:navigation",
     ":core:network",
-    ":core:onboarding",
     ":core:resources",
     ":core:runner",
     ":core:terminal",
